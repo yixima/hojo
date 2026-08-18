@@ -27,9 +27,12 @@ basic:
 qualifications:
   # 全省庁統一資格。Drive のフォルダ名「全国統一入札資格_2026」から取得検討中の可能性。
   zenshocho_toitsu:
-    held: null                     # status: unconfirmed
-    grade: null                    # A/B/C/D
+    held: false                    # status: confirmed（本人確認 2026-08-18）
+    applying: true                 # 現在申請中・取得作業中
+    expected_grade: null           # status: unconfirmed  申請中の等級
     categories: []                 # 役務の提供等 等
+    # 判定方針: 国の案件は「資格取得後なら応募可」として別枠で提示する。
+    # 申請中のため、公告日ではなく「入札参加資格審査申請の受付が随時か」を確認して拾う。
   tokyo_metropolitan: null         # status: unconfirmed  東京都の入札参加資格
   invoice_registered: null         # status: unconfirmed
 
