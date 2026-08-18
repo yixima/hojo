@@ -68,6 +68,20 @@ track_record:
     municipalities_supported: 27
     media_produced: 581
     deal_close_rate_2024: 0.122
+    as_of: 2025-03
+
+  # HP (japanpromotion.org) に、より新しい実績値がある。
+  # 当環境からは同ドメインがネットワークポリシーでブロックされており未取得。
+  # 以下は Web 検索の要約経由で得た参考値。一次情報未確認のため提案書には転記しないこと。
+  latest_unverified:            # status: unconfirmed
+    japan_expo_2026_visitors: 220000
+    japan_expo_2026_note: WABI SABI 25周年・過去最大の会場面積
+    wabisabi_2026_exhibitors: 106
+    wabisabi_cumulative_exhibitions: 13
+    wabisabi_cumulative_exhibitors: 1214
+    wabisabi_area_sqm: 1500
+    wabisabi_cumulative_visitors: 110000
+    todo: HP実績セクションの原文を入手し、scale: を最新値へ更新する
 
   flagship_events:
     - { name: JAPAN EXPO パビリオン WABI SABI, city: パリ, since: 2011, type: 日本フェスティバル }
@@ -105,3 +119,4 @@ overseas_presence:
 search_scope:
   categories: [補助金, 企画競争, 企画提案, プロポーザル]
   issuers: 全国・全発注元
+  delivery: 週次レポート            # 確認済み 2026-08-18
