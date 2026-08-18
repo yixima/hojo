@@ -1,0 +1,104 @@
+# 一般社団法人ジャパンプロモーション 会社プロファイル
+# 公募案件（補助金／企画競争・プロポーザル）の適合判定に用いる基礎データ。
+#
+# 出典:
+#   [A] 提案書 正本.pdf（令和7年度「東京手仕事」MAISON & OBJET PARIS 2025 企画提案）
+#   [B] 入札書.pdf（同上、2025-03-18）
+#   [C] 実績資料.pdf
+#   [D] 公式サイト japanpromotion.org（Web検索経由。サイト本体は当環境からアクセス不可）
+# status: confirmed = 一次資料で裏取り済み / unconfirmed = 未確認、本人確認待ち
+
+basic:
+  name: 一般社団法人ジャパンプロモーション
+  name_en: Japan Promotion
+  legal_form: 一般社団法人          # status: confirmed [B]
+  established: 2015-10             # status: confirmed [C]
+  representative: 生島 儀尊（代表理事）  # status: confirmed [B]
+  address: 東京都渋谷区神宮前6-18-10 海老名ビル4F  # status: confirmed [B]
+  website: https://www.japanpromotion.org
+  own_ec: https://wabisabistore.net/en/   # WABI SABI STORE（伝統工芸品の越境EC）
+
+  # --- 未確認: 本人確認が必要 ---
+  capital_or_endowment: null       # status: unconfirmed  基本財産
+  annual_revenue: null             # status: unconfirmed
+  employees: null                  # status: unconfirmed  提案書記載の社員は5名以上（うちパリ在住2名）
+  fiscal_year_end: null            # status: unconfirmed
+
+qualifications:
+  # 全省庁統一資格。Drive のフォルダ名「全国統一入札資格_2026」から取得検討中の可能性。
+  zenshocho_toitsu:
+    held: null                     # status: unconfirmed
+    grade: null                    # A/B/C/D
+    categories: []                 # 役務の提供等 等
+  tokyo_metropolitan: null         # status: unconfirmed  東京都の入札参加資格
+  invoice_registered: null         # status: unconfirmed
+
+# --- 事業ドメイン（検索キーワード辞書の元データ）---
+domains:
+  primary:
+    - 日本文化・伝統工芸品の海外プロモーション
+    - 海外展示会・見本市への出展支援／パビリオン運営
+    - 自治体の海外展開支援・シティプロモーション
+    - 海外向け販路開拓／越境EC
+  secondary:
+    - アートフェア出展・美術展の企画運営
+    - インバウンド（訪日）プロモーション
+    - 国際イベントの企画・制作・現地運営
+    - カタログ／Webサイト等の制作物ディレクション
+
+capabilities:
+  - 海外展示会の出展企画・ブース設計施工・商談運営
+  - 現地スタッフ管理（仏語・英語・西語対応の通訳／接客チーム）
+  - 美術品・工芸品の国際輸送／輸出入／保険／安全対策
+  - 現地会計・納税・国際送金の代行
+  - バイヤー誘致（自社+外注パートナー計3,140件のバイヤーリスト）
+  - 越境EC「WABI SABI STORE」での継続販売
+  - 情報セキュリティ体制（UTM: Check Point CP1530WIFI / Defender + Kaspersky 二重対策）
+
+track_record:
+  scale:                           # status: confirmed [C][A]（2025年3月時点）
+    cities: 16
+    exhibitions: 91
+    exhibitions_with_crafts: 49
+    exhibitors_served: 3611
+    items_handled: 6618
+    municipalities_supported: 27
+    media_produced: 581
+    deal_close_rate_2024: 0.122
+
+  flagship_events:
+    - { name: JAPAN EXPO パビリオン WABI SABI, city: パリ, since: 2011, type: 日本フェスティバル }
+    - { name: WORLD ART DUBAI, city: ドバイ, period: 2015-2024, type: アートフェア }
+    - { name: HYPER JAPAN パビリオン MIYABI, city: ロンドン, period: 2015-2017 }
+    - { name: MAISON&OBJET, city: パリ, period: 2023-2025, type: インテリア・ギフト BtoB }
+    - { name: MANGA BARCELONA, city: バルセロナ, period: 2024-2026 }
+    - { name: ART SCOPE, city: マイアミ, period: 2021-2022 }
+    - { name: Salon ART SHOPPING, city: パリ, since: 2018 }
+    - { name: 台北國際動漫節, city: 台北, period: 2018 }
+    - { name: 深圳国際文化博覧会, city: 深セン, period: 2017 }
+
+  # 公的機関からの受託実績（＝公募案件の実績要件を満たす根拠）
+  public_sector_contracts:
+    - { client: 公益財団法人東京都中小企業振興公社, project: 令和7年度「東京手仕事」MAISON & OBJET PARIS 2025 出展及びポップアップストア運営, year: 2025, amount_jpy: 40986000, note: 入札書記載額（税込） }
+    - { client: 公益財団法人東京都中小企業振興公社, project: 令和4~5年度「東京手仕事」ジャパンエキスポ・パビリオン WABI SABI 出展委託, year: 2022-2023 }
+    - { client: 公益財団法人東京都中小企業振興公社, project: 令和4年度「東京手仕事」WORLD ART DUBAI 2023 JAPAN ZONE 出展委託, year: 2022 }
+    - { client: 熊本県庁, project: パリ JAPAN EXPO 出展／ステージ出演, year: 2016-2024 }
+    - { client: 東京都・JOC, project: 東京2020 仏国プロモーション事業, year: 2019 }
+    - { client: 岩手県庁, project: 伝統工芸品の仏国でのテスト販売事業, year: 2019 }
+    - { client: 九州経済連合会, project: ラグビーW杯 欧州プロモーション事業, year: 2018 }
+    - { client: 経済産業省, project: クールジャパンの芽事業「COOL JAPAN WORLD TRIAL」アメリカ事業, year: 2013 }
+    - { client: 映像産業振興機構(VIPO), project: J-LOP事業 パリJAPAN EXPO コンテンツプロモーション, year: 2016-2018 }
+
+# 実績ベースの受注可能規模。落札実績 4,098万円 が上限側の実測値。
+contract_size:
+  demonstrated_max_jpy: 40986000   # status: confirmed [B]
+  preferred_min_jpy: null          # status: unconfirmed
+  preferred_max_jpy: null          # status: unconfirmed
+
+overseas_presence:
+  - { country: フランス, city: パリ, note: 在住社員2名（制作局 運営管理課長・編集課長） }
+
+# --- 検索対象範囲（ユーザー確認済み）---
+search_scope:
+  categories: [補助金, 企画競争, 企画提案, プロポーザル]
+  issuers: 全国・全発注元
