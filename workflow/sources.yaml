@@ -1,34 +1,200 @@
 # 巡回対象の情報源
 #
-# 【重要】クラウド環境のネットワークアクセスが Trusted のままだと、
-# ここに挙げた全サイトが egress プロキシで遮断される（検証済み・403）。
-# 環境設定の「許可されたドメイン」に network_allowlist の7行を登録すること。
+# ネットワーク設定：**Full（全ドメイン許可）** を採用（2026-08-19 決定）。
+# 公募情報のドメイン空間は予測不能であることがDNS実測で判明したため
+# （末尾の domain_survey を参照）、許可リスト方式は採らない。
+#
+# 巡回先は「ドメインを列挙できるか」とは別問題として、組織カテゴリで網羅する。
 
-network_allowlist:
-  # 2026-08-19 にDNSで全数検証した結果に基づく。推測ではなく実測。
-  # 検証の詳細と、なぜこの形になったかは下の domain_survey を参照。
-  #
-  # 【重要】公的機関のドメインは統一されていない。特定TLDへの限定は原理的に破綻する。
-  # 下記は「実測で確認できた範囲を漏れなく覆う」ための最小構成であり、
-  # 新しい遮断に遭遇したら都度追記して育てること（runbook 手順0参照）。
-  - "*.jp"              # 国・自治体・協会・公社・大学・補助金事務局の大半
-  - "*.tokyo"           # 地域TLD。tokyoteshigoto.tokyo（東京手仕事公式）、kougei.tokyo
-  - "*.kyoto"           # 地域TLD
-  - "*.osaka"
-  - "*.nagoya"
-  - "*.yokohama"
-  - "*.okinawa"
-  - "*.travel"          # 観光協会・DMO。sapporo.travel、kyoto.travel
-  - "*.info"            # 補助金事務局。kyodokyogyohojokin.info、jizokukahojokin.info、njss.info
-  - "gotokyo.org"       # 東京観光公式
-  - "grants-guide.com"  # 民間の補助金集約（発見の網を広げる用）
-  - "japanpromotion.org"      # 自社HP
-  - "*.japanpromotion.org"
-  - "wabisabistore.net"       # 自社EC
+# =====================================================================
+# 巡回先：組織カテゴリ別
+# =====================================================================
+# 全てを毎週巡回するのは非現実的なため、frequency で頻度を分ける。
+#   every_run : 毎週必ず直接確認する
+#   monthly   : 月1回（第1週）
+#   seasonal  : 公告期（12〜6月）は毎週、端境期（7〜11月）は月1回
+#   websearch : 直接巡回せず WebSearch で拾う（数が多すぎるもの）
 
-# 代替案：上記が煩雑な場合、ネットワークアクセスを Full（全ドメイン）にしてもよい。
-# 公募情報は特定TLDに収まらないため、Full の方が運用上は確実。
-# ただし遮断という安全網は失われる。判断は生島様に委ねる。
+# ---------------------------------------------------------------------
+# A. 御社の事業と直結。最優先
+# ---------------------------------------------------------------------
+tier_a:
+  frequency: every_run
+  orgs:
+    - name: 伝統的工芸品産業振興協会
+      domain: kyokai.kougeihin.jp
+      url: https://kyokai.kougeihin.jp/association_cat/公募公告/
+      note: |
+        最重要。「海外におけるテストマーケティング業務」「海外における実演・
+        ワークショップ業務」など、御社の主力事業とほぼ完全に一致する企画提案募集を
+        毎年4月上旬に公告し5月中旬に締め切る。2027年3月中旬から厳重監視。
+
+    - name: 公益財団法人東京都中小企業振興公社
+      domain: tokyo-kosha.or.jp
+      also: tokyoteshigoto.tokyo   # 「東京手仕事」事業サイト。地域TLD
+      note: 御社の受託実績あり（令和4・5・7年度）。展示会出展助成事業も実施。
+
+    - name: 自治体国際化協会（CLAIR / クレア）
+      domain: clair.or.jp
+      note: |
+        パリ・ロンドン・ニューヨーク・シンガポール・ソウル・北京・シドニーに
+        海外事務所を持ち、自治体の国際化・海外プロモーションを支援する総務省系団体。
+        海外事務所単位で現地イベント・展示会出展の委託を出すことがあり、
+        御社の「自治体の海外展開支援」と最も近い発注元の一つ。**新規開拓の本命。**
+
+    - name: 独立行政法人日本貿易振興機構（JETRO）
+      domain: jetro.go.jp
+      url: https://www.jetro.go.jp/procurement/
+      note: 海外展示会ジャパンパビリオンの運営受託。調達情報ページを確認する。
+
+    - name: 独立行政法人中小企業基盤整備機構（中小機構）
+      domain: smrj.go.jp
+      note: JAPANブランド育成支援等事業、TAKUMI NEXT。受託と営業機会の両面。
+
+    - name: 中小企業庁
+      domain: chusho.meti.go.jp
+      note: 小規模事業者持続化補助金＜共同・協業型＞など。支援機関側で申請できる制度がある。
+
+    - name: 独立行政法人国際交流基金（JF）
+      domain: jpf.go.jp
+      note: 文化芸術の海外発信。助成と受託の両方。海外拠点多数。
+
+# ---------------------------------------------------------------------
+# B. 国の府省庁
+# ---------------------------------------------------------------------
+tier_b_ministries:
+  frequency: monthly
+  orgs:
+    - { name: 経済産業省, domain: meti.go.jp, url: "https://www.meti.go.jp/information_2/publicoffer/", note: "クールジャパン、コンテンツ海外展開促進事業。受託実績あり" }
+    - { name: 文化庁, domain: bunka.go.jp, note: 文化芸術の国際発信・海外展開 }
+    - { name: 観光庁, domain: mlit.go.jp, url: "https://www.mlit.go.jp/kankocho/soshiki/nyusatsukeiyaku/kikakukyoso_jisshikoji.html", note: インバウンド・訪日プロモーション }
+    - { name: 外務省, domain: mofa.go.jp, note: "在外公館文化事業、対外発信。各在外公館は emb-japan.go.jp" }
+    - { name: 農林水産省, domain: maff.go.jp, note: 食文化の海外発信。工芸品と併催の案件あり }
+    - { name: 内閣府 地方創生, domain: chisou.go.jp, note: 地域産品の高付加価値化・海外展開推進のための実証調査事業 }
+    - { name: 総務省, domain: soumu.go.jp, note: CLAIRの所管。地域情報化・国際化 }
+    - { name: 国土交通省, domain: mlit.go.jp, note: 観光庁の親組織 }
+
+  横断検索:
+    - { name: 調達ポータル, domain: p-portal.go.jp, note: 国の調達案件横断。企画競争もここに出る }
+    - { name: jGrants, domain: jgrants-portal.go.jp, note: 国の補助金横断検索 }
+    - { name: 政府電子調達システム GEPS, domain: geps.go.jp, note: 全省庁統一資格の電子申請もここ }
+    - { name: ミラサポplus, domain: mirasapo-plus.go.jp, note: 中小企業向け支援制度の横断 }
+
+# ---------------------------------------------------------------------
+# C. 国の外郭団体・独立行政法人（tier_a 以外）
+# ---------------------------------------------------------------------
+tier_c_national_agencies:
+  frequency: monthly
+  orgs:
+    - { name: 日本政府観光局（JNTO）, domain: jnto.go.jp, note: 訪日プロモーション。海外事務所多数 }
+    - { name: 日本芸術文化振興会, domain: ntj.jac.go.jp, note: 文化芸術活動への助成 }
+    - { name: 映像産業振興機構（VIPO）, domain: vipo.or.jp, note: "J-LOP後継。御社の受託実績あり（2016-2018）" }
+    - { name: 日本デザイン振興会, domain: jdp.or.jp, note: グッドデザイン賞。デザイン系の海外発信事業 }
+    - { name: 国際協力機構（JICA）, domain: jica.go.jp, note: 開発途上国向け。文化交流案件が稀にある }
+    - { name: ユニジャパン, domain: unijapan.org, note: "映画・コンテンツの海外展開。.org に注意" }
+    - { name: 海外産業人材育成協会（AOTS）, domain: aots.jp, note: "人材育成。.jp 直下" }
+    - { name: 日本貿易保険（NEXI）, domain: nexi.go.jp, note: 優先度低 }
+    - { name: NEDO, domain: nedo.go.jp, note: 技術開発中心。優先度低 }
+    - { name: クールジャパン機構, domain: cj-fund.co.jp, note: "出資機関。.co.jp に注意" }
+
+# ---------------------------------------------------------------------
+# D. 商工会議所・商工会・中央会（全国および都道府県）
+# ---------------------------------------------------------------------
+tier_d_chambers:
+  frequency: seasonal
+  note: |
+    海外展示会出展の共同事業、販路開拓支援事業の委託先を公募することがある。
+    数が多いため、全国組織を直接巡回し、地方組織は WebSearch で拾う。
+  national:
+    - { name: 日本商工会議所, domain: jcci.or.jp }
+    - { name: 全国商工会連合会, domain: shokokai.or.jp }
+    - { name: 全国中小企業団体中央会, domain: chuokai.or.jp }
+  major_local:
+    - { name: 東京商工会議所, domain: tokyo-cci.or.jp }
+    - { name: 大阪商工会議所, domain: osaka.cci.or.jp }
+    - { name: 名古屋商工会議所, domain: nagoya-cci.or.jp }
+    - { name: 神戸商工会議所, domain: kobe-cci.or.jp }
+    - { name: 京都商工会議所, domain: kyo.or.jp }
+  pattern: |
+    地方の商工会議所は「XXX-cci.or.jp」または「XXX.cci.or.jp」が多いが例外も多い
+    （京都商工会議所は kyo.or.jp）。列挙せず WebSearch で拾う。
+
+# ---------------------------------------------------------------------
+# E. 都道府県の産業振興外郭団体（中小企業振興公社・産業振興財団など）
+# ---------------------------------------------------------------------
+tier_e_prefectural_agencies:
+  frequency: seasonal
+  note: |
+    **ここが最も見落としやすい発注元。** 都道府県本体ではなく外郭団体が
+    海外展示会出展事業の運営委託を出すケースが多い。御社の受注実績である
+    東京都中小企業振興公社がまさにこの類型。47都道府県すべてに同種団体がある。
+    名称もドメインもバラバラで規則性がないため、WebSearch を主とし、
+    確認できたものを下に追記して育てる。
+  verified:
+    - { pref: 東京, name: 東京都中小企業振興公社, domain: tokyo-kosha.or.jp, note: 受注実績あり }
+    - { pref: 石川, name: 石川県産業創出支援機構（ISICO）, domain: isico.or.jp }
+    - { pref: 千葉, name: 千葉県産業振興センター, domain: ccjc-net.or.jp }
+    - { pref: 静岡, name: 静岡県国際経済振興会（SIBA）, domain: siba.or.jp }
+    - { pref: 京都, name: 京都産業21, domain: ki21.jp }
+    - { pref: 神奈川, name: 神奈川産業振興センター, domain: kipc.or.jp }
+    - { pref: 埼玉, name: 埼玉県産業振興公社, domain: saitama-j.or.jp }
+    - { pref: 愛知, name: あいち産業振興機構, domain: aibsc.jp }
+    - { pref: 北海道, name: 北海道中小企業総合支援センター, domain: hsc.or.jp }
+    - { pref: 福岡, name: 福岡県中小企業振興センター, domain: joho-fukuoka.or.jp }
+    - { pref: 大阪, name: 大阪産業局, domain: obda.or.jp }
+  todo: |
+    残り36県は未調査。次回以降、WebSearch で「◯◯県 中小企業振興公社 海外展示会 公募」
+    の形で確認し、判明したものをここに追記する。
+    兵庫県産業活性化センター（hyogo-iic.ne.jp）はDNS未解決。要再調査。
+
+# ---------------------------------------------------------------------
+# F. 自治体（都道府県・市区町村）
+# ---------------------------------------------------------------------
+tier_f_municipalities:
+  frequency: seasonal
+  priority_prefectures:   # 受注実績・関係のある県。公告期は直接巡回
+    - { name: 東京都, domain: metro.tokyo.lg.jp, note: 東京2020仏国プロモーション実績 }
+    - { name: 熊本県, domain: pref.kumamoto.jp, note: "2016-2024 パリJAPAN EXPO出展（lg.jp 無し）" }
+    - { name: 岩手県, domain: pref.iwate.jp, note: "2019 伝統工芸品の仏国テスト販売（lg.jp 無し）" }
+    - { name: 山形県, domain: pref.yamagata.jp, note: "Drive上に費用試算資料あり（lg.jp 無し）" }
+    - { name: 京都府, domain: pref.kyoto.jp, note: "Precious Kyoto でMaison&Objet出展の前例（lg.jp 無し）" }
+    - { name: 富山県, domain: pref.toyama.jp, note: シンガポールNATAS出展事業の公募実績 }
+    - { name: 愛媛県, domain: pref.ehime.jp, note: 海外富裕層向けコンテンツ造成事業の公募実績 }
+  designated_cities: |
+    政令指定都市20市＋中核市＋東京23区は、シティプロモーション・海外プロモーション・
+    姉妹都市交流事業の公募を出す。ドメインに規則性がないため WebSearch で拾う。
+    実例：川崎市（city.kawasaki.jp）、国立市（city.kunitachi.tokyo.jp）、
+    相模原市（city.sagamihara.kanagawa.jp）、足立区（city.adachi.tokyo.jp）
+  strategy: websearch_first
+
+# ---------------------------------------------------------------------
+# G. 観光協会・DMO・文化財団
+# ---------------------------------------------------------------------
+tier_g_tourism_culture:
+  frequency: seasonal
+  orgs:
+    - { name: 札幌観光協会, domain: association.sapporo.travel, note: "北米市場向けプロモーション業務の公募実績。.travel" }
+    - { name: 京都市観光協会, domain: kyoto.travel, note: ".travel" }
+    - { name: 北海道観光振興機構, domain: visit-hokkaido.jp, note: 大規模イベント出展事業の公募実績 }
+    - { name: 東京観光財団（TCVB）, domain: tcvb.or.jp }
+    - { name: 東京観光公式, domain: gotokyo.org, note: ".org" }
+    - { name: アーツカウンシル東京, domain: artscouncil-tokyo.jp }
+    - { name: 東京都歴史文化財団, domain: rekibun.or.jp }
+    - { name: 東京都エリアマネジメント関連, domain: areatokyo.or.jp, note: 海外旅行博・商談会出展の企画提案募集実績 }
+    - { name: 日本旅行業協会（JATA）, domain: jata-net.or.jp }
+
+# ---------------------------------------------------------------------
+# H. 民間の集約サイト（発見の網を広げる補助手段）
+# ---------------------------------------------------------------------
+tier_h_aggregators:
+  frequency: monthly
+  note: 一次情報ではないため、ここで見つけたものは必ず発注元の原典を確認する。
+  orgs:
+    - { name: NJSS, domain: njss.info, note: 入札情報の集約。有料 }
+    - { name: 補助金ポータル, domain: hojyokin-portal.jp }
+    - { name: スマート補助金, domain: smart-hojokin.jp }
+    - { name: 補助金ガイド, domain: grants-guide.com }
+    - { name: J-Net21, domain: j-net21.smrj.go.jp, note: 中小機構運営。支援情報ヘッドライン }
 
 # =====================================================================
 # ドメイン実測調査（2026-08-19、DNS解決による全数検証）
