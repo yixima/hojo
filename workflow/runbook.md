@@ -4,7 +4,9 @@
 定期実行された新しいセッションは会話履歴を持たないため、**この文書だけを読めば
 実行できる**ように書いてある。
 
-## 前提の確認（最初に必ず行う）
+## 手順0：ネットワーク到達性の確認と、許可ドメインの育成
+
+### 前提の確認（最初に必ず行う）
 
 ```bash
 curl -sS -o /dev/null -w "%{http_code}\n" --max-time 15 https://www.jgrants-portal.go.jp/
@@ -16,8 +18,22 @@ curl -sS -o /dev/null -w "%{http_code}\n" --max-time 15 https://www.jgrants-port
 
 解消するには、claude.ai/code の環境セレクタ（メッセージ入力欄の上の雲アイコン）から
 ネットワークアクセスを `Custom` にし、`workflow/sources.yaml` の
-`network_allowlist` の7行を「許可されたドメイン」に登録する。
+`network_allowlist` を「許可されたドメイン」に登録する。
 「一般的なパッケージマネージャーのデフォルトリストも含める」のチェックは必ずオンにする。
+
+### 遮断に遭遇したら記録する（重要）
+
+公的機関のドメインは統一されていない（`sources.yaml` の `domain_survey` を参照）。
+許可リストは完璧にはならないので、**巡回中に `EGRESS_BLOCKED` に遭遇したら、
+そのドメインを必ず記録し、レポート末尾の「追加すべき許可ドメイン」に列挙する。**
+
+ドメインの存在確認はHTTPが通らなくてもDNSで可能：
+
+```bash
+getent hosts www.example.lg.jp && echo 実在 || echo 不明
+```
+
+この積み重ねで許可リストを育てる。放置すると、その発注機関の案件は永久に拾えない。
 
 ---
 

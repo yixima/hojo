@@ -5,14 +5,91 @@
 # 環境設定の「許可されたドメイン」に network_allowlist の7行を登録すること。
 
 network_allowlist:
-  # この7行で日本の公的機関のほぼ全てを網羅できる
-  - "*.go.jp"          # 国の機関すべて（省庁・独法・jGrants・調達ポータル）
-  - "*.lg.jp"          # 地方自治体すべて
-  - "*.or.jp"          # 公益法人・協会・経済団体
-  - "kougeihin.jp"     # 伝統的工芸品産業振興協会（.or.jp ではないため個別指定）
-  - "*.kougeihin.jp"
-  - "japanpromotion.org"    # 自社HP（実績値の更新用）
+  # 2026-08-19 にDNSで全数検証した結果に基づく。推測ではなく実測。
+  # 検証の詳細と、なぜこの形になったかは下の domain_survey を参照。
+  #
+  # 【重要】公的機関のドメインは統一されていない。特定TLDへの限定は原理的に破綻する。
+  # 下記は「実測で確認できた範囲を漏れなく覆う」ための最小構成であり、
+  # 新しい遮断に遭遇したら都度追記して育てること（runbook 手順0参照）。
+  - "*.jp"              # 国・自治体・協会・公社・大学・補助金事務局の大半
+  - "*.tokyo"           # 地域TLD。tokyoteshigoto.tokyo（東京手仕事公式）、kougei.tokyo
+  - "*.kyoto"           # 地域TLD
+  - "*.osaka"
+  - "*.nagoya"
+  - "*.yokohama"
+  - "*.okinawa"
+  - "*.travel"          # 観光協会・DMO。sapporo.travel、kyoto.travel
+  - "*.info"            # 補助金事務局。kyodokyogyohojokin.info、jizokukahojokin.info、njss.info
+  - "gotokyo.org"       # 東京観光公式
+  - "grants-guide.com"  # 民間の補助金集約（発見の網を広げる用）
+  - "japanpromotion.org"      # 自社HP
   - "*.japanpromotion.org"
+  - "wabisabistore.net"       # 自社EC
+
+# 代替案：上記が煩雑な場合、ネットワークアクセスを Full（全ドメイン）にしてもよい。
+# 公募情報は特定TLDに収まらないため、Full の方が運用上は確実。
+# ただし遮断という安全網は失われる。判断は生島様に委ねる。
+
+# =====================================================================
+# ドメイン実測調査（2026-08-19、DNS解決による全数検証）
+# =====================================================================
+domain_survey:
+  method: getent hosts による名前解決。HTTPは遮断されているためDNSで存在を確認した。
+
+  prefectures:
+    summary: |
+      47都道府県のうち、pref.X.lg.jp を持たない県が14ある。
+      「*.lg.jp」だけを許可すると、この14県を丸ごと取りこぼす。
+      御社の実績先である熊本県・岩手県・山形県・京都府がいずれも該当する。
+    only_pref_x_jp:      # lg.jp が存在しない14県 ← *.lg.jp では拾えない
+      [岩手, 宮城, 山形, 茨城, 群馬, 山梨, 静岡, 愛知, 京都, 岡山, 愛媛, 熊本, 大分, 鹿児島]
+    only_pref_x_lg_jp:   # 19道府県
+      [北海道, 青森, 千葉, 新潟, 福井, 長野, 岐阜, 三重, 滋賀, 大阪, 和歌山, 島根, 山口, 徳島, 香川, 高知, 福岡, 佐賀, 宮崎]
+    both:                # 12県
+      [秋田, 福島, 栃木, 埼玉, 神奈川, 富山, 石川, 奈良, 鳥取, 広島, 長崎, 沖縄]
+    irregular:
+      東京都: www.metro.tokyo.lg.jp    # pref ではなく metro
+      兵庫県: web.pref.hyogo.lg.jp     # www ではなく web
+
+  municipalities:
+    summary: |
+      政令指定都市20市を検証したところ、3パターンが混在し規則性がない。
+      1,700超の市区町村を列挙するのは不可能。
+    pattern_city_x_lg_jp: [さいたま, 千葉, 横浜, 新潟, 静岡, 京都, 大阪, 堺, 神戸, 広島, 北九州, 福岡]
+    pattern_city_x_jp:    [札幌, 仙台, 川崎, 名古屋, 岡山, 熊本]
+    pattern_city_x_pref_jp:
+      相模原: www.city.sagamihara.kanagawa.jp   # lg.jp も city.X.jp も無い
+      浜松:   www.city.hamamatsu.shizuoka.jp    # 同上
+    tokyo_wards: |
+      23区も混在。千代田区・江東区は両方、港区・渋谷区・足立区・大田区・練馬区は
+      city.X.tokyo.jp のみ、中央区・新宿区・世田谷区は city.X.lg.jp のみ。
+
+  non_jp_tlds:
+    summary: 公的な公募情報が .jp 以外に置かれている実例。ここが最大の盲点だった。
+    verified:
+      - { domain: tokyoteshigoto.tokyo, note: "「東京手仕事」公式サイト。御社の主力受注先の事業ブランド" }
+      - { domain: kougei.tokyo,         note: 東京の工芸関連 }
+      - { domain: gotokyo.org,          note: 東京観光公式 }
+      - { domain: kyoto.travel,         note: 京都市観光協会 }
+      - { domain: association.sapporo.travel, note: 札幌観光協会。北米市場向けプロモーション業務の公募実績あり }
+      - { domain: yokohamajapan.com,    note: 横浜観光 }
+      - { domain: r6.kyodokyogyohojokin.info, note: 小規模事業者持続化補助金＜共同・協業型＞事務局 }
+      - { domain: jizokukahojokin.info, note: 小規模事業者持続化補助金 事務局 }
+      - { domain: njss.info,            note: NJSS。民間の入札情報集約サービス }
+      - { domain: wabisabistore.net,    note: 御社の越境EC }
+    caution: |
+      補助金事務局のドメインは年度ごとに変わる（r6→r7 など）。
+      また新制度ができるたびに新ドメインが立つため、事前列挙は不可能。
+      *.info をまとめて許可しておくのが現実的。
+
+  qualification_sites:
+    summary: 全省庁統一資格（申請中）に直結するサイト
+    verified:
+      - { domain: www.geps.go.jp, note: 政府電子調達システム。統一資格の電子申請はここ }
+      - { domain: www.p-portal.go.jp, note: 調達ポータル }
+      - { domain: www.jgrants-portal.go.jp, note: jGrants }
+    not_resolved:
+      - { domain: www.chotatujouhou.go.jp, note: "統一資格審査申請・調達情報検索サイト。名前解決せず。URLが変わった可能性あり、要再調査" }
 
 # --- 優先度A：御社の事業と直結。毎回必ず確認する ---
 tier_a:
