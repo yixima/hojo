@@ -34,7 +34,24 @@ qualifications:
     # 判定方針: 国の案件は「資格取得後なら応募可」として別枠で提示する。
     # 申請中のため、公告日ではなく「入札参加資格審査申請の受付が随時か」を確認して拾う。
   tokyo_metropolitan: null         # status: unconfirmed  東京都の入札参加資格
+    # 【2026-08-19 判明】東京都中小企業振興公社の委託案件では**不要**。
+    # 同公社「契約のお知らせ」の選定制限は5項目のみ（法令上の許可／経営状態／
+    # 営業経歴1年以上／指名停止／社会的信用）で、資格登録の要求はない。
+    # 応募は「ビジネスチャンス・ナビ」（無料登録）経由。
+    # 東京都本体の案件については引き続き未確認。
   invoice_registered: null         # status: unconfirmed
+
+  # --- 2026-08-19 追加。JETRO ベオグラード博 日本館運営（入札）の必須要件 ---
+  privacy_mark: null               # status: unconfirmed  プライバシーマーク
+  isms: null                       # status: unconfirmed  ISMS認証（ISO/IEC 27001）
+    # JETRO の入札では「Pマーク または ISMS のいずれか」が参加必須要件。
+    # 未保有の場合、要件を満たす法人を主幹事とする共同企業体でしか参加できない。
+    # 提案書記載の情報セキュリティ体制（UTM / Defender+Kaspersky / アクセス制限規程）は
+    # 認証とは別物であり、この要件は充足しない。
+  gbizid_prime: null               # status: unconfirmed  GビズIDプライムアカウント
+    # Jグランツ電子申請（持続化補助金＜共同・協業型＞等）に必須。取得に数週間。
+    # 暫定GビズIDプライムアカウントは使用不可。
+  chancenavi_registered: null      # status: unconfirmed  ビジネスチャンス・ナビ登録
 
 # --- 事業ドメイン（検索キーワード辞書の元データ）---
 domains:
@@ -81,7 +98,7 @@ track_record:
     wabisabi_cumulative_exhibitors: 1214
     wabisabi_area_sqm: 1500
     wabisabi_cumulative_visitors: 110000
-    todo: HP実績セクションの原文を入手し、scale: を最新値へ更新する
+    todo: "HP実績セクションの原文を入手し、scale: を最新値へ更新する"
 
   flagship_events:
     - { name: JAPAN EXPO パビリオン WABI SABI, city: パリ, since: 2011, type: 日本フェスティバル }

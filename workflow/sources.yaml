@@ -5,6 +5,15 @@
 # （末尾の domain_survey を参照）、許可リスト方式は採らない。
 #
 # 巡回先は「ドメインを列挙できるか」とは別問題として、組織カテゴリで網羅する。
+#
+# 【2026-08-19 第2回巡回で判明・重要】
+# 巡回時は必ずブラウザ相当の User-Agent を付けること。
+#   curl -A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
+#            (KHTML, like Gecko) Chrome/128.0 Safari/537.36'
+# www.chusho.meti.go.jp と www.meti.go.jp は CloudFront の UA フィルタにより、
+# curl のデフォルト UA では 403 を返す。ブラウザ相当の UA なら 200。
+# これはネットワークポリシーの問題ではない。第1回巡回で経産省系が読めなかった
+# 原因はこれだった可能性が高い。
 
 # =====================================================================
 # 巡回先：組織カテゴリ別
@@ -32,7 +41,18 @@ tier_a:
     - name: 公益財団法人東京都中小企業振興公社
       domain: tokyo-kosha.or.jp
       also: tokyoteshigoto.tokyo   # 「東京手仕事」事業サイト。地域TLD
-      note: 御社の受託実績あり（令和4・5・7年度）。展示会出展助成事業も実施。
+      note: |
+        御社の受託実績あり（令和4・5・7年度）。展示会出展助成事業も実施。
+        【2026-08-19 確認】**tier_a で最も打率が高い発注元。**
+        契約情報は https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html に一覧があり、
+        件名・公表日・希望申出期間・受付状況が表で読める（ログイン不要）。
+        応募は「ビジネスチャンス・ナビ」（https://www.chancenavi.jp/bcn/、登録無料）経由。
+        **東京都の入札参加資格は不要。** 選定の制限は5項目のみ（法令上の許可、経営状態、
+        営業経歴1年以上、指名停止、社会的信用）。
+        令和8年度は海外関連業務を年間を通じて発注している（Tokyo SMEサポートデスク インド、
+        海外ビジネス・チャレンジ塾、ベトナム現地商談会、タイ／ベトナム現地幹部人材育成講座、
+        Food Japan 2026、海外企業とのイノベーション創出支援事業（マレーシア）等）。
+        端境期でも案件が出るため、7〜11月も毎週確認する価値がある。
 
     - name: 自治体国際化協会（CLAIR / クレア）
       domain: clair.or.jp
@@ -41,11 +61,31 @@ tier_a:
         海外事務所を持ち、自治体の国際化・海外プロモーションを支援する総務省系団体。
         海外事務所単位で現地イベント・展示会出展の委託を出すことがあり、
         御社の「自治体の海外展開支援」と最も近い発注元の一つ。**新規開拓の本命。**
+        【2026-08-19 確認】**調達・入札の専用ページは存在しない。** 公募は
+        トップページの新着情報に混ざって出る（JETプログラム関連は jetprogramme.org 側）。
+        巡回は https://www.clair.or.jp/ と https://www.clair.or.jp/index-news.html を見る。
+        助成事業（多文化共生／国際交流支援／自治体国際協力促進／経済活動助成）は
+        すべて地方自治体等が対象で、御社は直接応募できない。ただし自治体が受給し
+        御社が執行を受託する構図は成立する。
+        営業導線として次の2つが有効：
+          - プロモーションアドバイザー制度（海外プロモーション専門家を自治体に紹介）
+            交流支援部経済交流課 keishin@clair.or.jp / 03-5213-1726
+          - 海外活動支援（自治体の海外での販路拡大・観光PRを海外事務所が支援）
+            総務部企画調査課 kikaku@clair.or.jp / 03-5213-1722
 
     - name: 独立行政法人日本貿易振興機構（JETRO）
       domain: jetro.go.jp
       url: https://www.jetro.go.jp/procurement/
-      note: 海外展示会ジャパンパビリオンの運営受託。調達情報ページを確認する。
+      note: |
+        海外展示会ジャパンパビリオンの運営受託。
+        **入札情報と公募情報がページ分離されているため、毎回両方を見ること。**
+          入札情報: https://www.jetro.go.jp/procurement/bid.html
+          公募情報: https://www.jetro.go.jp/procurement/publicoffer.html
+        海外展開支援部 国際博覧会課（Tel 03-3582-4688 / ODE@jetro.go.jp）は
+        国際博覧会の日本館業務を「総合プロデュース」「行催事」「運営」「設計・監理」に
+        分割発注する。2026-08-19時点でベオグラード博の行催事（限度額3.27億円）と
+        運営が公告中。**公募形式は全省庁統一資格が不要な場合がある**（行催事業務が実例）。
+        入札形式でも「JETRO発行の等級確認結果通知書」で統一資格を代替できる制度がある。
 
     - name: 独立行政法人中小企業基盤整備機構（中小機構）
       domain: smrj.go.jp
@@ -53,7 +93,18 @@ tier_a:
 
     - name: 中小企業庁
       domain: chusho.meti.go.jp
-      note: 小規模事業者持続化補助金＜共同・協業型＞など。支援機関側で申請できる制度がある。
+      note: |
+        小規模事業者持続化補助金＜共同・協業型＞など。支援機関側で申請できる制度がある。
+        【2026-08-19 確認】巡回先は3ページに分かれている。
+          補助金: https://www.chusho.meti.go.jp/koukai/hojyokin/kobo.html
+          委託事業: https://www.chusho.meti.go.jp/koukai/itaku/index.html
+          入札・その他: https://www.chusho.meti.go.jp/koukai/nyusatsu/index.html
+        **ブラウザ相当の User-Agent が必須**（冒頭の注記を参照）。
+        ＜共同・協業型＞以外の補助金（新事業進出、省力化投資、持続化の一般型・創業型・
+        災害支援枠、ものづくり等）は中小企業者・小規模事業者本人が対象で、
+        一般社団法人は申請できない。
+        ＜共同・協業型＞は一般社団法人が「地域振興等機関」として申請できる。
+        詳細は reports/kobo_report_20260819b.md の論点①〜③を参照。
 
     - name: 独立行政法人国際交流基金（JF）
       domain: jpf.go.jp
@@ -247,6 +298,19 @@ domain_survey:
       補助金事務局のドメインは年度ごとに変わる（r6→r7 など）。
       また新制度ができるたびに新ドメインが立つため、事前列挙は不可能。
       *.info をまとめて許可しておくのが現実的。
+
+  blocked_domains:
+    summary: |
+      2026-08-19 の巡回で egress ポリシーにより CONNECT が拒否された（502）ドメイン。
+      許可リストへの追加を検討する。プロキシの recentRelayFailures で確認できる：
+        curl -sS "$HTTPS_PROXY/__agentproxy/status"
+    verified:
+      - { domain: www.kougei.or.jp, note: "日本工芸会系。伝産協会は kyokai.kougeihin.jp で到達可のため実害は小" }
+      - { domain: www.mirasapo-plus.go.jp, note: "中小企業支援制度の横断検索。月次巡回で必要。追加推奨" }
+      - { domain: s-hojokin.jp, note: "省力化投資補助金事務局。優先度低" }
+    not_blocked_but_403:
+      - { domain: www.chusho.meti.go.jp, note: "UAフィルタ。ブラウザ相当UAで200" }
+      - { domain: www.meti.go.jp, note: "同上" }
 
   qualification_sites:
     summary: 全省庁統一資格（申請中）に直結するサイト
