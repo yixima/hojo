@@ -1,0 +1,347 @@
+<title>公募案件リスト 2026.08.19</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --bg:#F1F3F6; --surface:#FFFFFF; --surface-2:#E8ECF2; --surface-3:#DDE3EB;
+  --ink:#14202E; --ink-2:#43505F; --ink-3:#6B7887;
+  --rule:#D3D9E1; --rule-strong:#A9B4C1;
+  --indigo:#1E4A7B; --indigo-deep:#14304F; --indigo-tint:#E2EAF3; --on-indigo:#FFFFFF;
+  --vermillion:#BE3A2B; --vermillion-tint:#FAE6E3;
+  --mustard:#8E6A16; --mustard-tint:#F5EEDA;
+  --celadon:#2C6D5E; --celadon-tint:#DFEDE8;
+  --shadow:0 1px 2px rgba(20,32,46,.06), 0 6px 18px -10px rgba(20,32,46,.18);
+  --serif:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E151E; --surface:#16202C; --surface-2:#1E2A38; --surface-3:#263444;
+    --ink:#E4E9EF; --ink-2:#AEBAC7; --ink-3:#7D8A99;
+    --rule:#2A3846; --rule-strong:#425263;
+    --indigo:#84B4E3; --indigo-deep:#AECDEE; --indigo-tint:#17293C; --on-indigo:#0E151E;
+    --vermillion:#EC8172; --vermillion-tint:#35211E;
+    --mustard:#DCB35C; --mustard-tint:#2E2717;
+    --celadon:#74C0AA; --celadon-tint:#162B26;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E151E; --surface:#16202C; --surface-2:#1E2A38; --surface-3:#263444;
+  --ink:#E4E9EF; --ink-2:#AEBAC7; --ink-3:#7D8A99;
+  --rule:#2A3846; --rule-strong:#425263;
+  --indigo:#84B4E3; --indigo-deep:#AECDEE; --indigo-tint:#17293C; --on-indigo:#0E151E;
+  --vermillion:#EC8172; --vermillion-tint:#35211E;
+  --mustard:#DCB35C; --mustard-tint:#2E2717;
+  --celadon:#74C0AA; --celadon-tint:#162B26;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -12px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+  font-size:15.5px; line-height:1.8; font-feature-settings:"palt" 1}
+:focus-visible{outline:2px solid var(--vermillion); outline-offset:2px; border-radius:2px}
+.wrap{max-width:74rem; margin-inline:auto; padding:0 clamp(1rem,3.5vw,2rem) 5rem}
+
+/* masthead */
+header.top{padding:clamp(2rem,5vw,3.4rem) 0 0}
+.rule-double{border:0; border-top:3px solid var(--indigo-deep); border-bottom:1px solid var(--indigo-deep); height:4px; margin:0 0 1.3rem}
+.eyebrow{font-family:var(--mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-3); display:flex; flex-wrap:wrap; gap:.3rem 1.1rem}
+h1{font-family:var(--serif); font-weight:700; font-size:clamp(1.6rem,4.4vw,2.35rem);
+  line-height:1.35; margin:.6rem 0 .3rem; text-wrap:balance}
+.sub{color:var(--ink-2); font-size:.92rem; margin:0 0 1.4rem; max-width:44rem}
+.sub a{color:var(--indigo); text-underline-offset:3px}
+.sub a:hover{color:var(--vermillion)}
+
+/* summary tiles */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr)); gap:.7rem; margin:0 0 1.6rem}
+.tile{background:var(--surface); border:1px solid var(--rule); border-top:3px solid var(--rule-strong);
+  border-radius:3px; padding:.75rem .9rem; box-shadow:var(--shadow)}
+.tile.t-crit{border-top-color:var(--vermillion)}
+.tile.t-go{border-top-color:var(--celadon)}
+.tile.t-warn{border-top-color:var(--mustard)}
+.tile.t-info{border-top-color:var(--indigo)}
+.tile .k{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; color:var(--ink-3); display:block}
+.tile .v{font-family:var(--mono); font-size:1.5rem; font-weight:500; line-height:1.3; font-variant-numeric:tabular-nums; display:block}
+.tile .u{font-size:.72rem; color:var(--ink-3)}
+.t-crit .v{color:var(--vermillion)} .t-go .v{color:var(--celadon)}
+.t-warn .v{color:var(--mustard)} .t-info .v{color:var(--indigo)}
+
+/* controls */
+.controls{display:flex; flex-wrap:wrap; gap:.5rem .4rem; align-items:center;
+  padding:.75rem 0 1rem; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); margin-bottom:1.2rem}
+.ctl-label{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; color:var(--ink-3); margin-right:.3rem}
+.chip{font-family:var(--sans); font-size:.8rem; padding:.28rem .8rem; border-radius:999px;
+  border:1px solid var(--rule-strong); background:var(--surface); color:var(--ink-2);
+  cursor:pointer; line-height:1.5; transition:background .12s, color .12s, border-color .12s}
+.chip:hover{border-color:var(--indigo); color:var(--indigo)}
+.chip[aria-pressed="true"]{background:var(--indigo); border-color:var(--indigo); color:var(--on-indigo); font-weight:700}
+.chip .c{font-family:var(--mono); font-size:.7rem; opacity:.75; margin-left:.35rem}
+.spacer{flex:1 1 2rem}
+
+/* table */
+.tscroll{overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; min-width:60rem; font-size:.83rem; line-height:1.6}
+thead th{background:var(--surface-2); color:var(--ink-2); font-size:.7rem; font-weight:700;
+  letter-spacing:.06em; text-align:left; padding:.6rem .7rem; white-space:nowrap;
+  border-bottom:1px solid var(--rule-strong); position:sticky; top:0; z-index:2}
+thead th.sortable{cursor:pointer; user-select:none}
+thead th.sortable:hover{color:var(--indigo)}
+thead th .arw{font-family:var(--mono); font-size:.65rem; opacity:.45; margin-left:.2rem}
+thead th[aria-sort] .arw{opacity:1; color:var(--vermillion)}
+tbody td{padding:.65rem .7rem; vertical-align:top; border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr{border-left:4px solid transparent}
+tbody tr.u-crit{border-left-color:var(--vermillion)}
+tbody tr.u-warn{border-left-color:var(--mustard)}
+tbody tr.u-ok{border-left-color:var(--celadon)}
+tbody tr:hover td{background:var(--surface-2)}
+td.mono,th.mono{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+.rank{font-family:var(--mono); font-weight:500; font-size:.72rem; letter-spacing:.08em;
+  padding:.1rem .45rem; border-radius:2px; border:1px solid currentColor; display:inline-block}
+.rank-S{color:var(--vermillion); background:var(--vermillion-tint)}
+.rank-A{color:var(--indigo); background:var(--indigo-tint)}
+.rank-B{color:var(--ink-2)}
+.rank-C{color:var(--ink-3)}
+
+.name{font-weight:500; color:var(--ink); text-decoration:none; display:block; max-width:22rem; line-height:1.55}
+.name:hover{color:var(--vermillion); text-decoration:underline; text-underline-offset:3px}
+.name .arrow{font-family:var(--mono); font-size:.7rem; color:var(--ink-3); margin-left:.25rem}
+.kind{display:inline-block; margin-top:.25rem; font-size:.68rem; letter-spacing:.04em;
+  padding:.05rem .4rem; border-radius:2px; background:var(--surface-3); color:var(--ink-2)}
+.org{color:var(--ink-2); max-width:11rem; display:block; line-height:1.5}
+
+.amt{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; display:block}
+.conf{font-size:.68rem; color:var(--ink-3); white-space:nowrap; display:block}
+.conf.fixed{color:var(--celadon)} .conf.est{color:var(--mustard)}
+
+.days{font-family:var(--mono); font-size:.68rem; padding:.05rem .4rem; border-radius:2px;
+  display:inline-block; margin-top:.2rem; font-variant-numeric:tabular-nums}
+.d-crit{background:var(--vermillion-tint); color:var(--vermillion); font-weight:500}
+.d-warn{background:var(--mustard-tint); color:var(--mustard); font-weight:500}
+.d-ok{background:var(--celadon-tint); color:var(--celadon)}
+
+.act{display:block; font-size:.72rem; color:var(--ink-3); line-height:1.5; max-width:12rem}
+.q-req{color:var(--vermillion)} .q-alt{color:var(--mustard)} .q-none{color:var(--ink-3)}
+
+.verd{font-weight:700; font-size:.78rem; white-space:nowrap; display:block}
+.v-go{color:var(--celadon)} .v-check{color:var(--indigo)} .v-note{color:var(--ink-3)}
+.next{display:block; font-size:.72rem; color:var(--ink-2); line-height:1.5; max-width:13rem; margin-top:.15rem}
+
+.empty{padding:2.5rem 1rem; text-align:center; color:var(--ink-3); font-size:.9rem}
+.hidden{display:none}
+
+footer{margin-top:2rem; padding-top:1.2rem; border-top:1px solid var(--rule-strong);
+  font-size:.78rem; color:var(--ink-3)}
+footer p{margin:0 0 .4rem; max-width:52rem}
+footer code{font-family:var(--mono); font-size:.9em; color:var(--ink-2)}
+footer a{color:var(--indigo); text-underline-offset:3px}
+.legend{display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; margin:.6rem 0 1rem; font-size:.74rem; color:var(--ink-3)}
+.legend b{font-weight:500; color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <hr class="rule-double">
+  <div class="eyebrow"><span>公募・企画競争 探索ワークフロー</span><span>案件リスト</span><span>2026.08.19</span></div>
+  <h1>公募案件リスト 2026.08.19</h1>
+  <p class="sub">第2回巡回で洗い出した7件。各案件名から<a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">レポート本文の該当節</a>へ飛びます。残日数は<strong>直近アクション期限</strong>で測っています ── 締切ではありません。</p>
+
+  <div class="tiles">
+    <div class="tile t-crit"><span class="k">至急 7日以下</span><span class="v">6</span><span class="u">件</span></div>
+    <div class="tile t-warn"><span class="k">見送り・記録</span><span class="v">3</span><span class="u">件</span></div>
+    <div class="tile t-go"><span class="k">応募推奨</span><span class="v">1</span><span class="u">件</span></div>
+    <div class="tile t-info"><span class="k">要検討</span><span class="v">3</span><span class="u">件</span></div>
+    <div class="tile"><span class="k">金額判明分</span><span class="v">3.57</span><span class="u">億円（2件）</span></div>
+  </div>
+</header>
+
+<div class="controls">
+  <span class="ctl-label">判定</span>
+  <button class="chip" data-filter="all" aria-pressed="true">すべて<span class="c">7</span></button>
+  <button class="chip" data-filter="応募推奨" aria-pressed="false">応募推奨<span class="c">1</span></button>
+  <button class="chip" data-filter="要検討" aria-pressed="false">要検討<span class="c">3</span></button>
+  <button class="chip" data-filter="見送り" aria-pressed="false">見送り・記録<span class="c">3</span></button>
+  <span class="spacer"></span>
+  <button class="chip" id="urgentOnly" aria-pressed="false">至急のみ<span class="c">6</span></button>
+</div>
+
+<div class="tscroll">
+  <table id="cases">
+    <thead>
+      <tr>
+        <th class="sortable" data-key="rank" scope="col">格付<span class="arw">↕</span></th>
+        <th scope="col">案件名 ／ 種別</th>
+        <th scope="col">発注機関</th>
+        <th class="sortable mono" data-key="amt" scope="col">見込み金額<span class="arw">↕</span></th>
+        <th class="sortable mono" data-key="due" scope="col">締切<span class="arw">↕</span></th>
+        <th class="sortable mono" data-key="act" scope="col">直近アクション期限<span class="arw">↕</span></th>
+        <th scope="col">応募形態</th>
+        <th scope="col">資格</th>
+        <th scope="col">判定 ／ 次アクション</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="u-ok" data-verdict="応募推奨" data-urgent="0" data-rank="1" data-amt="30000000" data-due="20260930" data-act="20260824">
+        <td><span class="rank rank-S">S</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s2">小規模事業者持続化補助金＜共同・協業型＞第3回<span class="arrow">↗</span></a><span class="kind">補助金</span></td>
+        <td><span class="org">中小企業庁</span></td>
+        <td><span class="amt">3,000万円</span><span class="conf fixed">◎確定・補助上限</span></td>
+        <td class="mono">2026-09-30<br>17:00<span class="days d-ok">残42日</span></td>
+        <td class="mono">2026-08-24<br><span class="conf">推奨</span><span class="act">GビズIDプライム申請着手／国際輸送費を事務局へ照会</span></td>
+        <td>支援側</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-go">応募推奨</span><span class="next">GビズID着手と参画事業者5〜10者の内諾取得</span></td>
+      </tr>
+
+      <tr class="u-crit" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260908" data-act="20260825">
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s4">「2027年ベオグラード国際博覧会」日本館運営<span class="arrow">↗</span></a><span class="kind">入札・総合評価</span></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">億円規模</span><span class="conf est">△推定・予定価格非公開</span></td>
+        <td class="mono">2026-09-08<br>15:00<span class="days d-warn">残20日</span></td>
+        <td class="mono">2026-08-25<br>09:00<span class="days d-crit">残6日</span><span class="act">入札説明会の参加申込メール</span></td>
+        <td>単独／共同</td>
+        <td><span class="q-alt">要（代替可）</span><span class="act">JETRO等級確認の申請期限 8/26 17:00</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">Pマーク／ISMS の保有確認 → 8/25 説明会申込</span></td>
+      </tr>
+
+      <tr class="u-crit" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260824" data-act="20260824">
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">第70回東京都伝統工芸品展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
+        <td class="mono">2026-08-24<br>14:00<span class="days d-crit">残5日</span></td>
+        <td class="mono">2026-08-24<br>14:00<span class="act">希望申出（締切と同一）</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span><span class="act">ナビ登録は必要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">ナビで仕様書・予定価格を確認し可否判断</span></td>
+      </tr>
+
+      <tr class="u-crit" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260825" data-act="20260825">
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">海外展開シンポジウム 運営等業務委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
+        <td class="mono">2026-08-25<br>14:00<span class="days d-crit">残6日</span></td>
+        <td class="mono">2026-08-25<br>14:00<span class="act">希望申出（締切と同一）</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span><span class="act">ナビ登録は必要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">ナビで仕様書・予定価格を確認し可否判断</span></td>
+      </tr>
+
+      <tr class="u-crit" data-verdict="見送り" data-urgent="1" data-rank="4" data-amt="-1" data-due="20260826" data-act="20260826">
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">創業支援拠点（丸の内・多摩）生成AI映像コンテンツ制作及び鉄道・エリア連動型デジタルプロモーション業務委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
+        <td class="mono">2026-08-26<br>14:00<span class="days d-crit">残7日</span></td>
+        <td class="mono">2026-08-26<br>14:00<span class="act">希望申出（締切と同一）</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-note">記録のみ</span><span class="next">対応不要。海外要素がなく映像制作主体のため参考掲載</span></td>
+      </tr>
+
+      <tr class="u-crit" data-verdict="見送り" data-urgent="1" data-rank="1" data-amt="327000000" data-due="20260821" data-act="20260821">
+        <td><span class="rank rank-S">S</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s3">「2027年ベオグラード国際博覧会」日本館行催事業務<span class="arrow">↗</span></a><span class="kind">企画競争</span></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">3億2,700万円</span><span class="conf fixed">◎確定・委託限度額</span></td>
+        <td class="mono">2026-08-21<br>17:00<span class="days d-crit">残2日</span></td>
+        <td class="mono">2026-08-21<br>17:00<span class="act">提案書10部＋見積書を持参または郵送</span></td>
+        <td>単独／共同</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-note">見送り</span><span class="next">物理的に不可。2027年以降の国際博案件を監視対象に固定</span></td>
+      </tr>
+
+      <tr class="u-crit" data-verdict="見送り" data-urgent="1" data-rank="4" data-amt="-1" data-due="20260820" data-act="20260820">
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s3">JOI 25周年記念事業広報用動画制作業務委託契約<span class="arrow">↗</span></a><span class="kind">企画競争</span></td>
+        <td><span class="org">国際交流基金</span></td>
+        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
+        <td class="mono">2026-08-20<br>12:00<span class="days d-crit">残1日</span></td>
+        <td class="mono">2026-08-20<br>12:00<span class="act">提案書提出</span></td>
+        <td>単独</td>
+        <td><span class="q-req">要（間に合わない）</span><span class="act">全省庁統一資格 A〜D等級</span></td>
+        <td><span class="verd v-note">見送り</span><span class="next">記録のみ。翌年度の同種案件を監視</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+  <p class="empty hidden" id="empty">該当する案件がありません。</p>
+</div>
+
+<div class="legend">
+  <span><b>格付</b> S / A / B / C ── 適合度</span>
+  <span><b>左端の色帯</b> <span style="color:var(--vermillion)">■</span> 至急 7日以下　<span style="color:var(--mustard)">■</span> 要着手 8〜21日　<span style="color:var(--celadon)">■</span> 通常 22日以上。<b>公表された期限のうち最も早いもの</b>で測る</span>
+  <span><b>金額確度</b> ◎確定 ／ △推定 ／ －非公開</span>
+</div>
+
+<footer>
+  <p><strong>この一覧に出ていない12項目</strong>（公告日・事業期間・前提条件・実績要件の充足・懸念・状態・初報日ほか）は <code>data/cases/cases_20260819.csv</code> に入っています。項目の定義は <code>workflow/case-list-schema.md</code>。</p>
+  <p><strong>予定価格が「－非公開」の3件</strong>は東京都中小企業振興公社の案件で、仕様書と予定価格がビジネスチャンス・ナビにログインしないと読めません。金額欄は空欄ではなく「非公開」と明示しています ── 空欄だと「調べていない」と区別がつかないためです。</p>
+  <p>レポート本文 → <a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">第2回 公募巡回レポート</a>　／　ブランチ <code>claude/public-bid-search-workflow-znmhfx</code></p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('#cases tbody tr'));
+  var tbody=document.querySelector('#cases tbody');
+  var empty=document.getElementById('empty');
+  var chips=[].slice.call(document.querySelectorAll('.chip[data-filter]'));
+  var urgentBtn=document.getElementById('urgentOnly');
+  var filter='all';
+
+  function apply(){
+    var shown=0;
+    rows.forEach(function(r){
+      var okV = filter==='all' || r.dataset.verdict===filter;
+      var okU = urgentBtn.getAttribute('aria-pressed')!=='true' || r.dataset.urgent==='1';
+      var vis = okV && okU;
+      r.classList.toggle('hidden', !vis);
+      if(vis) shown++;
+    });
+    empty.classList.toggle('hidden', shown>0);
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      filter=c.dataset.filter;
+      chips.forEach(function(o){o.setAttribute('aria-pressed', String(o===c));});
+      apply();
+    });
+  });
+  urgentBtn.addEventListener('click', function(){
+    urgentBtn.setAttribute('aria-pressed', urgentBtn.getAttribute('aria-pressed')==='true'?'false':'true');
+    apply();
+  });
+
+  var dir={};
+  [].slice.call(document.querySelectorAll('th.sortable')).forEach(function(th){
+    th.setAttribute('tabindex','0');
+    function sort(){
+      var k=th.dataset.key;
+      var d=dir[k]=(dir[k]===1?-1:1);
+      [].slice.call(document.querySelectorAll('th.sortable')).forEach(function(o){o.removeAttribute('aria-sort');});
+      th.setAttribute('aria-sort', d===1?'ascending':'descending');
+      th.querySelector('.arw').textContent = d===1?'↑':'↓';
+      rows.slice().sort(function(a,b){
+        var x=Number(a.dataset[k]), y=Number(b.dataset[k]);
+        return (x-y)*d;
+      }).forEach(function(r){tbody.appendChild(r);});
+    }
+    th.addEventListener('click', sort);
+    th.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault(); sort();} });
+  });
+})();
+</script>
