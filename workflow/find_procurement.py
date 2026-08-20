@@ -39,15 +39,19 @@ REG = Path("data/registry/orgs.csv")
 
 # ラベルの語 -> 得点。強い語ほど高い
 LABEL_SCORE = [
+    # 自治体は「公募型プロポーザル」に業務委託を出す。ここを最上位に置く。
+    # 当初「入札情報」偏重にしたため、山形県で無関係なページ（エアコン工事）を
+    # 掴んだ。自治体の主戦場はプロポーザルであって物品入札ではない。
+    (re.compile(r"公募型プロポーザル|プロポーザル|企画提案|企画競争"), 11),
     (re.compile(r"入札・?契約情報|調達情報|入札情報|契約情報"), 10),
     (re.compile(r"公募情報|公募一覧|募集情報"), 9),
     (re.compile(r"入札|調達"), 7),
-    (re.compile(r"企画競争|プロポーザル|公募型"), 7),
     (re.compile(r"契約"), 4),
     (re.compile(r"公募|募集"), 3),
 ]
 # URLパスの語 -> 得点
 PATH_SCORE = [
+    (re.compile(r"proposal|puropo|kikakukyoso|kikaku"), 9),
     (re.compile(r"nyusatsu|nyuusatsu|chotatsu|choutatsu|procurement|bid|tender"), 8),
     (re.compile(r"keiyaku|contract"), 6),
     (re.compile(r"koubo|kobo|boshu|proposal"), 5),
@@ -55,9 +59,13 @@ PATH_SCORE = [
 # 誤爆しやすい語（職員採用、入居者募集など）
 NEGATIVE = re.compile(
     r"採用|求人|職員募集|入居者|会員募集|セミナー|イベント|受講|参加者募集|"
-    r"寄付|助成金の(交付|申請)|補助金.{0,4}申請|メルマガ")
+    r"寄付|助成金の(交付|申請)|補助金.{0,4}申請|メルマガ|"
+    r"エアコン|空調|清掃|警備|給食|電気設備|工事の入札|物品の売払|不用品")
 
 COMMON_PATHS = [
+    # 自治体でよく使われる形を先に置く
+    "/kensei/nyuusatsujouhou/nyuusatsujouhou/proposal/index.html",
+    "/kensei/nyuusatsu/", "/kensei/nyuusatsujouhou/",
     "/nyusatsu/", "/nyusatsu.html", "/chotatsu/", "/chotatsu.html",
     "/keiyaku/", "/keiyaku.html", "/procurement/", "/bid/", "/koubo/",
     "/about/nyusatsu/", "/info/nyusatsu/", "/outline/nyusatsu/",

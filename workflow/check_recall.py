@@ -26,13 +26,18 @@ KP = Path("data/registry/known_positives.csv")
 
 
 def domain_matches(target: str, known: set[str]) -> str:
-    """発注元ドメインがレジストリのどれかに一致するか（サブドメイン差を吸収）。"""
-    t = target.lower().strip()
+    """発注元ドメインがレジストリに登録されているか。
+
+    **サフィックス一致はしない。** kyushu.meti.go.jp（九州経済産業局）を
+    meti.go.jp（経済産業省）と同一視すると、登録していない組織を
+    「確認済み」と誤って数えてしまう。実際にそれで偽陽性を出した。
+    別組織は別ドメインとして厳密に扱う。www の有無だけを吸収する。
+    """
+    t = target.lower().strip().removeprefix("www.")
     if not t:
         return ""
     for d in known:
-        d = d.lower()
-        if t == d or t.endswith("." + d) or d.endswith("." + t):
+        if t == d.lower().removeprefix("www."):
             return d
     return ""
 

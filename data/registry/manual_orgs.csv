@@ -15,3 +15,5 @@ jnto.go.jp,独立行政法人国際観光振興機構（JNTO）,,国の外郭団
 bunka.go.jp,文化庁,,中央省庁,manual,https://www.bunka.go.jp/,,tier_b,monthly,,未確認,文化芸術の国際発信
 mlit.go.jp,観光庁,,中央省庁,manual,https://www.mlit.go.jp/kankocho/,,tier_b,monthly,,未確認,インバウンド・訪日プロモーション
 mofa.go.jp,外務省,,中央省庁,manual,https://www.mofa.go.jp/,,tier_b,monthly,,未確認,在外公館文化事業
+pref.yamagata.jp,山形県庁,山形,自治体本体（都道府県）,manual,https://www.pref.yamagata.jp/,https://www.pref.yamagata.jp/kensei/nyuusatsujouhou/nyuusatsujouhou/proposal/index.html,tier_a,every_run,,確認済み,県産品・貿易振興課／県産品流通戦略課／観光プロモーション課が毎年プロポーザルを出す。実測で確認
+kyushu.meti.go.jp,九州経済産業局,,地方支分部局,manual,https://www.kyushu.meti.go.jp/,https://www.kyushu.meti.go.jp/under/chotatu/chotatu.html,tier_a,every_run,,確認済み,競争入札の公告はGEPSのみ。局サイトは一覧のみなので調達ポータルも併せて見る
