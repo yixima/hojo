@@ -127,6 +127,7 @@ td.mono,th.mono{font-family:var(--mono); font-variant-numeric:tabular-nums; whit
 .amt{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; display:block}
 .conf{font-size:.68rem; color:var(--ink-3); white-space:nowrap; display:block}
 .conf.fixed{color:var(--celadon)} .conf.est{color:var(--mustard)}
+.basis{display:block; font-size:.66rem; color:var(--ink-3); line-height:1.45; white-space:normal; max-width:15rem; margin-top:.25rem}
 
 .days{font-family:var(--mono); font-size:.68rem; padding:.05rem .4rem; border-radius:2px;
   display:inline-block; margin-top:.2rem; font-variant-numeric:tabular-nums}
@@ -160,27 +161,28 @@ footer a{color:var(--indigo); text-underline-offset:3px}
   <hr class="rule-double">
   <div class="eyebrow"><span>公募・企画競争 探索ワークフロー</span><span>案件リスト</span><span>2026.08.19</span></div>
   <h1>公募案件リスト 2026.08.19</h1>
-  <p class="sub">第2回巡回で洗い出した<strong>19件</strong>。いま応募できる<strong>7件</strong>に加え、過年度の公告実績から近く出ると見込まれる<strong>予測12件</strong>を含みます。<strong>案件名をクリックすると発注元の案件ページ</strong>（予測案件は監視先の一覧ページ）へ、<strong>「解説 →」で<a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">レポート本文の該当節</a></strong>へ飛びます。残日数は<strong>直近アクション期限</strong>で測っています ── 締切ではありません。</p>
+  <p class="sub">第2回巡回で洗い出した<strong>21件</strong>。いま応募できる<strong>7件</strong>に加え、過年度の公告実績から近く出ると見込まれる<strong>予測14件</strong>を含みます。<strong>案件名をクリックすると発注元の案件ページ</strong>（予測案件は監視先の一覧ページ）へ、<strong>「解説 →」で<a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">レポート本文の該当節</a></strong>へ飛びます。残日数は<strong>直近アクション期限</strong>で測っています ── 締切ではありません。</p>
 
   <div class="tiles">
     <div class="tile t-crit"><span class="k">至急 7日以下</span><span class="v">6</span><span class="u">件</span></div>
     <div class="tile t-go"><span class="k">応募推奨</span><span class="v">4</span><span class="u">件</span></div>
-    <div class="tile t-info"><span class="k">要検討</span><span class="v">12</span><span class="u">件</span></div>
-    <div class="tile t-warn"><span class="k">予測案件</span><span class="v">12</span><span class="u">件</span></div>
-    <div class="tile"><span class="k">金額判明分</span><span class="v">3.98</span><span class="u">億円（3件）</span></div>
+    <div class="tile t-info"><span class="k">要検討</span><span class="v">11</span><span class="u">件</span></div>
+    <div class="tile t-warn"><span class="k">予測案件</span><span class="v">14</span><span class="u">件</span></div>
+    <div class="tile"><span class="k">落札実績で裏取り</span><span class="v">8</span><span class="u">件</span></div>
   </div>
 </header>
 
 <div class="controls">
   <span class="ctl-label">区分</span>
-  <button class="chip" data-kind="all" aria-pressed="true">すべて<span class="c">19</span></button>
+  <button class="chip" data-kind="all" aria-pressed="true">すべて<span class="c">21</span></button>
   <button class="chip" data-kind="公募中" aria-pressed="false">公募中<span class="c">7</span></button>
-  <button class="chip" data-kind="予測" aria-pressed="false">予測<span class="c">12</span></button>
+  <button class="chip" data-kind="予測" aria-pressed="false">予測<span class="c">14</span></button>
   <span class="spacer"></span>
   <span class="ctl-label">判定</span>
   <button class="chip" data-filter="all" aria-pressed="true">すべて</button>
   <button class="chip" data-filter="応募推奨" aria-pressed="false">応募推奨<span class="c">4</span></button>
-  <button class="chip" data-filter="要検討" aria-pressed="false">要検討<span class="c">12</span></button>
+  <button class="chip" data-filter="要検討" aria-pressed="false">要検討<span class="c">11</span></button>
+  <button class="chip" data-filter="見送り" aria-pressed="false">見送り<span class="c">5</span></button>
   <button class="chip" id="urgentOnly" aria-pressed="false">至急のみ<span class="c">6</span></button>
 </div>
 
@@ -192,7 +194,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <th class="sortable" data-key="rank" scope="col">格付<span class="arw">↕</span></th>
         <th scope="col">案件名 ／ 種別 ／ 解説</th>
         <th scope="col">発注機関</th>
-        <th class="sortable mono" data-key="amt" scope="col">見込み金額<span class="arw">↕</span></th>
+        <th class="sortable mono" data-key="amt" scope="col">見込み金額 ／ 根拠<span class="arw">↕</span></th>
         <th class="sortable mono" data-key="due" scope="col">締切 ／ 予測公告<span class="arw">↕</span></th>
         <th class="sortable mono" data-key="act" scope="col">直近アクション期限 ／ 予測の根拠<span class="arw">↕</span></th>
         <th scope="col">応募形態</th>
@@ -206,7 +208,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://r6.kyodokyogyohojokin.info/oubo.php" title="案件ページへ移動します">小規模事業者持続化補助金＜共同・協業型＞第3回<span class="arrow">↗</span></a><span class="kind">補助金</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s2">解説 →</a></td>
         <td><span class="org">中小企業庁</span></td>
-        <td><span class="amt">3,000万円</span><span class="conf fixed">◎確定</span></td>
+        <td><span class="amt">3,000万円</span><span class="conf fixed">◎確定</span><span class="basis">公募要領 第6版 P.8 の補助上限額（参画10者以上で3,000万円）</span></td>
         <td class="mono">2026-09-30<br>17:00<span class="days d-ok">残42日</span></td>
         <td class="mono">2026-09-30<br>17:00<span class="act">Jグランツ提出（公表期限は締切のみ）</span></td>
         <td>支援側</td>
@@ -218,7 +220,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.jetro.go.jp/procurement/bid/ode/b086abd8177ce6da.html" title="案件ページへ移動します">「2027年ベオグラード国際博覧会」日本館運営<span class="arrow">↗</span></a><span class="kind">入札（総合評価）</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s4">解説 →</a></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">—</span><span class="conf est">△推定（億円規模）</span></td>
+        <td><span class="amt">—</span><span class="conf est">△推定（億円規模）</span><span class="basis">同博覧会の「日本館 総合プロデュース・調整、展示設計・監理、広報業務」が323,807,861円（大日本印刷、2026-02-19契約、企画競争、落札率100%／JETRO契約公表 2026年2月分）。同「行催事業務」が委託限度額327,000,000円。日本館運営も億円規模と推定する</span></td>
         <td class="mono">2026-09-08<br>15:00<span class="days d-crit">残6日</span></td>
         <td class="mono">2026-08-25<br>09:00<span class="act">入札説明会の参加申込メール（ODE@jetro.go.jp）。次いで8/26 17:00までにJETRO等級確認申請</span></td>
         <td>単独または共同</td>
@@ -230,7 +232,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="案件ページへ移動します">第70回東京都伝統工芸品展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">希望制指名競争入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono">2026-08-24<br>14:00<span class="days d-crit">残5日</span></td>
         <td class="mono">2026-08-24<br>14:00<span class="act">希望申請（入札書の提出ではない）。申請後に指名通知を受けて入札</span></td>
         <td>単独</td>
@@ -242,7 +244,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="案件ページへ移動します">海外展開シンポジウム 運営等業務委託<span class="arrow">↗</span></a><span class="kind">総合評価方式入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono">2026-08-25<br>14:00<span class="days d-crit">残6日</span></td>
         <td class="mono">2026-08-25<br>14:00<span class="act">希望申請（入札書の提出ではない）。申請後に指名通知を受けて入札</span></td>
         <td>単独</td>
@@ -254,7 +256,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-C">C</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="案件ページへ移動します">創業支援拠点（丸の内・多摩）生成AI映像コンテンツ制作及び鉄道・エリア連動型デジタルプロモーション業務委託<span class="arrow">↗</span></a><span class="kind">委託</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono">2026-08-26<br>14:00<span class="days d-crit">残7日</span></td>
         <td class="mono">2026-08-26<br>14:00<span class="act">希望申請</span></td>
         <td>単独</td>
@@ -266,7 +268,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://www.jetro.go.jp/procurement/publicoffer/ode/fb7b1b718a1d1371.html" title="案件ページへ移動します">「2027年ベオグラード国際博覧会」日本館行催事業務<span class="arrow">↗</span></a><span class="kind">企画競争</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s3">解説 →</a></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">3億2,700万円</span><span class="conf fixed">◎確定</span></td>
+        <td><span class="amt">3億2,700万円</span><span class="conf fixed">◎確定</span><span class="basis">公募公告 6. 業務委託限度額に明記</span></td>
         <td class="mono">2026-08-21<br>17:00<span class="days d-crit">残2日</span></td>
         <td class="mono">2026-08-21<br>17:00<span class="act">提案書10部＋見積書の持参または郵送</span></td>
         <td>単独または共同</td>
@@ -278,7 +280,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-C">C</span></td>
         <td><a class="name" href="https://www.jpf.go.jp/j/about/bid/proposal/p_260731_1.html" title="案件ページへ移動します">JOI 25周年記念事業広報用動画制作業務委託契約<span class="arrow">↗</span></a><span class="kind">企画競争</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s3">解説 →</a></td>
         <td><span class="org">独立行政法人国際交流基金</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">国際交流基金は落札者・落札金額・予定価格・落札率を案件ごとに公表しているため、結果公示後に確認可能</span></td>
         <td class="mono">2026-08-20<br>12:00<span class="days d-crit">残1日</span></td>
         <td class="mono">2026-08-20<br>12:00<span class="act">提案書提出</span></td>
         <td>単独</td>
@@ -290,7 +292,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="監視先の一覧ページへ移動します">「東京手仕事」MAISON &amp; OBJET 出展及びポップアップストア運営業務<span class="arrow">↗</span></a><span class="kind">委託</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">4,098万円</span><span class="conf est">△推定（前回落札額）</span></td>
+        <td><span class="amt">4,098万円</span><span class="conf est">△推定（前回落札額）</span><span class="basis">令和7年度に御社が落札した際の入札額 40,986,000円（税込・入札書 2025-03-18）</span></td>
         <td class="mono"><span class="predwin">2027年2月〜3月</span></td>
         <td class="mono"><span class="act">令和7年度分の入札書が2025-03-18。令和8年度も「海外展示会の運営業務（Maison &amp; Objet）」として契約。3年連続で発注</span></td>
         <td>単独</td>
@@ -302,7 +304,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://kyokai.kougeihin.jp/association_cat/%E5%85%AC%E5%8B%9F%E5%85%AC%E5%91%8A/" title="監視先の一覧ページへ移動します">海外における伝統的工芸品テストマーケティング業務<span class="arrow">↗</span></a><span class="kind">企画提案募集</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">伝統的工芸品産業振興協会</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">伝統的工芸品産業振興協会は結果公示のページを持たず、落札金額は未確認</span></td>
         <td class="mono"><span class="predwin">2027年3月中旬〜7月上旬</span></td>
         <td class="mono"><span class="act">4年連続。ただし公告時期が動く（2024-06-26公告/07-12締切、2025-06-23公告/08-11締切、2026-04-01公告/05-15締切）</span></td>
         <td>単独</td>
@@ -314,7 +316,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://kyokai.kougeihin.jp/association_cat/%E5%85%AC%E5%8B%9F%E5%85%AC%E5%91%8A/" title="監視先の一覧ページへ移動します">海外における伝統的工芸品実演・ワークショップ業務<span class="arrow">↗</span></a><span class="kind">企画提案募集</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">伝統的工芸品産業振興協会</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">伝統的工芸品産業振興協会は結果公示のページを持たず、落札金額は未確認</span></td>
         <td class="mono"><span class="predwin">2027年4月頃</span></td>
         <td class="mono"><span class="act">2026年度に新設（2026-04-01公告/05-15締切）。テストマーケティングと同時公告</span></td>
         <td>単独</td>
@@ -326,7 +328,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="監視先の一覧ページへ移動します">第71回東京都伝統工芸品展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">希望制指名競争入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono"><span class="predwin">2027年8月中旬</span></td>
         <td class="mono"><span class="act">毎年開催。第68回(令和6年度)・令和7年度・第70回(令和8年度8月18日公告)と3年連続</span></td>
         <td>単独</td>
@@ -338,7 +340,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="監視先の一覧ページへ移動します">TOKYO職人展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">委託</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono"><span class="predwin">2027年5月中旬</span></td>
         <td class="mono"><span class="act">令和6年度・令和7年度・令和8年度(2026-05-19公告)と3年連続</span></td>
         <td>単独</td>
@@ -350,7 +352,7 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="監視先の一覧ページへ移動します">海外テストマーケティング・商談会 企画運営等委託<span class="arrow">↗</span></a><span class="kind">委託</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono"><span class="predwin">2027年前半</span></td>
         <td class="mono"><span class="act">令和5・6・7年度と3年連続で発注</span></td>
         <td>単独</td>
@@ -362,55 +364,55 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-A">A</span></td>
         <td><a class="name" href="https://www.chusho.meti.go.jp/koukai/hojyokin/kobo.html" title="監視先の一覧ページへ移動します">小規模事業者持続化補助金＜共同・協業型＞第4回<span class="arrow">↗</span></a><span class="kind">補助金</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">中小企業庁</span></td>
-        <td><span class="amt">3,000万円</span><span class="conf est">△推定（第3回と同額と仮定）</span></td>
+        <td><span class="amt">3,000万円</span><span class="conf est">△推定（第3回と同額と仮定）</span><span class="basis">第3回（3,000万円）と同額と仮定。第4回の公募要領で要確認</span></td>
         <td class="mono"><span class="predwin">2027年1月〜3月</span></td>
         <td class="mono"><span class="act">第1回2025-04-25公告、第2回2025-12-23公告(受付1/16)、第3回2026-07-08公告(受付8/14)。概ね半年周期</span></td>
         <td>支援側</td>
         <td><span class="q-none">不要</span></td>
         <td><span class="verd v-check">要検討</span><span class="next">第3回の結果を見て再挑戦するか判断</span></td>
       </tr>
-      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+      <tr class="u-pred" data-kind="予測" data-verdict="見送り" data-urgent="0" data-rank="4" data-amt="1800000" data-due="99999999" data-act="99999999">
         <td><span class="kindtag pred">予測</span></td>
-        <td><span class="rank rank-B">B</span></td>
-        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service06/" title="監視先の一覧ページへ移動します">FHA 2027 Food &amp; Beverage ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service06/" title="監視先の一覧ページへ移動します">FHA 2027 Food &amp; Beverage ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#samt">解説 →</a></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">180万円</span><span class="conf fixed">◎確定（前年同案件の落札額）</span><span class="basis">JETRO契約公表より、ジャパンパビリオン「設計・監理等」の実際の落札額は BIOFACH 2026 が1,669,420円（2025-08-25）、THAIFEX 2026 が1,803,080円（2025-12-22）。いずれも株式会社アライズが総合評価落札方式で受注。**500万円の足切り基準を下回る**</span></td>
         <td class="mono"><span class="predwin">2026年8月下旬</span></td>
         <td class="mono"><span class="act">前年同案件が2025-08-21公告。**今まさに公告時期**</span></td>
         <td>単独または共同</td>
         <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
-        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認</span></td>
+        <td><span class="verd v-note">見送り</span><span class="next">落札実績が166〜180万円で足切り基準（500万円）を下回るため対象外。施工・出展運営を狙う</span></td>
       </tr>
-      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+      <tr class="u-pred" data-kind="予測" data-verdict="見送り" data-urgent="0" data-rank="4" data-amt="1800000" data-due="99999999" data-act="99999999">
         <td><span class="kindtag pred">予測</span></td>
-        <td><span class="rank rank-B">B</span></td>
-        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service06/" title="監視先の一覧ページへ移動します">Seafood Expo Global 2027 ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service06/" title="監視先の一覧ページへ移動します">Seafood Expo Global 2027 ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#samt">解説 →</a></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">180万円</span><span class="conf fixed">◎確定（前年同案件の落札額）</span><span class="basis">JETRO契約公表より、ジャパンパビリオン「設計・監理等」の実際の落札額は BIOFACH 2026 が1,669,420円（2025-08-25）、THAIFEX 2026 が1,803,080円（2025-12-22）。いずれも株式会社アライズが総合評価落札方式で受注。**500万円の足切り基準を下回る**</span></td>
         <td class="mono"><span class="predwin">2026年9月上旬</span></td>
         <td class="mono"><span class="act">前年同案件が2025-09-08公告</span></td>
         <td>単独または共同</td>
         <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
-        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認</span></td>
+        <td><span class="verd v-note">見送り</span><span class="next">落札実績が166〜180万円で足切り基準（500万円）を下回るため対象外。施工・出展運営を狙う</span></td>
       </tr>
-      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+      <tr class="u-pred" data-kind="予測" data-verdict="見送り" data-urgent="0" data-rank="4" data-amt="1800000" data-due="99999999" data-act="99999999">
         <td><span class="kindtag pred">予測</span></td>
-        <td><span class="rank rank-B">B</span></td>
-        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service06/" title="監視先の一覧ページへ移動します">THAIFEX 2027 ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service06/" title="監視先の一覧ページへ移動します">THAIFEX 2027 ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#samt">解説 →</a></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">180万円</span><span class="conf fixed">◎確定（前年同案件の落札額）</span><span class="basis">JETRO契約公表より、ジャパンパビリオン「設計・監理等」の実際の落札額は BIOFACH 2026 が1,669,420円（2025-08-25）、THAIFEX 2026 が1,803,080円（2025-12-22）。いずれも株式会社アライズが総合評価落札方式で受注。**500万円の足切り基準を下回る**</span></td>
         <td class="mono"><span class="predwin">2026年11月中旬</span></td>
         <td class="mono"><span class="act">前年同案件が2025-11-19公告</span></td>
         <td>単独または共同</td>
         <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
-        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認</span></td>
+        <td><span class="verd v-note">見送り</span><span class="next">落札実績が166〜180万円で足切り基準（500万円）を下回るため対象外。施工・出展運営を狙う</span></td>
       </tr>
       <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
         <td><span class="kindtag pred">予測</span></td>
         <td><span class="rank rank-B">B</span></td>
         <td><a class="name" href="https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html" title="監視先の一覧ページへ移動します">東京インターナショナル・ギフト・ショー春2027 公社パビリオン 展示会運営業務委託<span class="arrow">↗</span></a><span class="kind">委託</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">東京都中小企業振興公社は落札金額を公表していない。契約情報ページ・過年度契約一覧・事業報告（令和6年度・全230頁）のいずれにも金額欄が無いことを確認済み。ビジネスチャンス・ナビは落札者決定まで一貫処理するため、ログインすれば確認できる可能性あり</span></td>
         <td class="mono"><span class="predwin">2026年10月〜12月</span></td>
         <td class="mono"><span class="act">春2025・春2026と2年連続で発注</span></td>
         <td>単独</td>
@@ -422,12 +424,36 @@ footer a{color:var(--indigo); text-underline-offset:3px}
         <td><span class="rank rank-C">C</span></td>
         <td><a class="name" href="https://kyokai.kougeihin.jp/association_cat/%E5%85%AC%E5%8B%9F%E5%85%AC%E5%91%8A/" title="監視先の一覧ページへ移動します">伝統的工芸品産業振興協会 英語・翻訳業務<span class="arrow">↗</span></a><span class="kind">企画競争</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">解説 →</a></td>
         <td><span class="org">伝統的工芸品産業振興協会</span></td>
-        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span><span class="basis">伝統的工芸品産業振興協会は結果公示のページを持たず、落札金額は未確認</span></td>
         <td class="mono"><span class="predwin">2027年3月下旬〜7月上旬</span></td>
         <td class="mono"><span class="act">5年連続（2022-07-04、2023-06-09、2024-03-25、2025-06-17、2026-06-15 各締切）</span></td>
         <td>単独</td>
         <td><span class="q-none">不要</span></td>
         <td><span class="verd v-check">要検討</span><span class="next">規模は小さいが協会との取引実績を作る入口として検討</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="2" data-amt="30000000" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://www.jetro.go.jp/procurement/bidtop/bid/service05/" title="監視先の一覧ページへ移動します">海外ジャパンパビリオン施工業務<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#samt">解説 →</a></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">3,000万円</span><span class="conf est">△推定（実績レンジの中央値）</span><span class="basis"></span></td>
+        <td class="mono"><span class="predwin">通年・随時</span></td>
+        <td class="mono"><span class="act">JETRO契約公表（海外における契約）より、ジャパンパビリオン施工業務の実績は21317269円〜36855323円。御社の落札実績40986000円と同規模帯</span></td>
+        <td>単独または共同</td>
+        <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報「展示会の施工」を毎週確認。設計監理ではなく施工を狙う</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="10000000" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-B">B</span></td>
+        <td><a class="name" href="https://www.jetro.go.jp/procurement/bid.html" title="監視先の一覧ページへ移動します">海外ジャパンパビリオン出展運営業務<span class="arrow">↗</span></a><span class="kind">入札</span> <a class="rep" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#samt">解説 →</a></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">1,000万円</span><span class="conf est">△推定（実績レンジの中央値）</span><span class="basis"></span></td>
+        <td class="mono"><span class="predwin">通年・随時</span></td>
+        <td class="mono"><span class="act">JETRO契約公表（海外における契約）より、ジャパン・パビリオン出展運営の実績は3419092円〜22114248円。下限は足切り基準を下回るため案件ごとに要判断</span></td>
+        <td>単独または共同</td>
+        <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認。規模が500万円以上か個別に判断</span></td>
       </tr>
     </tbody>
   </table>
@@ -437,14 +463,14 @@ footer a{color:var(--indigo); text-underline-offset:3px}
 <div class="legend">
   <span><b>格付</b> S / A / B / C ── 適合度</span>
   <span><b>左端の色帯</b> <span style="color:var(--vermillion)">■</span> 至急 7日以下　<span style="color:var(--mustard)">■</span> 要着手 8〜21日　<span style="color:var(--celadon)">■</span> 通常 22日以上。<b>公表された期限のうち最も早いもの</b>で測る</span>
-  <span><b>金額確度</b> ◎確定 ／ △推定 ／ －非公開</span>
+  <span><b>金額確度</b> ◎確定 ／ △推定 ／ －非公開。金額の下に<b>根拠</b>を明記</span>
   <span><b>破線の左帯</b> 予測案件。過年度の公告実績が根拠</span>
   <span><b>東京都中小企業振興公社の3件</b>は公社の契約情報一覧へリンク。ビジネスチャンス・ナビの案件詳細はPOST専用でURLが存在しないため</span>
 </div>
 
 <footer>
   <p><strong>この一覧に出ていない項目</strong>（公告日・前提条件・実績要件の充足・推奨着手日・状態ほか、全26項目）は <code>data/cases/cases_20260819.xlsx</code>（Excel）と同名の CSV に入っています。項目の定義は <code>workflow/case-list-schema.md</code>。Excel の基準日セルを今日の日付に変えると残日数と緊急度が再計算されます。</p>
-  <p><strong>予測案件は根拠つきでのみ載せています。</strong>「例年出ている気がする」は載せません。各行の「予測の根拠」に、何年連続で・いつ公告されたかを実測値で書いてあります。<br><strong>東京都中小企業振興公社の案件について。</strong>ビジネスチャンス・ナビの案件詳細ページは POST 専用で、クリックできる URL が存在しません。そのため公社の契約情報一覧へリンクしています（件名と整理番号で該当行が見つかります）。ナビで直接開く場合は「入札・発注案件の検索」で件名検索してください。案件番号は Excel の「前提条件」列に記載しました。<br><strong>予定価格が「－非公開」の案件</strong>は、仕様書がナビの添付資料にあり閲覧にログインが必要です。金額欄は空欄ではなく「非公開」と明示しています ── 空欄だと「調べていない」と区別がつかないためです。</p>
+  <p><strong>予定価格が非公開でも、過年度の落札金額から規模を推定しています。</strong>JETRO・国際交流基金・経済産業省は落札金額を公表しており、金額欄の下にその実測値を根拠として書いてあります。東京都中小企業振興公社は落札金額を公表しておらず（契約情報ページ・過年度一覧・事業報告の全てを確認済み）、その旨も明記しました。<br><strong>予測案件は根拠つきでのみ載せています。</strong>「例年出ている気がする」は載せません。各行の「予測の根拠」に、何年連続で・いつ公告されたかを実測値で書いてあります。<br><strong>東京都中小企業振興公社の案件について。</strong>ビジネスチャンス・ナビの案件詳細ページは POST 専用で、クリックできる URL が存在しません。そのため公社の契約情報一覧へリンクしています（件名と整理番号で該当行が見つかります）。ナビで直接開く場合は「入札・発注案件の検索」で件名検索してください。案件番号は Excel の「前提条件」列に記載しました。<br><strong>予定価格が「－非公開」の案件</strong>は、仕様書がナビの添付資料にあり閲覧にログインが必要です。金額欄は空欄ではなく「非公開」と明示しています ── 空欄だと「調べていない」と区別がつかないためです。</p>
   <p>レポート本文 → <a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">第2回 公募巡回レポート</a>　／　ブランチ <code>claude/public-bid-search-workflow-znmhfx</code></p>
 </footer>
 

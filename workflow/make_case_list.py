@@ -52,6 +52,7 @@ COLUMNS = [
     ("発注機関",             24, True),
     ("見込み金額",           15, False),
     ("金額確度",             18, False),
+    ("金額の根拠",           46, True),
     ("公告日",               12, False),
     ("締切",                 17, False),
     ("直近アクション期限",    17, False),
@@ -161,7 +162,7 @@ def build(csv_path: Path) -> Path:
         # 緊急度・残日数は数式。基準日(H1)を変えれば追随する。
         # 予測案件は期限が無いので空欄になる。
         put(4, f'=IF(E{y}="","",IF(E{y}<=7,"至急",IF(E{y}<=21,"要着手","通常")))', bold=True)
-        put(5, f'=IF(M{y}="","",INT(M{y})-INT($H$1))', fmt="0")
+        put(5, f'=IF(N{y}="","",INT(N{y})-INT($H$1))', fmt="0")
 
         put(6, r["案件名"], wrap=True)
         put(7, r["種別"], color=GREY)
@@ -174,32 +175,33 @@ def build(csv_path: Path) -> Path:
         conf = r["金額確度"]
         put(10, conf, color=CELADON if conf.startswith("◎") else MUSTARD if conf.startswith("△") else GREY)
 
-        put(11, parse_dt(r["公告日"]), fmt="yyyy-mm-dd", color=GREY)
-        put(12, parse_dt(r["締切"]), fmt="yyyy-mm-dd hh:mm", bold=True)
-        put(13, parse_dt(r["直近アクション期限"]), fmt="yyyy-mm-dd hh:mm", bold=True)
-        put(14, r["直近アクションの内容"], wrap=True, size=9)
-        put(15, parse_dt(r.get("推奨着手日", "")), fmt="yyyy-mm-dd", color=MUSTARD)
-        put(16, r.get("予測公告時期", ""), wrap=True, color=MUSTARD, bold=True)
-        put(17, r.get("予測の根拠", ""), wrap=True, size=9, color=GREY)
+        put(11, r.get("金額の根拠", ""), wrap=True, size=8.5, color=GREY)
+        put(12, parse_dt(r["公告日"]), fmt="yyyy-mm-dd", color=GREY)
+        put(13, parse_dt(r["締切"]), fmt="yyyy-mm-dd hh:mm", bold=True)
+        put(14, parse_dt(r["直近アクション期限"]), fmt="yyyy-mm-dd hh:mm", bold=True)
+        put(15, r["直近アクションの内容"], wrap=True, size=9)
+        put(16, parse_dt(r.get("推奨着手日", "")), fmt="yyyy-mm-dd", color=MUSTARD)
+        put(17, r.get("予測公告時期", ""), wrap=True, color=MUSTARD, bold=True)
+        put(18, r.get("予測の根拠", ""), wrap=True, size=9, color=GREY)
 
-        put(18, r["応募形態"])
+        put(19, r["応募形態"])
         q = r["資格要否"]
-        put(19, q, wrap=True, size=9,
+        put(20, q, wrap=True, size=9,
             color=VERMILLION if "間に合わない" in q else MUSTARD if "代替可" in q else GREY)
-        put(20, r["前提条件"], wrap=True, size=9)
-        put(21, r["実績要件"], wrap=True, size=9)
-        put(22, verdict, color=VERDICT_COLOR.get(verdict, INK), bold=True)
-        put(23, r["次アクション"], wrap=True, size=9)
-        put(24, r["状態"])
+        put(21, r["前提条件"], wrap=True, size=9)
+        put(22, r["実績要件"], wrap=True, size=9)
+        put(23, verdict, color=VERDICT_COLOR.get(verdict, INK), bold=True)
+        put(24, r["次アクション"], wrap=True, size=9)
+        put(25, r["状態"])
 
         link = r["レポート節"]
-        c = put(25, "該当節へ", color="0563C1")
+        c = put(26, "該当節へ", color="0563C1")
         if link:
             c.hyperlink = REPORT_URL + link
             c.font = Font(name=FONT, size=9.5, color="0563C1", underline="single")
 
         url = r["一次情報URL"]
-        c = put(26, url, color="0563C1", size=8.5)
+        c = put(27, url, color="0563C1", size=8.5)
         if url:
             c.hyperlink = url
             c.font = Font(name=FONT, size=8.5, color="0563C1", underline="single")
@@ -207,14 +209,14 @@ def build(csv_path: Path) -> Path:
         ws.row_dimensions[y].height = 44
 
     last = HEAD + len(rows)
-    ws.auto_filter.ref = f"A{HEAD}:Z{last}"
+    ws.auto_filter.ref = f"A{HEAD}:AA{last}"
     ws.freeze_panes = f"G{HEAD + 1}"
 
     dv = DataValidation(type="list",
                         formula1='"新規,検討中,提出済,見送り,締切超過"',
                         allow_blank=True, showDropDown=False)
     ws.add_data_validation(dv)
-    dv.add(f"X{HEAD + 1}:X{last}")
+    dv.add(f"Y{HEAD + 1}:Y{last}")
 
     # ---- 凡例シート --------------------------------------------------
     write_legend(wb, base_date)
@@ -237,6 +239,7 @@ LEGEND = [
     ("発注機関", "正式名称"),
     ("見込み金額", "補助金は補助上限額、それ以外は予定価格。不明は「—」"),
     ("金額確度", "◎確定 / △推定 / －非公開。空欄と「調べていない」を区別するため必須"),
+    ("金額の根拠", "どこの何を見てその金額にしたか。非公開ならどこを確認して非公開と判断したか"),
     ("公告日", ""),
     ("締切", "時刻まで記載。17:00必着と14:00では動きが変わる"),
     ("直近アクション期限", "締切より前に来る公表期限（説明会申込・質問締切・資格申請など）。"
