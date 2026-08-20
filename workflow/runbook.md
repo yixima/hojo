@@ -1,5 +1,9 @@
 # 週次実行手順（ランブック）
 
+> **設計の全体像は `workflow/ARCHITECTURE.md` を先に読むこと。**
+> 2026-08-20 に、巡回先を人手で列挙する方式から
+> 「権威ある全国名簿を母集団とし、網羅率と再現率を数える」方式へ全面改訂した。
+
 毎週1回、この手順を最初から最後まで実行する。
 定期実行された新しいセッションは会話履歴を持たないため、**この文書だけを読めば
 実行できる**ように書いてある。
@@ -66,6 +70,28 @@ getent hosts www.example.lg.jp && echo 実在 || echo 不明
 - 公社案件は**ビジネスチャンス・ナビ側の詳細ページにしかない情報がある**
   （契約方法、案件受付期間、入札資格の有無）。`workflow/fetch_chancenavi.py` で
   ログイン不要で取得できる。公社サイトの一覧だけで判断しない。
+
+---
+
+## 手順0.5：母集団と経路の点検
+
+```bash
+python3 workflow/check_recall.py        # 既知の正解を拾えるか
+```
+
+`調達経路まで判明している` が前回より下がっていたら、レジストリが壊れている。
+`MISS` が出たら、その発注元を拾える名簿を `harvest_orgs.py` に足すか、
+`data/registry/manual_orgs.csv` に手で足す。
+
+月1回（第1週）は母集団も更新する。
+
+```bash
+python3 workflow/harvest_orgs.py                    # 名簿から取り込み
+python3 workflow/find_procurement.py --skip-z       # 新規組織の調達ページを発見
+```
+
+`find_procurement.py` は20件ごとに途中保存するので、時間切れで止まっても
+再実行すれば続きから進む。
 
 ---
 
@@ -272,6 +298,9 @@ python3 workflow/check_links.py data/cases/cases_YYYYMMDD.csv
 - [ ] `data/cases/cases_YYYYMMDD.csv` を作成し、`make_case_list.py` で Excel を生成したか
 - [ ] 予測案件（区分=予測）を根拠つきで載せたか
 - [ ] `check_links.py` が FAIL 0 になったか
+- [ ] `check_recall.py` の再現率が前回を下回っていないか
+- [ ] レポート末尾に**網羅率（確認済み／未確認の内訳）を明記したか**。
+      未確認が残っていることを隠さない
 - [ ] 一覧アーティファクトを公開したか
 - [ ] 一覧の各行がレポートの該当節へリンクしているか
 - [ ] Gmail を送信したか

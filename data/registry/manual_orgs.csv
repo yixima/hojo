@@ -1,0 +1,17 @@
+domain,org,pref,category,source_directory,url,procurement_url,tier,frequency,last_checked,status,note
+kyokai.kougeihin.jp,一般財団法人伝統的工芸品産業振興協会,,主戦場直結,manual,https://kyokai.kougeihin.jp/,https://kyokai.kougeihin.jp/association_cat/%E5%85%AC%E5%8B%9F%E5%85%AC%E5%91%8A/,tier_a,every_run,,確認済み,主力事業と最も一致。公告時期は3月中旬〜7月上旬に散る
+jetro.go.jp,独立行政法人日本貿易振興機構（JETRO）,,国の外郭団体,manual,https://www.jetro.go.jp/,https://www.jetro.go.jp/procurement/,tier_a,every_run,,確認済み,入札と公募がページ分離。両方見ること
+smrj.go.jp,独立行政法人中小企業基盤整備機構,,国の外郭団体,manual,https://www.smrj.go.jp/,https://www.smrj.go.jp/procurement/solicitation/index.html,tier_a,every_run,,確認済み,
+jpf.go.jp,独立行政法人国際交流基金,,国の外郭団体,manual,https://www.jpf.go.jp/,https://www.jpf.go.jp/j/about/bid/,tier_a,every_run,,確認済み,落札者・落札金額・予定価格・落札率まで公表
+clair.or.jp,一般財団法人自治体国際化協会（CLAIR）,,国の外郭団体,manual,https://www.clair.or.jp/,https://www.clair.or.jp/index-news.html,tier_a,every_run,,確認済み,調達専用ページ無し。新着情報に混ざる
+chusho.meti.go.jp,中小企業庁,,中央省庁,manual,https://www.chusho.meti.go.jp/,https://www.chusho.meti.go.jp/koukai/index.html,tier_a,every_run,,確認済み,ブラウザ相当UA必須
+meti.go.jp,経済産業省,,中央省庁,manual,https://www.meti.go.jp/,https://www.meti.go.jp/information/publicoffer/index.html,tier_a,every_run,,確認済み,受注実績あり。落札金額をExcelで公表
+vipo.or.jp,特定非営利活動法人映像産業振興機構（VIPO）,,国の外郭団体,manual,https://www.vipo.or.jp/,,tier_a,every_run,,未確認,受注実績あり（J-LOP 2016-2018）
+pref.kumamoto.jp,熊本県,熊本,自治体本体,manual,https://www.pref.kumamoto.jp/,,tier_a,every_run,,未確認,受注実績あり（パリJAPAN EXPO 2016-2024）
+pref.iwate.jp,岩手県,岩手,自治体本体,manual,https://www.pref.iwate.jp/,,tier_a,every_run,,未確認,受注実績あり（仏国テスト販売 2019）
+metro.tokyo.lg.jp,東京都,東京,自治体本体,manual,https://www.metro.tokyo.lg.jp/,,tier_a,every_run,,未確認,受注実績あり（東京2020仏国プロモーション）
+kyukeiren.or.jp,一般社団法人九州経済連合会,,経済団体,manual,https://www.kyukeiren.or.jp/,,tier_b,monthly,,未確認,受注実績あり（ラグビーW杯欧州プロモーション 2018）
+jnto.go.jp,独立行政法人国際観光振興機構（JNTO）,,国の外郭団体,manual,https://www.jnto.go.jp/,https://www.jnto.go.jp/about-us/procurement/opencounter/,tier_a,every_run,,確認済み,訪日プロモーション
+bunka.go.jp,文化庁,,中央省庁,manual,https://www.bunka.go.jp/,,tier_b,monthly,,未確認,文化芸術の国際発信
+mlit.go.jp,観光庁,,中央省庁,manual,https://www.mlit.go.jp/kankocho/,,tier_b,monthly,,未確認,インバウンド・訪日プロモーション
+mofa.go.jp,外務省,,中央省庁,manual,https://www.mofa.go.jp/,,tier_b,monthly,,未確認,在外公館文化事業
