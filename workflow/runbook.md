@@ -229,6 +229,16 @@ python3 workflow/make_case_list.py data/cases/cases_YYYYMMDD.csv
 
 これで `.xlsx` が出力され、CSV も BOM 付きに書き直される。
 
+**リンクを検証する。**
+
+```bash
+python3 workflow/check_links.py data/cases/cases_YYYYMMDD.csv
+```
+
+`FAIL 0` になるまで配布しない。**HTTP 200 だけでは不十分**で、POST専用ページは
+200 を返しながら中身が空になる（ビジネスチャンス・ナビの案件詳細が実例）。
+詳細は `workflow/case-list-schema.md` の「リンクの検証」を参照。
+
 ---
 
 ## 手順6：レポート生成と送信
@@ -261,6 +271,7 @@ python3 workflow/make_case_list.py data/cases/cases_YYYYMMDD.csv
 - [ ] `data/ledger.csv` を更新してプッシュしたか
 - [ ] `data/cases/cases_YYYYMMDD.csv` を作成し、`make_case_list.py` で Excel を生成したか
 - [ ] 予測案件（区分=予測）を根拠つきで載せたか
+- [ ] `check_links.py` が FAIL 0 になったか
 - [ ] 一覧アーティファクトを公開したか
 - [ ] 一覧の各行がレポートの該当節へリンクしているか
 - [ ] Gmail を送信したか
