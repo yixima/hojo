@@ -1,0 +1,978 @@
+<title>第2回 公募巡回レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --bg:#F1F3F6;
+  --surface:#FFFFFF;
+  --surface-2:#E8ECF2;
+  --ink:#14202E;
+  --ink-2:#43505F;
+  --ink-3:#6B7887;
+  --rule:#D3D9E1;
+  --rule-strong:#A9B4C1;
+  --indigo:#1E4A7B;
+  --indigo-deep:#14304F;
+  --indigo-tint:#E2EAF3;
+  --on-indigo:#FFFFFF;
+  --vermillion:#BE3A2B;
+  --vermillion-tint:#FAE6E3;
+  --mustard:#8E6A16;
+  --mustard-tint:#F5EEDA;
+  --celadon:#2C6D5E;
+  --celadon-tint:#DFEDE8;
+  --shadow:0 1px 2px rgba(20,32,46,.06), 0 6px 18px -10px rgba(20,32,46,.18);
+
+  --serif:"Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans:"Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --measure:48rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E151E;
+    --surface:#16202C;
+    --surface-2:#1E2A38;
+    --ink:#E4E9EF;
+    --ink-2:#AEBAC7;
+    --ink-3:#7D8A99;
+    --rule:#2A3846;
+    --rule-strong:#425263;
+    --indigo:#84B4E3;
+    --indigo-deep:#AECDEE;
+    --indigo-tint:#17293C;
+    --on-indigo:#0E151E;
+    --vermillion:#EC8172;
+    --vermillion-tint:#35211E;
+    --mustard:#DCB35C;
+    --mustard-tint:#2E2717;
+    --celadon:#74C0AA;
+    --celadon-tint:#162B26;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E151E;
+  --surface:#16202C;
+  --surface-2:#1E2A38;
+  --ink:#E4E9EF;
+  --ink-2:#AEBAC7;
+  --ink-3:#7D8A99;
+  --rule:#2A3846;
+  --rule-strong:#425263;
+  --indigo:#84B4E3;
+  --indigo-deep:#AECDEE;
+  --indigo-tint:#17293C;
+  --on-indigo:#0E151E;
+  --vermillion:#EC8172;
+  --vermillion-tint:#35211E;
+  --mustard:#DCB35C;
+  --mustard-tint:#2E2717;
+  --celadon:#74C0AA;
+  --celadon-tint:#162B26;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -12px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16.5px;
+  line-height:1.85;
+  font-feature-settings:"palt" 1;
+}
+:focus-visible{outline:2px solid var(--vermillion); outline-offset:3px; border-radius:2px}
+
+.wrap{max-width:var(--measure); margin-inline:auto; padding:0 clamp(1rem,4.5vw,2rem) 6rem}
+
+/* ── masthead ───────────────────────────── */
+.masthead{padding:clamp(2.5rem,7vw,4.5rem) 0 0}
+.rule-double{border:0; border-top:3px solid var(--indigo-deep); border-bottom:1px solid var(--indigo-deep); height:4px; margin:0 0 1.6rem}
+.rule-double.close{margin:1.6rem 0 0}
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+  display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; align-items:baseline;
+}
+h1{
+  font-family:var(--serif); font-weight:700;
+  font-size:clamp(1.9rem,5.6vw,3rem); line-height:1.32;
+  letter-spacing:.01em; text-wrap:balance;
+  margin:.7rem 0 .2rem; color:var(--ink);
+}
+.subtitle{font-family:var(--serif); font-size:clamp(1rem,2.6vw,1.18rem); color:var(--ink-2); margin:.1rem 0 1.4rem; line-height:1.7}
+.masthead-meta{
+  display:flex; flex-wrap:wrap; gap:.6rem 2rem; align-items:flex-start;
+  justify-content:space-between;
+}
+.meta-list{display:grid; grid-template-columns:auto 1fr; gap:.15rem 1rem; font-size:.86rem; color:var(--ink-2); margin:0}
+.meta-list dt{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--ink-3); padding-top:.28rem}
+.meta-list dd{margin:0}
+.seal{
+  flex:none; display:grid; place-content:center; text-align:center;
+  width:5.1rem; height:5.1rem; border:2px solid var(--vermillion);
+  color:var(--vermillion); font-family:var(--serif); font-weight:700;
+  line-height:1.3; font-size:.94rem; letter-spacing:.04em;
+}
+.seal small{display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; font-weight:400; margin-top:.2rem}
+
+/* ── generic blocks ─────────────────────── */
+section{margin-top:clamp(3rem,7vw,4.5rem)}
+.sec-head{display:flex; gap:.9rem; align-items:baseline; border-bottom:1px solid var(--rule-strong); padding-bottom:.5rem; margin-bottom:1.5rem}
+.sec-num{font-family:var(--mono); font-size:.8rem; font-weight:500; color:var(--vermillion); letter-spacing:.08em; flex:none; padding-top:.2rem}
+h2{font-family:var(--serif); font-weight:700; font-size:clamp(1.3rem,3.6vw,1.62rem); line-height:1.45; margin:0; text-wrap:balance; letter-spacing:.01em}
+h3{font-family:var(--serif); font-weight:700; font-size:1.12rem; line-height:1.6; margin:2.4rem 0 .7rem; color:var(--ink); text-wrap:balance}
+h4{font-family:var(--sans); font-weight:700; font-size:.82rem; letter-spacing:.1em; color:var(--ink-3); margin:1.8rem 0 .55rem}
+p{margin:0 0 1.05rem}
+strong{font-weight:700; color:var(--ink)}
+a{color:var(--indigo); text-underline-offset:3px; text-decoration-thickness:1px}
+a:hover{color:var(--vermillion)}
+ul,ol{margin:0 0 1.05rem; padding-left:1.35rem}
+li{margin-bottom:.42rem}
+li::marker{color:var(--indigo)}
+code{font-family:var(--mono); font-size:.86em; background:var(--surface-2); padding:.12em .4em; border-radius:3px; word-break:break-all}
+.lede{font-size:1.05rem; line-height:1.9}
+
+/* ── deadline band ──────────────────────── */
+.band{
+  background:var(--surface); border:1px solid var(--rule);
+  border-left:4px solid var(--vermillion); border-radius:3px;
+  box-shadow:var(--shadow); padding:1.3rem 1.4rem; margin-top:2.4rem;
+}
+.band h4{margin-top:0; color:var(--vermillion)}
+.deadlines{list-style:none; margin:0; padding:0; display:grid; gap:.1rem}
+.deadlines li{
+  display:grid; grid-template-columns:auto 1fr auto; gap:.2rem .9rem;
+  align-items:baseline; padding:.6rem 0; margin:0;
+  border-top:1px solid var(--rule);
+}
+.deadlines li:first-child{border-top:0; padding-top:.2rem}
+.dl-date{font-family:var(--mono); font-size:.86rem; font-weight:500; color:var(--ink); font-variant-numeric:tabular-nums}
+.dl-name{font-size:.93rem; line-height:1.6}
+.dl-name span{display:block; color:var(--ink-3); font-size:.8rem}
+.dl-days{font-family:var(--mono); font-size:.76rem; letter-spacing:.03em; padding:.12rem .5rem; border-radius:2px; white-space:nowrap; font-variant-numeric:tabular-nums}
+.d-crit{background:var(--vermillion-tint); color:var(--vermillion)}
+.d-warn{background:var(--mustard-tint); color:var(--mustard)}
+.d-ok{background:var(--celadon-tint); color:var(--celadon)}
+
+/* ── decisions ──────────────────────────── */
+.decisions{list-style:none; padding:0; margin:1.4rem 0 0; display:grid; gap:.9rem}
+.decisions li{
+  margin:0; padding:1rem 1.15rem; background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow);
+  display:grid; grid-template-columns:auto 1fr; gap:.2rem .9rem; align-items:start;
+}
+.decisions .n{
+  font-family:var(--mono); font-size:.78rem; font-weight:500; color:var(--on-indigo);
+  background:var(--indigo); width:1.55rem; height:1.55rem; display:grid;
+  place-content:center; border-radius:50%; margin-top:.28rem;
+}
+.decisions p{margin:0; font-size:.95rem}
+
+/* ── tables ─────────────────────────────── */
+.tscroll{overflow-x:auto; margin:0 0 1.15rem; border:1px solid var(--rule); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.87rem; line-height:1.65}
+caption{caption-side:top; text-align:left; font-size:.78rem; color:var(--ink-3); padding:.55rem .8rem; border-bottom:1px solid var(--rule); font-family:var(--mono); letter-spacing:.05em}
+th,td{padding:.6rem .8rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--rule)}
+thead th{
+  background:var(--surface-2); font-size:.74rem; font-weight:700;
+  letter-spacing:.07em; color:var(--ink-2); white-space:nowrap;
+  border-bottom:1px solid var(--rule-strong);
+}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+.tnote{font-size:.78rem; color:var(--ink-3); margin:-.6rem 0 1.2rem}
+
+/* ── tender cards ───────────────────────── */
+.card{
+  background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  box-shadow:var(--shadow); padding:1.35rem 1.4rem 1.5rem;
+  margin:1.6rem 0; border-left:4px solid var(--rule-strong);
+}
+.card.crit{border-left-color:var(--vermillion)}
+.card.warn{border-left-color:var(--mustard)}
+.card.ok{border-left-color:var(--celadon)}
+.card.mute{border-left-color:var(--rule-strong)}
+.card-head{display:flex; flex-wrap:wrap; gap:.55rem .7rem; align-items:center; margin-bottom:.55rem}
+.card h3{margin:.15rem 0 .9rem; font-size:1.08rem}
+.rank{
+  font-family:var(--mono); font-weight:500; font-size:.74rem; letter-spacing:.09em;
+  padding:.15rem .55rem; border-radius:2px; border:1px solid currentColor;
+}
+.rank-s{color:var(--vermillion); background:var(--vermillion-tint)}
+.rank-a{color:var(--indigo); background:var(--indigo-tint)}
+.rank-b{color:var(--ink-2)}
+.rank-c{color:var(--ink-3)}
+.tag{
+  font-size:.74rem; letter-spacing:.05em; padding:.15rem .55rem;
+  border-radius:2px; background:var(--surface-2); color:var(--ink-2);
+}
+.tag.hot{background:var(--vermillion-tint); color:var(--vermillion); font-weight:700}
+.tag.go{background:var(--mustard-tint); color:var(--mustard); font-weight:700}
+.facts{
+  display:grid; grid-template-columns:auto 1fr; gap:0;
+  font-size:.86rem; border-top:1px solid var(--rule); margin:0 0 1.15rem;
+}
+.facts dt{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:var(--ink-3);
+  padding:.45rem .9rem .45rem 0; border-bottom:1px solid var(--rule); white-space:nowrap;
+}
+.facts dd{margin:0; padding:.45rem 0; border-bottom:1px solid var(--rule); font-variant-numeric:tabular-nums}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+
+/* ── quotes from the tender documents ───── */
+blockquote{
+  margin:1rem 0 1.15rem; padding:.75rem 0 .75rem 1.1rem;
+  border-left:2px solid var(--indigo);
+  font-family:var(--serif); font-size:.94rem; line-height:1.85; color:var(--ink-2);
+}
+blockquote p{margin:0 0 .5rem}
+blockquote p:last-child{margin-bottom:0}
+blockquote strong{color:var(--ink)}
+.src{display:block; font-family:var(--mono); font-size:.7rem; letter-spacing:.08em; color:var(--ink-3); margin-top:.5rem}
+
+/* ── callouts ───────────────────────────── */
+.callout{
+  border:1px solid var(--rule); border-left:3px solid var(--mustard);
+  background:var(--mustard-tint); border-radius:3px;
+  padding:1rem 1.15rem; margin:1.4rem 0; font-size:.93rem;
+}
+.callout.good{border-left-color:var(--celadon); background:var(--celadon-tint)}
+.callout.info{border-left-color:var(--indigo); background:var(--indigo-tint)}
+.callout h4{margin-top:0; color:var(--ink-2)}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+
+/* ── verdict strip (the three findings) ─── */
+.verdicts{display:grid; gap:.7rem; margin:1.4rem 0 1.6rem}
+.verdict{
+  display:grid; grid-template-columns:1fr auto; gap:.3rem .9rem; align-items:center;
+  background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  padding:.85rem 1.1rem;
+}
+.verdict .q{font-size:.9rem; line-height:1.6; color:var(--ink-2)}
+.verdict .a{font-family:var(--serif); font-weight:700; font-size:1.02rem; color:var(--celadon); white-space:nowrap; text-align:right}
+.verdict .a.num{font-family:var(--mono); font-size:.92rem; letter-spacing:-.01em; color:var(--indigo)}
+
+/* ── checklist ──────────────────────────── */
+.checklist{list-style:none; padding:0; margin:1.2rem 0 0; display:grid; gap:.75rem; counter-reset:ck}
+.checklist li{
+  margin:0; padding-left:2.1rem; position:relative; font-size:.95rem;
+  counter-increment:ck;
+}
+.checklist li::before{
+  content:counter(ck); position:absolute; left:0; top:.32rem;
+  font-family:var(--mono); font-size:.7rem; color:var(--vermillion);
+  border:1px solid var(--vermillion); width:1.4rem; height:1.4rem;
+  display:grid; place-content:center; border-radius:2px;
+}
+
+/* ── footer ─────────────────────────────── */
+footer{margin-top:4rem; padding-top:1.4rem; border-top:1px solid var(--rule-strong); font-size:.8rem; color:var(--ink-3)}
+footer p{margin:0 0 .4rem}
+footer code{background:transparent; padding:0; color:var(--ink-2)}
+
+@media (max-width:34rem){
+  body{font-size:16px}
+  .masthead-meta{flex-direction:column-reverse; align-items:flex-start}
+  .deadlines li{grid-template-columns:1fr auto}
+  .dl-date{grid-column:1/-1; color:var(--ink-3)}
+  .facts{grid-template-columns:1fr; gap:0}
+  .facts dt{border-bottom:0; padding-bottom:0}
+  .facts dd{padding-top:.1rem}
+  .verdict{grid-template-columns:1fr}
+  .verdict .a{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <hr class="rule-double">
+  <div class="eyebrow">
+    <span>公募・企画競争 探索ワークフロー</span>
+    <span>2026.08.19</span>
+  </div>
+  <h1>第2回 公募巡回レポート</h1>
+  <p class="subtitle">ネットワーク解放下での tier_a 全数巡回と、持続化補助金＜共同・協業型＞の要件確定</p>
+  <div class="masthead-meta">
+    <dl class="meta-list">
+      <dt>宛先</dt>
+      <dd>一般社団法人ジャパンプロモーション　代表理事　生島 儀尊 様</dd>
+      <dt>実行範囲</dt>
+      <dd>runbook 手順0（到達性）／手順3（tier_a 直接巡回）／手順4（判定）</dd>
+      <dt>新規</dt>
+      <dd>4件（うち S格 1件）＋ 既報1件の要件確定</dd>
+    </dl>
+    <div class="seal" aria-label="第2回巡回">巡回<small>NO.02</small></div>
+  </div>
+  <hr class="rule-double close">
+</header>
+
+<section aria-labelledby="s0">
+  <div class="sec-head"><span class="sec-num">00</span><h2 id="s0">要旨</h2></div>
+
+  <p class="lede">今週いちばん重要なのは、<strong>ネットワーク制限が解除されたこと</strong>です。前回は WebSearch しか使えず公募要領を1本も読めませんでしたが、今回は PDF を直接ダウンロードして読めました。以下の判定はすべて<strong>公募要領の原文に基づく確定情報</strong>です。推定は推定と明記しています。</p>
+
+  <div class="band">
+    <h4>締切7日未満 ── 2026年8月19日 時点</h4>
+    <ul class="deadlines">
+      <li>
+        <span class="dl-date">08/21 17:00</span>
+        <span class="dl-name">JETRO ベオグラード博 日本館 <strong>行催事業務</strong><span>限度額 3億2,700万円／説明会・質問受付とも終了済</span></span>
+        <span class="dl-days d-crit">残り2日</span>
+      </li>
+      <li>
+        <span class="dl-date">08/24 14:00</span>
+        <span class="dl-name">第70回 <strong>東京都伝統工芸品展</strong> 運営管理業務<span>東京都中小企業振興公社</span></span>
+        <span class="dl-days d-crit">残り5日</span>
+      </li>
+      <li>
+        <span class="dl-date">08/25 14:00</span>
+        <span class="dl-name"><strong>海外展開シンポジウム</strong> 運営等業務委託<span>東京都中小企業振興公社</span></span>
+        <span class="dl-days d-crit">残り6日</span>
+      </li>
+      <li>
+        <span class="dl-date">08/25 09:00</span>
+        <span class="dl-name">JETRO 日本館運営 <strong>入札説明会の参加申込</strong><span>ODE@jetro.go.jp へメール</span></span>
+        <span class="dl-days d-crit">残り6日</span>
+      </li>
+      <li>
+        <span class="dl-date">08/26 17:00</span>
+        <span class="dl-name">JETRO <strong>等級確認の申請期限</strong><span>統一資格が未取得の場合の迂回路</span></span>
+        <span class="dl-days d-crit">残り7日</span>
+      </li>
+    </ul>
+  </div>
+
+  <h4>判断が要るもの</h4>
+  <ol class="decisions">
+    <li><span class="n">1</span><p><strong>小規模事業者持続化補助金＜共同・協業型＞第3回は、御社で申請できます。</strong>補助上限 3,000万円（参画事業者10者以上）／2,000万円（5〜9者）。海外展示会出展も正面から対象です。締切 9/30。ただし GビズIDプライム取得に数週間かかるため、未取得なら<strong>今週中に着手</strong>しないと間に合いません。</p></li>
+    <li><span class="n">2</span><p><strong>JETRO「2027年ベオグラード国際博覧会」日本館運営（入札）が締切 9/8。</strong>御社の主戦場そのものです。全省庁統一資格が未取得でも JETRO の等級確認申請（期限 8/26 17:00）で参加できます。ただし <strong>Pマークまたは ISMS 認証が必須</strong>で、ここが唯一かつ最大の関門です。</p></li>
+    <li><span class="n">3</span><p><strong>東京都中小企業振興公社に受付中の案件が2件。</strong>伝統工芸品展の運営管理（8/24 締切）と海外展開シンポジウム（8/25 締切）。いずれも受注実績のある発注元です。</p></li>
+  </ol>
+</section>
+
+<section aria-labelledby="sglance">
+  <div class="sec-head"><span class="sec-num">01</span><h2 id="sglance">現在応募可能な案件</h2></div>
+  <p>7件すべての一覧（22項目・並び替えと絞り込み可）は <a href="https://claude.ai/code/artifact/be823b72-7fe6-4f11-8a42-04a8bba591d6">公募案件リスト 2026.08.19</a> にあります。以下は応募可能なものだけの抜粋です。</p>
+  <div class="tscroll">
+    <table>
+      <caption>格付の高い順。予定価格が非公開の案件も除外していません（eligibility.md の非公開ルール）</caption>
+      <thead>
+        <tr><th>格付</th><th>案件</th><th>発注機関</th><th class="num">締切</th><th>規模</th><th>資格</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="rank rank-s">S</span></td><td>持続化補助金＜共同・協業型＞第3回</td><td>中小企業庁</td><td class="num">09/30</td><td class="num">上限 3,000万円</td><td>不要</td></tr>
+        <tr><td><span class="rank rank-a">A</span></td><td>ベオグラード博 日本館運営</td><td>JETRO</td><td class="num">09/08</td><td>非公開（億円規模と推定）</td><td>要・代替可</td></tr>
+        <tr><td><span class="rank rank-a">A</span></td><td>第70回 東京都伝統工芸品展 運営管理</td><td>東京都中小企業振興公社</td><td class="num">08/24</td><td>非公開</td><td>不要</td></tr>
+        <tr><td><span class="rank rank-a">A</span></td><td>海外展開シンポジウム 運営等</td><td>東京都中小企業振興公社</td><td class="num">08/25</td><td>非公開</td><td>不要</td></tr>
+        <tr><td><span class="rank rank-c">C</span></td><td>創業支援拠点 映像制作・デジタルPR</td><td>東京都中小企業振興公社</td><td class="num">08/26</td><td>非公開</td><td>不要</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="s1">
+  <div class="sec-head"><span class="sec-num">02</span><h2 id="s1">至急対応 ── 締切7日未満</h2></div>
+
+  <article class="card crit">
+    <div class="card-head"><span class="rank rank-a">A</span><span class="tag hot">残り5日</span><span class="tag">希望制指名競争入札</span></div>
+    <h3>第70回東京都伝統工芸品展に係る運営管理業務の委託</h3>
+    <div class="callout good">
+      <h4>8月24日は提案書の締切ではありません</h4>
+      <p>ビジネスチャンス・ナビの詳細ページを直接確認しました。<strong>契約方法は「希望制指名競争入札」</strong>、
+      現在の状態は<strong>「希望申請受付中」</strong>です。8/24 14:00 までに出すのは<strong>希望申請</strong>であって、
+      入札書ではありません。申請後に指名通知を受け、その段階で入札書を出します
+      （備考欄：「指名通知時に、『指名通知書』及び『入札書』をナビ上にアップいたします」）。
+      <strong>5日でやるのは提案書作成ではなく希望申請です。</strong>前回レポートで「委託」とだけ書いたのは不正確でした。</p>
+    </div>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>公益財団法人 東京都中小企業振興公社（契約管理番号 53）</dd>
+      <dt>契約方法</dt><dd><strong>希望制指名競争入札</strong></dd>
+      <dt>案件業種</dt><dd>その他業務委託</dd>
+      <dt>公示</dt><dd>令和8年8月18日 08:59〜</dd>
+      <dt>受付期間</dt><dd>令和8年8月18日 09:00 〜 <strong>令和8年8月24日 14:00</strong></dd>
+      <dt>入札資格</dt><dd>記載なし（希望申請要件・希望受付業種とも指定なし）</dd>
+      <dt>最低制限価格</dt><dd>適用なし</dd>
+      <dt>予定価格</dt><dd>非公開（仕様書はナビの添付資料。<strong>閲覧にログインが必要</strong>）</dd>
+      <dt>応募形態</dt><dd>単独応募可</dd>
+      <dt>統一資格</dt><dd>不要</dd>
+      <dt>都の資格</dt><dd><strong>不要</strong></dd>
+    </dl>
+    <h4>なぜ適合するか</h4>
+    <ul>
+      <li>発注元が令和4・5・7年度の受託実績先。加点要素「過去の発注元と同一機関」に該当</li>
+      <li>伝統工芸品の展示運営は事業ドメインの中核。実績91回のうち49回が伝統工芸品</li>
+    </ul>
+    <h4>確認事項</h4>
+    <ul>
+      <li>応募には<strong>ビジネスチャンス・ナビ（無料）への登録が必須</strong>。公社「契約のお知らせ」に「参加希望者は『ビジネスチャンス・ナビ』にご登録ください（無料）」と明記</li>
+      <li><strong>東京都の入札参加資格は要件になっていません。</strong>同ページの「選定の制限について」は5項目のみ（法令上の許可／経営状態／営業経歴1年以上／指名停止／社会的信用）で、資格登録の要求はありません。プロファイルの未確認項目がひとつ埋まりました</li>
+      <li>仕様書・予定価格はログインしないと読めません。<strong>公募要領は未読です</strong></li>
+    </ul>
+    <h4>懸念</h4>
+    <p>国内開催のため海外要素なし（減点 −1ランク）。それでも発注元一致の加点で A 相当と判定しました。</p>
+  </article>
+
+  <article class="card crit">
+    <div class="card-head"><span class="rank rank-a">A</span><span class="tag hot">残り6日</span><span class="tag">総合評価方式入札</span></div>
+    <h3>海外展開シンポジウム 運営等業務委託</h3>
+    <div class="callout good">
+      <h4>契約方法は「総合評価方式入札」── 価格だけでは決まりません</h4>
+      <p>ナビの詳細ページで確認しました。<strong>総合評価方式</strong>なので、価格に加えて企画内容・実施体制・
+      実績が評価されます。<strong>実績で差がつく御社に有利な方式です。</strong>
+      こちらも現在は<strong>希望申請受付中</strong>で、8/25 14:00 までに出すのは希望申請です。</p>
+    </div>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>公益財団法人 東京都中小企業振興公社（契約管理番号 51）</dd>
+      <dt>契約方法</dt><dd><strong>総合評価方式入札</strong></dd>
+      <dt>案件業種</dt><dd>その他業務委託</dd>
+      <dt>公示</dt><dd>令和8年8月7日 08:59〜</dd>
+      <dt>受付期間</dt><dd>令和8年8月7日 09:00 〜 <strong>令和8年8月25日 14:00</strong></dd>
+      <dt>入札資格</dt><dd>記載なし</dd>
+      <dt>最低制限価格</dt><dd>適用なし</dd>
+      <dt>予定価格</dt><dd>非公開（仕様書はナビの添付資料。<strong>閲覧にログインが必要</strong>）</dd>
+      <dt>応募形態</dt><dd>単独応募可</dd>
+      <dt>統一資格</dt><dd>不要</dd>
+    </dl>
+    <h4>なぜ適合するか</h4>
+    <p>「海外展開」は事業ドメインの中核テーマで、発注元も受託実績先です。公社は令和8年度に海外関連業務を継続的に発注しています。</p>
+    <div class="callout good">
+      <h4>本年度の公社 海外系発注（実績）</h4>
+      <p>Tokyo SME サポートデスク インド 2件／海外ビジネス・チャレンジ塾 2件／ベトナム現地商談会／タイ・ベトナム現地幹部人材育成講座／Food Japan 2026 商談プロモート／海外企業とのイノベーション創出支援事業（マレーシア）ほか</p>
+      <p><strong>公社の海外系案件は年間を通じて出続けており、tier_a の中で最も打率が高い発注元です。</strong>端境期でも週次確認の価値があります。</p>
+    </div>
+    <h4>懸念</h4>
+    <ul>
+      <li>シンポジウムは国内開催の可能性が高く、御社の強みである現地運営が活きにくい</li>
+      <li>仕様書未読。規模が500万円未満の可能性あり</li>
+    </ul>
+  </article>
+
+  <article class="card mute">
+    <div class="card-head"><span class="rank rank-c">C</span><span class="tag">残り7日</span><span class="tag">参考</span></div>
+    <h3>創業支援拠点（丸の内・多摩）生成AI映像コンテンツ制作及び鉄道・エリア連動型デジタルプロモーション業務委託</h3>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>東京都中小企業振興公社（整理番号 54）</dd>
+      <dt>締切</dt><dd>令和8年8月26日 14:00</dd>
+    </dl>
+    <p>デジタルプロモーションという語は近いものの、対象は創業支援拠点の国内集客であり、海外要素なし・映像制作主体。減点要素2つに該当するため C。参考掲載にとどめます。</p>
+  </article>
+</section>
+
+<section aria-labelledby="s2">
+  <div class="sec-head"><span class="sec-num">03</span><h2 id="s2">持続化補助金＜共同・協業型＞第3回 ── 要件を確定しました</h2></div>
+
+  <p>前回レポートで「S候補・要確認」としていた案件です。<strong>公募要領 第6版（令和8年8月4日公開、全47ページ）を全文読み、3つの論点をすべて確定させました。</strong></p>
+
+  <div class="verdicts">
+    <div class="verdict"><span class="q">一般社団法人は「地域振興等機関」として申請できるか</span><span class="a">できる</span></div>
+    <div class="verdict"><span class="q">補助上限額は</span><span class="a num">3,000万円 ／ 2,000万円</span></div>
+    <div class="verdict"><span class="q">海外展開は対象事業になるか</span><span class="a">なる</span></div>
+  </div>
+
+  <article class="card ok">
+    <div class="card-head"><span class="rank rank-s">S</span><span class="tag go">残り42日</span><span class="tag">補助金</span></div>
+    <h3>小規模事業者持続化補助金＜共同・協業型＞（第3回）</h3>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>中小企業庁（事務局：株式会社日本経営データ・センター）</dd>
+      <dt>申請受付</dt><dd>令和8年8月14日 〜 <strong>令和8年9月30日 17:00</strong></dd>
+      <dt>補助上限</dt><dd><strong>3,000万円</strong>（参画10者以上）／<strong>2,000万円</strong>（5〜9者）</dd>
+      <dt>実施期間</dt><dd>交付決定日 〜 令和9年12月10日</dd>
+      <dt>採択発表</dt><dd>令和8年11月頃。交付決定は採択から概ね1〜2か月後</dd>
+      <dt>応募形態</dt><dd>支援側（申請者＝地域振興等機関）として単独申請可。複数機関の共同申請も可</dd>
+      <dt>統一資格</dt><dd>不要</dd>
+      <dt>申請方法</dt><dd>Jグランツ電子申請のみ（<strong>GビズIDプライム必須</strong>）</dd>
+    </dl>
+  </article>
+
+  <h3>論点① ── 一般社団法人は申請できるか</h3>
+  <p>根拠は3点あります。</p>
+
+  <h4>1. 応募資格（P.6「４．応募資格・申請要件」冒頭）</h4>
+  <blockquote>
+    <p>本事業の対象となる申請者は、次の条件を満たす「<strong>法人</strong>」とする。</p>
+    <span class="src">公募要領 第6版 P.6</span>
+  </blockquote>
+  <p>法人格の種類を限定していません。一般社団法人は法人です。</p>
+
+  <h4>2. 地域振興等機関の定義⑤（P.1）</h4>
+  <blockquote>
+    <p>⑤地域の企業の販路開拓につながる支援を事業として行っている<strong>法人</strong></p>
+    <p>※⑤については申請書記載のこれまでの取り組み内容やその実績・効果等、総合的な（第３者による）審査を行い判断します。</p>
+    <span class="src">公募要領 第6版 P.1</span>
+  </blockquote>
+  <p>①〜④は商工会・商工会議所・中央会・商店街振興組合・事業協同組合と法人類型が特定されていますが、<strong>⑤だけは「法人」一般</strong>です。御社は WABI SABI STORE の運営と16都市91回の出展支援で「販路開拓につながる支援を事業として行っている」実態があり、⑤に該当すると主張できます。</p>
+
+  <h4>3. よくある質問 Q2・Q4</h4>
+  <blockquote>
+    <p><strong>Q2</strong>　地域振興等機関に、個人事業主はなることはできるのか。<br>
+    <strong>A2</strong>　できません。地域振興等機関の定義には個人事業主が該当する項目はございません。</p>
+    <span class="src">申請時によくあるご質問（第3回公募用）</span>
+  </blockquote>
+  <p>排除されるのは個人事業主＝法人格がない場合であり、法人格の種類ではありません。</p>
+  <blockquote>
+    <p><strong>Q4</strong>　「地域の企業の販路開拓につながる支援を事業として行っている法人」の「地域とは」どの程度の範囲を指すのか。<br>
+    <strong>A4</strong>　<strong>地域の範囲については特に制限はございません。</strong></p>
+    <span class="src">申請時によくあるご質問（第3回公募用）</span>
+  </blockquote>
+  <p>Q9 も「参画事業者の地域を限定する必要はございません」としています。つまり<strong>全国から工芸事業者を集めてよい</strong>ということです。御社の全国ネットワークがそのまま使えます。</p>
+
+  <div class="callout">
+    <h4>注意点が2つあります</h4>
+    <ul>
+      <li><strong>一般社団法人は「参画事業者」にはなれません。</strong>P.2 の参画事業者の範囲では「参画事業者とならない者」に一般社団法人が明記されています。これは<strong>支援される側</strong>の話で、支援する側（申請者）の要件とは別です。Q7 も「参画事業者と地域振興等機関に同一法人がなることはできません」としており、両者が別物であることを裏づけています。</li>
+      <li><strong>⑤該当性について事務局は事前回答しません。</strong>Q1 に「自社判断をしたうえで、申請してください。審査によりますので、事務局にお問い合わせいただいても回答いたしかねます」とあります。<strong>申請書（様式2-1）でこれまでの支援実績をどこまで具体的に書けるかが採否を分けます。</strong>実績資料の 3,611社／6,618件／27自治体 はここで使う数字です。</li>
+    </ul>
+  </div>
+
+  <h3>論点② ── 補助上限額</h3>
+  <div class="tscroll">
+    <table>
+      <caption>公募要領 第6版 P.8「６．補助上限額及び補助率」</caption>
+      <thead><tr><th>参画事業者数</th><th class="num">補助上限額</th></tr></thead>
+      <tbody>
+        <tr><td>10者以上</td><td class="num"><strong>3,000万円</strong></td></tr>
+        <tr><td>5者以上9者以下</td><td class="num"><strong>2,000万円</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>補助率は経費区分ごとに異なります。</p>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>経費区分</th><th>補助率</th></tr></thead>
+      <tbody>
+        <tr><td>① 謝金</td><td>定額（＝100%）</td></tr>
+        <tr><td>② 地域振興等機関旅費</td><td>定額</td></tr>
+        <tr><td>③ 参画事業者旅費</td><td>2/3 以内</td></tr>
+        <tr><td>④ 借料</td><td>2/3 以内</td></tr>
+        <tr><td>⑤ 設営・設計費（内外装費、整備工事等）</td><td>2/3 以内</td></tr>
+        <tr><td>⑥ 展示会等出展費</td><td>2/3 以内</td></tr>
+        <tr><td>⑦ 備品費</td><td>定額</td></tr>
+        <tr><td>⑧ 広報費</td><td>2/3 以内</td></tr>
+        <tr><td>⑨ 印刷製本費</td><td>定額</td></tr>
+        <tr><td>⑩ 委託・外注費</td><td>定額（①②⑦⑨⑩の合計の 1/2 以内が上限）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>設計上効く制約</h4>
+  <ul>
+    <li>定額補助率の経費<strong>のみ</strong>を計上した申請は認められません（P.8）</li>
+    <li>複数の取組（展示会／催事販売／販売拠点構築）で申請する場合、<strong>すべての取組に10者以上</strong>参画してはじめて3,000万円（Q27）。1つでも5〜9者なら2,000万円</li>
+    <li>実績報告時に10者（または5者）を下回ると<strong>補助金は支払われません</strong>（P.11 ⑥、Q21）</li>
+  </ul>
+
+  <h3>論点③ ── 海外展開は対象事業になるか</h3>
+  <p>3か所に根拠があります。</p>
+
+  <h4>1. ⑥展示会等出展費（P.16）</h4>
+  <blockquote>
+    <p><strong>国内外</strong>で開催される展示会・商談会、販売会に参画事業者の商品・製品・サービス等を出展するために支払われる経費（補助率 2/3以内）</p>
+    <span class="src">公募要領 第6版 P.16</span>
+  </blockquote>
+
+  <h4>2. ⑩委託・外注費 注4（P.17）</h4>
+  <blockquote>
+    <p><strong>海外での展示会･商談会､販売会</strong>における通訳､広告物や会議資料等の翻訳に要する経費は⑩委託・外注費に計上。</p>
+    <span class="src">公募要領 第6版 P.17</span>
+  </blockquote>
+
+  <h4>3. 別添２「旅費の支給基準について」に【国外旅費】の節がある</h4>
+  <p>国別・都市別の宿泊費上限表が載っています。御社の主戦場では次のとおりです。</p>
+  <div class="tscroll">
+    <table>
+      <caption>公募要領 第6版 別添2（P.24 以降）</caption>
+      <thead><tr><th>都市</th><th class="num">宿泊費上限（一夜）</th><th class="num">日当</th></tr></thead>
+      <tbody>
+        <tr><td>パリ</td><td class="num">38,000円</td><td class="num">5,400円</td></tr>
+        <tr><td>マドリード</td><td class="num">36,000円</td><td class="num">5,400円</td></tr>
+        <tr><td>バルセロナ</td><td class="num">34,000円</td><td class="num">5,400円</td></tr>
+        <tr><td>ローマ</td><td class="num">30,000円</td><td class="num">5,400円</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <blockquote>
+    <p>【国外旅費】※不課税<br>
+    <strong>補助金事務局と協議の上、必要に応じて支出できるものとする。</strong><br>
+    ・航空賃、鉄道賃、及び船賃は、<strong>エコノミークラス</strong>（普通クラスに相当するもの）による実費額を支給する。</p>
+    <span class="src">公募要領 第6版 別添2</span>
+  </blockquote>
+
+  <h3>海外展開で申請する場合の重大な制約</h3>
+  <p>対象にはなりますが、<strong>御社の通常の事業の形そのままでは通りません。</strong>設計変更が要る点を重い順に挙げます。</p>
+
+  <div class="callout">
+    <h4>最優先の確認事項</h4>
+    <p><strong>国際輸送費の経費区分が存在しません。</strong>経費区分は①〜⑩の10種類のみで、運搬費・輸送費・通関費という区分がありません。⑩委託・外注費での計上可否は要領に記載がなく、<strong>事務局への事前確認が必須</strong>です。海外出展では最大級のコストであり、ここが認められないと積算が成立しません。</p>
+  </div>
+
+  <ol>
+    <li><strong>「テストマーケティング・テスト販売等に係る経費」は補助対象外</strong>（P.19「経費として計上できないもの」）。岩手県案件のようなテスト販売型の建付けは<strong>そのままでは通りません</strong>。「販売拠点構築の取組」の定義（P.5）でも「テストマーケティング、展示会・商談会や催事、販売会への出展は販売拠点構築の取組とはなりません」と念押しされています。</li>
+    <li><strong>参画事業者自身が渡航・出展する必要があります。</strong>
+      <blockquote>
+        <p>※展示会・商談会は原則参画事業者自らが参加する必要があります。申請者や一部の参画事業者、営業代行業者等が代理で行う場合は<strong>正当な理由が必要</strong>となります。（正当な理由として認められない場合、補助金のお支払いができません）</p>
+        <span class="src">公募要領 第6版 P.4</span>
+      </blockquote>
+      小規模事業者5〜10者を実際にパリ等へ連れて行く前提の計画になります。参画事業者旅費は2/3補助（自己負担1/3）なので、<strong>事業者側の資金負担をどう説明して参画に同意してもらうか</strong>が実務上の最大の山です。</li>
+    <li><strong>申請者自身の販路開拓は対象外。</strong>要領1ページ目の冒頭に
+      <blockquote>
+        <p>・本事業は、地域の小規模事業者の販路開拓を支援するものであり、<strong>地域振興等機関（申請者）の販路開拓を支援する事業ではありません。</strong></p>
+        <span class="src">公募要領 第6版 P.1</span>
+      </blockquote>
+      WABI SABI STORE への送客を目的に見える設計は不可。⑥の注3で「補助事業者自身の出展料は補助対象外」とも明記されています。</li>
+    <li><strong>「地域おこし」「業界支援」「観光PR」とならないよう留意</strong>（P.4）。シティプロモーション色を出すと目的外と判断されます。</li>
+    <li>ビジネスクラス不可／パスポート・ビザ取得料は対象外／商品の仕入れ・販売に直接かかる費用は対象外／参画事業者の商品保管費用は対象外（Q16）。</li>
+    <li><strong>交付決定日前に出展の本申込みをすると補助対象外</strong>（⑥注1）。採択発表が令和8年11月頃、交付決定はそこから1〜2か月 → <strong>実質2027年1月以降</strong>。事業期間は令和9年12月10日まで。<strong>狙えるのは2027年春〜秋の展示会</strong>です。Maison&amp;Objet Paris の1月会期は交付決定に間に合わない可能性が高く、9月会期のほうが安全です。</li>
+  </ol>
+
+  <h3>締切までにやること</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th class="num">期限</th><th>作業</th></tr></thead>
+      <tbody>
+        <tr><td class="num">今週中</td><td><strong>GビズIDプライムの取得着手</strong>（取得に数週間。暫定アカウントは使用不可）</td></tr>
+        <tr><td class="num">今週中</td><td>国際輸送費の計上可否を事務局へメール照会（kkr6@kyodokyogyohojokin.info）</td></tr>
+        <tr><td class="num">8月中</td><td>参画事業者5者（できれば10者）の内諾取得。小規模事業者の定義＝商業・サービス業は従業員5人以下、製造業その他は20人以下</td></tr>
+        <tr><td class="num">9月上旬</td><td>直近2年分の法人税・消費税申告書、決算書（貸借対照表・損益計算書）の準備</td></tr>
+        <tr><td class="num">9月中旬</td><td>様式1〜3の作成。様式4（地方公共団体の事業支援計画書）は任意だが、27自治体との関係を考えれば<strong>取得したほうが有利</strong></td></tr>
+        <tr><td class="num">09/30 17:00</td><td>Jグランツ提出</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>その他の申請条件</h4>
+  <ul>
+    <li>1公募につき申請は1回のみ（共同申請含む）</li>
+    <li>事業終了後<strong>5年間</strong>の報告義務</li>
+    <li>申請書類の作成に委託予定先等の利害関係者が関与していないこと</li>
+    <li>補助金の支払いは原則<strong>事業終了後の精算払い</strong>（＝立替が必要）</li>
+  </ul>
+</section>
+
+<section aria-labelledby="s4">
+  <div class="sec-head"><span class="sec-num">04</span><h2 id="s4">締切に余裕がある案件</h2></div>
+
+  <article class="card warn">
+    <div class="card-head"><span class="rank rank-a">A</span><span class="tag go">残り20日</span><span class="tag">一般競争入札・総合評価</span></div>
+    <h3>JETRO「2027年ベオグラード国際博覧会」日本館運営</h3>
+    <p>後述の行催事業務と<strong>同じ博覧会の、別発注</strong>です。こちらは間に合います。</p>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>JETRO 海外展開支援部 国際博覧会課（担当 岡田・塩入・石原）</dd>
+      <dt>公告日</dt><dd>2026年8月18日（<strong>昨日公告されたばかり</strong>）</dd>
+      <dt>説明会</dt><dd>2026年8月25日 11:00（<strong>参加希望は 8月25日 9:00 までにメール申込</strong>）</dd>
+      <dt>質問受付</dt><dd>2026年8月25日 11:00 〜 8月28日 14:00</dd>
+      <dt>受領期限</dt><dd><strong>2026年9月8日 15:00 必着</strong></dd>
+      <dt>プレゼン</dt><dd>2026年9月11日（1者45分程度）</dd>
+      <dt>開札</dt><dd>2026年9月14日 11:00</dd>
+      <dt>履行期間</dt><dd>契約締結日 〜 2027年12月31日</dd>
+      <dt>予定価格</dt><dd>非公開（同博覧会の行催事業務が3.27億円であることから、<strong>運営業務も億円単位と推定</strong>）</dd>
+      <dt>保証金</dt><dd>入札保証金・契約保証金とも免除</dd>
+    </dl>
+
+    <div class="callout good">
+      <h4>全省庁統一資格が未取得でも参加できます ── 今回いちばんの発見</h4>
+      <blockquote>
+        <p>（２）令和7・8・9年度の全省庁統一資格における資格の種類「役務の提供等」の A 等級又は B 等級に格付けされている者であること。なお、<strong>全省庁統一資格がない場合は、日本貿易振興機構に当該案件のみに有効な等級確認の申請をし、審査を受け、日本貿易振興機構発行の等級確認結果通知書にて当該資格を有することが確認できた者であること。</strong></p>
+        <p>＜等級確認の申請期限＞　<strong>2026年8月26日 17:00</strong><br>
+        ＜等級確認結果の通知期限＞　2026年8月27日 17:00</p>
+        <span class="src">入札公告 2026年8月18日 ２.入札参加資格</span>
+      </blockquote>
+      <p>8月26日17時までに JETRO へ等級確認を申請すれば、統一資格の取得を待たずに入札できます。申請方法は入札説明書別添①に記載（入札説明書は未取得）。</p>
+    </div>
+
+    <div class="callout">
+      <h4>ただし最大の関門があります</h4>
+      <blockquote>
+        <p>（４）以下のいずれかの要件を満たすこと。<br>
+        ①<strong>プライバシーマーク</strong>の使用許諾を保有していること。（更新手続き中の場合も保有しているものとみなす）<br>
+        ②<strong>情報セキュリティマネジメントシステム（ISMS）認証</strong>を取得していること。</p>
+        <span class="src">入札公告 2026年8月18日 ２.入札参加資格</span>
+      </blockquote>
+      <p>御社の提案書には情報セキュリティ体制（UTM: Check Point CP1530WIFI、Defender + Kaspersky の二重対策、アクセス制限規程）の記載がありますが、<strong>Pマーク／ISMS の認証取得はプロファイル上未確認</strong>です。どちらも保有していない場合、単独では入札できません。</p>
+      <p><strong>救済策：</strong>公告（５）により、共同企業体を結成する場合、この要件は<strong>主幹事法人が満たしていれば足ります</strong>。ただし主幹事が連絡窓口・支払窓口になるため、御社は構成員の立場になります。</p>
+    </div>
+
+    <h4>必要な提出物（公告 3.(1)）</h4>
+    <p>① 入札書及び入札書明細（封緘）／② 提案書8部（正1・副7）／③ 資格を証する書類の写し／④ Pマーク or ISMS の証明書の写し／⑤ 委任状／⑥（該当者のみ）ワーク・ライフ・バランス認定書類／⑦ <strong>情報セキュリティに関する調査票、情報管理体制図及び情報取扱者名簿</strong>／⑧（該当者のみ）協定書等</p>
+    <p>⑦ は御社が令和7年度「東京手仕事」提案書で作成済みのものが流用できます。</p>
+
+    <h4>今すぐ必要な判断</h4>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th class="num">期限</th><th>作業</th></tr></thead>
+        <tbody>
+          <tr><td class="num">08/25 09:00</td><td>入札説明会の参加申込メール（ODE@jetro.go.jp、件名「【入札説明会参加希望】2027年ベオグラード国際博覧会日本館運営」）</td></tr>
+          <tr><td class="num">08/25 11:00</td><td>入札説明会 出席（JETRO本部5階入札室、1者2名まで）</td></tr>
+          <tr><td class="num">08/26 17:00</td><td>全省庁統一資格の等級確認申請（統一資格が間に合わない場合）</td></tr>
+          <tr><td class="num">08/28 14:00</td><td>質問締切</td></tr>
+          <tr><td class="num">09/08 15:00</td><td>入札書・提案書8部の提出</td></tr>
+          <tr><td class="num">09/11</td><td>プレゼンテーション</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>懸念</h4>
+    <ul>
+      <li>Pマーク／ISMS の保有状況が不明。<strong>ここが未充足なら共同企業体一択です</strong></li>
+      <li>入札説明書・仕様書を未取得のため、業務内容の詳細と実績要件が未確認。<strong>公募要領は未読です</strong></li>
+      <li>セルビアでの長期運営（2027年12月まで）に耐える現地体制の構築が必要</li>
+    </ul>
+  </article>
+</section>
+
+<section aria-labelledby="s3">
+  <div class="sec-head"><span class="sec-num">05</span><h2 id="s3">応募が間に合わないが、記録しておくもの</h2></div>
+
+  <article class="card crit">
+    <div class="card-head"><span class="rank rank-s">S</span><span class="tag hot">残り2日・実質不可</span><span class="tag">企画競争</span></div>
+    <h3>JETRO「2027年ベオグラード国際博覧会」日本館行催事業務</h3>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>JETRO 海外展開支援部 国際博覧会課（担当 吉安・塩入・石原）</dd>
+      <dt>公告日</dt><dd>2026年7月23日</dd>
+      <dt>締切</dt><dd><strong>2026年8月21日 17:00 必着</strong></dd>
+      <dt>委託限度額</dt><dd><strong>327,000,000円</strong>（税別、セルビア付加価値税込み）</dd>
+      <dt>契約期間</dt><dd>契約締結日 〜 2027年12月31日</dd>
+      <dt>統一資格</dt><dd><strong>不要</strong></dd>
+    </dl>
+
+    <p><strong>適合度だけを見れば、今回見つかった中で最も御社に近い案件です。</strong>応募資格に全省庁統一資格の要求がなく、実績要件も次のとおりです。</p>
+    <blockquote>
+      <p>(10) 国際博覧会（国内外）あるいは類似する大型展示において、行催事業務のコンセプト、実施計画策定、企画業務の実績があること。かつ、これら実績のうち<strong>最低2回以上は海外における同様の業務実績</strong>であること。</p>
+      <span class="src">公募公告 2026年7月23日 ２.応募資格</span>
+    </blockquote>
+    <p>JAPAN EXPO パビリオン WABI SABI（パリ、2011〜）、MAISON&amp;OBJET（パリ、2023〜2025）、WORLD ART DUBAI、MANGA BARCELONA で優に充足します。コンソーシアム（(4)）も認められています。</p>
+
+    <h4>それでも今回は出せません。理由は3つです</h4>
+    <ol>
+      <li>提案書<strong>10部</strong>＋見積書を紙で持参または郵送（FAX・メール不可）。締切まで2日</li>
+      <li>公募説明会（7/30）も質問受付（〜8/4）も<strong>すでに終了</strong>しており、公募要領の交付を受けていない状態から作れる分量ではありません</li>
+      <li>応募資格(8)「<strong>セルビアの現地法規制等の情報を入手できる体制</strong>を構築している（例：セルビアに関連会社または協力会社がある…）」を満たす体制が現時点でありません</li>
+    </ol>
+
+    <div class="callout info">
+      <h4>この案件から学ぶべきこと</h4>
+      <ul>
+        <li>JETRO の国際博覧会案件は<strong>全省庁統一資格が不要</strong>な公募形式で出ることがあります。資格取得を待たずに狙える系統です</li>
+        <li><strong>JETRO 海外展開支援部 国際博覧会課（Tel: 03-3582-4688）を巡回対象に固定します。</strong>国際博覧会は数年おきに必ず開催され、日本館は「総合プロデュース」「行催事」「運営」「設計・監理」などに分割発注されます</li>
+        <li>セルビアに限らず、<strong>開催国の現地パートナーを事前に持っているかどうか</strong>が参加要件に直結します。パリの SUS ENIS／SHIBUYA INTERNATIONAL に加え、欧州各国の協力先を平時から広げておく価値があります</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card mute">
+    <div class="card-head"><span class="rank rank-c">C</span><span class="tag">資格が間に合わない</span></div>
+    <h3>国際交流基金「JOI 25周年記念事業広報用動画制作業務委託契約」</h3>
+    <p>締切 2026年8月20日 12時。<strong>令和7・8・9年度の全省庁統一資格（役務の提供等）A〜D等級が必須</strong>で、申請中の御社は参加不可。かつ動画制作単体は主戦場ではありません。記録のみ。</p>
+  </article>
+</section>
+
+<section aria-labelledby="s5f">
+  <div class="sec-head"><span class="sec-num">06</span><h2 id="s5f">近く公告されると見込まれる案件（予測）</h2></div>
+
+  <p class="lede">いま応募できるものだけを追っていると、パイプラインが途切れます。各発注元の<strong>過年度の公告実績を全数走査</strong>して、
+  次にいつ何が出るかを割り出しました。<strong>推測ではなく実測です。</strong>「何年連続で、いつ公告されたか」を根拠として全件に付けています。</p>
+
+  <div class="callout">
+    <h4>この調査で、前回レポートの季節判断が2つ誤りだと分かりました</h4>
+    <ul>
+      <li><strong>「伝産協会は毎年4月上旬公告」は誤り。</strong>公告時期は年ごとに動きます
+        （令和6年度 2024-06-26／令和7年度 2025-06-23／令和8年度 2026-04-01）。
+        4月だけ見ていると2年分を取り逃していました。<strong>3月中旬〜7月上旬を通して監視が必要</strong>です。</li>
+      <li><strong>「7〜10月は端境期」も誤り。</strong>JETRO は7〜11月に翌年のジャパンパビリオン
+        設計・監理を展示会ごとに公告しています。<strong>いまが本番の時期</strong>です。</li>
+    </ul>
+    <p><code>workflow/runbook.md</code> の季節調整表は全面的に書き直しました。</p>
+  </div>
+
+  <h3>最優先 ── 御社が受注した案件そのものの再公告</h3>
+
+  <article class="card ok">
+    <div class="card-head"><span class="rank rank-s">S</span><span class="tag go">2027年2〜3月</span><span class="tag">予測</span></div>
+    <h3>「東京手仕事」MAISON &amp; OBJET 出展及びポップアップストア運営業務</h3>
+    <dl class="facts">
+      <dt>発注機関</dt><dd>公益財団法人 東京都中小企業振興公社</dd>
+      <dt>予測公告</dt><dd><strong>2027年2月〜3月</strong></dd>
+      <dt>根拠</dt><dd>令和7年度分の御社の入札書が <strong>2025-03-18</strong>。令和8年度も「東京手仕事プロジェクトにおける海外展示会の運営業務の委託（Maison &amp; Objet）」として発注済み。<strong>3年連続</strong></dd>
+      <dt>想定規模</dt><dd>40,986,000円（令和7年度の御社の落札額。次回も同水準と推定）</dd>
+    </dl>
+    <p><strong>これが最大の再受注機会です。</strong>令和7年度に御社が受注した案件そのもので、提案書・積算内訳書・
+    実施体制の資料がすべて手元にあります。<strong>2027年1月から公社の契約情報を毎週確認してください。</strong></p>
+  </article>
+
+  <h3>伝統的工芸品産業振興協会 ── 主力事業と一致</h3>
+  <div class="tscroll">
+    <table>
+      <caption>公募公告カテゴリ121件を全数走査した実測値</caption>
+      <thead><tr><th>格付</th><th>案件</th><th>監視開始</th><th>根拠（過去の公告・締切）</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rank rank-s">S</span></td><td>海外における伝統的工芸品テストマーケティング業務</td><td class="num"><strong>2027年3月中旬</strong></td><td>4年連続。R6: 06-26公告/07-12締切 ／ R7: 06-23公告/08-11締切 ／ R8: 04-01公告/05-15締切。<strong>7月上旬まで監視を緩めないこと</strong></td></tr>
+        <tr><td><span class="rank rank-s">S</span></td><td>海外における伝統的工芸品実演・ワークショップ業務</td><td class="num">2027年3月中旬</td><td>令和8年度に新設（04-01公告/05-15締切）。テストマーケティングと同時公告</td></tr>
+        <tr><td><span class="rank rank-c">C</span></td><td>英語・翻訳業務</td><td class="num">2027年3月下旬</td><td><strong>5年連続</strong>（締切 2022-07-04 / 2023-06-09 / 2024-03-25 / 2025-06-17 / 2026-06-15）。規模は小さいが協会との取引実績を作る入口</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>東京都中小企業振興公社 ── 毎年出るもの</h3>
+  <div class="tscroll">
+    <table>
+      <caption>過年度契約情報（令和5〜7年度）から抽出</caption>
+      <thead><tr><th>格付</th><th>案件</th><th>予測公告</th><th>根拠</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rank rank-a">A</span></td><td>第71回 東京都伝統工芸品展 運営管理業務</td><td class="num">2027年8月中旬</td><td>第68回（令和6年度）→ 令和7年度 → 第70回（令和8年度 08-18公告）と3年連続</td></tr>
+        <tr><td><span class="rank rank-a">A</span></td><td>TOKYO職人展 運営管理業務</td><td class="num">2027年5月中旬</td><td>令和6・7・8年度と3年連続（令和8年度は 2026-05-19 公告）</td></tr>
+        <tr><td><span class="rank rank-a">A</span></td><td>海外テストマーケティング・商談会 企画運営等委託</td><td class="num">2027年前半</td><td>令和5・6・7年度と3年連続</td></tr>
+        <tr><td><span class="rank rank-b">B</span></td><td>東京インターナショナル・ギフト・ショー春2027 公社パビリオン運営</td><td class="num">2026年10〜12月</td><td>春2025・春2026と2年連続</td></tr>
+        <tr><td><span class="rank rank-b">B</span></td><td>海外展示会出展ブース装飾等委託（複数単価契約）</td><td class="num">通年・随時</td><td>Ambiente／ATX WEST／D&amp;M WEST／NIPPON HAKU BANGKOK／POWERGEN／Food Japan 等で毎年複数</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>JETRO ── 7〜11月がジャパンパビリオンの公告シーズン</h3>
+  <p>展示会ごとに<strong>開催の約1年前</strong>に設計・監理等が入札公告されます。前年の公告日から次を予測しました。
+  いずれも食品系展示会のため主戦場ではありませんが、<strong>ブース設計施工の実績づくりと JETRO との取引開始の入口</strong>になります。</p>
+  <div class="tscroll">
+    <table>
+      <caption>JETRO 調達情報「設計監理」カテゴリの実測値</caption>
+      <thead><tr><th>案件</th><th>予測公告</th><th>前年の公告日</th></tr></thead>
+      <tbody>
+        <tr><td>FHA 2027 Food &amp; Beverage ジャパンパビリオン 設計・監理等</td><td class="num"><strong>2026年8月下旬 ← いま</strong></td><td class="num">2025-08-21</td></tr>
+        <tr><td>Seafood Expo Global 2027 ジャパンパビリオン 設計・監理等</td><td class="num">2026年9月上旬</td><td class="num">2025-09-08</td></tr>
+        <tr><td>Summer Fancy Food Show 2027 ジャパンパビリオン 設計・監理等</td><td class="num">2026年10月下旬</td><td class="num">2025-10-21</td></tr>
+        <tr><td>National Restaurant Association Show 2027 設計・監理等</td><td class="num">2026年10月下旬</td><td class="num">2025-10-22</td></tr>
+        <tr><td>THAIFEX 2027 ジャパンパビリオン 設計・監理等</td><td class="num">2026年11月中旬</td><td class="num">2025-11-19</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>国の補助金</h3>
+  <p><strong>小規模事業者持続化補助金＜共同・協業型＞第4回</strong>は <strong>2027年1〜3月</strong>と予測します。
+  第1回が 2025-04-25 公告、第2回が 2025-12-23 公告（受付1/16〜）、第3回が 2026-07-08 公告（受付8/14〜）で、
+  概ね半年周期です。<strong>第3回に出す／出さないの判断がそのまま第4回の準備になります。</strong></p>
+</section>
+
+<section aria-labelledby="s5">
+  <div class="sec-head"><span class="sec-num">07</span><h2 id="s5">営業機会 ── 応募ではなく、顧客側が使う制度</h2></div>
+  <p>台帳（<code>data/ledger.csv</code>）には載せず、参考として掲載します。いずれも CLAIR です。</p>
+
+  <h4>プロモーションアドバイザー制度</h4>
+  <blockquote>
+    <p>海外プロモーションの各分野でご活躍されている方々を「プロモーションアドバイザー」として紹介する制度です。各自治体の要望に応じて、最適なアドバイザーを紹介しています。</p>
+    <span class="src">CLAIR「活動支援・助成などの申請」</span>
+  </blockquote>
+  <p>公募案件ではありませんが、<strong>自治体案件の入口として直接的です。</strong>生島様の登録可否を問い合わせる価値があります。担当：交流支援部経済交流課　keishin@clair.or.jp／03-5213-1726</p>
+
+  <h4>海外活動支援</h4>
+  <p>「地元産品の販路拡大、観光PRなど地方自治関係者が海外で行う様々な活動」を CLAIR の海外事務所（パリ含む）が支援する制度。自治体案件を取りに行く際、<strong>提案書に CLAIR パリ事務所との連携を書けると強い</strong>です。担当：総務部企画調査課　kikaku@clair.or.jp</p>
+
+  <h4>経済活動助成事業／国際交流支援事業</h4>
+  <p>いずれも助成対象は地方自治体等であり御社は直接申請できませんが、<strong>自治体が受給し、その執行を御社が受託する</strong>構図が成立します。既存の27自治体との関係で提案材料になります。</p>
+</section>
+
+<section aria-labelledby="s7">
+  <div class="sec-head"><span class="sec-num">08</span><h2 id="s7">tier_a 7組織の巡回結果</h2></div>
+  <div class="tscroll">
+    <table>
+      <caption>runbook 手順3 ── frequency: every_run</caption>
+      <thead><tr><th>組織</th><th class="num">到達</th><th class="num">該当</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>伝統的工芸品産業振興協会</td><td class="num">200</td><td class="num">0件</td><td>公募公告カテゴリの最新は締切 2026/07/09。4〜6月に集中し現在は端境期。次は2027年3月中旬から</td></tr>
+        <tr><td>東京都中小企業振興公社</td><td class="num">200</td><td class="num"><strong>3件</strong></td><td>tier_a で唯一の当たり。海外系案件を年間通じて発注しており最も打率が高い</td></tr>
+        <tr><td>├ 東京手仕事</td><td class="num">200</td><td class="num">0件</td><td>公募情報の掲載なし。事業紹介サイト</td></tr>
+        <tr><td>自治体国際化協会（CLAIR）</td><td class="num">200</td><td class="num">0件</td><td><strong>調達・入札の専用ページが存在しません。</strong>公募は新着情報に混ざって出ます。助成事業はすべて地方自治体向けで直接応募不可。ただし §07 の営業機会あり</td></tr>
+        <tr><td>JETRO</td><td class="num">200</td><td class="num"><strong>2件</strong></td><td>調達情報は入札・公募が分離。<strong>両方を毎回見る必要があります</strong></td></tr>
+        <tr><td>中小機構</td><td class="num">200</td><td class="num">0件</td><td>公募中はインキュベータ入居者募集4件＋アドバイザー募集1件＋グローバルネットワーク形成支援事業（参加企業＝中小企業者向け）。いずれも対象外</td></tr>
+        <tr><td>中小企業庁</td><td class="num">200</td><td class="num"><strong>1件</strong></td><td>委託事業は「現在公募中の案件はありません」。他の補助金（新事業進出、省力化投資、持続化の一般型・災害支援枠等）はいずれも中小企業者・小規模事業者本人が対象で一般社団法人は申請不可</td></tr>
+        <tr><td>国際交流基金（JF）</td><td class="num">200</td><td class="num">0件</td><td>企画競争5件・公募2件はいずれも動画制作・広報記事出稿・日本語教育システムで主戦場外。かつ全省庁統一資格が必須</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="s8">
+  <div class="sec-head"><span class="sec-num">09</span><h2 id="s8">ネットワーク到達性の記録</h2></div>
+
+  <div class="callout good">
+    <h4>前回からの最大の変化</h4>
+    <p><code>curl https://www.jgrants-portal.go.jp/</code> が <strong>200</strong> を返します（前回は <code>000</code> の全遮断）。<strong>公募要領の PDF を直接ダウンロードして読める状態です。</strong>本レポートの持続化補助金の判定は、すべて要領原文に基づいています。</p>
+  </div>
+
+  <h4>遮断されたドメイン ── 追加すべき許可ドメイン</h4>
+  <p>プロキシの <code>recentRelayFailures</code> で <code>connect_rejected</code>（policy denial）を確認しました。</p>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>ドメイン</th><th>影響</th></tr></thead>
+      <tbody>
+        <tr><td><code>www.mirasapo-plus.go.jp</code></td><td>中小企業支援制度の横断検索（tier_b）。<strong>月次巡回で必要。追加推奨</strong></td></tr>
+        <tr><td><code>www.kougei.or.jp</code></td><td>日本工芸会系。tier_a 1番の伝産協会は <code>kyokai.kougeihin.jp</code> で到達できるため実害は小</td></tr>
+        <tr><td><code>s-hojokin.jp</code></td><td>省力化投資補助金事務局。優先度低</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <h4>UAによる403 ── ポリシーではなくサイト側の挙動</h4>
+    <p><code>www.chusho.meti.go.jp</code> と <code>www.meti.go.jp</code> は、curl のデフォルト UA では <strong>403</strong> を返しますが、ブラウザ相当の User-Agent を付けると <strong>200</strong> になります。CloudFront の UA フィルタです。</p>
+    <p><strong>これは許可ドメインの問題ではありません。</strong>次回以降、巡回スクリプトは常にブラウザ相当の UA を付けてください。前回「経産省系が読めない」と判断したのは、この UA が原因だった可能性があります。<code>workflow/sources.yaml</code> の冒頭に注記を追加済みです。</p>
+  </div>
+</section>
+
+<section aria-labelledby="s6">
+  <div class="sec-head"><span class="sec-num">10</span><h2 id="s6">既報案件の状況と巡回範囲</h2></div>
+
+  <div class="tscroll">
+    <table>
+      <caption>runbook 手順7 ── 締切7日以内に迫っている既報案件はありません</caption>
+      <thead><tr><th>案件</th><th>発注機関</th><th>今回</th></tr></thead>
+      <tbody>
+        <tr><td>持続化補助金＜共同・協業型＞第3回</td><td>中小企業庁</td><td><strong>検討中</strong>へ更新。補助上限3,000万円、締切9/30を確定</td></tr>
+        <tr><td>海外における伝統的工芸品テストマーケティング業務</td><td>伝産協会</td><td>変更なし。次回公告は2027年3月中旬〜4月上旬を厳重監視</td></tr>
+        <tr><td>海外における伝統的工芸品実演・ワークショップ業務</td><td>伝産協会</td><td>同上</td></tr>
+        <tr><td>その他6件</td><td>—</td><td>締切超過のまま変更なし</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>巡回範囲の記録</h4>
+  <div class="tscroll">
+    <table>
+      <tbody>
+        <tr><th>実行日</th><td class="num">2026-08-19</td></tr>
+        <tr><th>確認ソース</th><td>tier_a 7組織（8ドメイン）を直接巡回＋中小企業庁 補助金/委託/入札の3ページ＋JETRO 入札・公募の両ページ＋経産省 調達トップ</td></tr>
+        <tr><th>読んだ要領</th><td>持続化補助金＜共同・協業型＞第3回 公募要領 第6版（47ページ・全文）／同 よくあるご質問（Q1〜Q27・全文）／JETRO 行催事業務 公募公告（4ページ・全文）／JETRO 日本館運営 入札公告（4ページ中3ページ）</td></tr>
+        <tr><th>WebSearch</th><td class="num">2クエリ</td></tr>
+        <tr><th>過年度調査</th><td>予測の根拠として実測。伝産協会 公募公告カテゴリ<strong>121件を全数走査</strong>（2022〜2026）／東京都中小企業振興公社 過年度契約情報 令和5・6・7年度／JETRO 調達情報「設計監理」「展示会の施工」カテゴリ／ビジネスチャンス・ナビ 公社案件2件の詳細（ログイン不要の範囲）</td></tr>
+        <tr><th>未実施</th><td>手順2の WebSearch 本体（10〜15本）、tier_b〜tier_h。<strong>ただし「7〜11月は端境期」という前提自体が誤りだったため、次回から季節調整表を差し替えた上で巡回範囲を見直す</strong></td></tr>
+        <tr><th>次回実行</th><td class="num">2026-08-26（月次巡回は9月第1週）</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="s10">
+  <div class="sec-head"><span class="sec-num">11</span><h2 id="s10">生島様への確認事項</h2></div>
+  <p>判定を確定させるために必要な情報です。</p>
+  <ol class="checklist">
+    <li><strong>プライバシーマークまたは ISMS 認証を保有していますか。</strong>JETRO ベオグラード博 日本館運営（9/8締切）の必須要件です。未保有なら共同企業体でしか参加できません。プロファイルの <code>qualifications</code> に項目を追加しました。</li>
+    <li><strong>GビズIDプライムアカウントは取得済みですか。</strong>未取得なら持続化補助金＜共同・協業型＞（9/30締切）に間に合わせるため今週着手が必要です。</li>
+    <li><strong>ビジネスチャンス・ナビ（東京都の電子入札システム）に登録済みですか。</strong>東京都中小企業振興公社の3案件はすべてこれ経由です。</li>
+    <li><strong>持続化補助金＜共同・協業型＞を実際に狙いますか。</strong>狙う場合、参画事業者5〜10者の当てはありますか。WABI SABI STORE の出品事業者や過去の出展事業者3,611社が母集団になり得ます。</li>
+    <li><strong>全省庁統一資格の申請進捗</strong>（等級・営業品目・見込み時期）。JETRO の等級確認申請という迂回路が使えることが分かったため優先度は下がりましたが、引き続き把握しておきたい情報です。</li>
+  </ol>
+</section>
+
+<footer>
+  <p>案件リスト <a href="https://claude.ai/code/artifact/be823b72-7fe6-4f11-8a42-04a8bba591d6">公募案件リスト 2026.08.19</a>　／　ブランチ <code>claude/public-bid-search-workflow-znmhfx</code>　／　原本 <code>reports/kobo_report_20260819b.md</code></p>
+  <p>台帳 <code>data/ledger.csv</code> に新規6件を追記し、持続化補助金の状態を「検討中」へ更新済み。判明事項は <code>workflow/sources.yaml</code>・<code>profile/company-profile.yaml</code>・<code>docs/handoff.md</code> に反映済み。</p>
+  <p>本レポートの引用は、いずれも公募要領・公告の原文からの直接引用です。「公募要領未読」と明記した案件は、仕様書を入手できていません。</p>
+</footer>
+
+</div>

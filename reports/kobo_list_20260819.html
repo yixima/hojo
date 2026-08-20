@@ -100,6 +100,7 @@ tbody tr{border-left:4px solid transparent}
 tbody tr.u-crit{border-left-color:var(--vermillion)}
 tbody tr.u-warn{border-left-color:var(--mustard)}
 tbody tr.u-ok{border-left-color:var(--celadon)}
+tbody tr.u-pred{border-left-color:var(--indigo); border-left-style:dashed}
 tbody tr:hover td{background:var(--surface-2)}
 td.mono,th.mono{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
 
@@ -108,6 +109,10 @@ td.mono,th.mono{font-family:var(--mono); font-variant-numeric:tabular-nums; whit
 .rank-S{color:var(--vermillion); background:var(--vermillion-tint)}
 .rank-A{color:var(--indigo); background:var(--indigo-tint)}
 .rank-B{color:var(--ink-2)}
+.kindtag{font-size:.66rem; letter-spacing:.05em; padding:.1rem .45rem; border-radius:2px; white-space:nowrap; display:inline-block; font-weight:700}
+.kindtag.open{background:var(--indigo-tint); color:var(--indigo)}
+.kindtag.pred{background:var(--surface-3); color:var(--ink-2)}
+.predwin{font-family:var(--sans); font-weight:700; color:var(--indigo); font-size:.8rem; white-space:normal; display:block; line-height:1.4}
 .rank-C{color:var(--ink-3)}
 
 .name{font-weight:500; color:var(--ink); text-decoration:none; display:block; max-width:22rem; line-height:1.55}
@@ -153,24 +158,27 @@ footer a{color:var(--indigo); text-underline-offset:3px}
   <hr class="rule-double">
   <div class="eyebrow"><span>公募・企画競争 探索ワークフロー</span><span>案件リスト</span><span>2026.08.19</span></div>
   <h1>公募案件リスト 2026.08.19</h1>
-  <p class="sub">第2回巡回で洗い出した7件。各案件名から<a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">レポート本文の該当節</a>へ飛びます。残日数は<strong>直近アクション期限</strong>で測っています ── 締切ではありません。</p>
+  <p class="sub">第2回巡回で洗い出した<strong>19件</strong>。いま応募できる<strong>7件</strong>に加え、過年度の公告実績から近く出ると見込まれる<strong>予測12件</strong>を含みます。各案件名から<a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">レポート本文の該当節</a>へ。残日数は<strong>直近アクション期限</strong>で測っています ── 締切ではありません。</p>
 
   <div class="tiles">
     <div class="tile t-crit"><span class="k">至急 7日以下</span><span class="v">6</span><span class="u">件</span></div>
-    <div class="tile t-warn"><span class="k">見送り・記録</span><span class="v">3</span><span class="u">件</span></div>
-    <div class="tile t-go"><span class="k">応募推奨</span><span class="v">1</span><span class="u">件</span></div>
-    <div class="tile t-info"><span class="k">要検討</span><span class="v">3</span><span class="u">件</span></div>
-    <div class="tile"><span class="k">金額判明分</span><span class="v">3.57</span><span class="u">億円（2件）</span></div>
+    <div class="tile t-go"><span class="k">応募推奨</span><span class="v">4</span><span class="u">件</span></div>
+    <div class="tile t-info"><span class="k">要検討</span><span class="v">12</span><span class="u">件</span></div>
+    <div class="tile t-warn"><span class="k">予測案件</span><span class="v">12</span><span class="u">件</span></div>
+    <div class="tile"><span class="k">金額判明分</span><span class="v">3.98</span><span class="u">億円（3件）</span></div>
   </div>
 </header>
 
 <div class="controls">
-  <span class="ctl-label">判定</span>
-  <button class="chip" data-filter="all" aria-pressed="true">すべて<span class="c">7</span></button>
-  <button class="chip" data-filter="応募推奨" aria-pressed="false">応募推奨<span class="c">1</span></button>
-  <button class="chip" data-filter="要検討" aria-pressed="false">要検討<span class="c">3</span></button>
-  <button class="chip" data-filter="見送り" aria-pressed="false">見送り・記録<span class="c">3</span></button>
+  <span class="ctl-label">区分</span>
+  <button class="chip" data-kind="all" aria-pressed="true">すべて<span class="c">19</span></button>
+  <button class="chip" data-kind="公募中" aria-pressed="false">公募中<span class="c">7</span></button>
+  <button class="chip" data-kind="予測" aria-pressed="false">予測<span class="c">12</span></button>
   <span class="spacer"></span>
+  <span class="ctl-label">判定</span>
+  <button class="chip" data-filter="all" aria-pressed="true">すべて</button>
+  <button class="chip" data-filter="応募推奨" aria-pressed="false">応募推奨<span class="c">4</span></button>
+  <button class="chip" data-filter="要検討" aria-pressed="false">要検討<span class="c">12</span></button>
   <button class="chip" id="urgentOnly" aria-pressed="false">至急のみ<span class="c">6</span></button>
 </div>
 
@@ -178,103 +186,247 @@ footer a{color:var(--indigo); text-underline-offset:3px}
   <table id="cases">
     <thead>
       <tr>
+        <th scope="col">区分</th>
         <th class="sortable" data-key="rank" scope="col">格付<span class="arw">↕</span></th>
         <th scope="col">案件名 ／ 種別</th>
         <th scope="col">発注機関</th>
         <th class="sortable mono" data-key="amt" scope="col">見込み金額<span class="arw">↕</span></th>
-        <th class="sortable mono" data-key="due" scope="col">締切<span class="arw">↕</span></th>
-        <th class="sortable mono" data-key="act" scope="col">直近アクション期限<span class="arw">↕</span></th>
+        <th class="sortable mono" data-key="due" scope="col">締切 ／ 予測公告<span class="arw">↕</span></th>
+        <th class="sortable mono" data-key="act" scope="col">直近アクション期限 ／ 予測の根拠<span class="arw">↕</span></th>
         <th scope="col">応募形態</th>
         <th scope="col">資格</th>
         <th scope="col">判定 ／ 次アクション</th>
       </tr>
     </thead>
     <tbody>
-
-      <tr class="u-ok" data-verdict="応募推奨" data-urgent="0" data-rank="1" data-amt="30000000" data-due="20260930" data-act="20260824">
+      <tr class="u-ok" data-kind="公募中" data-verdict="応募推奨" data-urgent="0" data-rank="1" data-amt="30000000" data-due="20260930" data-act="20260930">
+        <td><span class="kindtag open">公募中</span></td>
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s2">小規模事業者持続化補助金＜共同・協業型＞第3回<span class="arrow">↗</span></a><span class="kind">補助金</span></td>
         <td><span class="org">中小企業庁</span></td>
-        <td><span class="amt">3,000万円</span><span class="conf fixed">◎確定・補助上限</span></td>
+        <td><span class="amt">3,000万円</span><span class="conf fixed">◎確定</span></td>
         <td class="mono">2026-09-30<br>17:00<span class="days d-ok">残42日</span></td>
-        <td class="mono">2026-08-24<br><span class="conf">推奨</span><span class="act">GビズIDプライム申請着手／国際輸送費を事務局へ照会</span></td>
+        <td class="mono">2026-09-30<br>17:00<span class="act">Jグランツ提出（公表期限は締切のみ）</span></td>
         <td>支援側</td>
         <td><span class="q-none">不要</span></td>
-        <td><span class="verd v-go">応募推奨</span><span class="next">GビズID着手と参画事業者5〜10者の内諾取得</span></td>
+        <td><span class="verd v-go">応募推奨</span><span class="next">GビズIDプライム申請の着手と参画事業者5〜10者の内諾取得</span></td>
       </tr>
-
-      <tr class="u-crit" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260908" data-act="20260825">
+      <tr class="u-crit" data-kind="公募中" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260908" data-act="20260825">
+        <td><span class="kindtag open">公募中</span></td>
         <td><span class="rank rank-A">A</span></td>
-        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s4">「2027年ベオグラード国際博覧会」日本館運営<span class="arrow">↗</span></a><span class="kind">入札・総合評価</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s4">「2027年ベオグラード国際博覧会」日本館運営<span class="arrow">↗</span></a><span class="kind">入札（総合評価）</span></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">億円規模</span><span class="conf est">△推定・予定価格非公開</span></td>
-        <td class="mono">2026-09-08<br>15:00<span class="days d-warn">残20日</span></td>
-        <td class="mono">2026-08-25<br>09:00<span class="days d-crit">残6日</span><span class="act">入札説明会の参加申込メール</span></td>
-        <td>単独／共同</td>
-        <td><span class="q-alt">要（代替可）</span><span class="act">JETRO等級確認の申請期限 8/26 17:00</span></td>
+        <td><span class="amt">—</span><span class="conf est">△推定（億円規模）</span></td>
+        <td class="mono">2026-09-08<br>15:00<span class="days d-crit">残6日</span></td>
+        <td class="mono">2026-08-25<br>09:00<span class="act">入札説明会の参加申込メール（ODE@jetro.go.jp）。次いで8/26 17:00までにJETRO等級確認申請</span></td>
+        <td>単独または共同</td>
+        <td><span class="q-alt">要（JETRO等級確認で代替可・申請期限 2026-08-26 17:00）</span></td>
         <td><span class="verd v-check">要検討</span><span class="next">Pマーク／ISMS の保有確認 → 8/25 説明会申込</span></td>
       </tr>
-
-      <tr class="u-crit" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260824" data-act="20260824">
+      <tr class="u-crit" data-kind="公募中" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260824" data-act="20260824">
+        <td><span class="kindtag open">公募中</span></td>
         <td><span class="rank rank-A">A</span></td>
-        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">第70回東京都伝統工芸品展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
-        <td><span class="org">東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">第70回東京都伝統工芸品展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">希望制指名競争入札</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
         <td class="mono">2026-08-24<br>14:00<span class="days d-crit">残5日</span></td>
-        <td class="mono">2026-08-24<br>14:00<span class="act">希望申出（締切と同一）</span></td>
-        <td>単独</td>
-        <td><span class="q-none">不要</span><span class="act">ナビ登録は必要</span></td>
-        <td><span class="verd v-check">要検討</span><span class="next">ナビで仕様書・予定価格を確認し可否判断</span></td>
-      </tr>
-
-      <tr class="u-crit" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260825" data-act="20260825">
-        <td><span class="rank rank-A">A</span></td>
-        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">海外展開シンポジウム 運営等業務委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
-        <td><span class="org">東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
-        <td class="mono">2026-08-25<br>14:00<span class="days d-crit">残6日</span></td>
-        <td class="mono">2026-08-25<br>14:00<span class="act">希望申出（締切と同一）</span></td>
-        <td>単独</td>
-        <td><span class="q-none">不要</span><span class="act">ナビ登録は必要</span></td>
-        <td><span class="verd v-check">要検討</span><span class="next">ナビで仕様書・予定価格を確認し可否判断</span></td>
-      </tr>
-
-      <tr class="u-crit" data-verdict="見送り" data-urgent="1" data-rank="4" data-amt="-1" data-due="20260826" data-act="20260826">
-        <td><span class="rank rank-C">C</span></td>
-        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">創業支援拠点（丸の内・多摩）生成AI映像コンテンツ制作及び鉄道・エリア連動型デジタルプロモーション業務委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
-        <td><span class="org">東京都中小企業振興公社</span></td>
-        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
-        <td class="mono">2026-08-26<br>14:00<span class="days d-crit">残7日</span></td>
-        <td class="mono">2026-08-26<br>14:00<span class="act">希望申出（締切と同一）</span></td>
+        <td class="mono">2026-08-24<br>14:00<span class="act">希望申請（入札書の提出ではない）。申請後に指名通知を受けて入札</span></td>
         <td>単独</td>
         <td><span class="q-none">不要</span></td>
-        <td><span class="verd v-note">記録のみ</span><span class="next">対応不要。海外要素がなく映像制作主体のため参考掲載</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">8/24 14:00までに希望申請。仕様書はナビにログインして確認</span></td>
       </tr>
-
-      <tr class="u-crit" data-verdict="見送り" data-urgent="1" data-rank="1" data-amt="327000000" data-due="20260821" data-act="20260821">
+      <tr class="u-crit" data-kind="公募中" data-verdict="要検討" data-urgent="1" data-rank="2" data-amt="-1" data-due="20260825" data-act="20260825">
+        <td><span class="kindtag open">公募中</span></td>
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">海外展開シンポジウム 運営等業務委託<span class="arrow">↗</span></a><span class="kind">総合評価方式入札</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono">2026-08-25<br>14:00<span class="days d-crit">残6日</span></td>
+        <td class="mono">2026-08-25<br>14:00<span class="act">希望申請（入札書の提出ではない）。申請後に指名通知を受けて入札</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">8/25 14:00までに希望申請。仕様書はナビにログインして確認</span></td>
+      </tr>
+      <tr class="u-crit" data-kind="公募中" data-verdict="記録のみ" data-urgent="1" data-rank="4" data-amt="-1" data-due="20260826" data-act="20260826">
+        <td><span class="kindtag open">公募中</span></td>
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s1">創業支援拠点（丸の内・多摩）生成AI映像コンテンツ制作及び鉄道・エリア連動型デジタルプロモーション業務委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono">2026-08-26<br>14:00<span class="days d-crit">残7日</span></td>
+        <td class="mono">2026-08-26<br>14:00<span class="act">希望申請</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-note">記録のみ</span><span class="next">対応不要。参考掲載</span></td>
+      </tr>
+      <tr class="u-crit" data-kind="公募中" data-verdict="見送り" data-urgent="1" data-rank="1" data-amt="327000000" data-due="20260821" data-act="20260821">
+        <td><span class="kindtag open">公募中</span></td>
         <td><span class="rank rank-S">S</span></td>
         <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s3">「2027年ベオグラード国際博覧会」日本館行催事業務<span class="arrow">↗</span></a><span class="kind">企画競争</span></td>
         <td><span class="org">JETRO</span></td>
-        <td><span class="amt">3億2,700万円</span><span class="conf fixed">◎確定・委託限度額</span></td>
+        <td><span class="amt">3億2,700万円</span><span class="conf fixed">◎確定</span></td>
         <td class="mono">2026-08-21<br>17:00<span class="days d-crit">残2日</span></td>
-        <td class="mono">2026-08-21<br>17:00<span class="act">提案書10部＋見積書を持参または郵送</span></td>
-        <td>単独／共同</td>
+        <td class="mono">2026-08-21<br>17:00<span class="act">提案書10部＋見積書の持参または郵送</span></td>
+        <td>単独または共同</td>
         <td><span class="q-none">不要</span></td>
-        <td><span class="verd v-note">見送り</span><span class="next">物理的に不可。2027年以降の国際博案件を監視対象に固定</span></td>
+        <td><span class="verd v-note">見送り</span><span class="next">物理的に間に合わない。2027年以降の国際博案件を監視対象に固定</span></td>
       </tr>
-
-      <tr class="u-crit" data-verdict="見送り" data-urgent="1" data-rank="4" data-amt="-1" data-due="20260820" data-act="20260820">
+      <tr class="u-crit" data-kind="公募中" data-verdict="見送り" data-urgent="1" data-rank="4" data-amt="-1" data-due="20260820" data-act="20260820">
+        <td><span class="kindtag open">公募中</span></td>
         <td><span class="rank rank-C">C</span></td>
         <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s3">JOI 25周年記念事業広報用動画制作業務委託契約<span class="arrow">↗</span></a><span class="kind">企画競争</span></td>
-        <td><span class="org">国際交流基金</span></td>
-        <td><span class="amt">—</span><span class="conf">－非公開</span></td>
+        <td><span class="org">独立行政法人国際交流基金</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
         <td class="mono">2026-08-20<br>12:00<span class="days d-crit">残1日</span></td>
         <td class="mono">2026-08-20<br>12:00<span class="act">提案書提出</span></td>
         <td>単独</td>
-        <td><span class="q-req">要（間に合わない）</span><span class="act">全省庁統一資格 A〜D等級</span></td>
+        <td><span class="q-req">要（間に合わない）</span></td>
         <td><span class="verd v-note">見送り</span><span class="next">記録のみ。翌年度の同種案件を監視</span></td>
       </tr>
-
+      <tr class="u-pred" data-kind="予測" data-verdict="応募推奨" data-urgent="0" data-rank="1" data-amt="40986000" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-S">S</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">「東京手仕事」MAISON &amp; OBJET 出展及びポップアップストア運営業務<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">4,098万円</span><span class="conf est">△推定（前回落札額）</span></td>
+        <td class="mono"><span class="predwin">2027年2月〜3月</span></td>
+        <td class="mono"><span class="act">令和7年度分の入札書が2025-03-18。令和8年度も「海外展示会の運営業務（Maison &amp; Objet）」として契約。3年連続で発注</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-go">応募推奨</span><span class="next">2027年1月から公社の契約情報を毎週確認。前回提案書を土台に準備</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="応募推奨" data-urgent="0" data-rank="1" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-S">S</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">海外における伝統的工芸品テストマーケティング業務<span class="arrow">↗</span></a><span class="kind">企画提案募集</span></td>
+        <td><span class="org">伝統的工芸品産業振興協会</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2027年3月中旬〜7月上旬</span></td>
+        <td class="mono"><span class="act">4年連続。ただし公告時期が動く（2024-06-26公告/07-12締切、2025-06-23公告/08-11締切、2026-04-01公告/05-15締切）</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-go">応募推奨</span><span class="next">2027年3月中旬から毎週確認。7月上旬まで監視を緩めない</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="応募推奨" data-urgent="0" data-rank="1" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-S">S</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">海外における伝統的工芸品実演・ワークショップ業務<span class="arrow">↗</span></a><span class="kind">企画提案募集</span></td>
+        <td><span class="org">伝統的工芸品産業振興協会</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2027年4月頃</span></td>
+        <td class="mono"><span class="act">2026年度に新設（2026-04-01公告/05-15締切）。テストマーケティングと同時公告</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-go">応募推奨</span><span class="next">テストマーケティングと同時に公告される想定で並行準備</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="2" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">第71回東京都伝統工芸品展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">希望制指名競争入札</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2027年8月中旬</span></td>
+        <td class="mono"><span class="act">毎年開催。第68回(令和6年度)・令和7年度・第70回(令和8年度8月18日公告)と3年連続</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">今回(第70回)の結果を踏まえて判断</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="2" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">TOKYO職人展に係る運営管理業務の委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2027年5月中旬</span></td>
+        <td class="mono"><span class="act">令和6年度・令和7年度・令和8年度(2026-05-19公告)と3年連続</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">2027年4月から公社の契約情報を確認</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="2" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">海外テストマーケティング・商談会 企画運営等委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2027年前半</span></td>
+        <td class="mono"><span class="act">令和5・6・7年度と3年連続で発注</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">公社の契約情報を毎週確認</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="2" data-amt="30000000" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-A">A</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">小規模事業者持続化補助金＜共同・協業型＞第4回<span class="arrow">↗</span></a><span class="kind">補助金</span></td>
+        <td><span class="org">中小企業庁</span></td>
+        <td><span class="amt">3,000万円</span><span class="conf est">△推定（第3回と同額と仮定）</span></td>
+        <td class="mono"><span class="predwin">2027年1月〜3月</span></td>
+        <td class="mono"><span class="act">第1回2025-04-25公告、第2回2025-12-23公告(受付1/16)、第3回2026-07-08公告(受付8/14)。概ね半年周期</span></td>
+        <td>支援側</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">第3回の結果を見て再挑戦するか判断</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-B">B</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">FHA 2027 Food &amp; Beverage ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2026年8月下旬</span></td>
+        <td class="mono"><span class="act">前年同案件が2025-08-21公告。**今まさに公告時期**</span></td>
+        <td>単独または共同</td>
+        <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-B">B</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">Seafood Expo Global 2027 ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2026年9月上旬</span></td>
+        <td class="mono"><span class="act">前年同案件が2025-09-08公告</span></td>
+        <td>単独または共同</td>
+        <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-B">B</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">THAIFEX 2027 ジャパンパビリオンの設計・監理等<span class="arrow">↗</span></a><span class="kind">入札</span></td>
+        <td><span class="org">JETRO</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2026年11月中旬</span></td>
+        <td class="mono"><span class="act">前年同案件が2025-11-19公告</span></td>
+        <td>単独または共同</td>
+        <td><span class="q-alt">要（等級確認で代替可の可能性）</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">JETRO入札情報を毎週確認</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="3" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-B">B</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">東京インターナショナル・ギフト・ショー春2027 公社パビリオン 展示会運営業務委託<span class="arrow">↗</span></a><span class="kind">委託</span></td>
+        <td><span class="org">公益財団法人東京都中小企業振興公社</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2026年10月〜12月</span></td>
+        <td class="mono"><span class="act">春2025・春2026と2年連続で発注</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">公社の契約情報を毎週確認</span></td>
+      </tr>
+      <tr class="u-pred" data-kind="予測" data-verdict="要検討" data-urgent="0" data-rank="4" data-amt="-1" data-due="99999999" data-act="99999999">
+        <td><span class="kindtag pred">予測</span></td>
+        <td><span class="rank rank-C">C</span></td>
+        <td><a class="name" href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6#s5f">伝統的工芸品産業振興協会 英語・翻訳業務<span class="arrow">↗</span></a><span class="kind">企画競争</span></td>
+        <td><span class="org">伝統的工芸品産業振興協会</span></td>
+        <td><span class="amt">—</span><span class="conf ">－非公開</span></td>
+        <td class="mono"><span class="predwin">2027年3月下旬〜7月上旬</span></td>
+        <td class="mono"><span class="act">5年連続（2022-07-04、2023-06-09、2024-03-25、2025-06-17、2026-06-15 各締切）</span></td>
+        <td>単独</td>
+        <td><span class="q-none">不要</span></td>
+        <td><span class="verd v-check">要検討</span><span class="next">規模は小さいが協会との取引実績を作る入口として検討</span></td>
+      </tr>
     </tbody>
   </table>
   <p class="empty hidden" id="empty">該当する案件がありません。</p>
@@ -284,11 +436,12 @@ footer a{color:var(--indigo); text-underline-offset:3px}
   <span><b>格付</b> S / A / B / C ── 適合度</span>
   <span><b>左端の色帯</b> <span style="color:var(--vermillion)">■</span> 至急 7日以下　<span style="color:var(--mustard)">■</span> 要着手 8〜21日　<span style="color:var(--celadon)">■</span> 通常 22日以上。<b>公表された期限のうち最も早いもの</b>で測る</span>
   <span><b>金額確度</b> ◎確定 ／ △推定 ／ －非公開</span>
+  <span><b>破線の左帯</b> 予測案件。過年度の公告実績が根拠</span>
 </div>
 
 <footer>
-  <p><strong>この一覧に出ていない12項目</strong>（公告日・事業期間・前提条件・実績要件の充足・懸念・状態・初報日ほか）は <code>data/cases/cases_20260819.csv</code> に入っています。項目の定義は <code>workflow/case-list-schema.md</code>。</p>
-  <p><strong>予定価格が「－非公開」の3件</strong>は東京都中小企業振興公社の案件で、仕様書と予定価格がビジネスチャンス・ナビにログインしないと読めません。金額欄は空欄ではなく「非公開」と明示しています ── 空欄だと「調べていない」と区別がつかないためです。</p>
+  <p><strong>この一覧に出ていない項目</strong>（公告日・前提条件・実績要件の充足・推奨着手日・状態ほか、全26項目）は <code>data/cases/cases_20260819.xlsx</code>（Excel）と同名の CSV に入っています。項目の定義は <code>workflow/case-list-schema.md</code>。Excel の基準日セルを今日の日付に変えると残日数と緊急度が再計算されます。</p>
+  <p><strong>予測案件は根拠つきでのみ載せています。</strong>「例年出ている気がする」は載せません。各行の「予測の根拠」に、何年連続で・いつ公告されたかを実測値で書いてあります。<br><strong>予定価格が「－非公開」の案件</strong>は、仕様書がビジネスチャンス・ナビの添付資料にあり、閲覧にログインが必要です。金額欄は空欄ではなく「非公開」と明示しています ── 空欄だと「調べていない」と区別がつかないためです。</p>
   <p>レポート本文 → <a href="https://claude.ai/code/artifact/6f25d20f-a5ce-4db2-b4b2-5e46415b52a6">第2回 公募巡回レポート</a>　／　ブランチ <code>claude/public-bid-search-workflow-znmhfx</code></p>
 </footer>
 
@@ -300,15 +453,17 @@ footer a{color:var(--indigo); text-underline-offset:3px}
   var tbody=document.querySelector('#cases tbody');
   var empty=document.getElementById('empty');
   var chips=[].slice.call(document.querySelectorAll('.chip[data-filter]'));
+  var kinds=[].slice.call(document.querySelectorAll('.chip[data-kind]'));
   var urgentBtn=document.getElementById('urgentOnly');
-  var filter='all';
+  var filter='all', kind='all';
 
   function apply(){
     var shown=0;
     rows.forEach(function(r){
       var okV = filter==='all' || r.dataset.verdict===filter;
+      var okK = kind==='all' || r.dataset.kind===kind;
       var okU = urgentBtn.getAttribute('aria-pressed')!=='true' || r.dataset.urgent==='1';
-      var vis = okV && okU;
+      var vis = okV && okK && okU;
       r.classList.toggle('hidden', !vis);
       if(vis) shown++;
     });
@@ -318,6 +473,13 @@ footer a{color:var(--indigo); text-underline-offset:3px}
     c.addEventListener('click', function(){
       filter=c.dataset.filter;
       chips.forEach(function(o){o.setAttribute('aria-pressed', String(o===c));});
+      apply();
+    });
+  });
+  kinds.forEach(function(c){
+    c.addEventListener('click', function(){
+      kind=c.dataset.kind;
+      kinds.forEach(function(o){o.setAttribute('aria-pressed', String(o===c));});
       apply();
     });
   });
