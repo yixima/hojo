@@ -13,20 +13,20 @@ chubu.meti.go.jp,中部経済産業局,,地方支分部局,government,https://ww
 kyushu.meti.go.jp,九州経済産業局,,地方支分部局,government,https://www.kyushu.meti.go.jp/,https://www.kyushu.meti.go.jp/under/chotatu/chotatu.html,tier_a,every_run,2026-08-20,確認済み,競争入札の公告はGEPSのみ。局サイトは一覧のみなので調達ポータルも併せて見る
 ogb.go.jp,内閣府沖縄総合事務局,,地方支分部局,government,https://www.ogb.go.jp/,https://www.ogb.go.jp/soumu/soumu_tyouta,tier_a,every_run,2026-08-20,確認済み,競争入札はGEPS/調達ポータルのみで公告される場合がある。局サイトと調達ポータルの両方を見る
 shikoku.meti.go.jp,四国経済産業局,,地方支分部局,government,https://www.shikoku.meti.go.jp/,https://www.shikoku.meti.go.jp/02_soshikiinfos/04_kaikei/choutatsu_info/choutatsu_info.html,tier_a,every_run,2026-08-20,確認済み,競争入札はGEPS/調達ポータルのみで公告される場合がある。局サイトと調達ポータルの両方を見る
-tohoku.meti.go.jp,東北経済産業局,,地方支分部局,government,https://www.tohoku.meti.go.jp/,,tier_a,every_run,2026-08-20,要手動確認（未発見）,競争入札はGEPS/調達ポータルのみで公告される場合がある。局サイトと調達ポータルの両方を見る
+tohoku.meti.go.jp,東北経済産業局,,地方支分部局,government,https://www.tohoku.meti.go.jp/,https://www.tohoku.meti.go.jp/kikaku/sangyokyosoryoku/index_sangyokyosoryoku.html,tier_a,every_run,2026-08-21,要手動確認（中身が薄い）,競争入札はGEPS/調達ポータルのみで公告される場合がある。局サイトと調達ポータルの両方を見る
 kansai.meti.go.jp,近畿経済産業局,,地方支分部局,government,https://www.kansai.meti.go.jp/,https://www.kansai.meti.go.jp/8kaikei/nyusatsujoho/ichiran.html,tier_a,every_run,2026-08-20,確認済み,競争入札はGEPS/調達ポータルのみで公告される場合がある。局サイトと調達ポータルの両方を見る
 kanto.meti.go.jp,関東経済産業局,,地方支分部局,government,https://www.kanto.meti.go.jp/,https://www.kanto.meti.go.jp/chotatsu/chotatsu/index.html,tier_a,every_run,2026-08-20,確認済み,競争入札はGEPS/調達ポータルのみで公告される場合がある。局サイトと調達ポータルの両方を見る
 pref.iwate.jp,岩手県,岩手,自治体本体,manual,https://www.pref.iwate.jp/,https://www.pref.iwate.jp/kensei/nyuusatsu/sonota/index.html,tier_a,every_run,2026-08-20,未確認,受注実績あり（仏国テスト販売 2019）
 metro.tokyo.lg.jp,東京都,東京,自治体本体,manual,https://www.metro.tokyo.lg.jp/,https://www.metro.tokyo.lg.jp/tosei/zaise/keiyaku?utm_source=top&amp;utm_medium=1.5_navi&amp;utm_campaign=20250829,tier_a,every_run,2026-08-20,未確認,受注実績あり（東京2020仏国プロモーション）
-pref.kumamoto.jp,熊本県,熊本,自治体本体,manual,https://www.pref.kumamoto.jp/,,tier_a,every_run,2026-08-20,未確認,受注実績あり（パリJAPAN EXPO 2016-2024）
-city.kyoto.lg.jp,京都市,京都,自治体本体（政令市）,government,https://www.city.kyoto.lg.jp/,,tier_a,every_run,2026-08-20,要手動確認（未発見）,シティプロモーション・観光・産業振興
-city.kobe.lg.jp,神戸市,兵庫,自治体本体（政令市）,government,https://city.kobe.lg.jp/,,tier_a,every_run,2026-08-20,到達不可,シティプロモーション・観光・産業振興
+pref.kumamoto.jp,熊本県,熊本,自治体本体,manual,https://www.pref.kumamoto.jp/,,tier_a,every_run,2026-08-21,要手動確認（未発見）,受注実績あり（パリJAPAN EXPO 2016-2024）
+city.kyoto.lg.jp,京都市,京都,自治体本体（政令市）,government,https://www.city.kyoto.lg.jp/,,tier_a,every_run,2026-08-21,要手動確認（未発見）,シティプロモーション・観光・産業振興
+city.kobe.lg.jp,神戸市,兵庫,自治体本体（政令市）,government,https://city.kobe.lg.jp/,,tier_a,every_run,2026-08-21,到達不可,シティプロモーション・観光・産業振興
 city.sapporo.jp,札幌市,北海道,自治体本体（政令市）,government,https://city.sapporo.jp/,https://city.sapporo.jp/zaisei/keiyaku-kanri/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
-city.chiba.jp,千葉市,千葉,自治体本体（政令市）,government,https://city.chiba.jp/,,tier_a,every_run,2026-08-20,到達不可,シティプロモーション・観光・産業振興
+city.chiba.jp,千葉市,千葉,自治体本体（政令市）,government,https://city.chiba.jp/,,tier_a,every_run,2026-08-21,到達不可,シティプロモーション・観光・産業振興
 city.saitama.lg.jp,さいたま市,埼玉,自治体本体（政令市）,government,https://www.city.saitama.lg.jp/,https://www.city.saitama.lg.jp/005/001/017/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
 city.sakai.lg.jp,堺市,大阪,自治体本体（政令市）,government,https://www.city.sakai.lg.jp/,https://www.city.sakai.lg.jp/boshu/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
 city.sendai.jp,仙台市,宮城,自治体本体（政令市）,government,https://www.city.sendai.jp/,https://www.city.sendai.jp/boshu/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
-city.okayama.jp,岡山市,岡山,自治体本体（政令市）,government,https://city.okayama.jp/,,tier_a,every_run,2026-08-20,到達不可,シティプロモーション・観光・産業振興
+city.okayama.jp,岡山市,岡山,自治体本体（政令市）,government,https://city.okayama.jp/,,tier_a,every_run,2026-08-21,到達不可,シティプロモーション・観光・産業振興
 city.hiroshima.lg.jp,広島市,広島,自治体本体（政令市）,government,https://www.city.hiroshima.lg.jp/,https://www.city.hiroshima.lg.jp/business/nyusatsu/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
 city.nagoya.jp,名古屋市,愛知,自治体本体（政令市）,government,https://www.city.nagoya.jp/,https://www.city.nagoya.jp/jigyou/nyusatsu/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
 city.niigata.lg.jp,新潟市,新潟,自治体本体（政令市）,government,https://www.city.niigata.lg.jp/,https://www.city.niigata.lg.jp/business/keiyaku/index.html,tier_a,every_run,2026-08-20,確認済み,シティプロモーション・観光・産業振興
@@ -48,10 +48,10 @@ pref.wakayama.lg.jp,和歌山県庁,和歌山,自治体本体（都道府県）,
 pref.saitama.lg.jp,埼玉県庁,埼玉,自治体本体（都道府県）,government,https://www.pref.saitama.lg.jp/,https://www.pref.saitama.lg.jp/a0212/densinyusatsu/index.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.oita.jp,大分県庁,大分,自治体本体（都道府県）,government,https://pref.oita.jp/,https://pref.oita.jp/soshiki/20010/keiyaku.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.osaka.lg.jp,大阪庁,大阪,自治体本体（都道府県）,government,https://www.pref.osaka.lg.jp/,https://eawww.e-nyusatsu.pref.osaka.jp/portal/index,tier_a,every_run,2026-08-20,要手動確認（中身が薄い）,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
-pref.nara.jp,奈良県庁,奈良,自治体本体（都道府県）,government,https://pref.nara.jp/,,tier_a,every_run,2026-08-20,到達不可,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
+pref.nara.jp,奈良県庁,奈良,自治体本体（都道府県）,government,https://pref.nara.jp/,,tier_a,every_run,2026-08-21,到達不可,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.miyagi.jp,宮城県庁,宮城,自治体本体（都道府県）,government,https://www.pref.miyagi.jp/,https://www.pref.miyagi.jp/life/8/40/,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.miyazaki.lg.jp,宮崎県庁,宮崎,自治体本体（都道府県）,government,https://www.pref.miyazaki.lg.jp/,https://www.pref.miyazaki.lg.jp/shinchaku/nyusatsu/nyusatsu.xml,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
-pref.toyama.jp,富山県庁,富山,自治体本体（都道府県）,government,https://pref.toyama.jp/,,tier_a,every_run,2026-08-20,到達不可,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
+pref.toyama.jp,富山県庁,富山,自治体本体（都道府県）,government,https://pref.toyama.jp/,,tier_a,every_run,2026-08-21,到達不可,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.yamaguchi.lg.jp,山口県庁,山口,自治体本体（都道府県）,government,https://www.pref.yamaguchi.lg.jp/,https://www.pref.yamaguchi.lg.jp/life/6/index.html#life6_b2,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.yamagata.jp,山形県庁,山形,自治体本体（都道府県）,government,https://www.pref.yamagata.jp/,https://www.pref.yamagata.jp/kensei/nyuusatsujouhou/nyuusatsujouhou/proposal/index.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易振興課／県産品流通戦略課／観光プロモーション課が毎年プロポーザルを出す。実測で確認
 pref.yamanashi.jp,山梨県庁,山梨,自治体本体（都道府県）,government,https://www.pref.yamanashi.jp/,https://www.pref.yamanashi.jp/shinchaku/jouho/0808/groupware.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
@@ -60,7 +60,7 @@ pref.okayama.jp,岡山県庁,岡山,自治体本体（都道府県）,government
 pref.shimane.lg.jp,島根県庁,島根,自治体本体（都道府県）,government,https://www.pref.shimane.lg.jp/,https://www.pref.shimane.lg.jp/admin/bid/contract/cont_soumu/keiyaku.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.hiroshima.lg.jp,広島県庁,広島,自治体本体（都道府県）,government,https://www.pref.hiroshima.lg.jp/,https://www.pref.hiroshima.lg.jp/site/nyusatsukeiyaku/webad2026.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.tokushima.lg.jp,徳島県庁,徳島,自治体本体（都道府県）,government,https://pref.tokushima.lg.jp/,https://pref.tokushima.lg.jp/ippannokata/nyusatsu/,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
-pref.aichi.jp,愛知県庁,愛知,自治体本体（都道府県）,government,https://www.pref.aichi.jp/,,tier_a,every_run,2026-08-20,HTTP 403,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
+pref.aichi.jp,愛知県庁,愛知,自治体本体（都道府県）,government,https://www.pref.aichi.jp/,,tier_a,every_run,2026-08-21,要手動確認（未発見）,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.niigata.lg.jp,新潟県庁,新潟,自治体本体（都道府県）,government,https://www.pref.niigata.lg.jp/,https://www.pref.niigata.lg.jp/sec/kyoikufukuri/080807nyuusatsukekka.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.tochigi.lg.jp,栃木県庁,栃木,自治体本体（都道府県）,government,https://www.pref.tochigi.lg.jp/,https://www.pref.tochigi.lg.jp/kensei/nyuusatsu/index.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.okinawa.jp,沖縄県庁,沖縄,自治体本体（都道府県）,government,https://www.pref.okinawa.jp/,https://www.pref.okinawa.lg.jp/shigoto/nyusatsukeiyaku/1015342/index.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
@@ -68,7 +68,7 @@ pref.shiga.lg.jp,滋賀県庁,滋賀,自治体本体（都道府県）,governmen
 pref.ishikawa.lg.jp,石川県庁,石川,自治体本体（都道府県）,government,https://www.pref.ishikawa.lg.jp/,https://www.pref.ishikawa.lg.jp/kodomoseisaku/kodomo-wakamonoikenbako.html,tier_a,every_run,2026-08-20,要手動確認（候補のみ）,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.kanagawa.jp,神奈川県庁,神奈川,自治体本体（都道府県）,government,https://www.pref.kanagawa.jp/,https://www.pref.kanagawa.jp/select/nyuusatsu.html,tier_a,every_run,2026-08-20,要手動確認（中身が薄い）,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.fukuoka.lg.jp,福岡県庁,福岡,自治体本体（都道府県）,government,https://www.pref.fukuoka.lg.jp/,https://www.pref.fukuoka.lg.jp/bid/,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
-pref.fukushima.lg.jp,福島県庁,福島,自治体本体（都道府県）,government,https://pref.fukushima.lg.jp/,,tier_a,every_run,2026-08-20,到達不可,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
+pref.fukushima.lg.jp,福島県庁,福島,自治体本体（都道府県）,government,https://pref.fukushima.lg.jp/,,tier_a,every_run,2026-08-21,到達不可,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.akita.lg.jp,秋田県庁,秋田,自治体本体（都道府県）,government,https://www.pref.akita.lg.jp/,https://www.pref.akita.lg.jp/pages/genre/11700,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.gunma.jp,群馬県庁,群馬,自治体本体（都道府県）,government,https://www.pref.gunma.jp/,https://www.pref.gunma.jp/adv/ba.php?id=14,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.ibaraki.jp,茨城県庁,茨城,自治体本体（都道府県）,government,https://www.pref.ibaraki.jp/,https://www.pref.ibaraki.jp/shiru/nyusatsu-chotatsu/index.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
@@ -79,18 +79,18 @@ pref.shizuoka.jp,静岡県庁,静岡,自治体本体（都道府県）,governmen
 pref.kochi.lg.jp,高知県庁,高知,自治体本体（都道府県）,government,https://www.pref.kochi.lg.jp/,https://www.pref.kochi.lg.jp/category/bunya/shigoto_sangyo/nyusatsujoho/,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.tottori.lg.jp,鳥取県庁,鳥取,自治体本体（都道府県）,government,https://www.pref.tottori.lg.jp/,https://www.pref.tottori.lg.jp/,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
 pref.kagoshima.jp,鹿児島県庁,鹿児島,自治体本体（都道府県）,government,https://www.pref.kagoshima.jp/,https://www.pref.kagoshima.jp/ah01/infra/tochi-kensetu/nyusatu/r9-10shikaku.html,tier_a,every_run,2026-08-20,確認済み,県産品・貿易・観光の各課がプロポーザルを出す。入札情報／公募型プロポーザルの一覧を見る
-sec.or.jp,（一財）さっぽろ産業振興財団,,都道府県等中小企業支援センター,chusho_shien,http://www.sec.or.jp/top/,,tier_a,,2026-08-20,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
+sec.or.jp,（一財）さっぽろ産業振興財団,,都道府県等中小企業支援センター,chusho_shien,http://www.sec.or.jp/top/,,tier_a,,2026-08-21,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 kobe-ipc.or.jp,（公財）こうべ産業・就労支援財団,,都道府県等中小企業支援センター,chusho_shien,http://www.kobe-ipc.or.jp/,https://kobe-ipc.or.jp/archives/category/public-offering,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 siip.city.sendai.jp,（公財）仙台市産業振興事業団,,都道府県等中小企業支援センター,chusho_shien,http://www.siip.city.sendai.jp/,http://www.siip.city.sendai.jp/documents/20260701.pdf,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 ksrp.or.jp,（公財）北九州産業学術推進機構,,都道府県等中小企業支援センター,chusho_shien,http://www.ksrp.or.jp/fais/,https://www.ksrp.or.jp/offer/index.html,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 nipc.or.jp,（公財）名古屋産業振興公社,,都道府県等中小企業支援センター,chusho_shien,http://www.nipc.or.jp/index.html,http://www.nipc.or.jp/gotech/index.html,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 sakai-ipc.jp,（公財）堺市産業振興センター,,都道府県等中小企業支援センター,chusho_shien,https://www.sakai-ipc.jp/,https://www.sakai-ipc.jp/#navLinkPopup02,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
-kawasaki-net.ne.jp,（公財）川崎市産業振興財団,,都道府県等中小企業支援センター,chusho_shien,http://www.kawasaki-net.ne.jp/,,tier_a,,2026-08-20,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
+kawasaki-net.ne.jp,（公財）川崎市産業振興財団,,都道府県等中小企業支援センター,chusho_shien,http://www.kawasaki-net.ne.jp/,,tier_a,,2026-08-21,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 idec.or.jp,（公財）横浜企業経営支援財団,,都道府県等中小企業支援センター,chusho_shien,http://www.idec.or.jp/,http://www.idec.or.jp/topics/entry_info.html?id=3059,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 miesc.or.jp,（公財）三重県産業支援センター,三重,都道府県等中小企業支援センター,chusho_shien,http://www.miesc.or.jp/,http://www.miesc.or.jp/#jmp_compe,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 ki21.jp,（公財）京都産業21,京都,都道府県等中小企業支援センター,chusho_shien,http://www.ki21.jp/,https://www.ki21.jp/informations/2026clkoubokekka/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 astem.or.jp,（公財）京都高度技術研究所,京都,都道府県等中小企業支援センター,chusho_shien,http://www.astem.or.jp/,https://www.astem.or.jp/entre/startup/app2026,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-infosaga.or.jp,（公財）佐賀県産業振興機構,佐賀,都道府県等中小企業支援センター,chusho_shien,http://www.infosaga.or.jp/,,tier_a,,2026-08-20,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
+infosaga.or.jp,（公財）佐賀県産業振興機構,佐賀,都道府県等中小企業支援センター,chusho_shien,http://www.infosaga.or.jp/,,tier_a,,2026-08-21,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
 web.hyogo-iic.ne.jp,（公財）ひょうご産業活性化センター,兵庫,都道府県等中小企業支援センター,chusho_shien,http://web.hyogo-iic.ne.jp/,https://web.hyogo-iic.ne.jp/guide/kinyu,tier_a,,2026-08-20,要手動確認（中身が薄い）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 hsc.or.jp,（公財）北海道中小企業総合支援センター,北海道,都道府県等中小企業支援センター,chusho_shien,https://www.hsc.or.jp/,https://www.hsc.or.jp/hsc_wp/wp-content/uploads/2026/08/2026_koubo_calendar_20260820.pdf,tier_a,,2026-08-20,要手動確認（中身が薄い）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 chibashi-sangyo.or.jp,（公財）千葉市産業振興財団,千葉,都道府県等中小企業支援センター,chusho_shien,http://www.chibashi-sangyo.or.jp/,https://www.chibashi-sangyo.or.jp/info-all/13736/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
@@ -100,21 +100,21 @@ sozo-saitama.or.jp,（公財）さいたま市産業創造財団,埼玉,都道�
 saitama-j.or.jp,（公財）埼玉県産業振興公社,埼玉,都道府県等中小企業支援センター,chusho_shien,http://www.saitama-j.or.jp/,http://www.saitama-j.or.jp/pages/339?detail=1&amp;b_id=515&amp;r_id=783#block515,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 columbus.or.jp,（公財）大分県産業創造機構,大分,都道府県等中小企業支援センター,chusho_shien,http://www.columbus.or.jp/,https://www.columbus.or.jp/2026/08/17/%e3%80%90%e3%81%8a%e7%9f%a5%e3%82%89%e3%81%9b%e3%80%91%e4%bb%a4%e5%92%8c%ef%bc%98%e5%b9%b4%e5%ba%a6%e4%b8%ad%e5%b0%8f%e4%bc%81%e6%a5%ad%e5%9c%b0%e5%9f%9f%e8%b3%87%e6%ba%90%e6%b4%bb%e7%94%a8%e7%ad%89/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 obda.or.jp,（公財）大阪産業局,大阪,都道府県等中小企業支援センター,chusho_shien,http://www.obda.or.jp/,https://www.yorozu-osaka.jp/news/2026-07-08-1512/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-nara-sangyoshinko.or.jp,（公財）奈良県地域産業振興センター,奈良,都道府県等中小企業支援センター,chusho_shien,http://www.nara-sangyoshinko.or.jp/,,tier_a,,2026-08-20,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
+nara-sangyoshinko.or.jp,（公財）奈良県地域産業振興センター,奈良,都道府県等中小企業支援センター,chusho_shien,http://www.nara-sangyoshinko.or.jp/,,tier_a,,2026-08-21,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
 joho-miyagi.or.jp,（公財）みやぎ産業振興機構,宮城,都道府県等中小企業支援センター,chusho_shien,http://www.joho-miyagi.or.jp/,http://www.joho-miyagi.or.jp/go-tech-soudan,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 mepo.or.jp,（公財）宮崎県産業振興機構,宮崎,都道府県等中小企業支援センター,chusho_shien,https://www.mepo.or.jp/,https://www.mepo.or.jp/shiensaku/7880.html,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 tonio.or.jp,（公財）富山県新世紀産業機構,富山,都道府県等中小企業支援センター,chusho_shien,https://www.tonio.or.jp/,https://www.tonio.or.jp/search/%e5%85%a5%e6%9c%ad%e7%b5%90%e6%9e%9c%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%ef%bc%88%e4%bc%9a%e8%a8%88%e3%82%b7%e3%82%b9%e3%83%86%e3%83%a0%e7%ad%89%e3%81%ae%e5%b0%8e%e5%85%a5%e3%81%ab%e4%bf%82%e3%82%8b/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 yipf.or.jp,（公財）やまぐち産業振興財団,山口,都道府県等中小企業支援センター,chusho_shien,https://yipf.or.jp/,https://yipf.or.jp/bid/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 ynet.or.jp,（公財）山形県企業振興公社,山形,都道府県等中小企業支援センター,chusho_shien,http://www.ynet.or.jp/,https://www.ynet.or.jp/2025/11/hp.html,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 yiso.or.jp,（公財）やまなし産業支援機構,山梨,都道府県等中小企業支援センター,chusho_shien,http://www.yiso.or.jp/,https://www.yiso.or.jp/1216/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-gpc-gifu.or.jp,（公財）岐阜県産業経済振興センター,岐阜,都道府県等中小企業支援センター,chusho_shien,http://www.gpc-gifu.or.jp/,,tier_a,,2026-08-20,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-optic.or.jp,（公財）岡山県産業振興財団,岡山,都道府県等中小企業支援センター,chusho_shien,https://www.optic.or.jp/,,tier_a,,2026-08-20,HTTP 423,中小企業支援法に基づく指定法人。47都道府県＋政令市
+gpc-gifu.or.jp,（公財）岐阜県産業経済振興センター,岐阜,都道府県等中小企業支援センター,chusho_shien,http://www.gpc-gifu.or.jp/,,tier_a,,2026-08-21,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
+optic.or.jp,（公財）岡山県産業振興財団,岡山,都道府県等中小企業支援センター,chusho_shien,https://www.optic.or.jp/,,tier_a,,2026-08-21,HTTP 423,中小企業支援法に基づく指定法人。47都道府県＋政令市
 joho-iwate.or.jp,（公財）いわて産業振興センター,岩手,都道府県等中小企業支援センター,chusho_shien,http://www.joho-iwate.or.jp/,https://www.pref.iwate.jp/kensei/nyuusatsu/1010807/1066780.html,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 joho-shimane.or.jp,（公財）しまね産業振興財団,島根,都道府県等中小企業支援センター,chusho_shien,http://www.joho-shimane.or.jp/,http://www.joho-shimane.or.jp/news/wanted_subsidy/9077,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-hiwave.or.jp,（公財）ひろしま産業振興機構,広島,都道府県等中小企業支援センター,chusho_shien,http://www.hiwave.or.jp/,,tier_a,,2026-08-20,HTTP 403,中小企業支援法に基づく指定法人。47都道府県＋政令市
+hiwave.or.jp,（公財）ひろしま産業振興機構,広島,都道府県等中小企業支援センター,chusho_shien,http://www.hiwave.or.jp/,,tier_a,,2026-08-21,HTTP 403,中小企業支援法に基づく指定法人。47都道府県＋政令市
 ipc.city.hiroshima.jp,（公財）広島市産業振興センター,広島,都道府県等中小企業支援センター,chusho_shien,http://www.ipc.city.hiroshima.jp/,http://www.ipc.city.hiroshima.jp/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 oursun.our-think.or.jp,（公財）とくしま産業振興機構,徳島,都道府県等中小企業支援センター,chusho_shien,http://oursun.our-think.or.jp/,https://www.our-think.or.jp/327276/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
-ehime-iinet.or.jp,（公財）えひめ産業振興財団,愛媛,都道府県等中小企業支援センター,chusho_shien,http://www.ehime-iinet.or.jp/,,tier_a,,2026-08-20,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
+ehime-iinet.or.jp,（公財）えひめ産業振興財団,愛媛,都道府県等中小企業支援センター,chusho_shien,http://www.ehime-iinet.or.jp/,,tier_a,,2026-08-21,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
 aibsc.jp,（公財）あいち産業振興機構,愛知,都道府県等中小企業支援センター,chusho_shien,http://www.aibsc.jp/,https://www.aibsc.jp/supports/subcontracting_temple,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 nico.or.jp,（公財）にいがた産業創造機構,新潟,都道府県等中小企業支援センター,chusho_shien,http://www.nico.or.jp/,https://www.nico.or.jp/newslist_1/?c=nyusatsu,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 tokyo-kosha.or.jp,（公財）東京都中小企業振興公社,東京,都道府県等中小企業支援センター,chusho_shien,http://www.tokyo-kosha.or.jp/,http://www.tokyo-kosha.or.jp/kosha/keiyaku/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
@@ -125,10 +125,10 @@ kmt-ti.or.jp,（公財）くまもと産業支援財団,熊本,都道府県等�
 isico.or.jp,（公財）石川県産業創出支援機構,石川,都道府県等中小企業支援センター,chusho_shien,https://www.isico.or.jp/,https://www.isico.or.jp/support/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 kipc.or.jp,（公財）神奈川産業振興センター,神奈川,都道府県等中小企業支援センター,chusho_shien,http://www.kipc.or.jp/,https://www.kipc.or.jp/topics/information/soumu20260617/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
 fisc.jp,（公財）ふくい産業支援センター,福井,都道府県等中小企業支援センター,chusho_shien,http://www.fisc.jp/,https://www.fisc.jp/offering/consult/2026/08/173674/,tier_a,,2026-08-20,確認済み,中小企業支援法に基づく指定法人。47都道府県＋政令市
-joho-fukuoka.or.jp,（公財）福岡県中小企業振興センター,福岡,都道府県等中小企業支援センター,chusho_shien,http://www.joho-fukuoka.or.jp/new/center/,,tier_a,,2026-08-20,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
+joho-fukuoka.or.jp,（公財）福岡県中小企業振興センター,福岡,都道府県等中小企業支援センター,chusho_shien,http://www.joho-fukuoka.or.jp/new/center/,,tier_a,,2026-08-21,要手動確認（未発見）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 utsukushima.net,（公財）福島県産業振興センター,福島,都道府県等中小企業支援センター,chusho_shien,http://www.utsukushima.net/,http://www.utsukushima.net/news.html?id=759,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 bic-akita.or.jp,（公財）あきた企業活性化センター,秋田,都道府県等中小企業支援センター,chusho_shien,http://www.bic-akita.or.jp/,https://www.bic-akita.or.jp/news/8874/,tier_a,,2026-08-20,要手動確認（中身が薄い）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-g-inf.or.jp,（公財）群馬県産業支援機構,群馬,都道府県等中小企業支援センター,chusho_shien,http://www.g-inf.or.jp/,,tier_a,,2026-08-20,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
+g-inf.or.jp,（公財）群馬県産業支援機構,群馬,都道府県等中小企業支援センター,chusho_shien,http://www.g-inf.or.jp/,,tier_a,,2026-08-21,到達不可,中小企業支援法に基づく指定法人。47都道府県＋政令市
 iis-net.or.jp,（公財）いばらき中小企業グローバル推進機構,茨城,都道府県等中小企業支援センター,chusho_shien,http://www.iis-net.or.jp/,https://www.hirosawa-zaidan.com/zaidan-boshu/zaidan-boshu-r08.html,tier_a,,2026-08-20,要手動確認（中身が薄い）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 joho-nagasaki.or.jp,（公財）長崎県産業振興財団,長崎,都道府県等中小企業支援センター,chusho_shien,https://www.joho-nagasaki.or.jp/,https://www.joho-nagasaki.or.jp/info_offer/2026-176/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 nice-o.or.jp,（公財）長野県産業振興機構,長野,都道府県等中小企業支援センター,chusho_shien,https://www.nice-o.or.jp/,https://www.nice-o.or.jp/info/info-75718/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
@@ -139,100 +139,100 @@ kagawa-isf.jp,（公財）かがわ産業支援財団,香川,都道府県等中�
 joho-kochi.or.jp,（公財）高知県産業振興センター,高知,都道府県等中小企業支援センター,chusho_shien,http://www.joho-kochi.or.jp/,https://joho-kochi.or.jp/gaisyo/mhnichi/R8final/result.pdf,tier_a,,2026-08-20,要手動確認（中身が薄い）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 toriton.or.jp,（公財）鳥取県産業振興機構,鳥取,都道府県等中小企業支援センター,chusho_shien,http://www.toriton.or.jp/,https://www.toriton.or.jp/category/bidding-proposals/,tier_a,,2026-08-20,要手動確認（中身が薄い）,中小企業支援法に基づく指定法人。47都道府県＋政令市
 kisc.or.jp,（公財）かごしま産業支援センター,鹿児島,都道府県等中小企業支援センター,chusho_shien,https://www.kisc.or.jp/,https://www.kisc.or.jp/cat-sangyou/64747/,tier_a,,2026-08-20,要手動確認（候補のみ）,中小企業支援法に基づく指定法人。47都道府県＋政令市
-mofa.go.jp,外務省,,中央省庁,manual,https://www.mofa.go.jp/,,tier_b,monthly,,未確認,在外公館文化事業
-bunka.go.jp,文化庁,,中央省庁,manual,https://www.bunka.go.jp/,,tier_b,monthly,,未確認,文化芸術の国際発信
-mlit.go.jp,観光庁,,中央省庁,manual,https://www.mlit.go.jp/kankocho/,,tier_b,monthly,,未確認,インバウンド・訪日プロモーション
-nexi.go.jp,日本貿易保険 取引にかける保険を取り扱う,,公的中小企業支援機関,jnet21,https://www.nexi.go.jp/,,tier_b,,,未確認,中小機構 J-Net21 の公的機関一覧
-int.sentia-sendai.jp,（公財）仙台観光国際協会,,地域国際化協会,clair_rliea,http://int.sentia-sendai.jp/j/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kitaq-koryu.jp,（公財）北九州国際交流協会,,地域国際化協会,clair_rliea,http://www.kitaq-koryu.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kian.or.jp,（公財）川崎市国際交流協会,,地域国際化協会,clair_rliea,http://www.kian.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-yokeweb.com,（公財）横浜市国際交流協会,,地域国際化協会,clair_rliea,https://www.yokeweb.com/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-hi-hice.jp,（公財）浜松国際交流協会,,地域国際化協会,clair_rliea,http://www.hi-hice.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-mief.or.jp,（公財）三重県国際交流財団,三重,地域国際化協会,clair_rliea,http://www.mief.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kcif.or.jp,（公財）京都市国際交流協会,京都,地域国際化協会,clair_rliea,http://www.kcif.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-spira.or.jp,（公財）佐賀県国際交流協会,佐賀,地域国際化協会,clair_rliea,http://www.spira.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-hyogo-ip.or.jp,（公財）兵庫県国際交流協会,兵庫,地域国際化協会,clair_rliea,http://www.hyogo-ip.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-hiecc.or.jp,（公社）北海道国際交流・協力総合センター,北海道,地域国際化協会,clair_rliea,http://www.hiecc.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-ccia-chiba.or.jp,（公財）千葉市国際交流協会,千葉,地域国際化協会,clair_rliea,http://www.ccia-chiba.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-wixas.wak-kokusai.jp,（公財）和歌山県国際交流協会,和歌山,地域国際化協会,clair_rliea,https://wixas.wak-kokusai.jp,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-stib.jp,（公社）さいたま観光国際協会,埼玉,地域国際化協会,clair_rliea,http://www.stib.jp/kokusai/index.shtml,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-sia1.jp,（公財）埼玉県国際交流協会,埼玉,地域国際化協会,clair_rliea,https://sia1.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-oitaplaza.jp,（公財）大分県芸術文化スポーツ振興財団,大分,地域国際化協会,clair_rliea,http://www.oitaplaza.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-ih-osaka.or.jp,（公財）大阪国際交流センター,大阪,地域国際化協会,clair_rliea,http://www.ih-osaka.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-ofix.or.jp,（公財）大阪府国際交流財団,大阪,地域国際化協会,clair_rliea,http://www.ofix.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-mif.or.jp,（公財）宮崎県国際交流協会,宮崎,地域国際化協会,clair_rliea,http://www.mif.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-yiea.or.jp,（公財）山口県国際交流協会,山口,地域国際化協会,clair_rliea,http://www.yiea.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-airyamagata.org,（公財）山形県国際交流協会,山形,地域国際化協会,clair_rliea,http://www.airyamagata.org/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-yia.or.jp,（公財）山梨県国際交流協会,山梨,地域国際化協会,clair_rliea,http://yia.or.jp/wordpress/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-gic.or.jp,（公財）岐阜県国際交流センター,岐阜,地域国際化協会,clair_rliea,http://www.gic.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-opief.or.jp,（一財）岡山県国際交流協会,岡山,地域国際化協会,clair_rliea,http://www.opief.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-iwate-ia.or.jp,（公財）岩手県国際交流協会,岩手,地域国際化協会,clair_rliea,http://www.iwate-ia.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-pcf.city.hiroshima.jp,（公財）広島平和文化センター,広島,地域国際化協会,clair_rliea,http://www.pcf.city.hiroshima.jp/ircd/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-topia.ne.jp,（公財）徳島県国際交流協会,徳島,地域国際化協会,clair_rliea,http://www.topia.ne.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-epic.or.jp,（公財）愛媛県国際交流協会,愛媛,地域国際化協会,clair_rliea,http://www.epic.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-www2.aia.pref.aichi.jp,（公財）愛知県国際交流協会,愛知,地域国際化協会,clair_rliea,http://www2.aia.pref.aichi.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-nief.or.jp,（公財）新潟市国際交流協会,新潟,地域国際化協会,clair_rliea,https://www.nief.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-niigata-ia.or.jp,（公財）新潟県国際交流協会,新潟,地域国際化協会,clair_rliea,http://www.niigata-ia.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-tia21.or.jp,（公財）栃木県国際交流協会,栃木,地域国際化協会,clair_rliea,http://tia21.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kokusai.oihf.or.jp,（公財）沖縄県国際交流・人材育成財団,沖縄,地域国際化協会,clair_rliea,http://kokusai.oihf.or.jp,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kumamoto-if.or.jp,（一財）熊本市国際交流振興事業団,熊本,地域国際化協会,clair_rliea,http://www.kumamoto-if.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-ifie.or.jp,（公財）石川県国際交流協会,石川,地域国際化協会,clair_rliea,http://www.ifie.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kifjp.org,（公財）かながわ国際交流財団,神奈川,地域国際化協会,clair_rliea,http://www.kifjp.org/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-f-i-a.or.jp,（公財）福井県国際交流協会,福井,地域国際化協会,clair_rliea,http://www.f-i-a.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-fcif.or.jp,（公財）福岡よかトピア国際交流財団,福岡,地域国際化協会,clair_rliea,https://www.fcif.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-fief.or.jp,（公財）福岡県国際交流センター,福岡,地域国際化協会,clair_rliea,https://fief.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-worldvillage.org,（公財）福島県国際交流協会,福島,地域国際化協会,clair_rliea,http://www.worldvillage.org/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-aiahome.or.jp,（公財）秋田県国際交流協会,秋田,地域国際化協会,clair_rliea,http://www.aiahome.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-top.gtia.jp,（公財）群馬県観光物産国際協会,群馬,地域国際化協会,clair_rliea,https://top.gtia.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-ia-ibaraki.or.jp,（公財）茨城県国際交流協会,茨城,地域国際化協会,clair_rliea,http://www.ia-ibaraki.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-nia.or.jp,（公財）長崎県国際交流協会,長崎,地域国際化協会,clair_rliea,http://www.nia.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kokusai-koryu.jp,（公社）青森県観光国際交流機構,青森,地域国際化協会,clair_rliea,http://www.kokusai-koryu.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-samenet.jp,（一財）静岡市国際交流協会,静岡,地域国際化協会,clair_rliea,http://www.samenet.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-sir.or.jp,（公財）静岡県国際交流協会,静岡,地域国際化協会,clair_rliea,http://www.sir.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-i-pal.or.jp,（公財）香川県国際交流協会,香川,地域国際化協会,clair_rliea,http://www.i-pal.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kochi-kia.or.jp,（公財）高知県国際交流協会,高知,地域国際化協会,clair_rliea,http://www.kochi-kia.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-torisakyu.or.jp,（公財）鳥取県国際交流財団,鳥取,地域国際化協会,clair_rliea,http://www.torisakyu.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kiaweb.or.jp,（公財）鹿児島県国際交流協会,鹿児島,地域国際化協会,clair_rliea,https://www.kiaweb.or.jp/,,tier_b,,,未確認,総務省認定の中核的民間国際交流組織
-kyukeiren.or.jp,一般社団法人九州経済連合会,,経済団体,manual,https://www.kyukeiren.or.jp/,,tier_b,monthly,,未確認,受注実績あり（ラグビーW杯欧州プロモーション 2018）
-nic-nagoya.or.jp,（公財）名古屋国際センター,,地域国際化協会,clair_rliea,http://www.nic-nagoya.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-plaza-sapporo.or.jp,（公財）札幌国際プラザ,,地域国際化協会,clair_rliea,https://www.plaza-sapporo.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-kicc.jp,（公財）神戸国際コミュニティセンター,,地域国際化協会,clair_rliea,https://www.kicc.jp/ja,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-kpic.or.jp,（公財）京都府国際センター,京都,地域国際化協会,clair_rliea,http://www.kpic.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-ccb.or.jp,（公財）ちば国際コンベンションビューロー,千葉,地域国際化協会,clair_rliea,http://www.ccb.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-mia-miyagi.jp,（公財）宮城県国際化協会,宮城,地域国際化協会,clair_rliea,http://mia-miyagi.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-tic-toyama.or.jp,（公財）とやま国際センター,富山,地域国際化協会,clair_rliea,http://www.tic-toyama.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-sic-info.org,（公財）しまね国際センター,島根,地域国際化協会,clair_rliea,http://www.sic-info.org/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-hiroshima-ic.or.jp,（公財）ひろしま国際センター,広島,地域国際化協会,clair_rliea,http://hiroshima-ic.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-tokyo-tsunagari.or.jp,（公財）東京都つながり創生財団,東京,地域国際化協会,clair_rliea,https://tokyo-tsunagari.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-s-i-a.or.jp,（公財）滋賀県国際協会,滋賀,地域国際化協会,clair_rliea,http://www.s-i-a.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-kuma-koku.jp,熊本県国際協会,熊本,地域国際化協会,clair_rliea,http://www.kuma-koku.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-anpie.or.jp,（公財）長野県国際化協会,長野,地域国際化協会,clair_rliea,http://www.anpie.or.jp/,,tier_c,,,未確認,総務省認定の中核的民間国際交流組織
-nichibenren.or.jp,ひまわり中小企業センター 弁護士への相談が可能,,公的中小企業支援機関,jnet21,https://www.nichibenren.or.jp/ja/sme/about_himawari.html,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-zenpuku.or.jp,中小企業勤労者福祉サービスセンター 大手企業並みの福利厚生の整備をサポート,,公的中小企業支援機関,jnet21,https://www.zenpuku.or.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-zenkyo.or.jp,全国中小企業振興機関協会 販路の多角化や取引適正化・経営安定化を支援,,公的中小企業支援機関,jnet21,https://www.zenkyo.or.jp/index.htm,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-shokokai.or.jp,商工会 会員制の経済団体,,公的中小企業支援機関,jnet21,https://www.shokokai.or.jp/?page_id=1754,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-jcci.or.jp,商工会議所 会員制の経済団体,,公的中小企業支援機関,jnet21,https://www.jcci.or.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-partner.jica.go.jp,国際協力機構（ジャイカ） 中小企業向けに海外人材を紹介するサービスを展開,,公的中小企業支援機関,jnet21,https://partner.jica.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-nedo.go.jp,新エネルギー・産業技術総合開発機構 エネルギー・環境分野と産業技術支援の一翼を担う,,公的中小企業支援機関,jnet21,https://www.nedo.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-amed.go.jp,日本医療研究開発機構 医療分野の研究開発機関,,公的中小企業支援機関,jnet21,https://www.amed.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-jcaa.or.jp,日本商事仲裁協会 企業同士の仲裁や調停、通関手帳を発行する,,公的中小企業支援機関,jnet21,https://www.jcaa.or.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-jfc.go.jp,日本政策金融公庫 国民生活や企業経営の向上を支援する政策金融機関,,公的中小企業支援機関,jnet21,https://www.jfc.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-jilc.or.jp,日本立地センター 全国各地の産業用地を紹介,,公的中小企業支援機関,jnet21,https://www.jilc.or.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-webdesk.jsa.or.jp,日本規格協会 新技術や優れた製品を普及させるための標準化を支援,,公的中小企業支援機関,jnet21,https://webdesk.jsa.or.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-eu-japan.eu,日欧産業協力センター 欧州企業とのマッチングサービス（EEN）を提供,,公的中小企業支援機関,jnet21,https://www.eu-japan.eu/ja,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-aots.jp,海外産業人材育成協会 製造現場など日本で働く外国人の育成や研修を行う,,公的中小企業支援機関,jnet21,https://www.aots.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-aist.go.jp,産業技術総合研究所 モノづくり企業のための総合支援機関,,公的中小企業支援機関,jnet21,https://www.aist.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-sangyokoyo.or.jp,産業雇用安定センター 企業間の人材マッチングを無料でサポートする機関,,公的中小企業支援機関,jnet21,https://www.sangyokoyo.or.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-shindan-net.jp,省エネルギーセンター 設備を省エネ対応にするための診断、アドバイスを行う,,公的中小企業支援機関,jnet21,https://www.shindan-net.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-fukushi-work.jp,福祉人材センター・バンク 福祉関係の仕事だけを集めた無料の職業紹介所,,公的中小企業支援機関,jnet21,https://www.fukushi-work.jp/bank/index_6.html,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-wam.go.jp,福祉医療機構 福祉・医療分野の総合支援窓口,,公的中小企業支援機関,jnet21,https://www.wam.go.jp/hp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-jst.go.jp,科学技術振興機構 産学官連携の総合支援機関,,公的中小企業支援機関,jnet21,https://www.jst.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-engokyokai.jp,自衛隊援護協会 退職自衛官と求人企業を結びつける支援をする機関,,公的中小企業支援機関,jnet21,https://www.engokyokai.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-nite.go.jp,製品評価技術基盤機構 工業製品に関する検査や評価を実施,,公的中小企業支援機関,jnet21,https://www.nite.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-maff.go.jp,農地中間管理機構 農地の集積・集約化を進める仲介機関,,公的中小企業支援機関,jnet21,https://www.maff.go.jp/j/keiei/koukai/kikou/nouchibank.html,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-naro.go.jp,農業・食品産業技術総合研究機構 農業分野の研究開発機関,,公的中小企業支援機関,jnet21,https://www.naro.go.jp/index.html,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-alic.go.jp,農畜産業振興機構 農畜産業の総合支援機関,,公的中小企業支援機関,jnet21,https://www.alic.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
-ur-net.go.jp,都市再生機構 略称UR,,公的中小企業支援機関,jnet21,https://www.ur-net.go.jp/,,tier_d,,,未確認,中小機構 J-Net21 の公的機関一覧
+mofa.go.jp,外務省,,中央省庁,manual,https://www.mofa.go.jp/,,tier_b,monthly,2026-08-21,HTTP 403,在外公館文化事業
+bunka.go.jp,文化庁,,中央省庁,manual,https://www.bunka.go.jp/,https://www.mext.go.jp/b_menu/choutatsu/index.htm,tier_b,monthly,2026-08-21,要手動確認（中身が薄い）,文化芸術の国際発信
+mlit.go.jp,観光庁,,中央省庁,manual,https://www.mlit.go.jp/kankocho/,https://www.mlit.go.jp/kankocho/soshiki/nyusatsukeiyaku/index.html,tier_b,monthly,2026-08-21,確認済み,インバウンド・訪日プロモーション
+nexi.go.jp,日本貿易保険 取引にかける保険を取り扱う,,公的中小企業支援機関,jnet21,https://www.nexi.go.jp/,https://www.nexi.go.jp/supply/,tier_b,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+int.sentia-sendai.jp,（公財）仙台観光国際協会,,地域国際化協会,clair_rliea,http://int.sentia-sendai.jp/j/,https://int.sentia-sendai.jp/blog/j/35502/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kitaq-koryu.jp,（公財）北九州国際交流協会,,地域国際化協会,clair_rliea,http://www.kitaq-koryu.jp/,https://www.kitaq-koryu.jp/news/recruitment/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kian.or.jp,（公財）川崎市国際交流協会,,地域国際化協会,clair_rliea,http://www.kian.or.jp/,http://www.kian.or.jp/topics/employ-shokutaku24-sd-idx.shtml,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+yokeweb.com,（公財）横浜市国際交流協会,,地域国際化協会,clair_rliea,https://www.yokeweb.com/,https://www.yokeweb.com/2026/07/14/1-271/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+hi-hice.jp,（公財）浜松国際交流協会,,地域国際化協会,clair_rliea,http://www.hi-hice.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+mief.or.jp,（公財）三重県国際交流財団,三重,地域国際化協会,clair_rliea,http://www.mief.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+kcif.or.jp,（公財）京都市国際交流協会,京都,地域国際化協会,clair_rliea,http://www.kcif.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+spira.or.jp,（公財）佐賀県国際交流協会,佐賀,地域国際化協会,clair_rliea,http://www.spira.or.jp/,https://www.spira.or.jp/ai1ec_event/%e3%80%9097%e3%81%97%e3%82%81%e3%81%8d%e3%82%8a%e3%80%91%e5%87%ba%e5%a0%b4%e8%80%85%e5%8b%9f%e9%9b%86%ef%bc%81%ef%bc%81%e7%ac%ac11%e5%9b%9e-%e6%97%a5%e6%9c%ac%e8%aa%9e%e3%82%b9%e3%83%94%e3%83%bc/?instance_id=,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+hyogo-ip.or.jp,（公財）兵庫県国際交流協会,兵庫,地域国際化協会,clair_rliea,http://www.hyogo-ip.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+hiecc.or.jp,（公社）北海道国際交流・協力総合センター,北海道,地域国際化協会,clair_rliea,http://www.hiecc.or.jp/,,tier_b,,2026-08-21,到達不可,総務省認定の中核的民間国際交流組織
+ccia-chiba.or.jp,（公財）千葉市国際交流協会,千葉,地域国際化協会,clair_rliea,http://www.ccia-chiba.or.jp/,https://ccia-chiba.or.jp/wards_info/97693.html,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+wixas.wak-kokusai.jp,（公財）和歌山県国際交流協会,和歌山,地域国際化協会,clair_rliea,https://wixas.wak-kokusai.jp,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+stib.jp,（公社）さいたま観光国際協会,埼玉,地域国際化協会,clair_rliea,http://www.stib.jp/kokusai/index.shtml,https://stib.jp/international/news/4994/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+sia1.jp,（公財）埼玉県国際交流協会,埼玉,地域国際化協会,clair_rliea,https://sia1.jp/,https://sia1.jp/topics/r8nihongo_jinzai/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+oitaplaza.jp,（公財）大分県芸術文化スポーツ振興財団,大分,地域国際化協会,clair_rliea,http://www.oitaplaza.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+ih-osaka.or.jp,（公財）大阪国際交流センター,大阪,地域国際化協会,clair_rliea,http://www.ih-osaka.or.jp/,https://www.ih-osaka.or.jp/projects/development/saigaiji-volunteer/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+ofix.or.jp,（公財）大阪府国際交流財団,大阪,地域国際化協会,clair_rliea,http://www.ofix.or.jp/,https://ofix.or.jp/2026/07/31/infoday/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+mif.or.jp,（公財）宮崎県国際交流協会,宮崎,地域国際化協会,clair_rliea,http://www.mif.or.jp/,https://www.mif.or.jp/volunteer/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+yiea.or.jp,（公財）山口県国際交流協会,山口,地域国際化協会,clair_rliea,http://www.yiea.or.jp/,https://yiea.or.jp/news/news_18313/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+airyamagata.org,（公財）山形県国際交流協会,山形,地域国際化協会,clair_rliea,http://www.airyamagata.org/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+yia.or.jp,（公財）山梨県国際交流協会,山梨,地域国際化協会,clair_rliea,http://yia.or.jp/wordpress/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+gic.or.jp,（公財）岐阜県国際交流センター,岐阜,地域国際化協会,clair_rliea,http://www.gic.or.jp/,https://www.gic.or.jp/news/%e3%80%90%e5%b2%90%e9%98%9c%e7%9c%8c%e3%80%91%e5%8b%9f%e9%9b%86%e4%b8%ad_%e3%81%8e%e3%81%b5%e3%82%aa%e3%83%b3%e3%83%a9%e3%82%a4%e3%83%b3%e6%97%a5%e6%9c%ac%e8%aa%9e%e6%95%99%e5%ae%a4%ef%bc%88%e3%81%af,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+opief.or.jp,（一財）岡山県国際交流協会,岡山,地域国際化協会,clair_rliea,http://www.opief.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+iwate-ia.or.jp,（公財）岩手県国際交流協会,岩手,地域国際化協会,clair_rliea,http://www.iwate-ia.or.jp/,http://www.iwate-ia.or.jp/kensei/nyuusatsujouhou/nyuusatsujouhou/proposal/index.html,tier_b,,2026-08-21,確認済み,総務省認定の中核的民間国際交流組織
+pcf.city.hiroshima.jp,（公財）広島平和文化センター,広島,地域国際化協会,clair_rliea,http://www.pcf.city.hiroshima.jp/ircd/,http://www.pcf.city.hiroshima.jp/ircd/info/oshirase-naiyou-207-network-boshu.html,tier_b,,2026-08-21,要手動確認（中身が薄い）,総務省認定の中核的民間国際交流組織
+topia.ne.jp,（公財）徳島県国際交流協会,徳島,地域国際化協会,clair_rliea,http://www.topia.ne.jp/,https://www.topia.ne.jp/docs/2026072800018/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+epic.or.jp,（公財）愛媛県国際交流協会,愛媛,地域国際化協会,clair_rliea,http://www.epic.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+www2.aia.pref.aichi.jp,（公財）愛知県国際交流協会,愛知,地域国際化協会,clair_rliea,http://www2.aia.pref.aichi.jp/,http://www2.aia.pref.aichi.jp/kikaku/j/mm/merumagatop.html,tier_b,,2026-08-21,要手動確認（中身が薄い）,総務省認定の中核的民間国際交流組織
+nief.or.jp,（公財）新潟市国際交流協会,新潟,地域国際化協会,clair_rliea,https://www.nief.or.jp/,https://www.nief.or.jp/about_nief/ad/index.html,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+niigata-ia.or.jp,（公財）新潟県国際交流協会,新潟,地域国際化協会,clair_rliea,http://www.niigata-ia.or.jp/,https://www.niigata-ia.or.jp/topics/15871/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+tia21.or.jp,（公財）栃木県国際交流協会,栃木,地域国際化協会,clair_rliea,http://tia21.or.jp/,https://www.pref.tochigi.lg.jp/c01/kouhou/gaikokujinkipason.html,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kokusai.oihf.or.jp,（公財）沖縄県国際交流・人材育成財団,沖縄,地域国際化協会,clair_rliea,http://kokusai.oihf.or.jp,http://kokusai.oihf.or.jp/topics/1778132030/,tier_b,,2026-08-21,確認済み,総務省認定の中核的民間国際交流組織
+kumamoto-if.or.jp,（一財）熊本市国際交流振興事業団,熊本,地域国際化協会,clair_rliea,http://www.kumamoto-if.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+ifie.or.jp,（公財）石川県国際交流協会,石川,地域国際化協会,clair_rliea,http://www.ifie.or.jp/,https://www.ifie.or.jp/international/volunteer/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kifjp.org,（公財）かながわ国際交流財団,神奈川,地域国際化協会,clair_rliea,http://www.kifjp.org/,https://www.kifjp.org/ad,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+f-i-a.or.jp,（公財）福井県国際交流協会,福井,地域国際化協会,clair_rliea,http://www.f-i-a.or.jp/,http://www.f-i-a.or.jp/ja/fia/event/?id=10161,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+fcif.or.jp,（公財）福岡よかトピア国際交流財団,福岡,地域国際化協会,clair_rliea,https://www.fcif.or.jp/,https://www.fcif.or.jp/latestnews/languages/summerjapaneseclasses/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+fief.or.jp,（公財）福岡県国際交流センター,福岡,地域国際化協会,clair_rliea,https://fief.or.jp/,https://fief.or.jp/request/volunteer/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+worldvillage.org,（公財）福島県国際交流協会,福島,地域国際化協会,clair_rliea,http://www.worldvillage.org/,,tier_b,,2026-08-21,HTTP 404,総務省認定の中核的民間国際交流組織
+aiahome.or.jp,（公財）秋田県国際交流協会,秋田,地域国際化協会,clair_rliea,http://www.aiahome.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+top.gtia.jp,（公財）群馬県観光物産国際協会,群馬,地域国際化協会,clair_rliea,https://top.gtia.jp/,https://top.gtia.jp/topics/business/id2002/,tier_b,,2026-08-21,確認済み,総務省認定の中核的民間国際交流組織
+ia-ibaraki.or.jp,（公財）茨城県国際交流協会,茨城,地域国際化協会,clair_rliea,http://www.ia-ibaraki.or.jp/,https://www.ia-ibaraki.or.jp/volunteer/volunteer-recruit/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+nia.or.jp,（公財）長崎県国際交流協会,長崎,地域国際化協会,clair_rliea,http://www.nia.or.jp/,https://www.nia.or.jp/index.php/page/supporting-member,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kokusai-koryu.jp,（公社）青森県観光国際交流機構,青森,地域国際化協会,clair_rliea,http://www.kokusai-koryu.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+samenet.jp,（一財）静岡市国際交流協会,静岡,地域国際化協会,clair_rliea,http://www.samenet.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+sir.or.jp,（公財）静岡県国際交流協会,静岡,地域国際化協会,clair_rliea,http://www.sir.or.jp/,https://www.sir.or.jp/news/5531/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+i-pal.or.jp,（公財）香川県国際交流協会,香川,地域国際化協会,clair_rliea,http://www.i-pal.or.jp/,https://www.i-pal.or.jp/2026/05/20261.html,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kochi-kia.or.jp,（公財）高知県国際交流協会,高知,地域国際化協会,clair_rliea,http://www.kochi-kia.or.jp/,https://kochi-kia.or.jp/news/%e3%80%90%e6%83%85%e5%a0%b1%e5%85%b1%e6%9c%89%e3%80%91jica%e6%b5%b7%e5%a4%96%e5%8d%94%e5%8a%9b%e9%9a%8a%e5%8b%9f%e9%9b%86%e8%aa%ac%e6%98%8e%e4%bc%9a/,tier_b,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+torisakyu.or.jp,（公財）鳥取県国際交流財団,鳥取,地域国際化協会,clair_rliea,http://www.torisakyu.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+kiaweb.or.jp,（公財）鹿児島県国際交流協会,鹿児島,地域国際化協会,clair_rliea,https://www.kiaweb.or.jp/,,tier_b,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+kyukeiren.or.jp,一般社団法人九州経済連合会,,経済団体,manual,https://www.kyukeiren.or.jp/,https://www.kyukeiren.or.jp/kensei/nyuusatsu/,tier_b,monthly,2026-08-21,確認済み,受注実績あり（ラグビーW杯欧州プロモーション 2018）
+nic-nagoya.or.jp,（公財）名古屋国際センター,,地域国際化協会,clair_rliea,http://www.nic-nagoya.or.jp/,,tier_c,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+plaza-sapporo.or.jp,（公財）札幌国際プラザ,,地域国際化協会,clair_rliea,https://www.plaza-sapporo.or.jp/,,tier_c,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+kicc.jp,（公財）神戸国際コミュニティセンター,,地域国際化協会,clair_rliea,https://www.kicc.jp/ja,https://www.kicc.jp/ja/aboutus/activity/chiikikokusaika_joseikin,tier_c,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kpic.or.jp,（公財）京都府国際センター,京都,地域国際化協会,clair_rliea,http://www.kpic.or.jp/,http://www.kpic.or.jp/nihongo/appli.html,tier_c,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+ccb.or.jp,（公財）ちば国際コンベンションビューロー,千葉,地域国際化協会,clair_rliea,http://www.ccb.or.jp/,,tier_c,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+mia-miyagi.jp,（公財）宮城県国際化協会,宮城,地域国際化協会,clair_rliea,http://mia-miyagi.jp/,,tier_c,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+tic-toyama.or.jp,（公財）とやま国際センター,富山,地域国際化協会,clair_rliea,http://www.tic-toyama.or.jp/,https://www.tic-toyama.or.jp/topics/92122.html,tier_c,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+sic-info.org,（公財）しまね国際センター,島根,地域国際化協会,clair_rliea,http://www.sic-info.org/,https://www.sic-info.org/others/post-31724/,tier_c,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+hiroshima-ic.or.jp,（公財）ひろしま国際センター,広島,地域国際化協会,clair_rliea,http://hiroshima-ic.or.jp/,http://hiroshima-ic.or.jp/guide/volunteer/,tier_c,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+tokyo-tsunagari.or.jp,（公財）東京都つながり創生財団,東京,地域国際化協会,clair_rliea,https://tokyo-tsunagari.or.jp/,,tier_c,,2026-08-21,HTTP 404,総務省認定の中核的民間国際交流組織
+s-i-a.or.jp,（公財）滋賀県国際協会,滋賀,地域国際化協会,clair_rliea,http://www.s-i-a.or.jp/,http://www.s-i-a.or.jp/inquiries/volunteers,tier_c,,2026-08-21,要手動確認（候補のみ）,総務省認定の中核的民間国際交流組織
+kuma-koku.jp,熊本県国際協会,熊本,地域国際化協会,clair_rliea,http://www.kuma-koku.jp/,,tier_c,,2026-08-21,HTTP 503,総務省認定の中核的民間国際交流組織
+anpie.or.jp,（公財）長野県国際化協会,長野,地域国際化協会,clair_rliea,http://www.anpie.or.jp/,,tier_c,,2026-08-21,要手動確認（未発見）,総務省認定の中核的民間国際交流組織
+nichibenren.or.jp,ひまわり中小企業センター 弁護士への相談が可能,,公的中小企業支援機関,jnet21,https://www.nichibenren.or.jp/ja/sme/about_himawari.html,,tier_d,,2026-08-21,要手動確認（未発見）,中小機構 J-Net21 の公的機関一覧
+zenpuku.or.jp,中小企業勤労者福祉サービスセンター 大手企業並みの福利厚生の整備をサポート,,公的中小企業支援機関,jnet21,https://www.zenpuku.or.jp/,,tier_d,,2026-08-21,HTTP 403,中小機構 J-Net21 の公的機関一覧
+zenkyo.or.jp,全国中小企業振興機関協会 販路の多角化や取引適正化・経営安定化を支援,,公的中小企業支援機関,jnet21,https://www.zenkyo.or.jp/index.htm,,tier_d,,2026-08-21,要手動確認（未発見）,中小機構 J-Net21 の公的機関一覧
+shokokai.or.jp,商工会 会員制の経済団体,,公的中小企業支援機関,jnet21,https://www.shokokai.or.jp/?page_id=1754,,tier_d,,2026-08-21,HTTP 404,中小機構 J-Net21 の公的機関一覧
+jcci.or.jp,商工会議所 会員制の経済団体,,公的中小企業支援機関,jnet21,https://www.jcci.or.jp/,https://www.jcci.or.jp/news/news/2026/0821171649.html,tier_d,,2026-08-21,要手動確認（候補のみ）,中小機構 J-Net21 の公的機関一覧
+partner.jica.go.jp,国際協力機構（ジャイカ） 中小企業向けに海外人材を紹介するサービスを展開,,公的中小企業支援機関,jnet21,https://partner.jica.go.jp/,https://partner.jica.go.jp/Contents/ChangedInternationalCooperationDetail?htmlName=fundraising_vol2,tier_d,,2026-08-21,要手動確認（中身が薄い）,中小機構 J-Net21 の公的機関一覧
+nedo.go.jp,新エネルギー・産業技術総合開発機構 エネルギー・環境分野と産業技術支援の一翼を担う,,公的中小企業支援機関,jnet21,https://www.nedo.go.jp/,https://www.nedo.go.jp/nyusatsu/index.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+amed.go.jp,日本医療研究開発機構 医療分野の研究開発機関,,公的中小企業支援機関,jnet21,https://www.amed.go.jp/,https://www.chotatsu.amed.go.jp/public/world/info/procurement/,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+jcaa.or.jp,日本商事仲裁協会 企業同士の仲裁や調停、通関手帳を発行する,,公的中小企業支援機関,jnet21,https://www.jcaa.or.jp/,,tier_d,,2026-08-21,HTTP 423,中小機構 J-Net21 の公的機関一覧
+jfc.go.jp,日本政策金融公庫 国民生活や企業経営の向上を支援する政策金融機関,,公的中小企業支援機関,jnet21,https://www.jfc.go.jp/,https://www.jfc.go.jp/n/supply/index.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+jilc.or.jp,日本立地センター 全国各地の産業用地を紹介,,公的中小企業支援機関,jnet21,https://www.jilc.or.jp/,https://www.jilc.or.jp/pages/37/#block2563,tier_d,,2026-08-21,要手動確認（候補のみ）,中小機構 J-Net21 の公的機関一覧
+webdesk.jsa.or.jp,日本規格協会 新技術や優れた製品を普及させるための標準化を支援,,公的中小企業支援機関,jnet21,https://webdesk.jsa.or.jp/,https://webdesk.jsa.or.jp/,tier_d,,2026-08-21,要手動確認（候補のみ）,中小機構 J-Net21 の公的機関一覧
+eu-japan.eu,日欧産業協力センター 欧州企業とのマッチングサービス（EEN）を提供,,公的中小企業支援機関,jnet21,https://www.eu-japan.eu/ja,https://www.eu-japan.eu/ja/invest-eu-hub/invest/funding,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+aots.jp,海外産業人材育成協会 製造現場など日本で働く外国人の育成や研修を行う,,公的中小企業支援機関,jnet21,https://www.aots.jp/,https://www.aots.jp/news/announcement/2026-07-01/,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+aist.go.jp,産業技術総合研究所 モノづくり企業のための総合支援機関,,公的中小企業支援機関,jnet21,https://www.aist.go.jp/,https://www.aist.go.jp/aist_j/procure/index.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+sangyokoyo.or.jp,産業雇用安定センター 企業間の人材マッチングを無料でサポートする機関,,公的中小企業支援機関,jnet21,https://www.sangyokoyo.or.jp/,https://www.sangyokoyo.or.jp/about/supply/index.html,tier_d,,2026-08-21,要手動確認（中身が薄い）,中小機構 J-Net21 の公的機関一覧
+shindan-net.jp,省エネルギーセンター 設備を省エネ対応にするための診断、アドバイスを行う,,公的中小企業支援機関,jnet21,https://www.shindan-net.jp/,,tier_d,,2026-08-21,要手動確認（未発見）,中小機構 J-Net21 の公的機関一覧
+fukushi-work.jp,福祉人材センター・バンク 福祉関係の仕事だけを集めた無料の職業紹介所,,公的中小企業支援機関,jnet21,https://www.fukushi-work.jp/bank/index_6.html,,tier_d,,2026-08-21,要手動確認（未発見）,中小機構 J-Net21 の公的機関一覧
+wam.go.jp,福祉医療機構 福祉・医療分野の総合支援窓口,,公的中小企業支援機関,jnet21,https://www.wam.go.jp/hp/,https://www.wam.go.jp/hp/cat/chotatsujoho/,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+jst.go.jp,科学技術振興機構 産学官連携の総合支援機関,,公的中小企業支援機関,jnet21,https://www.jst.go.jp/,https://www.jst.go.jp/#tabs-2,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+engokyokai.jp,自衛隊援護協会 退職自衛官と求人企業を結びつける支援をする機関,,公的中小企業支援機関,jnet21,https://www.engokyokai.jp/,https://www.engokyokai.jp/bid/bid.php,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+nite.go.jp,製品評価技術基盤機構 工業製品に関する検査や評価を実施,,公的中小企業支援機関,jnet21,https://www.nite.go.jp/,https://www.nite.go.jp/nite/chotatsu/index.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+maff.go.jp,農地中間管理機構 農地の集積・集約化を進める仲介機関,,公的中小企業支援機関,jnet21,https://www.maff.go.jp/j/keiei/koukai/kikou/nouchibank.html,https://www.maff.go.jp/j/supply/index.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+naro.go.jp,農業・食品産業技術総合研究機構 農業分野の研究開発機関,,公的中小企業支援機関,jnet21,https://www.naro.go.jp/index.html,https://www.naro.go.jp/supply/index.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
+alic.go.jp,農畜産業振興機構 農畜産業の総合支援機関,,公的中小企業支援機関,jnet21,https://www.alic.go.jp/,https://www.alic.go.jp/koho/kikaku03_000280.html,tier_d,,2026-08-21,要手動確認（中身が薄い）,中小機構 J-Net21 の公的機関一覧
+ur-net.go.jp,都市再生機構 略称UR,,公的中小企業支援機関,jnet21,https://www.ur-net.go.jp/,https://www.ur-net.go.jp/order/e-bid.html,tier_d,,2026-08-21,確認済み,中小機構 J-Net21 の公的機関一覧
 telework.mhlw.go.jp,テレワーク相談センター テレワークの実施に関して労務管理などをサポート,,公的中小企業支援機関,jnet21,https://telework.mhlw.go.jp/info/map/,,tier_z,,,未確認,中小機構 J-Net21 の公的機関一覧
 nurse-center.net,ナースセンター 無料職業紹介事業e-ナースセンターを運営,,公的中小企業支援機関,jnet21,https://www.nurse-center.net/nccs/,,tier_z,,,未確認,中小機構 J-Net21 の公的機関一覧
 jeed.go.jp,ポリテクセンター 公的な職業訓練施設,,公的中小企業支援機関,jnet21,https://www.jeed.go.jp/location/poly/,,tier_z,,,未確認,中小機構 J-Net21 の公的機関一覧

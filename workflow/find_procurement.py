@@ -30,6 +30,8 @@ import re
 import sys
 import urllib.parse
 import urllib.request
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 from pathlib import Path
 
@@ -72,7 +74,7 @@ COMMON_PATHS = [
 ]
 
 
-def fetch(url: str, timeout: int = 12) -> tuple[int, str]:
+def fetch(url: str, timeout: int = 10) -> tuple[int, str]:
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -142,9 +144,13 @@ def discover(domain: str, top_url: str) -> tuple[str, str]:
         if st == 200:
             return best, "要手動確認（中身が薄い）"
 
+    # よくあるパスを順に叩く。全部試すと1組織2分かかるので上限を設ける。
+    deadline = time.monotonic() + 35
     for path in COMMON_PATHS:
+        if time.monotonic() > deadline:
+            break
         cand = urllib.parse.urljoin(base, path)
-        st, pg = fetch(cand, timeout=8)
+        st, pg = fetch(cand, timeout=6)
         if st == 200 and looks_like_listing(pg):
             return cand, "確認済み"
 
@@ -166,6 +172,7 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--tier", help="この tier だけ処理する（例 tier_a）")
     ap.add_argument("--skip-z", action="store_true", help="tier_z を飛ばす")
+    ap.add_argument("--workers", default=8, help="並列数（相手は公的機関なので控えめに）")
     args = ap.parse_args()
 
     rows = list(csv.DictReader(REG.open(encoding="utf-8-sig")))
@@ -182,15 +189,25 @@ def main() -> int:
         targets = targets[: args.limit]
     print(f"対象 {len(targets)} / 全 {len(rows)} 組織\n")
 
+    # 1組織あたり最大35秒かかるため直列だと現実的でない。並列で回す。
+    # 相手はいずれも公的機関なので同時接続数は控えめにする。
     done = 0
-    for r in targets:
-        url, st = discover(r["domain"], r.get("url") or "")
-        r["procurement_url"], r["status"], r["last_checked"] = url, st, today
-        done += 1
-        mark = "OK " if st == "確認済み" else "-- "
-        print(f"{mark}{r['org'][:26]:28} {st:22} {url[:60]}", flush=True)
-        if done % 20 == 0:
-            save(rows, fields)          # 途中経過を失わない
+    with ThreadPoolExecutor(max_workers=int(args.workers)) as ex:
+        futs = {ex.submit(discover, r["domain"], r.get("url") or ""): r
+                for r in targets}
+        for fut in as_completed(futs):
+            r = futs[fut]
+            try:
+                url, st = fut.result()
+            except Exception as e:
+                url, st = "", f"例外 {type(e).__name__}"
+            r["procurement_url"], r["status"], r["last_checked"] = url, st, today
+            done += 1
+            mark = "OK " if st == "確認済み" else "-- "
+            print(f"{mark}[{done}/{len(targets)}] {r['org'][:24]:26} "
+                  f"{st:22} {url[:56]}", flush=True)
+            if done % 20 == 0:
+                save(rows, fields)      # 途中経過を失わない
 
     save(rows, fields)
 

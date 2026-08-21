@@ -42,10 +42,14 @@ qualifications:
   invoice_registered: null         # status: unconfirmed
 
   # --- 2026-08-19 追加。JETRO ベオグラード博 日本館運営（入札）の必須要件 ---
-  privacy_mark: null               # status: unconfirmed  プライバシーマーク
-  isms: null                       # status: unconfirmed  ISMS認証（ISO/IEC 27001）
+  privacy_mark: false              # status: confirmed（本人確認 2026-08-21）未保有
+  isms: false                      # status: confirmed（本人確認 2026-08-21）未保有
     # JETRO の入札では「Pマーク または ISMS のいずれか」が参加必須要件。
-    # 未保有の場合、要件を満たす法人を主幹事とする共同企業体でしか参加できない。
+    # **両方とも未保有が確定（2026-08-21）。** したがって当該案件は
+    # 要件を満たす法人を主幹事とする共同企業体でしか参加できず、
+    # 御社は構成員（連絡窓口・支払窓口は主幹事）となる。
+    # 取得を検討する場合、Pマークは申請から付与まで概ね4〜8か月かかるため、
+    # 来年度以降の案件を見据えるなら早期着手が要る。
     # 提案書記載の情報セキュリティ体制（UTM / Defender+Kaspersky / アクセス制限規程）は
     # 認証とは別物であり、この要件は充足しない。
   gbizid_prime: null               # status: unconfirmed  GビズIDプライムアカウント
