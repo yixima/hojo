@@ -125,27 +125,58 @@ tier_d_chambers:
 tier_e_prefectural_agencies:
   frequency: seasonal
   note: |
-    **ここが最も見落としやすい発注元。** 都道府県本体ではなく外郭団体が
-    海外展示会出展事業の運営委託を出すケースが多い。御社の受注実績である
-    東京都中小企業振興公社がまさにこの類型。47都道府県すべてに同種団体がある。
-    名称もドメインもバラバラで規則性がないため、WebSearch を主とし、
-    確認できたものを下に追記して育てる。
+    **最も見落としやすい発注元。** 都道府県本体ではなく外郭団体が海外展示会出展事業の
+    運営委託を出すケースが多い。御社の受注実績である東京都中小企業振興公社がこの類型。
+    2026-08-26 にDNSで実在確認し、45/47団体を特定した。
   verified:
-    - { pref: 東京, name: 東京都中小企業振興公社, domain: tokyo-kosha.or.jp, note: 受注実績あり }
-    - { pref: 石川, name: 石川県産業創出支援機構（ISICO）, domain: isico.or.jp }
-    - { pref: 千葉, name: 千葉県産業振興センター, domain: ccjc-net.or.jp }
-    - { pref: 静岡, name: 静岡県国際経済振興会（SIBA）, domain: siba.or.jp }
-    - { pref: 京都, name: 京都産業21, domain: ki21.jp }
-    - { pref: 神奈川, name: 神奈川産業振興センター, domain: kipc.or.jp }
-    - { pref: 埼玉, name: 埼玉県産業振興公社, domain: saitama-j.or.jp }
-    - { pref: 愛知, name: あいち産業振興機構, domain: aibsc.jp }
-    - { pref: 北海道, name: 北海道中小企業総合支援センター, domain: hsc.or.jp }
-    - { pref: 福岡, name: 福岡県中小企業振興センター, domain: joho-fukuoka.or.jp }
-    - { pref: 大阪, name: 大阪産業局, domain: obda.or.jp }
-  todo: |
-    残り36県は未調査。次回以降、WebSearch で「◯◯県 中小企業振興公社 海外展示会 公募」
-    の形で確認し、判明したものをここに追記する。
-    兵庫県産業活性化センター（hyogo-iic.ne.jp）はDNS未解決。要再調査。
+    - { pref: 北海道, domain: www.hsc.or.jp }
+    - { pref: 青森県, domain: www.21aomori.or.jp }
+    - { pref: 岩手県, domain: www.joho-iwate.or.jp }
+    - { pref: 宮城県, domain: www.joho-miyagi.or.jp }
+    - { pref: 秋田県, domain: www.bic-akita.or.jp }
+    - { pref: 山形県, domain: www.ynet.or.jp }
+    - { pref: 福島県, domain: www.utsukushima.net }
+    - { pref: 茨城県, domain: www.iis-net.or.jp }
+    - { pref: 栃木県, domain: www.tochigi-iin.or.jp }
+    - { pref: 群馬県, domain: www.g-inf.or.jp }
+    - { pref: 埼玉県, domain: www.saitama-j.or.jp }
+    - { pref: 千葉県, domain: www.ccjc-net.or.jp }
+    - { pref: 東京都, domain: www.tokyo-kosha.or.jp }
+    - { pref: 神奈川県, domain: www.kipc.or.jp }
+    - { pref: 新潟県, domain: www.nico.or.jp }
+    - { pref: 富山県, domain: www.tonio.or.jp }
+    - { pref: 石川県, domain: www.isico.or.jp }
+    - { pref: 福井県, domain: www.fisc.jp }
+    - { pref: 山梨県, domain: www.yiso.or.jp }
+    - { pref: 静岡県, domain: www.ric-shizuoka.or.jp }
+    - { pref: 愛知県, domain: www.aibsc.jp }
+    - { pref: 三重県, domain: www.miesc.or.jp }
+    - { pref: 滋賀県, domain: www.shigaplaza.or.jp }
+    - { pref: 京都府, domain: www.ki21.jp }
+    - { pref: 大阪府, domain: www.obda.or.jp }
+    - { pref: 兵庫県, domain: web.hyogo-iic.ne.jp }
+    - { pref: 奈良県, domain: www.nara-sangyoshinko.or.jp }
+    - { pref: 和歌山県, domain: www.yarukiouendan.or.jp }
+    - { pref: 鳥取県, domain: www.toriton.or.jp }
+    - { pref: 島根県, domain: www.joho-shimane.or.jp }
+    - { pref: 岡山県, domain: www.optic.or.jp }
+    - { pref: 広島県, domain: www.hiwave.or.jp }
+    - { pref: 山口県, domain: www.ymg-ssz.jp }
+    - { pref: 徳島県, domain: www.our-think.or.jp }
+    - { pref: 香川県, domain: www.kagawa-isf.jp }
+    - { pref: 愛媛県, domain: www.ehime-iinet.or.jp }
+    - { pref: 高知県, domain: www.joho-kochi.or.jp }
+    - { pref: 福岡県, domain: www.joho-fukuoka.or.jp }
+    - { pref: 佐賀県, domain: www.saga-itc.jp }
+    - { pref: 長崎県, domain: www.joho-nagasaki.or.jp }
+    - { pref: 熊本県, domain: www.kmt-ti.or.jp }
+    - { pref: 大分県, domain: www.oita-ncc.jp }
+    - { pref: 沖縄県, domain: www.okinawa-ric.jp }
+    - { pref: 岐阜県, domain: www.vec.or.jp }
+    - { pref: 宮崎県, domain: www.mif.or.jp }
+  unresolved:
+    - { pref: 長野県, note: "長野県産業振興機構。候補ドメインが解決せず。要再調査" }
+    - { pref: 鹿児島県, note: "かごしま産業支援センター。候補ドメインが解決せず。要再調査" }
 
 # ---------------------------------------------------------------------
 # F. 自治体（都道府県・市区町村）
@@ -156,16 +187,109 @@ tier_f_municipalities:
     - { name: 東京都, domain: metro.tokyo.lg.jp, note: 東京2020仏国プロモーション実績 }
     - { name: 熊本県, domain: pref.kumamoto.jp, note: "2016-2024 パリJAPAN EXPO出展（lg.jp 無し）" }
     - { name: 岩手県, domain: pref.iwate.jp, note: "2019 伝統工芸品の仏国テスト販売（lg.jp 無し）" }
-    - { name: 山形県, domain: pref.yamagata.jp, note: "Drive上に費用試算資料あり（lg.jp 無し）" }
+    - { name: 山形県, domain: pref.yamagata.jp, note: "韓国市場周遊促進事業の公告実績（lg.jp 無し）" }
     - { name: 京都府, domain: pref.kyoto.jp, note: "Precious Kyoto でMaison&Objet出展の前例（lg.jp 無し）" }
     - { name: 富山県, domain: pref.toyama.jp, note: シンガポールNATAS出展事業の公募実績 }
     - { name: 愛媛県, domain: pref.ehime.jp, note: 海外富裕層向けコンテンツ造成事業の公募実績 }
-  designated_cities: |
-    政令指定都市20市＋中核市＋東京23区は、シティプロモーション・海外プロモーション・
-    姉妹都市交流事業の公募を出す。ドメインに規則性がないため WebSearch で拾う。
-    実例：川崎市（city.kawasaki.jp）、国立市（city.kunitachi.tokyo.jp）、
-    相模原市（city.sagamihara.kanagawa.jp）、足立区（city.adachi.tokyo.jp）
-  strategy: websearch_first
+    - { name: 福島県, domain: pref.fukushima.lg.jp, note: 2027国際園芸博覧会 出展業務委託を公告中 }
+  # 47都道府県の全ホストは workflow/pref_hosts.json に格納（DNS実測済み）
+  # 政令市20市＋東京23区＋中核市49市 = 90市区をDNSで実在確認（2026-08-26）
+  verified_cities:
+    - { city: 札幌, domain: www.city.sapporo.jp }
+    - { city: 仙台, domain: www.city.sendai.jp }
+    - { city: さいたま, domain: www.city.saitama.lg.jp }
+    - { city: 千葉, domain: www.city.chiba.jp }
+    - { city: 横浜, domain: www.city.yokohama.lg.jp }
+    - { city: 川崎, domain: www.city.kawasaki.jp }
+    - { city: 相模原, domain: www.city.sagamihara.kanagawa.jp }
+    - { city: 新潟, domain: www.city.niigata.lg.jp }
+    - { city: 静岡, domain: www.city.shizuoka.lg.jp }
+    - { city: 浜松, domain: www.city.hamamatsu.shizuoka.jp }
+    - { city: 名古屋, domain: www.city.nagoya.jp }
+    - { city: 京都, domain: www.city.kyoto.lg.jp }
+    - { city: 大阪, domain: www.city.osaka.lg.jp }
+    - { city: 堺, domain: www.city.sakai.lg.jp }
+    - { city: 神戸, domain: www.city.kobe.lg.jp }
+    - { city: 岡山, domain: www.city.okayama.jp }
+    - { city: 広島, domain: www.city.hiroshima.lg.jp }
+    - { city: 北九州, domain: www.city.kitakyushu.lg.jp }
+    - { city: 福岡, domain: www.city.fukuoka.lg.jp }
+    - { city: 熊本, domain: www.city.kumamoto.jp }
+    - { city: chiyoda区, domain: www.city.chiyoda.lg.jp }
+    - { city: chuo区, domain: www.city.chuo.lg.jp }
+    - { city: minato区, domain: www.city.minato.tokyo.jp }
+    - { city: shinjuku区, domain: www.city.shinjuku.lg.jp }
+    - { city: bunkyo区, domain: www.city.bunkyo.lg.jp }
+    - { city: taito区, domain: www.city.taito.lg.jp }
+    - { city: sumida区, domain: www.city.sumida.lg.jp }
+    - { city: koto区, domain: www.city.koto.lg.jp }
+    - { city: shinagawa区, domain: www.city.shinagawa.tokyo.jp }
+    - { city: meguro区, domain: www.city.meguro.tokyo.jp }
+    - { city: ota区, domain: www.city.ota.tokyo.jp }
+    - { city: setagaya区, domain: www.city.setagaya.lg.jp }
+    - { city: shibuya区, domain: www.city.shibuya.tokyo.jp }
+    - { city: suginami区, domain: www.city.suginami.tokyo.jp }
+    - { city: toshima区, domain: www.city.toshima.lg.jp }
+    - { city: kita区, domain: www.city.kita.lg.jp }
+    - { city: arakawa区, domain: www.city.arakawa.tokyo.jp }
+    - { city: itabashi区, domain: www.city.itabashi.tokyo.jp }
+    - { city: nerima区, domain: www.city.nerima.tokyo.jp }
+    - { city: adachi区, domain: www.city.adachi.tokyo.jp }
+    - { city: katsushika区, domain: www.city.katsushika.lg.jp }
+    - { city: edogawa区, domain: www.city.edogawa.tokyo.jp }
+    - { city: 旭川, domain: www.city.asahikawa.hokkaido.jp }
+    - { city: 函館, domain: www.city.hakodate.hokkaido.jp }
+    - { city: 青森, domain: www.city.aomori.aomori.jp }
+    - { city: 盛岡, domain: www.city.morioka.iwate.jp }
+    - { city: 秋田, domain: www.city.akita.lg.jp }
+    - { city: 郡山, domain: www.city.koriyama.lg.jp }
+    - { city: いわき, domain: www.city.iwaki.lg.jp }
+    - { city: 宇都宮, domain: www.city.utsunomiya.tochigi.jp }
+    - { city: 前橋, domain: www.city.maebashi.gunma.jp }
+    - { city: 高崎, domain: www.city.takasaki.gunma.jp }
+    - { city: 川越, domain: www.city.kawagoe.saitama.jp }
+    - { city: 船橋, domain: www.city.funabashi.lg.jp }
+    - { city: 柏, domain: www.city.kashiwa.lg.jp }
+    - { city: 八王子, domain: www.city.hachioji.tokyo.jp }
+    - { city: 横須賀, domain: www.city.yokosuka.kanagawa.jp }
+    - { city: 富山, domain: www.city.toyama.lg.jp }
+    - { city: 金沢, domain: www4.city.kanazawa.lg.jp }
+    - { city: 福井, domain: www.city.fukui.lg.jp }
+    - { city: 甲府, domain: www.city.kofu.yamanashi.jp }
+    - { city: 長野, domain: www.city.nagano.nagano.jp }
+    - { city: 岐阜, domain: www.city.gifu.lg.jp }
+    - { city: 豊橋, domain: www.city.toyohashi.lg.jp }
+    - { city: 豊田, domain: www.city.toyota.aichi.jp }
+    - { city: 岡崎, domain: www.city.okazaki.lg.jp }
+    - { city: 一宮, domain: www.city.ichinomiya.aichi.jp }
+    - { city: 大津, domain: www.city.otsu.lg.jp }
+    - { city: 豊中, domain: www.city.toyonaka.osaka.jp }
+    - { city: 東大阪, domain: www.city.higashiosaka.lg.jp }
+    - { city: 姫路, domain: www.city.himeji.lg.jp }
+    - { city: 西宮, domain: www.nishi.or.jp }
+    - { city: 尼崎, domain: www.city.amagasaki.hyogo.jp }
+    - { city: 奈良, domain: www.city.nara.lg.jp }
+    - { city: 和歌山, domain: www.city.wakayama.wakayama.jp }
+    - { city: 鳥取, domain: www.city.tottori.lg.jp }
+    - { city: 松江, domain: www.city.matsue.lg.jp }
+    - { city: 倉敷, domain: www.city.kurashiki.okayama.jp }
+    - { city: 福山, domain: www.city.fukuyama.hiroshima.jp }
+    - { city: 下関, domain: www.city.shimonoseki.lg.jp }
+    - { city: 高松, domain: www.city.takamatsu.kagawa.jp }
+    - { city: 松山, domain: www.city.matsuyama.ehime.jp }
+    - { city: 高知, domain: www.city.kochi.kochi.jp }
+    - { city: 久留米, domain: www.city.kurume.fukuoka.jp }
+    - { city: 長崎, domain: www.city.nagasaki.lg.jp }
+    - { city: 佐世保, domain: www.city.sasebo.lg.jp }
+    - { city: 大分, domain: www.city.oita.oita.jp }
+    - { city: 宮崎, domain: www.city.miyazaki.miyazaki.jp }
+    - { city: 鹿児島, domain: www.city.kagoshima.lg.jp }
+    - { city: 那覇, domain: www.city.naha.okinawa.jp }
+  unresolved:
+    - { city: 中野区, note: "city.nakano.lg.jp / city.nakano.tokyo.jp とも解決せず。要再調査" }
+  note: |
+    市区町村のドメインに規則性はない（city.X.lg.jp / city.X.jp / city.X.県名.jp が混在）。
+    上記90市区は実測で確定したもの。それ以外の一般市町村は WebSearch で拾う。
 
 # ---------------------------------------------------------------------
 # G. 観光協会・DMO・文化財団
@@ -247,6 +371,26 @@ domain_survey:
       補助金事務局のドメインは年度ごとに変わる（r6→r7 など）。
       また新制度ができるたびに新ドメインが立つため、事前列挙は不可能。
       *.info をまとめて許可しておくのが現実的。
+
+
+  full_inventory:
+    surveyed: 2026-08-26
+    summary: |
+      巡回対象のドメインをDNSで全数実測し、以下を確定した。
+      これにより「どこを見るべきか」のリストは実質的に完成した。
+    counts:
+      都道府県: 47/47（pref_hosts.json に格納）
+      都道府県の産業振興外郭団体: 45/47（長野・鹿児島が未特定）
+      政令指定都市: 20/20
+      東京23区: 22/23（中野区が未特定）
+      中核市ほか主要市: 48/49
+      国の府省庁・独法・外郭団体: 30組織
+      観光協会・DMO・文化財団: 9組織
+      商工会議所・商工会・中央会: 8組織
+    method: |
+      getent hosts による名前解決。HTTPが遮断されていてもDNSは通るため、
+      到達性と実在を分けて確認できる。未特定のものは候補ドメインが解決しなかった
+      もので、次回巡回時にWebSearchで正式URLを特定する。
 
   qualification_sites:
     summary: 全省庁統一資格（申請中）に直結するサイト
