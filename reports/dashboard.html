@@ -1,0 +1,443 @@
+<title>ジャパンプロモーション公募ボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+/* ── 江戸紫を軸にした配色。東京手仕事のイメージカラーに由来 ───────── */
+:root{
+  --ground:#FAF8FC;
+  --surface:#FFFFFF;
+  --surface-2:#F4F1F7;
+  --ink:#1C1722;
+  --ink-2:#4A4356;
+  --muted:#7A7288;
+  --line:#E5E0EC;
+  --line-strong:#CFC7DC;
+  --accent:#664A9E;        /* 江戸紫 */
+  --accent-soft:#EFE9F8;
+  --crit:#A82C46;          /* 茜 */
+  --crit-soft:#FBEBEE;
+  --warn:#9C6612;          /* 琥珀 */
+  --warn-soft:#FBF2E2;
+  --ok:#276B52;            /* 常磐 */
+  --ok-soft:#E5F2EC;
+  --off:#8A8398;
+  --off-soft:#F0EEF3;
+  --shadow:0 1px 2px rgba(28,23,34,.05), 0 8px 24px -12px rgba(28,23,34,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141119;
+    --surface:#1D1926;
+    --surface-2:#251F31;
+    --ink:#EFEBF5;
+    --ink-2:#C3BBD2;
+    --muted:#918AA1;
+    --line:#302941;
+    --line-strong:#453B59;
+    --accent:#B49AE4;
+    --accent-soft:#2A2140;
+    --crit:#F0899E;
+    --crit-soft:#3A1F28;
+    --warn:#E3B166;
+    --warn-soft:#372A16;
+    --ok:#79C7A6;
+    --ok-soft:#173328;
+    --off:#8B8399;
+    --off-soft:#262130;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141119;
+  --surface:#1D1926;
+  --surface-2:#251F31;
+  --ink:#EFEBF5;
+  --ink-2:#C3BBD2;
+  --muted:#918AA1;
+  --line:#302941;
+  --line-strong:#453B59;
+  --accent:#B49AE4;
+  --accent-soft:#2A2140;
+  --crit:#F0899E;
+  --crit-soft:#3A1F28;
+  --warn:#E3B166;
+  --warn-soft:#372A16;
+  --ok:#79C7A6;
+  --ok-soft:#173328;
+  --off:#8B8399;
+  --off-soft:#262130;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding:0 22px 80px}
+
+/* ── 見出し ───────────────────────────────────────────── */
+.mast{
+  border-bottom:1px solid var(--line);
+  padding:38px 0 24px; margin-bottom:34px;
+  display:flex; flex-wrap:wrap; gap:20px 32px; align-items:flex-end; justify-content:space-between;
+}
+.mast h1{
+  font-family:"Shippori Mincho",serif; font-weight:700;
+  font-size:clamp(26px,4vw,36px); line-height:1.3; margin:0;
+  letter-spacing:.02em; text-wrap:balance;
+}
+.mast .sub{color:var(--muted); font-size:13.5px; margin-top:6px}
+.stamp{
+  display:flex; gap:26px; font-size:12.5px; color:var(--muted);
+}
+.stamp b{display:block; font-family:"Roboto Mono",monospace; font-size:19px;
+  color:var(--ink); font-weight:500; font-variant-numeric:tabular-nums; line-height:1.2}
+
+/* ── 冒頭の判断 ───────────────────────────────────────── */
+.lede{
+  background:var(--surface); border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:3px; padding:22px 26px; margin-bottom:40px; box-shadow:var(--shadow);
+}
+.lede p{margin:0 0 10px; max-width:66ch}
+.lede p:last-child{margin-bottom:0}
+.lede strong{color:var(--accent); font-weight:700}
+
+/* ── セクション ───────────────────────────────────────── */
+section{margin-bottom:44px}
+.shead{display:flex; align-items:baseline; gap:12px; margin-bottom:4px; flex-wrap:wrap}
+.shead h2{
+  font-family:"Shippori Mincho",serif; font-size:19px; font-weight:700;
+  margin:0; letter-spacing:.03em;
+}
+.shead .n{
+  font-family:"Roboto Mono",monospace; font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.sdesc{color:var(--muted); font-size:13px; margin:0 0 18px; max-width:66ch}
+.rule{height:1px; background:var(--line); margin:0 0 18px}
+
+/* ── 案件カード ───────────────────────────────────────── */
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:20px 22px; margin-bottom:14px; box-shadow:var(--shadow);
+  display:grid; gap:14px;
+}
+.card.lead{border-color:var(--accent); border-width:1px 1px 1px 3px}
+.chead{display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap}
+.grade{
+  flex:none; width:30px; height:30px; border-radius:2px;
+  display:grid; place-items:center;
+  font-family:"Roboto Mono",monospace; font-weight:500; font-size:14px;
+  background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent);
+}
+.grade.b{background:var(--off-soft); color:var(--ink-2); border-color:var(--line-strong)}
+.grade.c{background:transparent; color:var(--muted); border-color:var(--line-strong)}
+.ctitle{flex:1 1 300px; min-width:0}
+.ctitle h3{
+  margin:0; font-size:16px; font-weight:700; line-height:1.5; text-wrap:balance;
+}
+.ctitle .org{color:var(--muted); font-size:12.5px; margin-top:3px}
+
+/* ── ステータス表示 ───────────────────────────────────── */
+.pill{
+  display:inline-flex; align-items:center; gap:6px; flex:none;
+  padding:3px 10px; border-radius:2px; font-size:11.5px; font-weight:700;
+  letter-spacing:.06em; border:1px solid;
+}
+.p-crit{background:var(--crit-soft); color:var(--crit); border-color:var(--crit)}
+.p-warn{background:var(--warn-soft); color:var(--warn); border-color:var(--warn)}
+.p-ok{background:var(--ok-soft); color:var(--ok); border-color:var(--ok)}
+.p-off{background:var(--off-soft); color:var(--off); border-color:var(--line-strong)}
+
+/* ── 締切カウンタ ─────────────────────────────────────── */
+.dl{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.dl .days{
+  font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  font-size:26px; font-weight:500; line-height:1; color:var(--ink);
+}
+.dl .days.urgent{color:var(--crit)}
+.dl .days small{font-size:12px; color:var(--muted); margin-left:3px; font-weight:400}
+.dl .date{font-size:12.5px; color:var(--muted); font-family:"Roboto Mono",monospace}
+.bar{flex:1 1 160px; height:4px; background:var(--surface-2); border-radius:2px; overflow:hidden; min-width:100px}
+.bar i{display:block; height:100%; background:var(--accent); border-radius:2px}
+.bar i.urgent{background:var(--crit)}
+
+/* ── 明細表 ───────────────────────────────────────────── */
+.facts{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:2px; background:var(--line); border:1px solid var(--line); border-radius:2px; overflow:hidden;
+}
+.facts div{background:var(--surface); padding:9px 12px}
+.facts dt{font-size:11px; color:var(--muted); letter-spacing:.06em; margin-bottom:2px}
+.facts dd{margin:0; font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums}
+.note{font-size:13.5px; color:var(--ink-2); margin:0; max-width:70ch}
+.note b{color:var(--ink)}
+.note.flag{
+  background:var(--warn-soft); border-left:2px solid var(--warn);
+  padding:10px 14px; border-radius:0 2px 2px 0; color:var(--ink-2);
+}
+.src{font-size:12px}
+.src a{color:var(--accent); text-decoration:none; border-bottom:1px solid var(--line-strong)}
+.src a:hover,.src a:focus-visible{border-bottom-color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:1px}
+
+/* ── 一覧表 ───────────────────────────────────────────── */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13px; min-width:640px}
+th,td{padding:9px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{
+  font-size:11px; letter-spacing:.08em; color:var(--muted); font-weight:700;
+  background:var(--surface-2); white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.d{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-2)}
+td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
+.star{color:var(--accent); font-weight:700}
+
+/* ── 巡回記録 ─────────────────────────────────────────── */
+.foot{border-top:1px solid var(--line); padding-top:22px; margin-top:52px; font-size:12.5px; color:var(--muted)}
+.foot h3{font-family:"Shippori Mincho",serif; font-size:14px; color:var(--ink); margin:0 0 10px; letter-spacing:.04em}
+.foot ul{margin:0; padding-left:18px}
+.foot li{margin-bottom:4px}
+@media (max-width:560px){
+  .stamp{gap:18px}
+  .card{padding:16px}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <h1>公募案件ボード</h1>
+    <div class="sub">一般社団法人ジャパンプロモーション ／ 補助金・企画競争の巡回結果</div>
+  </div>
+  <div class="stamp">
+    <div>巡回日<b>08.26</b></div>
+    <div>台帳<b>21</b></div>
+    <div>要行動<b>3</b></div>
+  </div>
+</header>
+
+<div class="lede">
+  <p><strong>今すぐ動くべき案件が1件あります。</strong> 小規模事業者持続化補助金＜共同・協業型＞第3回は、公募要領を条文まで確認した結果、御社が申請主体になれることが確定しました。補助上限3,000万円、締切まで35日です。</p>
+  <p>ただし申請はJグランツ電子申請のみで、<strong>GビズIDプライムの取得に数週間かかります。</strong> 未取得であれば、今日中に着手しないと締切に間に合いません。</p>
+  <p>もう1件、<strong>統一資格が未取得であることによる取りこぼしが発生しました。</strong> 文化庁の国際動向調査（9月4日締切）は全省庁統一資格A〜D等級が参加要件で、申請中の現状では応募できません。資格取得の緊急性を示す実例です。</p>
+</div>
+
+<!-- ══ 応募可能 ══ -->
+<section>
+  <div class="shead"><h2>応募可能・要行動</h2><span class="n">1件</span></div>
+  <p class="sdesc">公募要領を精読し、応募資格を条文で確認済みの案件。</p>
+  <div class="rule"></div>
+
+  <article class="card lead">
+    <div class="chead">
+      <div class="grade">S</div>
+      <div class="ctitle">
+        <h3>小規模事業者持続化補助金＜共同・協業型＞ 第3回公募</h3>
+        <div class="org">中小企業庁（令和6年度補正予算）／ 補助金</div>
+      </div>
+      <span class="pill p-ok">応募可</span>
+    </div>
+    <div class="dl">
+      <div class="days">35<small>日</small></div>
+      <div class="bar"><i style="width:24%"></i></div>
+      <div class="date">2026-09-30 17:00 必着</div>
+    </div>
+    <dl class="facts">
+      <div><dt>補助上限額</dt><dd>3,000万円<span style="color:var(--muted);font-size:11px"> ／参画10者以上</span></dd></div>
+      <div><dt>参画5〜9者の場合</dt><dd>2,000万円</dd></div>
+      <div><dt>応募形態</dt><dd>支援側（申請主体）</dd></div>
+      <div><dt>統一資格</dt><dd>不要</dd></div>
+      <div><dt>事業実施期限</dt><dd>2027-12-10</dd></div>
+      <div><dt>採択発表</dt><dd>2026年11月頃</dd></div>
+    </dl>
+    <p class="note"><b>判定根拠</b>：申請者要件は「法人」で法人格の限定なし。御社は地域振興等機関の定義⑤「地域の企業の販路開拓につながる支援を事業として行っている法人」に該当します。公募要領P.2の「一般社団法人は対象外」は<b>参画事業者側の規定</b>であり、申請者側の制約ではありません。海外での展示会・商談会・販売会は注4で明示的に対象です。</p>
+    <p class="note flag"><b>採否を分ける論点</b>：「補助金活用の有無に限らず過去実施した事業と同様の事業は補助対象外」（P.4）。JAPAN EXPO・MAISON&amp;OBJETへの毎年の出展は、同様の事業と判断されるリスクがあります。新規性・発展性を打ち出す企画設計が必要です。ほかに、自社販路開拓の除外、代理販売型の除外、外注費1/2上限の制約があります。</p>
+    <p class="src"><a href="https://r6.kyodokyogyohojokin.info/doc/r6_koubover6_kk3.pdf">公募要領 第6版（全47ページ・2026年8月4日公開）</a></p>
+  </article>
+</section>
+
+<!-- ══ 要精査 ══ -->
+<section>
+  <div class="shead"><h2>応募可能・要精査</h2><span class="n">2件</span></div>
+  <p class="sdesc">募集は継続中。適合性の判断に追加確認が必要な案件。</p>
+  <div class="rule"></div>
+
+  <article class="card">
+    <div class="chead">
+      <div class="grade b">B</div>
+      <div class="ctitle">
+        <h3>2026年度 第2期 芸術文化魅力創出助成</h3>
+        <div class="org">アーツカウンシル東京（東京都歴史文化財団）／ 助成金</div>
+      </div>
+      <span class="pill p-warn">条件付</span>
+    </div>
+    <div class="dl">
+      <div class="days">29<small>日</small></div>
+      <div class="bar"><i style="width:19%"></i></div>
+      <div class="date">2026-09-24 14:00</div>
+    </div>
+    <dl class="facts">
+      <div><dt>申請者の要件</dt><dd>都内に本部事務所</dd></div>
+      <div><dt>実施場所</dt><dd>東京都内に限る</dd></div>
+      <div><dt>事業実施期間</dt><dd>2026-12-16 以降</dd></div>
+      <div><dt>統一資格</dt><dd>不要</dd></div>
+    </dl>
+    <p class="note">申請者は「東京都内に本部事務所又は本店所在地が存在する団体」で、<b>渋谷区の御社は要件を満たします</b>。個人は不可、法人格の限定はありません。ただし<b>対象事業の実施場所が東京都内に限定</b>されるため、海外事業には使えません。国内でのフェスティバル・アートプロジェクトを企画する場合に有効です。</p>
+    <p class="src"><a href="https://www.artscouncil-tokyo.jp/grants/grant-for-artistic-city/29105/">募集要項</a>　※申請説明会は9月1日・9月8日</p>
+  </article>
+
+  <article class="card">
+    <div class="chead">
+      <div class="grade c">C</div>
+      <div class="ctitle">
+        <h3>令和8年度 MICE誘致に向けたクライアントイベント（ジャカルタ）参加事業者募集</h3>
+        <div class="org">公益財団法人東京観光財団（TCVB）／ 参加募集</div>
+      </div>
+      <span class="pill p-off">要精査</span>
+    </div>
+    <div class="dl">
+      <div class="days">55<small>日</small></div>
+      <div class="bar"><i style="width:8%"></i></div>
+      <div class="date">2026-10-20 正午</div>
+    </div>
+    <p class="note">受託ではなく<b>参加事業者としての募集</b>です。インドネシア・ジャカルタでの現地イベント。MICE関連事業者が対象と見られ、御社の適合性は要確認ですが、海外現地イベントの実績を持つ点で接点はあります。</p>
+    <p class="src"><a href="https://www.tcvb.or.jp/jp/news/2026/0807_7799/">募集案内</a></p>
+  </article>
+</section>
+
+<!-- ══ 締切要確認 ══ -->
+<section>
+  <div class="shead"><h2>締切の確認が必要</h2><span class="n">3件</span></div>
+  <p class="sdesc">事業内容は適合するが、ページから締切を機械的に取得できなかった案件。次回巡回で個別確認します。</p>
+  <div class="rule"></div>
+
+  <article class="card">
+    <div class="chead">
+      <div class="grade">A</div>
+      <div class="ctitle">
+        <h3>令和8年度 地域資源発掘型プログラム事業 地域観光プロモーター業務委託（第2回）</h3>
+        <div class="org">公益財団法人東京観光財団（TCVB）／ 業務委託</div>
+      </div>
+      <span class="pill p-warn">締切未確認</span>
+    </div>
+    <p class="note">民間事業者が地域観光プロモーターとして応募し、財団と委託契約を締結。協議会の運営とプログラム事業の企画・実施を担う構成で、<b>特産品の開発や旅行者誘致イベント</b>が対象。御社の地域資源×インバウンドの事業領域と重なります。<b>この3件のなかで最も優先度が高い案件です。</b></p>
+    <p class="src"><a href="https://www.tcvb.or.jp/jp/news/chiiki_r8shinki_PressRelease2.pdf">募集要項（PDF）</a></p>
+  </article>
+
+  <article class="card">
+    <div class="chead">
+      <div class="grade b">B</div>
+      <div class="ctitle">
+        <h3>令和8年度 イタリア旅行博「TTG 2026」共同出展募集</h3>
+        <div class="org">公益財団法人東京観光財団（TCVB）／ 出展募集</div>
+      </div>
+      <span class="pill p-warn">締切未確認</span>
+    </div>
+    <p class="note">海外旅行博への共同出展。8月10日更新。御社の海外出展運営の実績が直接活きる分野です。</p>
+    <p class="src"><a href="https://www.tcvb.or.jp/jp/news/2026/0810_7811/">案内ページ</a></p>
+  </article>
+
+  <article class="card">
+    <div class="chead">
+      <div class="grade b">B</div>
+      <div class="ctitle">
+        <h3>令和9年度 JETプログラム来日直後オリエンテーション（夏来日）総合業務委託</h3>
+        <div class="org">自治体国際化協会（CLAIR）／ 公募型プロポーザル</div>
+      </div>
+      <span class="pill p-warn">締切未確認</span>
+    </div>
+    <p class="note">CLAIRは今回が<b>初回巡回</b>です。パリ・ロンドン・ニューヨーク等に海外事務所を持ち、自治体の国際化を支援する組織で、御社の「27自治体の海外展開支援」という実績と最も噛み合う発注元。本件は大規模研修イベントの運営受託で、海外展開そのものではありませんが、<b>取引実績を作る足がかりとして価値があります。</b></p>
+    <p class="src"><a href="https://jetprogramme.org/ja/information/news/r9jetprogrammeorientation/">公示ページ</a></p>
+  </article>
+</section>
+
+<!-- ══ 不可 ══ -->
+<section>
+  <div class="shead"><h2>今回は応募不可</h2><span class="n">1件</span></div>
+  <p class="sdesc">募集中だが、資格要件を満たせない案件。翌年度に同一案件が出るため記録します。</p>
+  <div class="rule"></div>
+
+  <article class="card">
+    <div class="chead">
+      <div class="grade c">C</div>
+      <div class="ctitle">
+        <h3>令和8年度 無形文化遺産保護条約に係る国際動向調査事業委託</h3>
+        <div class="org">文化庁 ／ 一般競争入札（総合評価落札方式）</div>
+      </div>
+      <span class="pill p-crit">資格不足</span>
+    </div>
+    <div class="dl">
+      <div class="days urgent">9<small>日</small></div>
+      <div class="bar"><i class="urgent" style="width:74%"></i></div>
+      <div class="date">2026-09-04 15:00 入札書受領期限</div>
+    </div>
+    <p class="note flag"><b>参加要件</b>：「文部科学省競争参加資格（全省庁統一資格）において、令和8年度に『役務の提供等』のA、B、C又はD等級に格付けされている者であること」。<b>御社は現在申請中のため、9日後の締切には間に合わない見込みです。</b>履行期限は令和9年3月23日。<b>統一資格の取得を急ぐべき理由を、具体的な損失として示す実例になりました。</b></p>
+    <p class="src"><a href="https://www.bunka.go.jp/shinsei_boshu/kobo/94419801.html">入札公告</a></p>
+  </article>
+</section>
+
+<!-- ══ 継続監視 ══ -->
+<section>
+  <div class="shead"><h2>継続監視 — 締切超過だが毎年公募される案件</h2><span class="n">13件</span></div>
+  <p class="sdesc">今年度は締切済み。<span class="star">★</span>は御社の事業と最も一致し、翌年度に必ず捕捉すべき案件です。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>格</th><th>案件</th><th>発注機関</th><th>今年度締切</th><th>翌年度の公告目安</th></tr></thead>
+    <tbody>
+      <tr><td class="g">S</td><td><span class="star">★</span> 海外における伝統的工芸品<b>テストマーケティング</b>業務</td><td>伝統的工芸品産業振興協会</td><td class="d">2026-05-15</td><td class="d">4月上旬</td></tr>
+      <tr><td class="g">S</td><td><span class="star">★</span> 海外における伝統的工芸品<b>実演・ワークショップ</b>業務</td><td>伝統的工芸品産業振興協会</td><td class="d">2026-05-15</td><td class="d">4月上旬</td></tr>
+      <tr><td class="g">A</td><td>コンテンツ海外展開促進事業（国際的イベント連携）</td><td>経済産業省</td><td class="d">2026-02頃</td><td class="d">1月</td></tr>
+      <tr><td class="g">A</td><td>大規模イベント出展事業 委託業務</td><td>北海道</td><td class="d">年度前半</td><td class="d">要調査</td></tr>
+      <tr><td class="g">A</td><td>海外旅行博・商談会出展およびセールスコール</td><td>江戸街道・広域エリア</td><td class="d">年度前半</td><td class="d">要調査</td></tr>
+      <tr><td class="g">A</td><td>シンガポール「NATAS Holidays」出展事業</td><td>富山県／北陸国際観光テーマ地区推進協議会</td><td class="d">2026-06頃</td><td class="d">5月</td></tr>
+      <tr><td class="g">B</td><td>緊急的文化遺産保護国際貢献事業（専門家交流）</td><td>文化庁</td><td class="d">2026-08-24</td><td class="d">7月下旬</td></tr>
+      <tr><td class="g">B</td><td>第42回国民文化祭 分野別フェスティバル 企画・運営</td><td>文化庁</td><td class="d">2026-07-16</td><td class="d">6月中旬</td></tr>
+      <tr><td class="g">B</td><td>伝統的工芸品PRのための広告出稿業務</td><td>伝統的工芸品産業振興協会</td><td class="d">2026-04-02</td><td class="d">3月中旬</td></tr>
+      <tr><td class="g">B</td><td>伝統的工芸品 映像企画・制作業者</td><td>伝統的工芸品産業振興協会</td><td class="d">2026-04-03</td><td class="d">3月中旬</td></tr>
+      <tr><td class="g">B</td><td>伝統的工芸品産業支援補助金</td><td>経済産業省</td><td class="d">2026-01-29</td><td class="d">1月上旬</td></tr>
+      <tr><td class="g">C</td><td>育成講座「E-commerce Academy」専門家業務</td><td>JETRO</td><td class="d">2026-06-15</td><td class="d">要調査</td></tr>
+      <tr><td class="g">C</td><td>日本映画の海外発信事業 釜山ACFM ジャパンブース</td><td>ユニジャパン／文化庁</td><td class="d">2026-07-23</td><td class="d">6月下旬</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══ 営業機会 ══ -->
+<section>
+  <div class="shead"><h2>営業機会</h2><span class="n">参考</span></div>
+  <p class="sdesc">御社が応募するのではなく、採択された事業者が海外出展を計画するため、営業先リストとして使えるもの。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>制度</th><th>実施機関</th><th>備考</th></tr></thead>
+    <tbody>
+      <tr><td>IP360補助金（海外展開支援）</td><td>VIPO</td><td>御社のJ-LOP受託実績と同系統。<b>詳細を次回調査</b></td></tr>
+      <tr><td>ギフト・ショー春2027 フロンティアパビリオン出展者募集</td><td>東京都中小企業振興公社</td><td>出展者が海外展開の次段階に進む導線</td></tr>
+      <tr><td>令和8年度 展示会出展助成事業</td><td>東京都中小企業振興公社</td><td>受注実績のある機関</td></tr>
+      <tr><td>地域資源活用製品等の開発・販売促進事業</td><td>東京都中小企業振興公社</td><td>2026年6月募集開始</td></tr>
+      <tr><td>中堅・中小企業輸出支援エコシステム形成事業費補助金</td><td>経済産業省</td><td><b>2者以上の連携体が申請要件</b>。御社がコンソーシアム参加できる余地あり</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer class="foot">
+  <h3>巡回範囲の記録</h3>
+  <ul>
+    <li><b>直接巡回</b>（29サイト）：CLAIR／JETRO／中小機構／中小企業庁／国際交流基金／東京都中小企業振興公社／東京手仕事／経産省／文化庁／観光庁／外務省／内閣府地方創生／JNTO／日本芸術文化振興会／VIPO／日本デザイン振興会／ユニジャパン／日本商工会議所／東京商工会議所／全国商工会連合会／京都産業21／あいち産業振興機構／石川ISICO／アーツカウンシル東京／東京観光財団／北海道観光振興機構／伝統的工芸品産業振興協会／持続化補助金事務局</li>
+    <li><b>一次資料の精読</b>：持続化補助金＜共同・協業型＞第3回 公募要領 第6版（全47ページ）、文化庁 入札公告</li>
+    <li><b>WebSearch</b>：8クエリ</li>
+    <li><b>取得できなかったサイト</b>：経産省 公募一覧（0バイト応答）、内閣府地方創生、外務省調達、CLAIR入札ページ（196バイト）、観光庁企画競争公示、北海道観光振興機構 — いずれも別URLでの再取得を次回試みます</li>
+    <li><b>次回の重点</b>：① 締切未確認の3件を個別確認 ② 経産省・観光庁・内閣府の公募ページへの到達経路を確立 ③ 都道府県の産業振興外郭団体を1〜2県調査（現在11／47団体）</li>
+  </ul>
+  <p style="margin-top:16px">判定基準は <code>workflow/eligibility.md</code>、巡回先は <code>workflow/sources.yaml</code>、台帳は <code>data/ledger.csv</code>（21件）。次回巡回は2026年9月2日。</p>
+</footer>
+
+</div>
