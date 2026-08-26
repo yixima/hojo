@@ -1,0 +1,344 @@
+# 公募カレンダー ― 「まだ出ていないが、必ず出る案件」の予測台帳
+#
+# 目的：締切に気づいてから動くのでは間に合わない。過去の公告実績から
+#       「いつ・どこが・何を出すか」を先回りして把握し、公告前から準備に入る。
+#
+# 使い方（runbook 手順3.5）：
+#   毎回の巡回時、watch_from が当日から30日以内に迫っている項目について
+#   発注機関のサイトを直接確認し、公告が出ていれば台帳へ登録する。
+#   公告が出たら observed に実績を追記し、翌年の予測精度を上げる。
+#
+# 凡例
+#   confidence: high   = 複数年の公告実績を直接確認済み
+#               medium = 1年分の実績を確認、または制度上ほぼ確実
+#               low    = 状況証拠による推定。要検証
+#   watch_from: この日から監視を開始する（公告予想日の2〜4週間前）
+
+# ─────────────────────────────────────────────────────────────
+# 最重点 ― 御社の主力事業と直結。取り逃すと1年待ち
+# ─────────────────────────────────────────────────────────────
+tier_s:
+  - id: KOUGEI-TESTMKT
+    name: 海外における伝統的工芸品テストマーケティング業務
+    issuer: 伝統的工芸品産業振興協会
+    type: 企画提案募集
+    observed:
+      - { year: 2026, announced: 2026-04-01, deadline: 2026-05-15 }
+      - { year: 2025, announced: 2025-06-23, deadline: 2025-08-11 }
+    predicted_announce: 2027-04-上旬
+    predicted_deadline: 2027-05-中旬
+    watch_from: 2027-03-10
+    confidence: high
+    note: |
+      御社の主力事業と最も一致する案件。ただし2025年は6月公告・8月締切、
+      2026年は4月公告・5月締切と、年により2か月ずれている。
+      **3月から6月まで継続監視が必要。**
+    url: https://kyokai.kougeihin.jp/association_cat/公募公告/
+
+  - id: KOUGEI-DEMO
+    name: 海外における伝統的工芸品実演・ワークショップ業務
+    issuer: 伝統的工芸品産業振興協会
+    type: 企画提案募集
+    observed:
+      - { year: 2026, announced: 2026-04-01, deadline: 2026-05-15 }
+    predicted_announce: 2027-04-上旬
+    predicted_deadline: 2027-05-中旬
+    watch_from: 2027-03-10
+    confidence: high
+    note: 実演型。事業者本人の渡航を伴う構成で、御社のJAPAN EXPO運営と同型。
+
+  - id: MIYAZAKI-KENSANHIN-US
+    name: 世界へ羽ばたけ！県産品海外展開強化事業（米国）業務
+    issuer: 宮崎県
+    type: 企画提案競技
+    observed:
+      - { year: 2026, announced: 2026-07-07, deadline: 2026-07-29 }
+    predicted_announce: 2027-07-上旬
+    predicted_deadline: 2027-07-下旬
+    watch_from: 2027-06-15
+    confidence: medium
+    note: 県産品の海外展開。御社の自治体海外展開支援と完全に同型。公告から締切まで3週間と短い。
+
+# ─────────────────────────────────────────────────────────────
+# 国際園芸博覧会 GREEN×EXPO 2027 ― 今まさに各県が動いている
+# ─────────────────────────────────────────────────────────────
+tier_expo2027:
+  meta:
+    event: 2027年国際園芸博覧会（GREEN×EXPO 2027）
+    venue: 横浜市 旧上瀬谷通信施設
+    period: 2027年3月19日 〜 9月26日
+    note: |
+      **現在進行中の最大の鉱脈。** 開幕が2027年3月のため、各都道府県・政令市が
+      2026年度中に出展業務委託を順次公告する。既に福島・福岡・宮崎で確認済み。
+      **未公告の県は今後半年で出す可能性が高い。** 毎回の巡回で全県をチェックすること。
+  observed:
+    - { pref: 福島県, announced: 2026-08頃, deadline: 2026-09-04, status: 公募中 }
+    - { pref: 福岡県, announced: 2026-05-25, deadline: 2026-06-19, status: 締切済 }
+    - { pref: 宮崎県, announced: 2026-06-10, deadline: 2026-07頃, status: 結果公表済 }
+  watch:
+    targets: 47都道府県 ＋ 政令指定都市20市
+    keywords: [国際園芸博覧会, GREEN×EXPO, 園芸博, 花博, 出展業務, 出展作品]
+    watch_from: 継続（毎回の巡回で確認）
+    confidence: high
+    note: |
+      出展形態は「屋内出展作品の設計・施工・維持管理」「屋外出展業務」「出展業務委託」
+      など県により異なる。いずれも御社のブース設計施工・展示演出・現地運営の実績が
+      そのまま実績要件になる。
+
+# ─────────────────────────────────────────────────────────────
+# 年次の定例案件 ― 公告時期がほぼ固定
+# ─────────────────────────────────────────────────────────────
+tier_annual:
+  - id: JIZOKUKA-KYODO
+    name: 小規模事業者持続化補助金＜共同・協業型＞
+    issuer: 中小企業庁
+    type: 補助金
+    observed:
+      - { round: 1, accept: 2025-04-25, deadline: 2025-06-16 }
+      - { round: 2, accept: 2026-01-16, deadline: 2026-02-27 }
+      - { round: 3, accept: 2026-08-14, deadline: 2026-09-30 }
+    predicted_announce: 第4回は2027年初頭の見込み
+    watch_from: 2026-12-01
+    confidence: high
+    note: |
+      年2〜3回公募。御社が申請主体になれることを公募要領で確認済み（応募資格⑤）。
+      補助上限3,000万円。**第3回で採択されなかった場合、次回に再挑戦できる。**
+
+  - id: METI-CONTENTS-KAIGAI
+    name: コンテンツ海外展開促進事業（国際的イベントと連携した日本コンテンツ発信力強化）
+    issuer: 経済産業省
+    type: 企画競争
+    observed:
+      - { year: 2026, announced: 2026-01-19 }
+    predicted_announce: 2027-01-中旬
+    watch_from: 2026-12-20
+    confidence: medium
+    note: JAPAN EXPO等の国際イベントと連携する構成。御社の実績と直結。要 全省庁統一資格。
+
+  - id: METI-DENTO-HOJO
+    name: 伝統的工芸品産業支援補助金
+    issuer: 経済産業省
+    type: 補助金
+    observed:
+      - { year: 2026, announced: 2026-01-07, deadline: 2026-01-29 }
+    predicted_announce: 2027-01-上旬
+    watch_from: 2026-12-15
+    confidence: high
+    note: 産地組合等が対象。御社は支援側での関与を検討する枠。
+
+  - id: KOUGEI-AD
+    name: 伝統的工芸品PRのための広告出稿業務
+    issuer: 伝統的工芸品産業振興協会
+    type: 企画競争
+    observed:
+      - { year: 2026, announced: 2026-03-13, deadline: 2026-04-02 }
+    predicted_announce: 2027-03-中旬
+    watch_from: 2027-02-20
+    confidence: high
+
+  - id: KOUGEI-VIDEO
+    name: 伝統的工芸品 映像企画・制作業者
+    issuer: 伝統的工芸品産業振興協会
+    type: 企画競争
+    observed:
+      - { year: 2026, announced: 2026-03-11, deadline: 2026-04-03 }
+    predicted_announce: 2027-03-中旬
+    watch_from: 2027-02-20
+    confidence: high
+
+  - id: BUNKA-ISAN-KOKUSAI
+    name: 緊急的文化遺産保護国際貢献事業（専門家交流）実施委託業務
+    issuer: 文化庁
+    type: 委託
+    observed:
+      - { year: 2026, announced: 2026-07-31, deadline: 2026-08-24 }
+    predicted_announce: 2027-07-下旬
+    watch_from: 2027-07-10
+    confidence: medium
+    note: 2026年は8月24日締切。今回2日差で逃した案件。
+
+  - id: BUNKA-MUKEI-CHOSA
+    name: 無形文化遺産保護条約に係る国際動向調査事業委託
+    issuer: 文化庁
+    type: 一般競争（総合評価）
+    observed:
+      - { year: 2026, deadline: 2026-09-04 }
+    predicted_announce: 2027-08-中旬
+    watch_from: 2027-08-01
+    confidence: medium
+    note: |
+      **要 全省庁統一資格「役務の提供等」A〜D等級。** 2026年は資格未取得のため
+      応募できなかった。資格取得後は応募可能になる。
+
+  - id: KOKUMIN-BUNKASAI
+    name: 国民文化祭 分野別フェスティバル 企画・運営業務
+    issuer: 文化庁
+    type: 公募
+    observed:
+      - { year: 2026, announced: 2026-06-17, deadline: 2026-07-16 }
+    predicted_announce: 2027-06-中旬
+    watch_from: 2027-06-01
+    confidence: medium
+
+  - id: TOYAMA-NATAS
+    name: シンガポール「NATAS Holidays」出展事業業務委託
+    issuer: 富山県／北陸国際観光テーマ地区推進協議会
+    type: 公募型プロポーザル
+    observed:
+      - { year: 2026, announced: 2026-05-21 }
+    predicted_announce: 2027-05-中旬
+    watch_from: 2027-05-01
+    confidence: medium
+    note: 海外旅行博への県出展。御社の出展運営実績が直結。
+
+  - id: HOKKAIDO-KAIGAI
+    name: 道市連携海外展開推進事業 委託業務
+    issuer: 北海道
+    type: プロポーザル
+    observed:
+      - { year: 2026, deadline: 2026-07-07 }
+    predicted_announce: 2027-06-中旬
+    watch_from: 2027-06-01
+    confidence: medium
+    note: 2026年はインド市場が対象。年により対象国が変わる。
+
+  - id: MIYAZAKI-OTA-INBOUND
+    name: 海外OTA等を活用したインバウンド誘客プロモーション事業（欧米豪市場向け）
+    issuer: 宮崎県
+    type: 企画提案競技
+    observed:
+      - { year: 2026, deadline: 2026-06-15 }
+    predicted_announce: 2027-05-下旬
+    watch_from: 2027-05-15
+    confidence: medium
+
+  - id: UNIJAPAN-BUSAN
+    name: 日本映画の海外発信事業 釜山ACFM ジャパンブース参加企業募集
+    issuer: ユニジャパン／文化庁
+    type: 参加募集
+    observed:
+      - { year: 2026, deadline: 2026-07-23 }
+    predicted_announce: 2027-06-下旬
+    watch_from: 2027-06-15
+    confidence: medium
+
+  - id: TCVB-CHIIKI-PROMOTER
+    name: 地域資源発掘型プログラム事業 地域観光プロモーター業務委託
+    issuer: 東京観光財団（TCVB）
+    type: 業務委託
+    observed:
+      - { round: 2, accept: 2026-08-26, deadline: 2026-10-09 }
+    predicted_announce: 年度内に複数回募集
+    watch_from: 継続
+    confidence: high
+    note: 第2回が現在募集中。回を分けて募集するため、次回も想定される。
+
+  - id: ARTS-COUNCIL-MIRYOKU
+    name: 芸術文化魅力創出助成
+    issuer: アーツカウンシル東京
+    type: 助成金
+    observed:
+      - { term: 1期, deadline: 2026-07頃 }
+      - { term: 2期, accept: 2026-08-19, deadline: 2026-09-24 }
+    predicted_announce: 年2期制。次期は2027年前半
+    watch_from: 2027-04-01
+    confidence: high
+    note: 都内実施が条件のため海外事業には使えない。国内企画のときの選択肢。
+
+  - id: GIFU-MOKUSEIHIN-EU
+    name: 県産木製品 欧州販路開拓業務委託
+    issuer: 岐阜県
+    type: 一般競争入札
+    observed:
+      - { year: 2026, deadline: 2026-08-24, note: 郵送・電子は8月24日17時必着 }
+    predicted_announce: 2027-07-下旬
+    predicted_deadline: 2027-08-中旬
+    watch_from: 2027-07-15
+    confidence: medium
+    note: |
+      **欧州への販路開拓業務。御社の主戦場そのもの。** 2026年は8月17日（持参）
+      /8月24日（郵送・電子）締切で、今回2日差で逃した。来年は必ず捕捉すること。
+    url: https://www.pref.gifu.lg.jp/bid/bid/439809.html
+
+  - id: GUNMA-INFLUENCER
+    name: 多言語情報発信事業及び海外インフルエンサー等招請事業
+    issuer: 群馬県
+    type: 公募
+    observed:
+      - { year: 2026, participate_by: 2026-07-22, proposal_by: 2026-07-31 }
+    predicted_announce: 2027-07-上旬
+    watch_from: 2027-06-25
+    confidence: medium
+    note: |
+      **海外インフルエンサーの招請事業。御社の「SNSインフルエンサーによる
+      アンバサダー訪日旅行企画」と完全に同型。** 履行期間は翌年3月まで。
+    url: https://www.pref.gunma.jp/site/nyuusatsu/766308.html
+
+  - id: KAGOSHIMA-AIRPORT-OUTBOUND
+    name: 鹿児島空港国際線アウトバウンドプロモーション業務
+    issuer: 鹿児島県
+    type: 企画提案
+    observed:
+      - { year: 2026, participate_by: 2026-04-13, proposal_by: 2026-04-27 }
+    predicted_announce: 2027-03-下旬
+    watch_from: 2027-03-15
+    confidence: medium
+    note: 年度当初の公告。4月上旬に締切が来るため、3月中旬から監視が必要。
+
+  - id: AKITA-KOKUSAI-HASSHIN
+    name: 韓国情報発信業務委託／中国情報発信業務委託
+    issuer: 秋田県
+    type: 企画提案競技
+    observed:
+      - { year: 2026, contract_end: 2027-03-31 }
+    predicted_announce: 2027-04〜05
+    watch_from: 2027-04-01
+    confidence: low
+    note: 締切表記をページから取得できず。次回巡回で公告時期を特定すること。
+
+  - id: YAMAGATA-KOREA-SHUYU
+    name: 韓国市場における二次交通を活用した県内広域周遊促進事業業務委託
+    issuer: 山形県
+    type: 企画提案
+    observed:
+      - { year: 2026, participate_by: 2026-08-26, proposal_by: 2026-08-28 }
+    predicted_announce: 2027-07-下旬
+    watch_from: 2027-07-15
+    confidence: medium
+    note: |
+      山形県は御社が費用試算資料を持つ県。参加申込から提案書提出まで2日しかない
+      短期決戦型のため、公告直後に気づく体制が必須。
+
+  - id: FUKUI-HOKURIKU-KOGEI-FAIR
+    name: 北陸3県工芸品フェア（中国・重慶）出品事業者募集
+    issuer: 福井県
+    type: 参加募集
+    observed:
+      - { year: 2026, deadline: 2026-08-28 }
+    predicted_announce: 2027-07-下旬
+    watch_from: 2027-07-15
+    confidence: low
+    note: |
+      出品事業者の募集であり御社が応募する案件ではないが、**このフェア自体の
+      運営受託が別途公告されている可能性が高い。** 次回、福井県・石川県・富山県の
+      工芸品フェア運営業務の公告履歴を調査すること。
+
+# ─────────────────────────────────────────────────────────────
+# 制度上の周期 ― 予算サイクルから確実に発生する
+# ─────────────────────────────────────────────────────────────
+fiscal_cycle:
+  - phase: 12月〜1月
+    what: 翌年度予算の内示を受け、国の企画競争・補助金が公告開始
+    action: 経産省・文化庁・観光庁・中小企業庁の公募ページを毎週確認
+  - phase: 2月〜3月
+    what: 補正予算に基づく公募が集中。翌年度案件の公告も本格化
+    action: 伝統的工芸品産業振興協会（3月中旬〜）を最重点で監視
+  - phase: 4月〜6月
+    what: 年度当初案件のピーク。自治体のプロポーザルが最多
+    action: 47都道府県＋政令市を毎週巡回。取り逃しが最も痛い時期
+  - phase: 7月〜8月
+    what: 年度前半の補完的な公募。文化庁の国際事業がこの時期
+    action: 通常巡回
+  - phase: 9月〜11月
+    what: 端境期。補正予算関連の補助金が散発
+    action: 通常巡回。カレンダーの精度向上と、翌年度に向けた準備に充てる
