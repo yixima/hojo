@@ -323,6 +323,77 @@ tier_annual:
       運営受託が別途公告されている可能性が高い。** 次回、福井県・石川県・富山県の
       工芸品フェア運営業務の公告履歴を調査すること。
 
+  # ── アーカイブ探索（2026-08-26、191組織）で発見した定例案件 ──
+  - id: SMRJ-CEO-SHODANKAI
+    name: CEOネットワーク強化事業 商談会の開催に係る業務請負
+    issuer: 中小機構
+    type: 公募
+    observed:
+      - { year: 2026, variants: [先端産業, 医療機器, インドCEO, 環境技術] }
+      - { year: 2025, variants: [環境技術, インド・フランス, 医療機器, シンガポール] }
+    watch_from: 2027-03-01
+    confidence: high
+    note: |
+      **分野別・国別に複数本が同時公告される。** 商談会の開催運営で、御社の
+      バイヤー集客・商談運営の実績が直結。年度当初に集中。
+    url: https://www.smrj.go.jp/procurement/bid/list/2026/index.html
+
+  - id: SMRJ-CREATIVE
+    name: 海外市場適合クリエイティブ制作等業務
+    issuer: 中小機構
+    type: 公募
+    observed: [{ year: 2026, announced: 2026-05-18 }]
+    watch_from: 2027-04-20
+    confidence: medium
+    note: 海外市場向けの制作物。御社の制作メディア581点の実績が効く。
+
+  - id: SMRJ-TESTMKT-TOUR
+    name: 中小企業海外市場開拓に向けたテストマーケティング国内ツアー 請負先
+    issuer: 中小機構
+    type: 公募
+    observed: [{ year: 2025, announced: 2025-08-26 }]
+    watch_from: 2027-08-01
+    confidence: medium
+
+  - id: KOBE-MESSE
+    name: 国際フロンティア産業メッセ 開催等業務 企画提案コンペ
+    issuer: 神戸市
+    type: 企画提案コンペ
+    observed: [{ year: 2026, proposal_window: 2025-11-21〜2025-11-28 }]
+    watch_from: 2027-10-20
+    confidence: high
+    note: |
+      **展示会そのものの開催運営受託。** 前年11月下旬に公告・受付。
+      受付期間が1週間しかないため、11月上旬から監視が必要。
+
+  - id: CHIBA-SHOKU-BRAND
+    name: 千葉市「食のブランド」プロモーション等業務委託
+    issuer: 千葉市
+    type: 公募型プロポーザル
+    observed: [{ year: 2026, participate_by: 2026-03-11, proposal_by: 2026-03-17 }]
+    watch_from: 2027-02-20
+    confidence: high
+
+  - id: CHIBA-INBOUND
+    name: Webサイト及びSNS等を活用した訪日外国人観光客向け情報発信業務委託
+    issuer: 千葉市
+    type: 公募型プロポーザル
+    observed: [{ year: 2026, participate_by: 2026-02-27, proposal_by: 2026-03-06 }]
+    watch_from: 2027-02-05
+    confidence: high
+    note: インバウンド向け情報発信。政令市は2〜3月に翌年度案件を公告する型。
+
+  - id: JPF-NENPO
+    name: 国際交流基金 年報（和文・英文）電子版制作
+    issuer: 国際交流基金
+    type: 委託
+    observed: [{ years: 2025-2027, note: 複数年度契約 }]
+    watch_from: 2027-06-01
+    confidence: low
+    note: |
+      国際交流基金の調達は航空券手配・接遇業務が大半で御社向きではないが、
+      制作系・企画運営系が稀に出る。年1回の確認で足りる。
+
 # ─────────────────────────────────────────────────────────────
 # 東京都中小企業振興公社 ― 過年度契約情報アーカイブから復元した年間サイクル
 # ─────────────────────────────────────────────────────────────
