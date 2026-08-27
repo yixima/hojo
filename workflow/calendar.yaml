@@ -432,6 +432,174 @@ tier_kosha:
     - TOKYO職人展／東京手仕事展 販売催事
 
 # ─────────────────────────────────────────────────────────────
+# 伝統的工芸品産業振興協会 ― 公募公告アーカイブ3年分から復元した年間サイクル
+# ─────────────────────────────────────────────────────────────
+# 出典: https://kyokai.kougeihin.jp/association_cat/公募公告/ （2024〜2026年・62件を確認）
+# 【重要】海外案件だけでなく、国内の大規模イベント運営・設営業務が多数ある。
+#   御社の「パビリオン運営・ブース施工・展示演出」の実績がそのまま効く領域で、
+#   初回サーチでは新着ページしか見ていなかったため完全に見落としていた。
+tier_kougei_full:
+  meta:
+    issuer: 一般財団法人 伝統的工芸品産業振興協会
+    archive: https://kyokai.kougeihin.jp/association_cat/公募公告/
+    note: 過去分も同一カテゴリページに残る。ページ送りで3年分を遡れる。
+
+  # ── 海外事業（最重点）──
+  overseas:
+    - name: 海外における伝統的工芸品テストマーケティング業務【企画提案募集】
+      observed: [{year: 2026, deadline: 2026-05-15}, {year: 2025, deadline: 2025-08-11}, {year: 2024, deadline: 2024-07-12, name_then: 令和6年度 海外テストマーケティング委託業者公募}]
+      watch_from: 2027-03-10
+      confidence: high
+      note: 年により締切が5月・7月・8月と大きくずれる。3月から9月まで継続監視が必要。
+    - name: 海外における伝統的工芸品実演・ワークショップ業務【企画提案募集】
+      observed: [{year: 2026, deadline: 2026-05-15}]
+      watch_from: 2027-03-10
+      confidence: high
+    - name: 香港におけるテストマーケティング（産地関係者向け参加募集）
+      observed: [{year: 2024, deadline: 2024-09-05}]
+      watch_from: 2027-08-01
+      confidence: low
+      note: 参加募集だが、運営受託が別途公告される可能性がある。
+
+  # ── 大規模イベントの運営・設営（御社の主力と直結。今回初めて把握）──
+  events:
+    - name: KOGEI WALK（旧 JAPAN TRADITIONAL CRAFTS WEEK）開催運営・広報業務等
+      observed: [{year: 2026, deadline: 2026-02-27}, {year: 2025, deadline: 2025-02-21, scope: 配布物・ポスター・HP制作等}]
+      watch_from: 2027-01-25
+      confidence: high
+      note: |
+        **開催運営そのものの受託。御社の主力領域。** 2月下旬締切。
+        初回サーチでは新着に出ておらず、完全に見落としていた案件。
+    - name: KOUGEI EXPO IN OSAKA 開催運営・設営・広報業務
+      observed: [{year: 2025, deadline: 2025-03-28}]
+      watch_from: 2027-02-25
+      confidence: medium
+      note: 開催都市が年により変わる可能性。設営・広報を含む一括受託。
+    - name: 伝統的工芸品月間国民会議全国大会 設営業務等【企画競争】
+      observed: [{year: 2026, deadline: 2026-06-30, edition: 第43回}, {year: 2024, deadline: 2024-07-19, edition: 第41回}]
+      watch_from: 2027-05-25
+      confidence: high
+      note: 毎年開催。設営業務の受託。
+    - name: 伝統的工芸品月間全国大会 関連催事 物流（一括搬入・搬出）業務
+      observed: [{year: 2026, deadline: 2026-07-03}, {year: 2025, deadline: 2025-05-30}, {year: 2024, deadline: 2024-07-25}]
+      watch_from: 2027-05-01
+      confidence: high
+      note: 御社の国際輸送・美術品取扱の実績が効く。
+    - name: 伝統的工芸品公募作品展 作品管理・展示・輸送等業務委託【企画公募】
+      observed: [{year: 2026, deadline: 2026-06-16}, {year: 2025, deadline: 2025-05-30}]
+      watch_from: 2027-05-01
+      confidence: high
+    - name: 日本伝統工芸士会作品展 作品受付管理・レイアウト・会場設営・運送・展示等業務
+      observed: [{year: 2024, deadline: 2024-08-01, edition: 第26回}]
+      watch_from: 2027-07-01
+      confidence: medium
+    - name: 大阪・関西万博での普及イベント企画・運営（邦楽器中心）
+      observed: [{year: 2025, deadline: 2025-04-28}]
+      confidence: low
+      note: 万博限りの単発と思われるが、大型国際イベント連動型の前例として記録。
+
+  # ── 常設拠点「伝統工芸 青山スクエア」関連（定期発生）──
+  aoyama_square:
+    - name: 季節展示コーナー装飾業務委託
+      observed: [{year: 2026, deadline: 2026-03-17}, {year: 2025, deadline: 2025-03-17}]
+      watch_from: 2027-02-20
+      confidence: high
+      note: 2年連続で3月17日締切。装飾業務で御社の演出実績が効く。
+    - name: 展示台配置レイアウト及び新設
+      observed: [{year: 2026, deadline: 2026-05-22}, {year: 2026, deadline: 2026-02-16, type: 一般競争}]
+      watch_from: 2027-01-25
+      confidence: medium
+    - name: 備品レンタル及び展示サポート業務委託
+      observed: [{year: 2026, deadline: 2026-03-16}, {year: 2025, deadline: 2025-03-12}]
+      watch_from: 2027-02-20
+      confidence: high
+    - name: ダイレクトメールデザイン・卓上カレンダー・印刷・発送・納品業務
+      observed: [{year: 2026, deadline: 2026-03-31}, {year: 2025, deadline: 2025-02-10}]
+      watch_from: 2027-01-25
+      confidence: medium
+
+  # ── 制作・広報（御社の制作物ディレクション実績が効く）──
+  production:
+    - name: 伝統的工芸品 映像企画・制作業者
+      observed: [{year: 2026, deadline: 2026-04-03}, {year: 2025, deadline: 2025-03-28}]
+      watch_from: 2027-02-25
+      confidence: high
+    - name: 英語・翻訳業務
+      observed: [{year: 2026, deadline: 2026-06-15}, {year: 2025, deadline: 2025-06-17}]
+      watch_from: 2027-05-20
+      confidence: high
+      note: 2年連続で6月中旬締切。御社の多言語制作体制が効く。
+    - name: 伝統的工芸品PRのための広告出稿業務
+      observed: [{year: 2026, deadline: 2026-04-02}, {year: 2025, deadline: 2025-02-14}, {year: 2024, deadline: 2024-07-04}]
+      watch_from: 2027-01-25
+      confidence: medium
+      note: 締切が年により2月・4月・7月と大きくずれる。通年で監視。
+    - name: 成田空港でのインバウンド向け広告出稿の委託【企画公募】
+      observed: [{year: 2025, deadline: 2025-07-29}]
+      watch_from: 2027-07-01
+      confidence: low
+    - name: 日本の伝統工芸士ナビ 掲載内容の収集及び登録用データ作成
+      observed: [{year: 2026, deadline: 2026-07-09}]
+      watch_from: 2027-06-10
+      confidence: medium
+
+  # ── 調査・事務局業務 ──
+  research_admin:
+    - { name: 伝統的工芸品産地実勢調査 調査業務委託, observed: [{year: 2026, deadline: 2026-05-22}, {year: 2025, deadline: 2025-08-29}], watch_from: 2027-04-20, confidence: medium }
+    - { name: コンサルタント産地支援事業 事務局業務等, observed: [{year: 2026, deadline: 2026-06-03}, {year: 2025, deadline: 2025-04-30}], watch_from: 2027-04-01, confidence: medium }
+    - { name: 学生等に対する伝統的工芸品教育事業「次世代開拓サポート」事務局業務, observed: [{year: 2026, deadline: 2026-06-01}, {year: 2025, deadline: 2025-07-18}], watch_from: 2027-05-01, confidence: medium }
+    - { name: 後継者育成事業 産地従事者研修会 事務局業務, observed: [{year: 2026, deadline: 2026-06-15}, {year: 2025, deadline: 2025-06-30}], watch_from: 2027-05-20, confidence: medium }
+
+# ─────────────────────────────────────────────────────────────
+# JETRO ― ジャパンパビリオン／国際博覧会日本館の入札サイクル
+# ─────────────────────────────────────────────────────────────
+# 出典: https://www.jetro.go.jp/procurement/bid/
+# 【重要】JETROは海外見本市の「ジャパンパビリオン設計・監理」を常時公告している。
+#   御社が16都市91回で行ってきたパビリオン運営そのもの。初回サーチでは調達トップ
+#   ページしか見ておらず、入札一覧の中身に到達できていなかった。
+tier_jetro:
+  meta:
+    issuer: 独立行政法人日本貿易振興機構（JETRO）
+    bid_list: https://www.jetro.go.jp/procurement/bid/
+    public_offer: https://www.jetro.go.jp/procurement/publicoffer/
+    qualification: |
+      2021年度で独自の競争参加資格登録を廃止し、**全省庁統一資格の有資格者**が対象。
+      区分は案件により「役務の提供：その他」「工事」など。
+      なお中小企業者等は、当該分野の技術力等を証明できれば
+      **等級や過去の納入実績にかかわらず参加可能**という特例がある。
+      御社は統一資格を申請提出済み・取得手続き中のため、**取得時期が勝負を分ける。**
+    forecast: https://www.jetro.go.jp/ext_images/procurement/pdf/20260801.pdf  # 2026年度調達見通し
+    note: |
+      **「調達見通し」PDFが毎年度公開される。** これを読めば、その年度に何が公告されるかを
+      公告前に把握できる。毎回の巡回で最新版を確認すること。
+
+  recurring:
+    - name: 国際博覧会 日本館 展示・施工等／運営／行催事業務
+      observed:
+        - { event: 2027年ベオグラード国際博覧会, announced: 2026-08-21, deadline: 2026-09-14, scope: 展示・施工等 }
+        - { event: 2027年ベオグラード国際博覧会, announced: 2026-08-18, deadline: 2026-09-08, scope: 運営 }
+      confidence: high
+      note: |
+        **国際博覧会の日本館。御社の最上位の狙い目。**
+        展示・施工／運営／行催事が別々に公告される。国際博覧会は数年おきに開催される
+        ため、次の博覧会（GREEN×EXPO 2027 等）でも同様の公告が想定される。
+
+    - name: 海外見本市 ジャパンパビリオンの設計・監理等
+      observed:
+        - { event: FHA Food & Hospitality Asia 2027（シンガポール）, announced: 2026-08-20, deadline: 2026-09-08 }
+        - { event: Seafood Expo North America 2027（ボストン）, announced: 2026-07-22, deadline: 2026-07-27 }
+        - { event: BIOFACH 2027（ニュルンベルク）, announced: 2026-07-07, deadline: 2026-07-13 }
+        - { event: Sirha 2027（リヨン）, announced: 2026-06-26 }
+      watch_from: 継続（毎回の巡回で bid_list を確認）
+      confidence: high
+      note: |
+        **6〜9月に集中して公告される。** 公告から受領期限まで6〜19日と短い。
+        対象見本市は年により入れ替わるため、リストを毎回確認すること。
+        JETROの「ジェトロが出展支援する展示会（年間予定）」
+        （https://www.jetro.go.jp/services/tradefair/list.html）で翌年度の対象展示会を
+        先読みできる。
+
+# ─────────────────────────────────────────────────────────────
 # 制度上の周期 ― 予算サイクルから確実に発生する
 # ─────────────────────────────────────────────────────────────
 fiscal_cycle:
