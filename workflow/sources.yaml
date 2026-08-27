@@ -636,6 +636,23 @@ tier_national_events:
       url: https://www.fukushi.metro.tokyo.lg.jp/shougai/koza/shoubunsai
       開催: 2027年度（令和9年度）／国民文化祭と同時開催
       note: 国民文化祭と一体で開催されるが、所管局が違うため発注は別枠で出る
+    - name: 東京都 入札・契約情報（生活文化スポーツ局の委託を含む）
+      url: https://www.zaimu.metro.tokyo.lg.jp/keiyaku/
+      note: |
+        生活文化スポーツ局の国民文化祭ページ（seikatubunka.metro.tokyo.lg.jp）は
+        Liferay製のSPAで、本文が静的HTMLに含まれない。curlでは中身が取れない。
+        **東京都の委託公募は財務局の入札・契約情報から追うこと。**
+    - name: 宮崎県 国民スポーツ大会（第81回・2027年）
+      url: https://www.pref.miyazaki.lg.jp/
+      開催: 2027年
+      note: 分母抽出で装飾・設営案件を5件出している既知の発注者。式典演出の発注を監視
+    - name: 長野県 国民スポーツ大会（第82回・2028年）
+      url: https://www.pref.nagano.lg.jp/
+      開催: 2028年
+    - name: 群馬県 国民スポーツ大会（第83回・2029年）
+      url: https://www.pref.gunma.jp/
+      開催: 2029年
+      note: FOODEX JAPAN2027 県ブース装飾でも発注実績がある
 
   # 開催地が持ち回る主な全国イベント。開催地が判明したら orgs に追加していく
   rotating_events:
