@@ -245,7 +245,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-crit">募集中</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-08">
       <div class="days urgent">13<small>日</small></div>
       <div class="bar"><i class="urgent" style="width:70%"></i></div>
       <div class="date">2026-09-08 入札関係書類 受領期限</div>
@@ -268,7 +268,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-crit">募集中</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-08">
       <div class="days urgent">13<small>日</small></div>
       <div class="bar"><i class="urgent" style="width:70%"></i></div>
       <div class="date">2026-09-08 受領期限 ／ 開札 09-10</div>
@@ -285,7 +285,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-warn">募集中</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-14">
       <div class="days">19<small>日</small></div>
       <div class="bar"><i style="width:55%"></i></div>
       <div class="date">2026-09-14 受領期限 ／ 開札 09-17</div>
@@ -311,7 +311,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-crit">至急</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-01">
       <div class="days urgent">6<small>日</small></div>
       <div class="bar"><i class="urgent" style="width:82%"></i></div>
       <div class="date">2026-09-01 正午 参加申込書</div>
@@ -336,7 +336,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-warn">資格要確認</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-08">
       <div class="days">13<small>日</small></div>
       <div class="bar"><i style="width:62%"></i></div>
       <div class="date">2026-09-08 17:00 参加申込書</div>
@@ -361,7 +361,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-warn">要着手</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-10">
       <div class="days">15<small>日</small></div>
       <div class="bar"><i style="width:55%"></i></div>
       <div class="date">2026-09-10 12:00 必着</div>
@@ -386,7 +386,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-ok">応募可</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-30">
       <div class="days">35<small>日</small></div>
       <div class="bar"><i style="width:24%"></i></div>
       <div class="date">2026-09-30 17:00 必着</div>
@@ -420,7 +420,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-warn">条件付</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-24">
       <div class="days">29<small>日</small></div>
       <div class="bar"><i style="width:19%"></i></div>
       <div class="date">2026-09-24 14:00</div>
@@ -444,7 +444,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-off">要精査</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-10-20">
       <div class="days">55<small>日</small></div>
       <div class="bar"><i style="width:8%"></i></div>
       <div class="date">2026-10-20 正午</div>
@@ -532,7 +532,7 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
       </div>
       <span class="pill p-crit">資格不足</span>
     </div>
-    <div class="dl">
+    <div class="dl" data-deadline="2026-09-04">
       <div class="days urgent">9<small>日</small></div>
       <div class="bar"><i class="urgent" style="width:74%"></i></div>
       <div class="date">2026-09-04 15:00 入札書受領期限</div>
@@ -657,3 +657,44 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
 </footer>
 
 </div>
+
+<script>
+(function(){
+  // 残日数は閲覧時に計算する。数値の直書きをやめ、日付の陳腐化を防ぐ。
+  var JST=9*60;
+  function todayJST(){
+    var n=new Date();
+    var utc=n.getTime()+n.getTimezoneOffset()*60000;
+    var j=new Date(utc+JST*60000);
+    return new Date(j.getFullYear(),j.getMonth(),j.getDate());
+  }
+  var t=todayJST();
+  document.querySelectorAll('.dl[data-deadline]').forEach(function(el){
+    var p=el.getAttribute('data-deadline').split('-');
+    var d=new Date(+p[0],+p[1]-1,+p[2]);
+    var days=Math.round((d-t)/86400000);
+    var box=el.querySelector('.days'), bar=el.querySelector('.bar i');
+    if(!box) return;
+    var label=days<0?'超過':(days===0?'本日':days);
+    box.innerHTML=label+(days>0?'<small>日</small>':'');
+    var urgent=days<=7;
+    box.classList.toggle('urgent',urgent);
+    if(bar){
+      var pct=days<0?100:Math.max(4,Math.min(100,Math.round((1-days/60)*100)));
+      bar.style.width=pct+'%';
+      bar.classList.toggle('urgent',urgent);
+    }
+    var pill=el.closest('.card') && el.closest('.card').querySelector('.pill');
+    if(pill && days<0){ pill.textContent='締切超過'; pill.className='pill p-off'; }
+  });
+  // ヘッダーに閲覧日を表示
+  var st=document.querySelector('.stamp');
+  if(st){
+    var n=new Date(), utc=n.getTime()+n.getTimezoneOffset()*60000, j=new Date(utc+JST*60000);
+    var pad=function(x){return (x<10?'0':'')+x;};
+    var el=document.createElement('div');
+    el.innerHTML='閲覧日<b>'+pad(j.getMonth()+1)+'.'+pad(j.getDate())+'</b>';
+    st.appendChild(el);
+  }
+})();
+</script>

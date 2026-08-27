@@ -171,59 +171,78 @@ tier_d_chambers:
 # ---------------------------------------------------------------------
 tier_e_prefectural_agencies:
   frequency: seasonal
+  source_of_truth: https://www.chusho.meti.go.jp/soudan/todou_sien.html
   note: |
     **最も見落としやすい発注元。** 都道府県本体ではなく外郭団体が海外展示会出展事業の
     運営委託を出すケースが多い。御社の受注実績である東京都中小企業振興公社がこの類型。
-    2026-08-26 にDNSで実在確認し、45/47団体を特定した。
-  verified:
-    - { pref: 北海道, domain: www.hsc.or.jp }
-    - { pref: 青森県, domain: www.21aomori.or.jp }
-    - { pref: 岩手県, domain: www.joho-iwate.or.jp }
-    - { pref: 宮城県, domain: www.joho-miyagi.or.jp }
-    - { pref: 秋田県, domain: www.bic-akita.or.jp }
-    - { pref: 山形県, domain: www.ynet.or.jp }
-    - { pref: 福島県, domain: www.utsukushima.net }
-    - { pref: 茨城県, domain: www.iis-net.or.jp }
-    - { pref: 栃木県, domain: www.tochigi-iin.or.jp }
-    - { pref: 群馬県, domain: www.g-inf.or.jp }
-    - { pref: 埼玉県, domain: www.saitama-j.or.jp }
-    - { pref: 千葉県, domain: www.ccjc-net.or.jp }
-    - { pref: 東京都, domain: www.tokyo-kosha.or.jp }
-    - { pref: 神奈川県, domain: www.kipc.or.jp }
-    - { pref: 新潟県, domain: www.nico.or.jp }
-    - { pref: 富山県, domain: www.tonio.or.jp }
-    - { pref: 石川県, domain: www.isico.or.jp }
-    - { pref: 福井県, domain: www.fisc.jp }
-    - { pref: 山梨県, domain: www.yiso.or.jp }
-    - { pref: 静岡県, domain: www.ric-shizuoka.or.jp }
-    - { pref: 愛知県, domain: www.aibsc.jp }
-    - { pref: 三重県, domain: www.miesc.or.jp }
-    - { pref: 滋賀県, domain: www.shigaplaza.or.jp }
-    - { pref: 京都府, domain: www.ki21.jp }
-    - { pref: 大阪府, domain: www.obda.or.jp }
-    - { pref: 兵庫県, domain: web.hyogo-iic.ne.jp }
-    - { pref: 奈良県, domain: www.nara-sangyoshinko.or.jp }
-    - { pref: 和歌山県, domain: www.yarukiouendan.or.jp }
-    - { pref: 鳥取県, domain: www.toriton.or.jp }
-    - { pref: 島根県, domain: www.joho-shimane.or.jp }
-    - { pref: 岡山県, domain: www.optic.or.jp }
-    - { pref: 広島県, domain: www.hiwave.or.jp }
-    - { pref: 山口県, domain: www.ymg-ssz.jp }
-    - { pref: 徳島県, domain: www.our-think.or.jp }
-    - { pref: 香川県, domain: www.kagawa-isf.jp }
-    - { pref: 愛媛県, domain: www.ehime-iinet.or.jp }
-    - { pref: 高知県, domain: www.joho-kochi.or.jp }
-    - { pref: 福岡県, domain: www.joho-fukuoka.or.jp }
-    - { pref: 佐賀県, domain: www.saga-itc.jp }
-    - { pref: 長崎県, domain: www.joho-nagasaki.or.jp }
-    - { pref: 熊本県, domain: www.kmt-ti.or.jp }
-    - { pref: 大分県, domain: www.oita-ncc.jp }
-    - { pref: 沖縄県, domain: www.okinawa-ric.jp }
-    - { pref: 岐阜県, domain: www.vec.or.jp }
-    - { pref: 宮崎県, domain: www.mif.or.jp }
-  unresolved:
-    - { pref: 長野県, note: "長野県産業振興機構。候補ドメインが解決せず。要再調査" }
-    - { pref: 鹿児島県, note: "かごしま産業支援センター。候補ドメインが解決せず。要再調査" }
+
+    2026-08-27、中小企業庁の公式一覧「都道府県等中小企業支援センター等」から
+    **47/47団体を確定**した。従来はドメインを推測していたため7件が誤っていた
+    （岐阜・山口・徳島・佐賀・大分・和歌山・宮崎）。**推測ではなく公式マスタを使うこと。**
+  verified_47:
+    - { pref: 北海道, name: "北海道中小企業総合支援センター", domain: www.hsc.or.jp }
+    - { pref: 福井, name: "ふくい産業支援センター", domain: www.fisc.jp }
+    - { pref: 青森, name: "21あおもり産業総合支援センター", domain: www.21aomori.or.jp }
+    - { pref: 滋賀, name: "滋賀県産業支援プラザ", domain: www.shigaplaza.or.jp }
+    - { pref: 岩手, name: "いわて産業振興センター", domain: www.joho-iwate.or.jp }
+    - { pref: 京都, name: "京都産業21", domain: www.ki21.jp }
+    - { pref: 宮城, name: "みやぎ産業振興機構", domain: www.joho-miyagi.or.jp }
+    - { pref: 大阪, name: "大阪産業局", domain: www.obda.or.jp }
+    - { pref: 秋田, name: "あきた企業活性化センター", domain: www.bic-akita.or.jp }
+    - { pref: 岐阜, name: "岐阜県産業経済振興センター", domain: www.gpc-gifu.or.jp }
+    - { pref: 山形, name: "山形県企業振興公社", domain: www.ynet.or.jp }
+    - { pref: 三重, name: "三重県産業支援センター", domain: www.miesc.or.jp }
+    - { pref: 福島, name: "福島県産業振興センター", domain: www.utsukushima.net }
+    - { pref: 富山, name: "富山県新世紀産業機構", domain: www.tonio.or.jp }
+    - { pref: 茨城, name: "いばらき中小企業グローバル推進機構", domain: www.iis-net.or.jp }
+    - { pref: 石川, name: "石川県産業創出支援機構", domain: www.isico.or.jp }
+    - { pref: 栃木, name: "栃木県産業振興センター", domain: www.tochigi-iin.or.jp }
+    - { pref: 島根, name: "しまね産業振興財団", domain: www.joho-shimane.or.jp }
+    - { pref: 群馬, name: "群馬県産業支援機構", domain: www.g-inf.or.jp }
+    - { pref: 岡山, name: "岡山県産業振興財団", domain: www.optic.or.jp }
+    - { pref: 千葉, name: "千葉県産業振興センター", domain: www.ccjc-net.or.jp }
+    - { pref: 広島, name: "ひろしま産業振興機構", domain: www.hiwave.or.jp }
+    - { pref: 埼玉, name: "埼玉県産業振興公社", domain: www.saitama-j.or.jp }
+    - { pref: 山口, name: "やまぐち産業振興財団", domain: yipf.or.jp }
+    - { pref: 東京, name: "東京都中小企業振興公社", domain: www.tokyo-kosha.or.jp }
+    - { pref: 徳島, name: "とくしま産業振興機構", domain: oursun.our-think.or.jp }
+    - { pref: 神奈川, name: "神奈川産業振興センター", domain: www.kipc.or.jp }
+    - { pref: 香川, name: "かがわ産業支援財団", domain: www.kagawa-isf.jp }
+    - { pref: 新潟, name: "にいがた産業創造機構", domain: www.nico.or.jp }
+    - { pref: 愛媛, name: "えひめ産業振興財団", domain: www.ehime-iinet.or.jp }
+    - { pref: 長野, name: "長野県産業振興機構", domain: www.nice-o.or.jp }
+    - { pref: 高知, name: "高知県産業振興センター", domain: www.joho-kochi.or.jp }
+    - { pref: 山梨, name: "やまなし産業支援機構", domain: www.yiso.or.jp }
+    - { pref: 福岡, name: "福岡県中小企業振興センター", domain: www.joho-fukuoka.or.jp }
+    - { pref: 静岡, name: "静岡県産業振興財団", domain: www.ric-shizuoka.or.jp }
+    - { pref: 佐賀, name: "佐賀県産業振興機構", domain: www.infosaga.or.jp }
+    - { pref: 愛知, name: "あいち産業振興機構", domain: www.aibsc.jp }
+    - { pref: 長崎, name: "長崎県産業振興財団", domain: www.joho-nagasaki.or.jp }
+    - { pref: 兵庫, name: "ひょうご産業活性化センター", domain: web.hyogo-iic.ne.jp }
+    - { pref: 熊本, name: "くまもと産業支援財団", domain: www.kmt-ti.or.jp }
+    - { pref: 奈良, name: "奈良県地域産業振興センター", domain: www.nara-sangyoshinko.or.jp }
+    - { pref: 大分, name: "大分県産業創造機構", domain: www.columbus.or.jp }
+    - { pref: 和歌山, name: "わかやま産業振興財団", domain: yarukiouendan.or.jp }
+    - { pref: 宮崎, name: "宮崎県産業振興機構", domain: www.mepo.or.jp }
+    - { pref: 鳥取, name: "鳥取県産業振興機構", domain: www.toriton.or.jp }
+    - { pref: 鹿児島, name: "かごしま産業支援センター", domain: www.kisc.or.jp }
+    - { pref: 沖縄, name: "沖縄県産業振興公社", domain: www.okinawa-ric.jp }
+
+  # 政令指定都市の産業振興財団（同じ公式一覧に掲載。都道府県センターとは別組織）
+  city_centers:
+    - { name: "さっぽろ産業振興財団", domain: www.sec.or.jp }
+    - { name: "仙台市産業振興事業団", domain: www.siip.city.sendai.jp }
+    - { name: "千葉市産業振興財団", domain: www.chibashi-sangyo.or.jp }
+    - { name: "さいたま市産業創造財団", domain: www.sozo-saitama.or.jp }
+    - { name: "横浜企業経営支援財団", domain: www.idec.or.jp }
+    - { name: "川崎市産業振興財団", domain: www.kawasaki-net.ne.jp }
+    - { name: "静岡産業振興協会", domain: www.b-nest.jp }
+    - { name: "名古屋産業振興公社", domain: www.nipc.or.jp }
+    - { name: "京都高度技術研究所", domain: www.astem.or.jp }
+    - { name: "堺市産業振興センター", domain: www.sakai-ipc.jp }
+    - { name: "こうべ産業・就労支援財団", domain: www.kobe-ipc.or.jp }
+    - { name: "広島市産業振興センター", domain: www.ipc.city.hiroshima.jp }
+    - { name: "北九州産業学術推進機構", domain: www.ksrp.or.jp }
 
 # ---------------------------------------------------------------------
 # F. 自治体（都道府県・市区町村）
