@@ -220,8 +220,8 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
   <div class="stamp">
     <div>巡回日<b>08.28</b></div>
     <div>分母<b>9,247</b></div>
-    <div>台帳<b>250</b></div>
-    <div>要行動<b>19</b></div>
+    <div>台帳<b>243</b></div>
+    <div>要行動<b>21</b></div>
   </div>
 </header>
 
@@ -928,6 +928,63 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
     </tbody>
   </table>
   <p class="note flag"><b>締切の読み方を誤った記録。</b> 協会ページ本文の見出し「２．参加に係る手続きの提出期限」には<b>提案書の締切</b>が書かれており、参加手続の期限ではありません。クラフト館を当初「参加手続9/4・応募可」と判定しましたが、実際の参加意向申出締切は8月10日でした。正しいのはページ下部のスケジュール表です。同じ資料に「提案資格確認結果通知 8月17日」とある時点で矛盾に気づけたはずでした。判定は <code>bin/expo2027_schedule.py</code> でスケジュール表を構造ごと読むように直しています。</p>
+</section>
+
+<!-- ══ 予測 ══ -->
+<section>
+  <div class="shead"><h2>次に来る公告 ― 実測から逆算した</h2><span class="n">予測</span></div>
+  <p class="sdesc">反復発注者6団体を一覧経由ではなく直接見に行き、公告と締切の実測値を取りました。<b>公告は展示会開催の2〜5か月前に集中します。</b>開催月がわかれば逆算できます。</p>
+  <div class="rule"></div>
+  <table>
+    <thead><tr><th>発注者</th><th>次に来る案件</th><th class="d">時期</th></tr></thead>
+    <tbody>
+      <tr><td><span class="star">★</span> 山口県産業技術センター系</td><td>春季展示会（スーパーマーケット・トレードショー2027等）装飾委託</td><td class="d">2026-09〜10</td></tr>
+      <tr><td><span class="star">★</span> 京都産業21</td><td>SEMICON Japan 2027 京都パビリオン装飾等業務</td><td class="d">2026-10〜12</td></tr>
+      <tr><td>静岡県産業振興財団</td><td>人とくるまのテクノロジー展2027 静岡県ブース設営等業務</td><td class="d">2026-12〜2027-01</td></tr>
+      <tr><td>大阪産業局</td><td>この街のクリエイター博覧会2028 会場設営・運営管理業務</td><td class="d">2027-05</td></tr>
+      <tr><td>ひょうご産業活性化センター</td><td>BEYOND SDGs エコプロ 兵庫県ブース装飾等委託業務</td><td class="d">2027-07</td></tr>
+      <tr><td>わかやま産業振興財団</td><td>集団出展ブース装飾委託業務【LIFE×DESIGN 2028】</td><td class="d">2027-08〜09</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><b>静岡県産業振興財団は、分母抽出では2件しか拾えていませんでしたが、直接見ると年4本以上ありました。</b>予算上限は200〜250万円台で安定しています。人とくるまのテクノロジー展（5月開催）は3月12日締切・240万円、機械要素技術展（7月開催）は4月27日締切・253万円、RoboNext（12月開催）は9月25日締切・208万円。開催月から逆算すると次の公告時期が読めます。</p>
+  <p class="note flag"><b>「出展企業募集」と「設営等業務の委託」は別物です。</b>産業支援機関の一覧には両方が並びます。御社が応募するのは設営等業務・装飾委託業務・ブース企画設営業務のほうで、共同出展企業募集・出展者募集・参加発注企業募集は出展する企業向けです。京都産業21の一覧80件のうち、御社が応募できるのは装飾等業務だけでした。</p>
+</section>
+
+<!-- ══ 国民文化祭 ══ -->
+<section>
+  <div class="shead"><h2>第42回国民文化祭は2027年度に東京都で開催</h2><span class="n">地元・最重点</span></div>
+  <p class="sdesc">2026年5月11日に開催地が東京都に決定しました。国民文化祭は開催の1〜2年前から、開会式・閉会式の企画運営、会場設営、広報、分野別フェスティバルの委託が集中して出ます。</p>
+  <div class="rule"></div>
+  <table>
+    <thead><tr><th class="d">時期</th><th>予測される公告</th></tr></thead>
+    <tbody>
+      <tr><td class="d">2026年度後半</td><td>基本計画・実施計画策定業務</td></tr>
+      <tr><td class="d">2027年前半</td><td>開会式・閉会式の企画運営、会場設営、広報</td></tr>
+      <tr><td class="d">2027年前半</td><td>分野別フェスティバルの企画・運営（文化庁が直接公募）</td></tr>
+    </tbody>
+  </table>
+  <p class="note">リードタイムは実証済みです。愛媛県（第43回・2028年度開催）は<b>開催2年前の2026年7月</b>に「開会式・閉会式に係る実施計画書策定及び広報業務委託」を企画提案募集しました。参加表明7/21、企画提案書7/27、プレゼン8/4。</p>
+  <p class="note"><b>2026年8月28日時点で、東京都の国民文化祭関連の発注はまだ一件も出ていません。</b>10団体を巡回して確認しました。出ていないのか見落としているのかを区別できる状態にあります。第27回全国障害者芸術・文化祭が同時開催されますが、所管局が違う（生活文化スポーツ局と福祉局）ため発注は別枠で出ます。</p>
+  <p class="note flag"><b>いま準備すべきことが1つあります。</b>東京都の競争入札参加資格者名簿への登載が前提になる可能性が高いので、公告を待たずに資格を取得しておいてください。御社は東京都から「東京手仕事」を受託した実績がありますが、名簿の有効期間と種目区分が今回の案件をカバーしているかは別問題です。</p>
+</section>
+
+<!-- ══ 国スポ ══ -->
+<section>
+  <div class="shead"><h2>国民スポーツ大会の開催地</h2><span class="n">6年分</span></div>
+  <p class="sdesc">開会式・閉会式の式典演出は、体育施設の整備とは別枠でイベント制作会社に委託されるのが通例です。<b>宮崎県と長野県は既に発注段階に入っている可能性が高い</b>とみています。</p>
+  <div class="rule"></div>
+  <table>
+    <thead><tr><th class="d">年</th><th class="g">回</th><th>開催地</th><th class="d">状態</th></tr></thead>
+    <tbody>
+      <tr><td class="d">2026</td><td class="g">80</td><td>青森県</td><td class="d">決定</td></tr>
+      <tr><td class="d">2027</td><td class="g">81</td><td><span class="star">★</span> 宮崎県</td><td class="d">決定</td></tr>
+      <tr><td class="d">2028</td><td class="g">82</td><td>長野県</td><td class="d">決定</td></tr>
+      <tr><td class="d">2029</td><td class="g">83</td><td><span class="star">★</span> 群馬県</td><td class="d">決定</td></tr>
+      <tr><td class="d">2030</td><td class="g">84</td><td>島根県</td><td class="d">内定</td></tr>
+      <tr><td class="d">2031</td><td class="g">85</td><td>奈良県</td><td class="d">内定</td></tr>
+    </tbody>
+  </table>
+  <p class="note">宮崎県は分母抽出でも装飾・設営案件を5件出している既知の発注者であり、群馬県は FOODEX JAPAN2027 の県ブース装飾を出しているところです。<b>どちらも御社との接点がある県で、国スポがその上に乗ってきます。</b></p>
 </section>
 <!-- ══ 到達不能 ══ -->
 <section>
