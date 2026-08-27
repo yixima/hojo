@@ -705,6 +705,31 @@ tier_shinko_zaidan:
     confidence: high
     note: 展示会ごとに個別公告されるため、年間を通じて発生する。
 
+  # ── 横浜市 脱炭素・GREEN×EXPO推進局（2026-08-27 発見）──
+  yokohama_expo_bureau:
+    issuer: 横浜市 脱炭素・GREEN×EXPO推進局 GREEN×EXPO推進課
+    index: https://www.city.yokohama.lg.jp/business/nyusatsu/kakukukyoku/2026/itaku/green/
+    note: |
+      **開催都市である横浜市に専用部局があり、GREEN×EXPO関連の委託を大量に個別公告している。**
+      各県の出展業務委託とはまったく別系統。2027年3月の開幕に向けて発注が続く。
+      **毎回の巡回でこのindexページを直接確認すること。**
+      公告から参加意向申出まで1週間程度と短いため、気づくのが遅れると間に合わない。
+    observed_2026:
+      - { name: 横浜グリーンエクスポにおける賓客受入等業務委託, announced: 2026-06-29, participate_by: 2026-07-06, note: "区分は「イベント企画運営等」。御社の主力" }
+      - { name: 国際参加者会議（IPM）における横浜市主催レセプション・エクスカーション運営業務委託, participate_by: 2026-04-02, note: 国際会議のレセプション・エクスカーション運営 }
+      - { name: GREEN×EXPO 2027来場者向け展示物（資源循環の可視化・カーボンリサイクル）企画・制作業務委託, participate_by: 2026-07-06 }
+      - { name: GREEN×EXPO 2027会場内の催事場等における催事の企画・運営業務委託, status: 結果掲載済 }
+      - { name: GREEN×EXPO 2027 横浜市出展関連業務委託, status: 契約結果公表済 }
+      - { name: GREEN×EXPO 2027機運醸成事業業務委託, status: 契約結果公表済 }
+      - { name: GREEN×EXPO 2027に向けた若者とともにつくるプロジェクト企画・運営業務委託, status: 契約結果公表済 }
+      - { name: GREEN×EXPO 2027における事前学習プログラム構築・運営等業務委託, status: 契約結果公表済 }
+      - { name: 瀬谷駅周辺等歩行者空間の賑わい創出業務委託, participate_by: 2026-03-03 }
+      - { name: 瀬谷駅北口駅前広場から旧上瀬谷通信施設地区における緑花による装飾および育成業務委託 }
+      - { name: GREEN×EXPO 2027開催に係る交通需要マネジメント（TDM）実施業務委託 }
+      - { name: 令和8年度 GREEN×EXPO 横断幕等の管理等委託, type: 公募型指名競争入札 }
+    watch_from: 継続（毎回）
+    confidence: high
+
   action_required: |
     **他46団体でも同種の発注がある可能性が高い。** 山口県財団はアーカイブを
     一覧で公開していたため発見できたが、他団体は公開形式が異なり今回は

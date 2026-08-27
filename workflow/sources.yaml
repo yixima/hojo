@@ -229,6 +229,27 @@ tier_e_prefectural_agencies:
     - { pref: 沖縄, name: "沖縄県産業振興公社", domain: www.okinawa-ric.jp }
 
   # 政令指定都市の産業振興財団（同じ公式一覧に掲載。都道府県センターとは別組織）
+  unreachable:
+    note: 2026-08-27 時点で接続が確立できない。URL変更またはアクセス制限の可能性。次回要再調査。
+    - { pref: 愛媛, name: えひめ産業振興財団, domain: www.ehime-iinet.or.jp }
+    - { pref: 佐賀, name: 佐賀県産業振興機構, domain: www.infosaga.or.jp }
+
+  priority_targets:
+    note: |
+      **2026-08-27の巡回で判明した最重点。** 産業振興財団は県内企業を束ねた共同出展の
+      ブース装飾・設営を継続的に外部委託しており、御社の主力と直結する。
+      以下は実際に発注が確認できた団体。毎回の巡回で必ず確認すること。
+    - { name: やまぐち産業振興財団, domain: yipf.or.jp, note: "年10本以上の「出展に係る装飾委託業務」" }
+    - { name: 京都産業21, domain: www.ki21.jp, note: "SEMICON京都パビリオン装飾／伝統産業の海外テストマーケティング" }
+    - { name: 大阪産業局, domain: www.obda.or.jp, note: "TENKA！プログラムの各展示会ブース企画・設営／クリエイター博覧会会場設営" }
+    - { name: 静岡県産業振興財団, domain: www.ric-shizuoka.or.jp, note: 県ブース設営等業務の企画提案コンペ }
+    - { name: ひょうご産業活性化センター, domain: web.hyogo-iic.ne.jp, note: 県ブース装飾等委託業務 }
+    - { name: 大分県産業創造機構, domain: www.columbus.or.jp, note: 展示商談会 県ブース企画・運営委託 }
+    - { name: 宮崎県産業振興機構, domain: www.mepo.or.jp, note: 機械要素技術展の小間装飾等業務委託 }
+    - { name: さいたま市産業創造財団, domain: www.sozo-saitama.or.jp, note: "COMPAMED／electronica など海外見本市のブース装飾" }
+    - { name: 横浜企業経営支援財団, domain: www.idec.or.jp, note: "Ambiente／NY NOW／横浜パビリオン" }
+    - { name: 広島県産業振興機構, domain: www.hiwave.or.jp, note: HIROSHIMA STARS 大規模見本市出展支援 }
+
   city_centers:
     - { name: "さっぽろ産業振興財団", domain: www.sec.or.jp }
     - { name: "仙台市産業振興事業団", domain: www.siip.city.sendai.jp }
