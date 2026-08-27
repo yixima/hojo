@@ -43,6 +43,41 @@ def anchors(base, s):
         if 6 <= len(t) <= 220: out.append((t, urllib.parse.urljoin(base, m.group(1))))
     return out
 
+# 個別ページから参加表明・提案書の期限を読む。
+# 一覧のバッジは信用できない（やまぐち産業振興財団は終了表示を出さない）。
+GATE = re.compile(r'参加(表明|意向申出|申[込出])[のに]?(受付|提出)?[のを]?(期限|締切)?|'
+                  r'提案書[のを]?(提出)?(期限|締切)|申込(期限|締切)|提出期限|必着')
+LATER = re.compile(r'提案書|企画提案書')
+
+def z2h(x): return x.translate(str.maketrans('０１２３４５６７８９', '0123456789'))
+
+def page_dates(text):
+    """締切語の近傍にある日付を (種別, 日付) で返す"""
+    text = re.sub(r'\s+', ' ', text)
+    out = []
+    pats = [(r'令和\s*([0-9０-９元]+)\s*年\s*([0-9０-９]+)\s*月\s*([0-9０-９]+)\s*日', True),
+            (r'(20[0-9０-９]{2})\s*年\s*([0-9０-９]+)\s*月\s*([0-9０-９]+)\s*日', False)]
+    for pat, wareki in pats:
+        for m in re.finditer(pat, text):
+            g1 = m.group(1)
+            y = (2018 + (1 if g1 == '元' else int(z2h(g1)))) if wareki else int(z2h(g1))
+            try: d = date(y, int(z2h(m.group(2))), int(z2h(m.group(3))))
+            except ValueError: continue
+            win = text[max(0, m.start()-70):m.start()+20]
+            if not GATE.search(win): continue
+            out.append(('提案書' if LATER.search(win) else '参加表明', d))
+    return out
+
+def verdict(url):
+    """個別ページを取得し、最も早い関門の日付で募集中かを判定する"""
+    h = fetch(url, 20, 1)
+    if not h: return '取得不可', None, ''
+    t = re.sub(r'<[^>]+>', ' ', h)
+    ds = [(k, d) for k, d in page_dates(t) if TODAY.year - 1 <= d.year <= TODAY.year + 2]
+    if not ds: return '日付不明', None, ''
+    kind, d = min(ds, key=lambda x: x[1])
+    return ('募集中' if d >= TODAY else '締切済'), d, kind
+
 def work(item):
     name, host, past = item
     hits, seen = [], set()
@@ -64,6 +99,12 @@ def work(item):
                 k = t[:70]
                 if k in seen: continue
                 seen.add(k); hits.append((t, link, done))
+    # 一覧で拾ったものを個別ページで確定させる
+    def resolve(h):
+        st, d, kind = verdict(h[1])
+        return (h[0], h[1], h[2], st, d, kind)
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        hits = list(ex.map(resolve, hits))
     return name, past, 'ok', hits
 
 with ThreadPoolExecutor(max_workers=6) as ex:
@@ -72,12 +113,16 @@ with ThreadPoolExecutor(max_workers=6) as ex:
 rows = []
 print(f'基準日 {TODAY}\n')
 for name, past, st, hits in res:
-    live = [h for h in hits if not h[2]]
-    print(f'■ {name}（過年度{past}件）: {st} — 現在の掲載 {len(hits)}件 うち募集中とみられる {len(live)}件')
-    for t, link, done in hits[:12]:
-        print(f'   {"済" if done else "●"} {t[:74]}')
-        rows.append({'発注者': name, '案件名': t, 'URL': link, '状態': '結果・終了' if done else '募集中の可能性'})
+    live = [h for h in hits if h[3] == '募集中' and not h[2]]
+    print(f'■ {name}（過年度{past}件）: {st} — 掲載 {len(hits)}件 / **募集中 {len(live)}件**')
+    for t, link, done, st, d, kind in hits[:14]:
+        mark = '●' if st == '募集中' else ('済' if st == '締切済' or done else '？')
+        info = f'{d} {kind}' if d else st
+        print(f'   {mark} {info:22} {t[:60]}')
+        rows.append({'発注者': name, '案件名': t, 'URL': link,
+                     '状態': '募集中' if st == '募集中' and not done else ('締切済' if st == '締切済' or done else st),
+                     '期限': d.isoformat() if d else '', '関門': kind})
     print()
 with open('data/repeaters_20260828.csv','w',newline='') as f:
-    w = csv.DictWriter(f, ['発注者','案件名','URL','状態']); w.writeheader(); w.writerows(rows)
+    w = csv.DictWriter(f, ['発注者','案件名','URL','状態','期限','関門']); w.writeheader(); w.writerows(rows)
 print(f'合計 {len(rows)}件')
