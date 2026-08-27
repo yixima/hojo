@@ -489,3 +489,52 @@ domain_survey:
       - { domain: www.jgrants-portal.go.jp, note: jGrants }
     not_resolved:
       - { domain: www.chotatujouhou.go.jp, note: "統一資格審査申請・調達情報検索サイト。名前解決せず。URLが変わった可能性あり、要再調査" }
+
+# ══════════════════════════════════════════════════════════════
+# 自動巡回が構造的に不可能な巡回先（2026-08-27 検証）
+# ここに載るものは手作業で確認する。放置すると分母から欠落する。
+# ══════════════════════════════════════════════════════════════
+blocked_sources:
+  note: |
+    2026-08-27 に全経路（curl の UA・ヘッダ・TLS変更、Chromium/Playwright）を
+    試したうえでの確定結果。回避は試みない。手動確認の対象として記録する。
+  hosts:
+    - name: 岐阜県
+      url: https://www.pref.gifu.lg.jp/
+      症状: TLSハンドシェイクは成立するがサーバがリクエストを無応答で切断（curl 52）
+      判定: データセンターIPからの遮断とみられる
+      対処: 手動確認
+    - name: 山梨県
+      url: https://www.pref.yamanashi.jp/
+      症状: 同上
+      対処: 手動確認
+    - name: 公益財団法人えひめ産業振興財団
+      url: https://www.ehime-iinet.or.jp/
+      症状: 同上（URL自体は正しいことをWebSearchで確認済み）
+      対処: 手動確認
+    - name: 公益財団法人岡山県産業振興財団
+      url: https://www.optic.or.jp/
+      症状: HTTP 423 Locked。「Security check required」の人間確認画面が返る
+      判定: 明示的なボット対策。回避しない
+      対処: 手動確認
+    - name: 佐賀県地域産業支援センター
+      url_誤: https://www.infosaga.or.jp/    # NXDOMAIN。中小企業庁マスタの記載が古い
+      url_正: https://www.saga-itc.jp/       # 200 OK。こちらを使う
+      対処: sources.yaml のホストを saga-itc.jp に修正済み
+
+  procurement_portals:
+    - name: 調達ポータル（p-portal）
+      url: https://www.p-portal.go.jp/pps-web-biz/UAA01/OAA0101
+      症状: |
+        検索フォームのGETは200で取得できる（CSRFトークンも取れる）が、
+        POSTすると必ず「不正な操作が行われました。トップページから
+        アクセスし直してください。」が返る。全hidden項目の完全再現、
+        セッション確立（トップ→検索画面の順に遷移）、Referer/Origin付与、
+        submit名のクエリ付与を試したが同じ。サーバ側で画面遷移状態を
+        検証しているため、JSを実行しないHTTPクライアントでは通らない。
+        実ブラウザ（Chromium）は当該ホストへの接続自体がリセットされる。
+      判定: 自動取得は不可
+      代替: |
+        国の機関の委託・入札は各省庁の調達情報ページと JETRO 入札情報から
+        取得できており、p-portal はその重複にあたる。優先度は低い。
+        必要なら手動で検索し、結果を data/ へ手置きする。
