@@ -522,6 +522,27 @@ blocked_sources:
       url_正: https://www.saga-itc.jp/       # 200 OK。こちらを使う
       対処: sources.yaml のホストを saga-itc.jp に修正済み
 
+  flaky_sources:
+    note: |
+      遮断ではなく**断続的に失敗する**巡回先。リトライすれば通る。
+      blocked_sources と混同しないこと。諦めてはいけない。
+    hosts:
+      - name: 岡山県
+        url: https://www.pref.okayama.jp/
+        症状: |
+          同じURLが 000（0バイト）を返したり 200 を返したりする。
+          3回リトライすればほぼ通る。**必ずリトライすること。**
+          2026-08-28、1回目で諦めて「取得不可」と記録しかけた。
+        本文抽出の注意: |
+          メニュー（多言語切替・文字サイズ変更・分野でさがす）が
+          本文より前に大量に入るため、単純にタグを剥がすと
+          メニューだけが取れる。**<title> を見るのが最も速い。**
+          「結果の公表」が入っていれば終了済みと判断できる。
+      - name: VIPO（映像産業振興機構）
+        url: https://www.vipo.or.jp/
+        症状: 本文がJSで描画され、curlではナビゲーションしか取れない
+        対処: 手動確認
+
   procurement_portals:
     - name: 調達ポータル（p-portal）
       url: https://www.p-portal.go.jp/pps-web-biz/UAA01/OAA0101
