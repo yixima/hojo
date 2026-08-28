@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """GREEN×EXPO 2027（2027年国際園芸博覧会・横浜）の各県出展業務を全県で探す。
    会期2027年3〜9月。各県が前年度中に個別発注するため、毎月これを回す。"""
-import re, html, json, subprocess, csv, urllib.parse
+import re, html, json, time, subprocess, csv, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36'
@@ -12,14 +12,15 @@ CASE = re.compile(r'委託|業務|プロポーザル|企画提案|企画競争|�
 SKIP = re.compile(r'入場券|チケット|来場|ボランティア|出展者募集|参加者募集|開催概要|とは')
 HUB  = re.compile(r'入札|公募|調達|プロポーザル|契約|委託|募集|事業者|企画競争|企画提案|お知らせ|新着')
 
-def fetch(u, t=22, tries=2):
-    for _ in range(tries):
+def fetch(u, t=22, tries=3):
+    for _i in range(tries):
         try:
             r = subprocess.run(['curl', '-sSL', '-A', UA, '--max-time', str(t), '--compressed', '-k', u],
                                capture_output=True, timeout=t + 8)
             b = r.stdout.decode('utf-8', 'replace')
             if len(b) > 500: return b
         except Exception: pass
+        if _i < tries - 1: time.sleep(2 ** _i)
     return ''
 
 def anchors(base, s):

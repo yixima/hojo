@@ -7,11 +7,14 @@ ARCH=re.compile(r'過年度|過去|終了|結果|一覧|年度|バックナン�
 # 案件名らしさ：手続き語を含むもの全て（トピック絞り込みは一切しない）
 CASE=re.compile(r'委託|業務|公募|入札|プロポーザル|企画競争|企画提案|企画競技|募集|請負|調達|選定')
 NOISE=re.compile(r'^(ホーム|トップ|一覧|次へ|前へ|もっと見る|詳細|PDF|Word|Excel|こちら|サイトマップ|お問い合わせ|プライバシー|English|ページの先頭)')
-def fetch(u,t=18):
-    try:
-        r=subprocess.run(['curl','-sSL','--http1.1','-A',UA,'--max-time',str(t),'--compressed','-k',u],capture_output=True,timeout=t+8)
-        return r.stdout.decode('utf-8','replace')
-    except Exception: return ''
+# 取得は bin/fetchlib.py に集約した。3回リトライする。
+# 岡山県のように断続的に0バイトを返す巡回先を1回で諦めないため。
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from fetchlib import fetch as _fetch
+
+def fetch(u, t=18):
+    return _fetch(u, timeout=t, tries=3)
 def anchors(base,s):
     out=[]
     for m in re.finditer(r'<a\s[^>]*href="([^"#]+)"[^>]*>(.*?)</a>',s,re.S|re.I):

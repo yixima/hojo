@@ -3,7 +3,7 @@
 
    分母抽出で「山口14件・京都9件」のように反復が確認された発注者は、
    一覧を回すのではなく個別に追う。公告から締切までが7〜10日しかないため。"""
-import re, html, csv, json, subprocess, urllib.parse
+import re, html, csv, json, time, subprocess, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, date
 from zoneinfo import ZoneInfo
@@ -27,13 +27,14 @@ TARGETS = [
     ('わかやま産業振興財団',     'yarukiouendan.or.jp',     2),
 ]
 
-def fetch(u, t=22, tries=2):
-    for _ in range(tries):
+def fetch(u, t=22, tries=3):
+    for _i in range(tries):
         try:
             b = subprocess.run(['curl','-sSL','-A',UA,'--max-time',str(t),'--compressed','-k',u],
                                capture_output=True, timeout=t+8).stdout.decode('utf-8','replace')
             if len(b) > 400: return b
         except Exception: pass
+        if _i < tries - 1: time.sleep(2 ** _i)
     return ''
 
 def anchors(base, s):

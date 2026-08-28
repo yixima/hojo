@@ -8,7 +8,7 @@
    県サイトのサイト内検索はパスが県ごとに違い推測が当たらないため、
    検索エンジン（WebSearchで得たURL）と組織サイトのcurl巡回を併用する。
    本スクリプトは後者を担う。前者は runbook 手順2.8 の手順で行う。"""
-import re, html, csv, subprocess, urllib.parse, yaml
+import re, html, csv, time, subprocess, urllib.parse, yaml
 from concurrent.futures import ThreadPoolExecutor
 
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36'
@@ -16,13 +16,14 @@ CASE = re.compile(r'委託|業務|プロポーザル|企画競争|企画提案|�
 SKIP = re.compile(r'入場券|チケット|来場|ボランティア|出演者|参加者募集|作品募集|職員|採用')
 HUB  = re.compile(r'入札|公募|調達|プロポーザル|契約|委託|募集|事業者|お知らせ|新着|情報')
 
-def fetch(u, t=22, tries=2):
-    for _ in range(tries):
+def fetch(u, t=22, tries=3):
+    for _i in range(tries):
         try:
             b = subprocess.run(['curl','-sSL','-A',UA,'--max-time',str(t),'--compressed','-k',u],
                                capture_output=True, timeout=t+8).stdout.decode('utf-8','replace')
             if len(b) > 400: return b
         except Exception: pass
+        if _i < tries - 1: time.sleep(2 ** _i)
     return ''
 
 def anchors(base, s):
