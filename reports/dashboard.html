@@ -685,8 +685,8 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
 
 <!-- ══ 締切要確認 ══ -->
 <section>
-  <div class="shead"><h2>締切の確認が必要</h2><span class="n">3件</span></div>
-  <p class="sdesc">事業内容は適合するが、ページから締切を機械的に取得できなかった案件。次回巡回で個別確認します。</p>
+  <div class="shead"><h2>締切の確認が必要</h2><span class="n">2件</span></div>
+  <p class="sdesc">事業内容は適合しますが、ページから締切を取得できなかった案件です。<b>本日、7件を一次資料で当たり、5件が決着しました。</b>残りはこの2件です。</p>
   <div class="rule"></div>
 
   <article class="card">
@@ -706,27 +706,60 @@ td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
     <div class="chead">
       <div class="grade b">B</div>
       <div class="ctitle">
-        <h3>令和8年度 イタリア旅行博「TTG 2026」共同出展募集</h3>
-        <div class="org">公益財団法人東京観光財団（TCVB）／ 出展募集</div>
-      </div>
-      <span class="pill p-warn">締切未確認</span>
-    </div>
-    <p class="note">海外旅行博への共同出展。8月10日更新。御社の海外出展運営の実績が直接活きる分野です。</p>
-    <p class="src"><a href="https://www.tcvb.or.jp/jp/news/2026/0810_7811/">案内ページ</a></p>
-  </article>
-
-  <article class="card">
-    <div class="chead">
-      <div class="grade b">B</div>
-      <div class="ctitle">
         <h3>令和9年度 JETプログラム来日直後オリエンテーション（夏来日）総合業務委託</h3>
         <div class="org">自治体国際化協会（CLAIR）／ 公募型プロポーザル</div>
       </div>
       <span class="pill p-warn">締切未確認</span>
     </div>
     <p class="note">CLAIRは今回が<b>初回巡回</b>です。パリ・ロンドン・ニューヨーク等に海外事務所を持ち、自治体の国際化を支援する組織で、御社の「27自治体の海外展開支援」という実績と最も噛み合う発注元。本件は大規模研修イベントの運営受託で、海外展開そのものではありませんが、<b>取引実績を作る足がかりとして価値があります。</b></p>
-    <p class="src"><a href="https://jetprogramme.org/ja/information/news/r9jetprogrammeorientation/">公示ページ</a></p>
+    <p class="note flag"><b>CLAIRのトップページに掲載はありますが、リンク先が404です</b>（末尾スラッシュの有無とも確認済み）。締切は<b>【不明】</b>。<b>電話で確認するほかありません。</b></p>
+    <p class="src"><a href="https://www.clair.or.jp/">CLAIRトップページ</a></p>
   </article>
+</section>
+
+<!-- ══ 締切未特定の決着 ══ -->
+<section>
+  <div class="shead"><h2>「締切未特定」の実像 — 訂正します</h2><span class="n">7件中5件が決着</span></div>
+  <p class="sdesc"><b>「締切が特定できていない53件が最大の穴」とご報告しましたが、誤りでした。</b>53という数字は、引用符を含むCSVを列区切りで数えたもので、列がずれていました。</p>
+  <div class="rule"></div>
+  <p class="note">CSVを正しく読み直すと、締切欄が空・要確認の行は68件です。ただし<b>中身を分類すると、大半は意図的に空にしてある行</b>でした。</p>
+  <table>
+    <thead><tr><th>状態</th><th class="d">件数</th><th>性質</th></tr></thead>
+    <tbody>
+      <tr><td>過年度実績（次回公告を待つ）</td><td class="d">41</td><td><b>意図的に空。予測の種であり穴ではない</b></td></tr>
+      <tr><td>領域外・対象外</td><td class="d">10</td><td>同上</td></tr>
+      <tr><td>締切超過（来年度型として監視）</td><td class="d">7</td><td>同上</td></tr>
+      <tr><td><b>要調査・締切要確認</b></td><td class="d"><b>7</b></td><td><b>本当の穴はここだけ</b></td></tr>
+    </tbody>
+  </table>
+  <p class="note">その7件を一次資料で当たった結果です。</p>
+  <table>
+    <thead><tr><th>案件</th><th>決着</th></tr></thead>
+    <tbody>
+      <tr><td>TCVB「TTG 2026」</td><td>PDFに申込期限 <b>8/27正午 → 超過</b>。かつ出展者向けで対象外 → D格に降格</td></tr>
+      <tr><td>VIPO IP360</td><td><b>令和7年度</b>の事業 → 過年度</td></tr>
+      <tr><td>VIPO TICAD9</td><td><b>令和7年度</b>文化庁事業。TICAD9は2025年8月に閉幕 → 過年度</td></tr>
+      <tr><td>高知市 物産展等開催運営</td><td>現在のプロポーザル一覧に掲載なし → 募集していない</td></tr>
+      <tr><td>郡山市 タイ販路開拓</td><td>参加申込・企画提案書 <b>令和8年4月22日17:15 → 超過</b>。年次反復のため次回を監視</td></tr>
+      <tr><td>千葉市 千の葉の芸術祭</td><td><b>令和元年12月公募・令和2年1月締切・受託候補者選定済み</b>。上限2,200万円</td></tr>
+      <tr><td>CLAIR JETオリエンテーション</td><td><b>【不明】</b>詳細ページが404。電話で確認するほかない</td></tr>
+    </tbody>
+  </table>
+  <p class="note flag"><b>VIPOの2件は「JSで読めない」と長く保留していましたが、締切を読む必要すらありませんでした。ページの表題に「令和7年度」と書いてありました。</b>本文が読めないときは、まず表題と年度を見ます。</p>
+</section>
+
+<!-- ══ メディアセンター JV ══ -->
+<section>
+  <div class="shead"><h2>7億円の案件に道がありました</h2><span class="n">9/3 正午必着</span></div>
+  <p class="sdesc"><b>GREEN×EXPO 2027 メディアセンター関連業務</b>（上限7億円）の提案書作成要領を読みました。以前「単独応募不可」でご報告した案件です。</p>
+  <div class="rule"></div>
+  <blockquote style="border-left:3px solid currentColor;padding-left:14px;margin:14px 0;opacity:.9">
+    次に掲げる要件をすべて満たす者、<b>又は複数の者による共同企業体</b>であること。共同企業体で参加する者にあっては、構成員全員が該当すること。<b>（※（2）は共同企業体として有していればよい。）</b><br><br>
+    (2) 過去５年以内に、サミット、国際博覧会、オリンピック・パラリンピック等の大規模イベントにおけるメディアセンター運営業務を履行した実績を有すること。
+  </blockquote>
+  <p class="note"><b>要領の括弧書きに、JV（共同企業体）なら実績要件を構成員の誰かが満たせばよいと明記されています。</b>「単独応募不可」で終わらせてはいけませんでした。<b>参加条件は本文だけでなく括弧書きまで読む</b>——これは他の案件にも効きます。</p>
+  <p class="note flag"><b>ただし正直に申し上げます。締切まで6日</b>で、提出は<b>郵送または持参のみ（電子不可）</b>、実績を証明する契約書の写しも要ります。この実績を持つ企業とJVを組むには、期間として極めて厳しいと考えます。<b>判断は生島様のものです。</b></p>
+  <p class="note">参加意向申出書締切 2026年9月3日（木）正午必着／提案書受付締切 9月17日17時／開札・評価委員会 9月下旬／結果通知 10月下旬〜11月上旬。提出先は協会 広報・報道課（045-307-2138）。</p>
 </section>
 
 <!-- ══ 不可 ══ -->
