@@ -138,6 +138,44 @@ def total(page_html):
     return m.group(1) if m else '?'
 
 
+DETAIL_KEYS = ['契約番号', '件　名', '履行期間', '契約方法', '発注等級', '受付等級',
+               '開札予定日時', '希望申請期間', '担当局部課']
+
+
+def detail_links(page_html):
+    """一覧の件名リンクから (index, cont_no, 件名) を拾う。"""
+    out = []
+    for m in re.finditer(
+            r'SelectSubmitNo\((\d+),(\d+),(\d+),(\d+)\)"[^>]*>(.*?)</a>',
+            page_html, re.S):
+        nm = html.unescape(re.sub(r'<[^>]+>', '', m.group(5))).strip()
+        out.append((m.group(3), m.group(4), nm))
+    return out
+
+
+def detail(index, cont_no):
+    """発注予定表を開いて項目名→値の辞書にする。
+
+    **希望申請期間はここにしかない。** 一覧には出ない。
+    希望制指名競争入札は公表から締切まで5〜7日しかないことが多く、
+    一覧だけ見ていると間に合わない。
+    """
+    d = post([('page', 7), ('act', 3), ('index', index),
+              ('cont_no', cont_no), ('consGoodsType', '')])
+    b = re.sub(r'<(script|style)[^>]*>.*?</\1>', '', d, flags=re.S)
+    t = html.unescape(re.sub(r'<[^>]+>', '\n', b))
+    L = [x.strip() for x in t.split('\n') if x.strip()]
+    out = {}
+    for k in DETAIL_KEYS:
+        if k in L:
+            i = L.index(k)
+            out[k.replace('　', '')] = L[i + 1] if i + 1 < len(L) else ''
+    m = re.search(r'営業種目１\s*\n\s*(\d+)\s+(\S+)', t)
+    if m:
+        out['営業種目'] = '%s %s' % (m.group(1), m.group(2))
+    return out
+
+
 def main():
     show_all = '--all' in sys.argv
     n, rs = fetch_all()
@@ -156,6 +194,24 @@ def main():
         if len(c) > 4:
             print('   履行期間 %s' % c[4])
         print()
+
+    if '--detail' in sys.argv:
+        print('=' * 70)
+        print('希望申請期間（発注予定表から。一覧には出ない）')
+        print('=' * 70)
+        h = search('')
+        names = {c[2].replace('【電子】 ', '') for c in hit}
+        for idx, cno, nm in detail_links(h):
+            if nm not in names:
+                continue
+            d = detail(idx, cno)
+            print(nm)
+            print('   種目 %s / 受付等級 %s'
+                  % (d.get('営業種目', '?'), d.get('受付等級', '?')))
+            print('   希望申請 %s' % d.get('希望申請期間', '?'))
+            print('   開札 %s / %s'
+                  % (d.get('開札予定日時', '?'), d.get('担当局部課', '?')))
+            print()
 
 
 if __name__ == '__main__':
