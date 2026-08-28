@@ -600,6 +600,77 @@ tier_tokyo_procurement:
       2026年度後半に出る計画策定業務に応募できない。
 
 # ══════════════════════════════════════════════════════════════
+# 2026-08-28 追加。開催が確定した2027年の全国イベントの発注元。
+# 会期は2027年8月と11月。発注は2026年度後半から出る。
+# 到達できるURLは実際に叩いて確認した（上位機関の一覧は当てにならない）。
+# ══════════════════════════════════════════════════════════════
+tier_2027_national_events:
+  第13回全国和牛能力共進会_北海道:
+    会期: 2027-08-26 〜 08-30
+    当社適合: 高
+    根拠: |
+      北海道庁の公式説明に「実行委員会では、会場の設営や式典の運営、
+      交通輸送などの計画を検討している」と明記されている。
+      **設営・式典運営・輸送は当社の本業そのもの。**
+    frequency: 隔日
+    orgs:
+      - name: 第13回全国和牛能力共進会北海道実行委員会
+        url: https://zenkyo-hokkaido.jp/
+        事務局: 一般社団法人北海道酪農畜産協会
+        note: 2025-10-01 に事務所を移転し本格的な準備に入った
+      - name: 北海道 農政部生産振興局畜産振興課 全国和牛能力共進会北海道大会準備室
+        url: https://www.pref.hokkaido.lg.jp/ns/tss/224564.html
+        設置: 2025年5月
+      - name: 北海道 委託業務（入札・調達情報）
+        url: https://www.pref.hokkaido.lg.jp/category/d003/c006/s010/
+        note: |
+          **2026-08-28 に到達確認。当社領域のイベント運営委託が定常的に出ている。**
+          例：北海道ボッチャフェス2026運営委託、北海道みらい運動会in江別運営管理委託。
+          和牛全共に限らず巡回する価値がある。
+      - name: 北海道 プロポーザル
+        url: https://www.pref.hokkaido.lg.jp/category/d003/c006/s012/
+        note: 「地域おこし協力隊×ふるさと納税」タイアップPRイベント委託業務など
+      - name: 帯広市 入札・契約
+        url: https://www.city.obihiro.hokkaido.jp/sangyo/keiyaku/index.html
+        note: 審査会場・セリ参観会場。**旧URL /kurashi/nyusatsu/ は404**
+      - name: 音更町 第13回全国和牛能力共進会北海道大会
+        url: https://www.town.otofuke.hokkaido.jp/keizai/2027wagyuzenkyo/
+        note: 展示会場・催事会場
+      - name: 全国和牛能力共進会音更町魅力発信協議会
+        url: https://www.town.otofuke.hokkaido.jp/keizai/2027wagyuzenkyo/kyougikai.html
+        note: |
+          **第5の層。**町の中に別途、発信のための協議会が置かれている。
+          4層（実行委員会・道・市・町）だけを見ていると取りこぼす。
+      - name: 公益社団法人全国和牛登録協会
+        url: https://zenwa.jp/
+        note: トップページは202バイトのフレームのみ。実体は zenkyo-hokkaido.jp 側
+    確認済み_2026-08-28: 発注はまだ一件も出ていない
+
+  第46回全国豊かな海づくり大会_千葉:
+    会期: 2027-11-14
+    当社適合: 中
+    frequency: 週次
+    orgs:
+      - name: 千葉県 農林水産部水産課 全国豊かな海づくり大会推進室
+        url: https://www.pref.chiba.lg.jp/suisan/umidukuri/umidukuri-kaisai.html
+        電話: 043-223-3530
+      - name: 千葉県 入札・契約
+        url: https://www.pref.chiba.lg.jp/nyuu-kei/index.html
+        note: |
+          **到達できるのはこのパスだけ。**
+          /category/kensei/nyusatsu/ も /kaikei/nyuusatsu/ も404。
+          物品・委託等はページ内アンカー #anchor_5856
+      - name: 旭市
+        url: https://www.city.asahi.lg.jp/
+        note: 式典行事の会場（千葉県東総文化会館）
+      - name: 銚子市
+        url: https://www.city.choshi.chiba.jp/business/
+        note: 海上歓迎・放流行事の会場（銚子漁港）
+      - name: 公益社団法人全国豊かな海づくり推進協会
+        url: https://www.yutakanaumi.jp/
+    確認済み_2026-08-28: 発注はまだ一件も出ていない
+
+# ══════════════════════════════════════════════════════════════
 # 2026-08-28 追加。分母抽出では届かなかった一次発注者。
 # GREEN×EXPO 2027 の全県スイープ中に、協会そのものを見落としていたと判明した。
 # ══════════════════════════════════════════════════════════════
