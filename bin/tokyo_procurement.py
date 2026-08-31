@@ -127,6 +127,32 @@ def fetch_all(keyword='', era='5', y_from='8', y_to='9', max_pages=40):
     return n, out
 
 
+def all_detail_links(keyword='', era='5', y_from='8', y_to='9', max_pages=40):
+    """**全ページ**の件名リンクを集める。
+
+    **2026-08-31 に見つかった不具合の修正。**
+    それまでは `search()` が返す1ページ目のリンクしか見ておらず、
+    2ページ目以降の案件の希望申請期間を取得できていなかった。
+    総件数が200を超えると3ページに分かれるため、**3分の2を見落としていた。**
+    週次巡回が全ページを手で走査して初めて判明した。
+
+    **一覧のページ送りと、詳細ページを開く操作は同じセッションを共有する。**
+    そのため、まずページごとのリンクをすべて集めてから詳細を開く
+    （集めながら詳細を開くと、セッションの現在ページがずれる）。
+    """
+    h = search(keyword, era, y_from, y_to)
+    out = detail_links(h)
+    pages = 1
+    while next_page(h) and pages < max_pages:
+        h = post([('page', 5), ('act', 6)])
+        got = detail_links(h)
+        if not got:
+            break
+        out += got
+        pages += 1
+    return out
+
+
 # 当社（イベント企画・会場設営・装飾）に当たる営業種目。
 # 名称は電子調達システムの営業種目欄の表記そのもの。
 TARGET_SYUMOKU = ['催事関係業務', '企画立案支援', '広告代理', '映像等制作',
@@ -199,11 +225,12 @@ def main():
         print('=' * 70)
         print('希望申請期間（発注予定表から。一覧には出ない）')
         print('=' * 70)
-        h = search('')
         names = {c[2].replace('【電子】 ', '') for c in hit}
-        for idx, cno, nm in detail_links(h):
-            if nm not in names:
+        seen = set()
+        for idx, cno, nm in all_detail_links():
+            if nm not in names or (idx, cno) in seen:
                 continue
+            seen.add((idx, cno))
             d = detail(idx, cno)
             print(nm)
             print('   種目 %s / 受付等級 %s'
@@ -212,6 +239,7 @@ def main():
             print('   開札 %s / %s'
                   % (d.get('開札予定日時', '?'), d.get('担当局部課', '?')))
             print()
+        print('（詳細を開いた件数 %d ／ 該当 %d）' % (len(seen), len(hit)))
 
 
 if __name__ == '__main__':
