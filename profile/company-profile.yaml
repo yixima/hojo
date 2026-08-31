@@ -25,15 +25,32 @@ basic:
   fiscal_year_end: null            # status: unconfirmed
 
 qualifications:
-  # 全省庁統一資格。Drive のフォルダ名「全国統一入札資格_2026」から取得検討中の可能性。
-  zenshocho_toitsu:
-    held: false                    # status: confirmed（本人確認 2026-08-18）
-    applying: true                 # 現在申請中・取得作業中
-    expected_grade: null           # status: unconfirmed  申請中の等級
-    categories: []                 # 役務の提供等 等
-    # 判定方針: 国の案件は「資格取得後なら応募可」として別枠で提示する。
-    # 申請中のため、公告日ではなく「入札参加資格審査申請の受付が随時か」を確認して拾う。
-  tokyo_metropolitan: null         # status: unconfirmed  東京都の入札参加資格
+  # 2026-08-31、生島様より現況を伺い、全面的に更新した。
+  # それまで「統一資格は申請中・未取得」「東京都は未登載」と記録していたが、
+  # **どちらも誤りだった。両方とも取得済みである。**
+  # この誤りにより、東京都の案件を「名簿未登載のため応募不可」と繰り返し報告した。
+  # 正しい判定軸は「登載の有無」ではなく **「等級が受付等級に届くか」** である。
+
+  zenshocho_toitsu:                # 全省庁統一資格
+    held: true                     # status: confirmed（生島様 2026-08-31）
+    grade: D                       # **D等級**
+    note: |
+      **当面Dのまま**との方針（2026-08-31）。
+      Dで届かない案件は、**コンソーシアム（共同企業体）または当社が再委託先**
+      となる形であれば参加できる。単独応募だけで可否を判定しない。
+
+  tokyo_metropolitan:              # 東京都 競争入札参加資格（物品買入れ等）
+    held: true                     # status: confirmed（生島様 2026-08-31）
+    grade: C                       # **C等級**
+    categories: unconfirmed        # **営業種目が未確認。120催事関係業務が入っているかが分岐点**
+    note: |
+      **受付等級に「C」が含まれる案件にのみ応募できる。**
+      東京都の案件は発注予定表に「受付等級」欄があり、
+      A / A,B / A,B,C / B / B,C / C の形で表示される。
+      **Cを含まないものは、資格を持っていても応募できない。**
+      2026-08-31 の実測では、希望申請受付中28件のうちC等級で入れるのは13件。
+      等級を上げる唯一の機会が、令和9・10年度の定期受付（2026-09-14〜10-30）である。
+
   invoice_registered: null         # status: unconfirmed
 
 # --- 事業ドメイン（検索キーワード辞書の元データ）---
@@ -81,7 +98,7 @@ track_record:
     wabisabi_cumulative_exhibitors: 1214
     wabisabi_area_sqm: 1500
     wabisabi_cumulative_visitors: 110000
-    todo: HP実績セクションの原文を入手し、scale: を最新値へ更新する
+    todo: "HP実績セクションの原文を入手し、scale: を最新値へ更新する"
 
   flagship_events:
     - { name: JAPAN EXPO パビリオン WABI SABI, city: パリ, since: 2011, type: 日本フェスティバル }
