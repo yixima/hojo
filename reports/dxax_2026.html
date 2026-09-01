@@ -1,0 +1,385 @@
+<title>Tokyo DX/AX Connect Day 案件概要</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --ground:#FBFAF6; --surface:#FFFFFF; --surface-2:#F4F1E8;
+  --ink:#1A1710; --ink-2:#4E4739; --muted:#867D69;
+  --line:#E4DED0; --line-2:#CFC6B2;
+  --accent:#1E4E5C; --accent-soft:#E3EDF0;
+  --urgent:#A3301F; --urgent-soft:#F8E9E5;
+  --ok:#3B6845; --ok-soft:#E6EFE7;
+  --shadow:0 1px 2px rgba(26,23,16,.05), 0 10px 26px -16px rgba(26,23,16,.30);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#15140E; --surface:#1F1D16; --surface-2:#282519;
+    --ink:#F1EEE3; --ink-2:#C6BFAC; --muted:#948B76;
+    --line:#332F22; --line-2:#4A4433;
+    --accent:#84BECD; --accent-soft:#1B2E34;
+    --urgent:#EE9382; --urgent-soft:#38201B;
+    --ok:#86C295; --ok-soft:#1B2C20;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 26px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#15140E; --surface:#1F1D16; --surface-2:#282519;
+  --ink:#F1EEE3; --ink-2:#C6BFAC; --muted:#948B76;
+  --line:#332F22; --line-2:#4A4433;
+  --accent:#84BECD; --accent-soft:#1B2E34;
+  --urgent:#EE9382; --urgent-soft:#38201B;
+  --ok:#86C295; --ok-soft:#1B2C20;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 26px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+  font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px 96px}
+h1,h2,h3{font-family:"Shippori Mincho",serif;font-weight:700;text-wrap:balance;margin:0}
+a{color:var(--accent)}
+.mono,code{font-family:"Roboto Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+header{padding:44px 0 8px}
+.eyebrow{font-family:"Roboto Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+h1{font-size:32px;line-height:1.32;letter-spacing:.02em}
+.sub{color:var(--ink-2);margin:14px 0 0;max-width:64ch}
+
+.keyfacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:3px;
+  margin-top:26px;overflow:hidden}
+.keyfacts div{background:var(--surface);padding:13px 15px}
+.keyfacts dt{font-size:11px;letter-spacing:.08em;color:var(--muted);margin-bottom:3px}
+.keyfacts dd{margin:0;font-family:"Roboto Mono",monospace;font-size:14px;font-weight:500}
+.keyfacts dd small{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--ink-2);font-size:12px}
+
+section{margin-top:52px}
+.shead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.shead h2{font-size:22px;letter-spacing:.02em}
+.shead .n{font-family:"Roboto Mono",monospace;font-size:11px;letter-spacing:.08em;
+  color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:2px;white-space:nowrap}
+.sdesc{color:var(--ink-2);margin:8px 0 0;max-width:64ch;font-size:14px}
+.rule{height:2px;background:var(--ink);opacity:.85;margin:16px 0 22px}
+p{margin:0 0 14px}
+p:last-child{margin-bottom:0}
+
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:480px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:700;
+  border-bottom:1px solid var(--line-2);white-space:nowrap}
+td.m,th.m{font-family:"Roboto Mono",monospace;white-space:nowrap;text-align:right}
+tr.total td{border-top:2px solid var(--ink);border-bottom:0;font-weight:700;font-size:15px}
+tr.total td.m{color:var(--urgent)}
+
+/* 二段組の当日進行 */
+.stages{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:620px){.stages{grid-template-columns:1fr}}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.stage h3{font-size:14px;padding:10px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.stage ul{list-style:none;margin:0;padding:8px 14px 12px;font-size:13px}
+.stage li{display:flex;gap:10px;padding:3px 0;color:var(--ink-2)}
+.stage li b{font-family:"Roboto Mono",monospace;font-weight:500;color:var(--ink);
+  white-space:nowrap;font-size:12px;flex:none;width:98px}
+.stage li.rest{opacity:.5}
+
+/* 業務の束 */
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.job{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:0 3px 3px 0;padding:13px 15px;box-shadow:var(--shadow)}
+.job h3{font-size:14.5px;margin-bottom:5px}
+.job p{font-size:13px;color:var(--ink-2);margin:0}
+
+/* 懸念 */
+.risks{list-style:none;padding:0;margin:0;counter-reset:r}
+.risks>li{counter-increment:r;position:relative;padding:0 0 22px 46px}
+.risks>li::before{content:counter(r);position:absolute;left:0;top:2px;
+  width:28px;height:28px;display:grid;place-items:center;border-radius:50%;
+  font-family:"Roboto Mono",monospace;font-size:12px;font-weight:700;
+  background:var(--urgent-soft);color:var(--urgent);border:1px solid var(--urgent)}
+.risks>li.mid::before{background:var(--surface-2);color:var(--ink-2);border-color:var(--line-2)}
+.risks>li:last-child{padding-bottom:0}
+.risks h3{font-size:16px;margin-bottom:5px}
+.risks p{font-size:14px;color:var(--ink-2);margin:0 0 8px}
+
+.callout{padding:16px 19px;border-left:3px solid var(--urgent);background:var(--urgent-soft);
+  border-radius:0 3px 3px 0;margin:18px 0}
+.callout b{color:var(--urgent)}
+.tip{padding:15px 18px;border-left:3px solid var(--accent);background:var(--accent-soft);
+  border-radius:0 3px 3px 0;margin:18px 0;font-size:13.5px}
+.tip b{color:var(--accent)}
+
+footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted)}
+@media (max-width:560px){h1{font-size:25px}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">東京都デジタルサービス局 / 契約番号 08-00051 / 希望制指名競争入札</p>
+  <h1>「Tokyo DX/AX Connect Day 2026」運営等業務委託</h1>
+  <p class="sub">仕様書・別紙1（業務の詳細）・別紙2（納入物件一覧）を読み、前年の入札経過調書を照合しました。<b>希望申請の締切は9月3日（木）16:00。</b>添付書類は不要です。</p>
+  <dl class="keyfacts">
+    <div><dt>本番</dt><dd>2026-12-23<small> 水</small></dd></div>
+    <div><dt>会場</dt><dd style="font-family:inherit;font-size:14px">ベルサール新宿グランド<small><br>イベントホール（新宿）</small></dd></div>
+    <div><dt>来場者</dt><dd>700<small> 人程度</small></dd></div>
+    <div><dt>開札</dt><dd>2026-09-28<small> 10:00</small></dd></div>
+    <div><dt>指名等通知</dt><dd>2026-09-11</dd></div>
+    <div><dt>受付等級</dt><dd>B,C<small> 御社はC</small></dd></div>
+  </dl>
+</header>
+
+<!-- ══ 概要 ══ -->
+<section>
+  <div class="shead"><h2>どんな仕事か</h2></div>
+  <div class="rule"></div>
+  <p>東京都・区市町村・中央省庁・GovTech東京・DX関連事業者が一堂に会する<b>行政DXの年次イベント</b>です。企画の中身は都が主体的に決め、<b>受託者は設営・運営・配信・撤収の実行を担います。</b></p>
+  <p>会場はベルサール新宿グランドのイベントホール全体。<b>ホール内で3つのゾーンが同時に動きます。</b>メインステージ400席、サブステージ50席、ブース25程度（各3m×3m）、そしてコネクトスペース（カフェ・会談）が3か所。</p>
+  <p>内容は3本立てです。<b>ブースコンテンツ</b>（パネル展示・ショートプレゼン・ツール体験）、<b>ステージコンテンツ</b>（講演・コラボサロン）、そして<b>Tokyo DX/AX award 2026</b>（都庁リーグ・区市町村リーグのプレゼン、投票、表彰）。アワードはYouTubeでライブ配信します。</p>
+
+  <div class="tip"><b>今年から2つの事業が統合されています。</b>前年度までは「Tokyo区市町村DXフェスタ」（区市町村リーグ）と「都庁DXアワード2025」（都庁リーグ）が別契約でした。今年はこれが1つのイベントになり、<b>規模が上がっています。</b></div>
+</section>
+
+<!-- ══ 日程 ══ -->
+<section>
+  <div class="shead"><h2>3日間の張り付き</h2><span class="n">12/22〜12/23</span></div>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>日</th><th>時間</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td class="m">12/22 火</td><td class="m">10:00–20:00</td><td>設営・リハーサル（会場使用は10:00–20:00）</td></tr>
+      <tr><td class="m">12/23 水</td><td class="m">09:00–</td><td>会場・控室の使用開始</td></tr>
+      <tr><td class="m">12/23 水</td><td class="m">09:30–17:30</td><td><b>本番運営</b></td></tr>
+      <tr><td class="m">12/23 水</td><td class="m">18:00–21:00</td><td>撤収</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="stages">
+    <div class="stage">
+      <h3>メインステージ（400席）</h3>
+      <ul>
+        <li><b>9:30–9:35</b>オープニング：挨拶</li>
+        <li><b>9:35–10:45</b>都庁リーグ 業務改革部門</li>
+        <li class="rest"><b>10:45–10:55</b>休憩</li>
+        <li><b>10:55–11:40</b>都庁リーグ 行政サービス部門</li>
+        <li class="rest"><b>11:40–12:20</b>休憩</li>
+        <li><b>12:20–13:00</b>テクドラ進捗紹介／区市町村リーグ DXアイデア部門</li>
+        <li class="rest"><b>13:00–13:10</b>休憩</li>
+        <li><b>13:10–14:00</b>区市町村リーグ 業務改革部門</li>
+        <li class="rest"><b>14:00–14:10</b>休憩</li>
+        <li><b>14:10–14:55</b>区市町村リーグ 行政サービス部門</li>
+        <li class="rest"><b>14:55–15:10</b>休憩</li>
+        <li><b>15:10–16:10</b>国・都・区市町村・都外自治体 合同セッション</li>
+        <li class="rest"><b>16:10–16:20</b>休憩</li>
+        <li><b>16:20–16:50</b>表彰</li>
+        <li class="rest"><b>16:50–17:00</b>休憩</li>
+        <li><b>17:00–17:20</b>表彰・講評・写真撮影</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <h3>サブステージ（50席）</h3>
+      <ul>
+        <li><b>9:40–10:40</b>セッション①</li>
+        <li class="rest"><b>10:40–10:50</b>休憩</li>
+        <li><b>10:50–11:50</b>セッション②</li>
+        <li class="rest"><b>11:50–12:50</b>休憩</li>
+        <li><b>12:50–13:50</b>セッション③</li>
+        <li class="rest"><b>13:50–14:00</b>休憩</li>
+        <li><b>14:00–15:00</b>セッション④</li>
+      </ul>
+      <h3 style="border-top:1px solid var(--line)">同時に動くもの</h3>
+      <ul>
+        <li><b>終日</b>ブース25程度（3m×3m）の運営</li>
+        <li><b>終日</b>コネクトスペース3か所（カフェ2・会談1）</li>
+        <li><b>終日</b>受付（二次元コード提示の誘導）</li>
+        <li><b>随時</b>YouTubeライブ配信</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 費用 ══ -->
+<section>
+  <div class="shead"><h2>会場使用料は受託者が払います</h2><span class="n">仕様書 別紙1 図1</span></div>
+  <p class="sdesc">ここが本案件の性格を決めています。<b>会場費・電源敷設費・有料備品を、受託者が本予約して支払う建て付けです。</b>金額は仕様書に確定額で示されています。</p>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>事項</th><th class="m">日数</th><th class="m">料金（税込）</th></tr></thead>
+    <tbody>
+      <tr><td>HALL全体 会場使用料その1（12時間）12/22 09:00–21:00</td><td class="m">1</td><td class="m">3,520,000円</td></tr>
+      <tr><td>HALL全体 会場使用料その2（12時間）12/23 09:00–21:00</td><td class="m">1</td><td class="m">3,520,000円</td></tr>
+      <tr><td>会場電源敷設費</td><td class="m">—</td><td class="m">1,000,000円</td></tr>
+      <tr><td>会場備品 置型プロジェクター</td><td class="m">2</td><td class="m">242,000円</td></tr>
+      <tr><td>会場備品 置型スクリーン</td><td class="m">2</td><td class="m">264,000円</td></tr>
+      <tr><td>会場備品 スポットライト（〜15灯）</td><td class="m">2</td><td class="m">121,000円</td></tr>
+      <tr><td>会場備品 高速インターネット</td><td class="m">2</td><td class="m">110,000円</td></tr>
+      <tr class="total"><td>合計</td><td class="m">—</td><td class="m">8,777,000円</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>これに加えて、パーテーション・パネル（A2最大50枚）・ディスプレイ（30〜32インチ最大27台）・電源タップ120個・トロフィー最大25個・看板類・カフェの飲料と菓子・司会者・YouTube配信機材とバックアップ回線・設営と当日の人員が、すべて受託者負担です。</p>
+  <p>テーブル372台と椅子1,112脚は会場備品を無償で使えます。</p>
+</section>
+
+<!-- ══ 前年 ══ -->
+<section>
+  <div class="shead"><h2>前年の入札は23社が指名され、7万9千円差で決まりました</h2><span class="n">契約番号 07-00063</span></div>
+  <p class="sdesc">前身の「（仮称）Tokyo区市町村DXフェスタ」運営等業務委託（令和7年9月29日開札・デジタルサービス局総務部企画計理課・種目120）の入札経過調書です。</p>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th class="m">順</th><th>入札者</th><th class="m">入札金額（税抜）</th></tr></thead>
+    <tbody>
+      <tr><td class="m">1</td><td><b>株式会社TRICK</b>（落札）</td><td class="m"><b>5,847,000円</b></td></tr>
+      <tr><td class="m">2</td><td>株式会社オン・ザ・プラネット</td><td class="m">5,926,802円</td></tr>
+      <tr><td class="m">3</td><td>株式会社ツクルス</td><td class="m">7,333,000円</td></tr>
+      <tr><td class="m">4</td><td>株式会社日本廣告社</td><td class="m">7,379,900円</td></tr>
+      <tr><td class="m">5</td><td>株式会社大和田組</td><td class="m">7,420,000円</td></tr>
+      <tr><td class="m">6</td><td>株式会社時事通信社</td><td class="m">7,500,000円</td></tr>
+      <tr><td class="m">7</td><td>株式会社ウルフスタイル</td><td class="m">8,000,000円</td></tr>
+      <tr><td class="m">8</td><td>株式会社クレアート</td><td class="m">8,175,000円</td></tr>
+      <tr><td class="m">9</td><td>株式会社アカンパニーテクノロジーズ</td><td class="m">8,411,000円</td></tr>
+      <tr><td class="m">10</td><td>株式会社TITLE</td><td class="m">8,888,760円</td></tr>
+      <tr><td class="m">11</td><td>株式会社ジェイレック</td><td class="m">9,499,560円</td></tr>
+      <tr><td class="m">12</td><td>株式会社プランニングオフィスエスエムエス</td><td class="m">9,795,200円</td></tr>
+      <tr><td class="m">13</td><td>有限会社ピー・スマイル</td><td class="m">9,800,000円</td></tr>
+      <tr><td class="m">14</td><td>株式会社ハイタッチパートナーズ福岡</td><td class="m">11,200,000円</td></tr>
+      <tr><td class="m">15</td><td>株式会社リベルタス・コンサルティング</td><td class="m">13,300,000円</td></tr>
+      <tr><td class="m">16-19</td><td>パイロットアド／スチュワード／プラム／アドバンスコミュニケーション</td><td class="m">辞退</td></tr>
+      <tr><td class="m">20</td><td>エヌクリエイション</td><td class="m">無効（金額錯誤）</td></tr>
+      <tr><td class="m">21-23</td><td>ディヴォーション／Sync Brain International／シバムジーク</td><td class="m">不参</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>落札金額 6,431,700円（税込）。</b>1位と2位の差は<b>79,802円</b>、率にして1.4%です。<b>この案件は価格勝負になっています。</b></p>
+
+  <div class="callout"><b>ただし、前年の落札額をそのまま今年の目安にはできません。</b>前年の落札額 643万円に対して、<b>今年は会場使用料等だけで877万7千円</b>が受託者負担で明記されています。会場も規模も違う別物とみるべきで、<b>今年の予定価格は前年の2倍以上になるはずです。</b><br><br>8月31日に「見込み約640万円」とお伝えしましたが、これは<b>誤りでした。</b>会場費877.7万円に、ブース設営・人員・配信・司会・トロフィー等を積むと、<b>おおむね1,600万〜2,200万円規模</b>とみるのが妥当です。</div>
+</section>
+
+<!-- ══ 業務 ══ -->
+<section>
+  <div class="shead"><h2>受託者がやること</h2><span class="n">別紙1・14項目</span></div>
+  <div class="rule"></div>
+  <div class="jobs">
+    <div class="job"><h3>計画と週次の打合せ</h3><p>契約確定の翌日から2週間以内に業務計画書・実施体制表・全体工程表を提出して承認を得る。以降<b>週1回を目安に都と打合せ。</b>資料は前営業日の正午までに提示し、打合せ後3営業日で修正版を提示。</p></div>
+    <div class="job"><h3>会場の本予約と支払い</h3><p>ベルサール新宿と本予約を申請し、<b>使用料等8,777,000円を支払う。</b></p></div>
+    <div class="job"><h3>ブース25の設営</h3><p>パーテーション、パネル（A2最大50枚）、ボード、ディスプレイ（30〜32インチ最大27台）、テーブル、椅子。<b>電源タップ120個</b>を用意。パネルはイベント後に破棄（費用も受託者）。</p></div>
+    <div class="job"><h3>コネクトスペースの運営</h3><p>飲料と菓子を用意してテーブルに配置。<b>なくなったら適宜補充。</b></p></div>
+    <div class="job"><h3>ステージ運営</h3><p>演台・司会者台・ステージ・ステップ・マイク・プロジェクター・スクリーン。資料投影、音響管理、BGM、登壇者の誘導。</p></div>
+    <div class="job"><h3>司会者の手配</h3><p><b>費用は受託者負担。</b>式典・表彰式で十分な実績を持つ者を選び、<b>氏名・略歴・司会実績を事前提出して都の承認を得る。</b>事前打合せとリハーサルに参加させる。</p></div>
+    <div class="job"><h3>アワードの制作物</h3><p><b>トロフィー最大25個</b>（デザインは昨年度と同様）。記念写真用の看板1つ（縦0.5m×幅2〜3m）、立て看板2個（縦1.8m×幅0.9m）、誘導看板A3を各5個。</p></div>
+    <div class="job"><h3>YouTubeライブ配信</h3><p>会場回線を基本に<b>バックアップ通信手段を別途確保。</b>本番と同じ環境で事前リハーサル。当日も通信テスト。配信機材の手配・設置・撤収。<b>アーカイブを残し、編集してMP4で提供、DVDに記録して納品。</b></p></div>
+    <div class="job"><h3>受付</h3><p>都が事前発行する二次元コードを来場者に提示させるよう誘導。未発行の来場者には都指定の手続を案内。</p></div>
+    <div class="job"><h3>当日全体の運営</h3><p>タイムテーブル・人員体制・連絡先・備品機器一覧・台本をまとめた「イベント運営用資料」を作り、<b>リハーサルまでに都の承認を得る。</b>誘導・受付・案内・備品移動・機器操作の人員を配置。</p></div>
+    <div class="job"><h3>記録</h3><p>準備・開催・後片付けの状況を写真で記録。受賞者と審査員の記念写真。いずれも令和9年1月中旬目安で納品。</p></div>
+    <div class="job"><h3>緊急時対応</h3><p>事故・急病・災害・混雑・通信障害・機材故障に備えた体制を整備し、連絡先と初動対応を運営用資料に記載。</p></div>
+  </div>
+</section>
+
+<!-- ══ 懸念 ══ -->
+<section>
+  <div class="shead"><h2>懸念点</h2><span class="n">赤＝重い／灰＝確認事項</span></div>
+  <p class="sdesc">希望申請は出す方針とのことですので、<b>指名された後、入札金額を決めるまでに詰めるべき点</b>として整理します。</p>
+  <div class="rule"></div>
+
+  <ol class="risks">
+    <li>
+      <h3>877万円を3〜4か月立て替えます</h3>
+      <p>会場費は<b>契約確定後すみやかに</b>本予約して支払います。開札が9月28日なので、支払いは<b>10月中</b>とみるべきです。</p>
+      <p>一方で都からの入金は、仕様書8によれば「委託業務完了後、完了届を提出」「履行が完了したことを確認した後、適法な請求に基づき、<b>全額を一括で支払う</b>」。<b>履行は12月23日、契約期間は令和9年1月29日まで。</b>入金は早くて令和9年1月、実際には2月にずれ込む可能性があります。</p>
+      <p><b>会場費877.7万円に加えて設営・人件費・配信の外注費も先払いになるため、立替は1,200万〜1,500万円規模。これを約4か月抱えます。</b>これが本案件で最も重い点です。運転資金の手当てを先に確かめてください。</p>
+    </li>
+    <li>
+      <h3>1.4%差で決まる価格勝負です</h3>
+      <p>前年は23社が指名され15社が入札し、<b>1位と2位の差は79,802円でした。</b>今年も同程度の競争が想定されます。</p>
+      <p><b>会場費877.7万円は全社に共通の固定費なので、差がつくのは残りの部分だけです。</b>つまり実質的な競争は設営・人員・配信・制作物の見積精度で決まります。ここを削りすぎると当日の運営が破綻します。</p>
+    </li>
+    <li>
+      <h3>ホール内で3ゾーンが同時に動きます</h3>
+      <p>メインステージ400席（9:30–17:20・15コマ）、サブステージ50席（9:40–15:00・4セッション）、ブース25、コネクトスペース3か所。<b>これらが同じホールで同時に進行します。</b></p>
+      <p>設営は12月22日の10時間のみ。<b>ブース25区画・パネル50枚・ディスプレイ27台・電源タップ120個を1日で立ち上げ、リハーサルまで終える必要があります。</b>人員計画がそのまま成否を決めます。</p>
+    </li>
+    <li class="mid">
+      <h3>YouTubeライブ配信を自社で持てるか</h3>
+      <p>会場回線に加えて<b>バックアップ通信手段の別途確保</b>、事前リハーサル、当日の通信テスト、機材の手配・設置・撤収、アーカイブの編集とDVD納品まで求められます。「モニターの画面と発表者が同時に映るように」という指定もあります。</p>
+      <p>自社に配信の実務がなければ外注になります。<b>その見積を入札前に取っておかないと、価格が組めません。</b></p>
+    </li>
+    <li class="mid">
+      <h3>司会者の選定に都の承認が要ります</h3>
+      <p>費用は受託者負担。<b>式典・表彰式または同規模のイベントで明瞭かつ円滑な進行を行う能力と十分な実績</b>を持つ者とされ、<b>氏名・略歴・主な司会実績を事前提出して承認を得ます。</b>事前打合せとリハーサルにも参加させます。</p>
+      <p>候補の当てがあるか、確保できるか（12月23日は年末で押さえにくい時期です）を先に見ておいてください。</p>
+    </li>
+    <li class="mid">
+      <h3>準備期間は実質2か月半です</h3>
+      <p>開札9月28日、契約確定後2週間以内に業務計画書を提出。一方で<b>都によるコンテンツ企画の策定は10月上旬</b>の予定です。つまり<b>企画が固まるのを待ってから、12月22日の設営まで2か月半で組み上げます。</b>週1回の打合せと資料提出のサイクルも並行します。</p>
+    </li>
+    <li class="mid">
+      <h3>違約金は契約金額の10%です</h3>
+      <p>個人情報の取扱いについて受託者の責任者・従事者の<b>故意または重過失</b>で都に損害が生じた場合、契約金額の100分の10。実損がそれを上回れば実損額を請求されます。</p>
+      <p>ただし来場者の二次元コードの発行と把握は<b>都が行います。</b>受託者は提示を促す誘導が中心で、個人情報に触れる範囲は限定的です。過度に恐れる条項ではありませんが、当日スタッフへの周知は必要です。</p>
+    </li>
+  </ol>
+
+  <div class="tip"><b>逆に、都立学校の案件で問題になった点はここにはありません。</b>あちらは「契約金額に含めよ」と指定された連携事業費の額が仕様書のどこにも書かれておらず、入札額が組めない構造でした。<b>本件は会場費が確定額で開示され、備品の数量も点数まで指定されています。積算できる案件です。</b></div>
+</section>
+
+<!-- ══ 納品物 ══ -->
+<section>
+  <div class="shead"><h2>納入物件</h2><span class="n">別紙2・8点</span></div>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th class="m">#</th><th>成果物</th><th>納入期限</th></tr></thead>
+    <tbody>
+      <tr><td class="m">1</td><td>業務計画書・実施体制表・全体工程表</td><td>契約確定日の翌日から2週間以内</td></tr>
+      <tr><td class="m">2</td><td>打合せ資料・議事要旨・課題管理表</td><td>各打合せ後3営業日を目安</td></tr>
+      <tr><td class="m">3</td><td>会場レイアウト図、備品・機材一覧、電源計画、配線図</td><td>設営着手前までに承認</td></tr>
+      <tr><td class="m">4</td><td>イベント運営用資料（進行台本、人員配置、連絡網、誘導・受付・緊急時対応）</td><td>リハーサル実施前までに承認</td></tr>
+      <tr><td class="m">5</td><td>投影・放映用動画その他制作物</td><td>リハーサル実施前までに承認</td></tr>
+      <tr><td class="m">6</td><td>トロフィー、看板その他アワード制作物</td><td>本番前の指定日まで</td></tr>
+      <tr><td class="m">7</td><td>記録写真、記念写真及び撮影データ</td><td>令和9年1月中旬目安</td></tr>
+      <tr><td class="m">8</td><td>配信アーカイブ用動画及び編集済み動画データ</td><td>令和9年1月中旬目安</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══ 連絡先 ══ -->
+<section>
+  <div class="shead"><h2>この先の日程と連絡先</h2></div>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th class="m">日</th><th>できごと</th></tr></thead>
+    <tbody>
+      <tr><td class="m">9/3 木 16:00</td><td><b>希望申請 締切</b>（電子調達システム・添付書類なし）</td></tr>
+      <tr><td class="m">9/11 金</td><td><b>指名等通知</b>（指名された者にのみ）</td></tr>
+      <tr><td class="m">9/11〜9/27</td><td>仕様の照会期間。<b>配信の外注見積、司会者の確保、運転資金の手当てをここで固める</b></td></tr>
+      <tr><td class="m">9/28 月 10:00</td><td><b>開札</b></td></tr>
+      <tr><td class="m">10月上旬</td><td>都によるコンテンツ企画の策定</td></tr>
+      <tr><td class="m">10月中</td><td>会場の本予約と<b>8,777,000円の支払い</b></td></tr>
+      <tr><td class="m">12/22 火</td><td>設営・リハーサル 10:00–20:00</td></tr>
+      <tr><td class="m">12/23 水</td><td>本番 9:30–17:30／撤収 18:00–21:00</td></tr>
+      <tr><td class="m">令和9年1月中旬</td><td>記録写真・配信アーカイブの納品</td></tr>
+      <tr><td class="m">令和9年1月29日</td><td>契約期間の末日</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>契約担当</b>　東京都デジタルサービス局総務部企画計理課 計理担当　03-5388-2085<br>
+  <b>事業担当</b>　デジタルサービス局 DX協働事業部 DX協働事業課　03-6258-5232（新宿NSビル28階）</p>
+</section>
+
+<footer>
+  出典：仕様書、別紙1「業務の詳細について」、別紙2「納入物件一覧」（いずれも東京都電子調達システムの配布資料）／東京都電子調達システム 発注予定表 契約番号08-00051（2026年9月1日実測）／同 入札（見積）経過調書 契約番号07-00063「（仮称）Tokyo区市町村DXフェスタ」運営等業務委託。<br>
+  予定価格は非公開のため、本ページの金額規模は仕様書の確定費目と前年実績からの推定です。
+</footer>
+
+</div>
