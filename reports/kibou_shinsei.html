@@ -1,0 +1,566 @@
+<title>希望申請 作業票</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap">
+
+<style>
+/* ── 伝票（work order）の配色。地は和紙寄りの温かい白、差し色は藍鉄、期限は弁柄 ── */
+:root{
+  --ground:#FBFAF6;
+  --surface:#FFFFFF;
+  --surface-2:#F4F1E8;
+  --ink:#1A1710;
+  --ink-2:#4E4739;
+  --muted:#867D69;
+  --line:#E4DED0;
+  --line-2:#CFC6B2;
+  --accent:#1E4E5C;        /* 藍鉄 */
+  --accent-soft:#E3EDF0;
+  --urgent:#A3301F;        /* 弁柄 */
+  --urgent-soft:#F8E9E5;
+  --ok:#3B6845;
+  --ok-soft:#E6EFE7;
+  --shadow:0 1px 2px rgba(26,23,16,.05), 0 10px 26px -16px rgba(26,23,16,.30);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#15140E;
+    --surface:#1F1D16;
+    --surface-2:#282519;
+    --ink:#F1EEE3;
+    --ink-2:#C6BFAC;
+    --muted:#948B76;
+    --line:#332F22;
+    --line-2:#4A4433;
+    --accent:#84BECD;
+    --accent-soft:#1B2E34;
+    --urgent:#EE9382;
+    --urgent-soft:#38201B;
+    --ok:#86C295;
+    --ok-soft:#1B2C20;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 26px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#15140E;
+  --surface:#1F1D16;
+  --surface-2:#282519;
+  --ink:#F1EEE3;
+  --ink-2:#C6BFAC;
+  --muted:#948B76;
+  --line:#332F22;
+  --line-2:#4A4433;
+  --accent:#84BECD;
+  --accent-soft:#1B2E34;
+  --urgent:#EE9382;
+  --urgent-soft:#38201B;
+  --ok:#86C295;
+  --ok-soft:#1B2C20;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 26px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+  font-size:15px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px 96px}
+h1,h2,h3{font-family:"Shippori Mincho",serif;font-weight:700;text-wrap:balance;margin:0}
+a{color:var(--accent)}
+code,.mono{font-family:"Roboto Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* ── 表題 ───────────────────────────── */
+header{padding:44px 0 26px}
+.eyebrow{
+  font-family:"Roboto Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 12px
+}
+h1{font-size:34px;line-height:1.3;letter-spacing:.02em}
+.sub{color:var(--ink-2);margin:14px 0 0;max-width:62ch}
+
+/* ── 期限バナー ─────────────────────── */
+.clock{
+  margin:26px 0 0;padding:18px 22px;border-radius:3px;
+  background:var(--urgent-soft);border:1px solid var(--urgent);
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px
+}
+.clock .lbl{font-size:12px;letter-spacing:.1em;color:var(--urgent);font-weight:700}
+.clock .big{font-family:"Roboto Mono",monospace;font-weight:700;font-size:27px;color:var(--urgent);letter-spacing:-.01em}
+.clock .what{font-size:13px;color:var(--ink-2);flex:1 1 100%}
+
+/* ── 章 ─────────────────────────────── */
+section{margin-top:52px}
+.shead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.shead h2{font-size:22px;letter-spacing:.02em}
+.shead .n{
+  font-family:"Roboto Mono",monospace;font-size:11px;letter-spacing:.08em;
+  color:var(--accent);background:var(--accent-soft);
+  padding:3px 9px;border-radius:2px;white-space:nowrap
+}
+.sdesc{color:var(--ink-2);margin:8px 0 0;max-width:64ch;font-size:14px}
+.rule{height:2px;background:var(--ink);opacity:.85;margin:16px 0 22px}
+
+/* ── 日付の区切り ───────────────────── */
+.day{
+  display:flex;align-items:center;gap:14px;
+  margin:30px 0 14px;
+}
+.day:first-of-type{margin-top:0}
+.day .d{
+  font-family:"Shippori Mincho",serif;font-weight:700;font-size:17px;
+  white-space:nowrap
+}
+.day .left{
+  font-family:"Roboto Mono",monospace;font-size:12px;color:var(--muted);white-space:nowrap
+}
+.day .hr{flex:1;height:1px;background:var(--line-2)}
+.day.today .d{color:var(--urgent)}
+.day.today .hr{background:var(--urgent)}
+
+/* ── 案件カード ─────────────────────── */
+.case{
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)
+}
+.case.pick{border-color:var(--accent);border-left-width:4px}
+.case.done{border-left:4px solid var(--ok)}
+.ctop{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.case h3{font-size:16px;line-height:1.55;letter-spacing:.01em;flex:1}
+.fit{
+  font-size:11px;font-weight:700;letter-spacing:.06em;white-space:nowrap;
+  padding:3px 9px;border-radius:2px;margin-top:3px
+}
+.fit.a{background:var(--accent);color:var(--ground)}
+.fit.b{background:var(--accent-soft);color:var(--accent)}
+.fit.c{background:var(--surface-2);color:var(--muted)}
+.meta{
+  display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:9px;
+  font-size:12.5px;color:var(--ink-2)
+}
+.meta b{font-family:"Roboto Mono",monospace;font-weight:500;color:var(--ink)}
+.meta .k{color:var(--muted)}
+.why{
+  margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line-2);
+  font-size:13.5px;color:var(--ink-2)
+}
+.why b{color:var(--ink)}
+.tel{font-family:"Roboto Mono",monospace;font-size:12.5px;color:var(--muted);margin-top:8px}
+
+/* ── 手順の背骨 ─────────────────────── */
+.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps>li{
+  counter-increment:s;position:relative;
+  padding:0 0 24px 52px;
+}
+.steps>li::before{
+  content:counter(s,decimal-leading-zero);
+  position:absolute;left:0;top:1px;width:32px;height:32px;
+  display:grid;place-items:center;border-radius:50%;
+  background:var(--accent);color:var(--ground);
+  font-family:"Roboto Mono",monospace;font-size:12px;font-weight:700
+}
+.steps>li::after{
+  content:"";position:absolute;left:15.5px;top:38px;bottom:2px;width:1px;
+  background:var(--line-2)
+}
+.steps>li:last-child{padding-bottom:0}
+.steps>li:last-child::after{display:none}
+.steps h3{font-size:16px;margin-bottom:5px}
+.steps p{margin:0;color:var(--ink-2);font-size:14px}
+.steps .note{
+  margin-top:8px;padding:9px 12px;background:var(--surface-2);
+  border-radius:2px;font-size:13px;color:var(--ink-2)
+}
+
+/* ── 事前確認 ───────────────────────── */
+.pre{
+  background:var(--surface);border:1px solid var(--line-2);border-radius:3px;
+  padding:6px 18px;margin-bottom:28px
+}
+.pre .row{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--line)}
+.pre .row:last-child{border-bottom:0}
+.pre .mk{
+  flex:none;width:22px;height:22px;border:2px solid var(--accent);border-radius:2px;
+  margin-top:3px
+}
+.pre .tx{font-size:14px}
+.pre .tx b{display:block;margin-bottom:2px}
+.pre .tx span{color:var(--ink-2);font-size:13px}
+
+/* ── 補足表 ─────────────────────────── */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{
+  font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:700;
+  border-bottom:1px solid var(--line-2);white-space:nowrap
+}
+td.m{font-family:"Roboto Mono",monospace;white-space:nowrap;color:var(--ink-2)}
+
+.tip{
+  margin-top:20px;padding:15px 18px;border-left:3px solid var(--accent);
+  background:var(--accent-soft);border-radius:0 3px 3px 0;font-size:13.5px
+}
+.tip b{color:var(--accent)}
+footer{
+  margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted)
+}
+@media (max-width:560px){
+  h1{font-size:26px}
+  .clock .big{font-size:22px}
+  .steps>li{padding-left:44px}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">東京都電子調達システム / 希望制指名競争入札</p>
+  <h1>希望申請 作業票</h1>
+  <p class="sub">2026年9月1日（火）時点で受付中の案件のうち、<b>御社の営業種目に登録があり、受付等級にCが含まれるもの</b>を締切順に並べました。東京都電子調達システムの発注予定表を本日実測しています。</p>
+  <div class="clock">
+    <span class="lbl">最も近い締切まで</span>
+    <span class="big" id="cd" data-deadline="2026-09-01T16:00:00+09:00">—</span>
+    <span class="what">都立学校・海外大学連携交流事業等運営業務委託（08-80023）／ 食用菌培養装置等撤去作業委託（08-30183）</span>
+  </div>
+</header>
+
+<!-- ══ 案件 ══ -->
+<section>
+  <div class="shead"><h2>受付中の案件</h2><span class="n">11件・9/1〜9/4</span></div>
+  <p class="sdesc">「本命」「有力」は御社の事業ドメインに重なるもの、「可」は資格上は応募できるが本業から遠いものです。金額は発注予定表に載らないため、ここには記載していません。</p>
+  <div class="rule"></div>
+
+  <div class="day today"><span class="d">9月1日（火）</span><span class="hr"></span><span class="left" data-left="2026-09-01T16:00:00+09:00"></span></div>
+
+  <article class="case pick done">
+    <div class="ctop">
+      <h3>令和8年度 都立学校・海外大学連携交流事業等運営業務委託</h3>
+      <span class="fit a">本命・決定済</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-80023</b>
+      <span class="k">締切</span><b>9/1 16:00</b>
+      <span class="k">種目</span><b>120 催事関係業務</b>
+      <span class="k">受付等級</span><b>C</b>
+      <span class="k">開札</span><b>9/17 9:40</b>
+    </div>
+    <p class="why"><b>都立高校生と海外大学生の英語による交流事業</b>の企画・運営、会場手配、<b>通訳者等の手配</b>、そして<b>海外大学との連携に係る経費支払業務</b>。海外送金の実務まで自社で持つ事業者は多くありません。令和7年度は落札385万円・入札5社。<b>生島様が8月31日に「応募する」と決定済み。</b></p>
+    <p class="tel">教育庁総務部契約管財課 矢萩　03-5320-6725</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>食用菌培養装置等撤去作業委託</h3>
+      <span class="fit c">可・本業外</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-30183</b>
+      <span class="k">締切</span><b>9/1 16:00</b>
+      <span class="k">種目</span><b>190 その他の業務委託等</b>
+      <span class="k">受付等級</span><b>B,C</b>
+      <span class="k">開札</span><b>9/17 9:50</b>
+    </div>
+    <p class="why">都立農芸高等学校の食用菌培養装置の撤去。種目190で資格上は応募できますが、<b>撤去作業そのもので、御社の事業とは重なりません。</b>参考として載せています。</p>
+    <p class="tel">教育庁総務部契約管財課 野崎　03-5320-6725</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>令和8年度 全国各地との連携事業における都営地下鉄広告の掲出（その3）</h3>
+      <span class="fit c">可・媒体買付</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-00339</b>
+      <span class="k">締切</span><b>9/1 17:00</b>
+      <span class="k">種目</span><b>115 広告代理</b>
+      <span class="k">受付等級</span><b>A,B,C</b>
+      <span class="k">開札</span><b>9/10 13:00</b>
+    </div>
+    <p class="why">都営地下鉄の広告枠の買付・掲出。<b>媒体枠の仕入れが実質で、制作・運営の要素がありません。</b>広告代理店の土俵です。</p>
+    <p class="tel">政策企画局総務部企画計理課 持田　03-5388-2967</p>
+  </article>
+
+  <div class="day"><span class="d">9月3日（木）</span><span class="hr"></span><span class="left" data-left="2026-09-03T16:00:00+09:00"></span></div>
+
+  <article class="case pick done">
+    <div class="ctop">
+      <h3>「Tokyo DX/AX Connect Day 2026」運営等業務委託</h3>
+      <span class="fit a">有力・決定済</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-00051</b>
+      <span class="k">締切</span><b>9/3 16:00</b>
+      <span class="k">種目</span><b>120 催事関係業務</b>
+      <span class="k">受付等級</span><b>B,C</b>
+      <span class="k">指名通知</span><b>9/11</b>
+      <span class="k">開札</span><b>9/28 10:00</b>
+    </div>
+    <p class="why">前日の設営と当日のイベント実施運営。種目120の本流です。前身の「DXフェスタ」は令和7年度に643万円で落札されていますが、<b>入札10社の接戦</b>でした。<b>生島様が8月31日に「希望申請を出す」と決定済み。</b>「物品買入れ等競争入札等参加者心得」の承諾が必要です。</p>
+    <p class="tel">デジタルサービス局総務部企画計理課　03-5388-2085</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>TOKYO ALLYマークの普及啓発に係るWEB広告掲出業務委託</h3>
+      <span class="fit b">可</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-00524</b>
+      <span class="k">締切</span><b>9/3 17:00</b>
+      <span class="k">種目</span><b>115 広告代理</b>
+      <span class="k">受付等級</span><b>A,B,C</b>
+      <span class="k">指名通知</span><b>9/10</b>
+      <span class="k">開札</span><b>9/18 10:30</b>
+    </div>
+    <p class="why">性的マイノリティへの理解を広げる「TOKYO ALLYマーク」のWEB広告掲出。履行は2027年3月1日まで。<b>掲出が主で制作・運営の比重は不明です。</b>仕様書を見ないと判断できません。</p>
+    <p class="tel">総務局総務部企画計理課 白土　03-5388-2316</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>令和8年度 万引き防止広報キャンペーンに関する業務委託</h3>
+      <span class="fit b">可</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-37010</b>
+      <span class="k">締切</span><b>9/3 16:00</b>
+      <span class="k">種目</span><b>115 広告代理 / 116 映像等製作</b>
+      <span class="k">受付等級</span><b>B,C</b>
+      <span class="k">開札</span><b>9/30 8:45</b>
+    </div>
+    <p class="why">警視庁の発注。広報キャンペーンなので<b>企画・制作・展開の要素があります。</b>履行は2027年3月19日まで。なお備考に「<b>スタートアップを対象とした等級によらない入札参加制度の対象案件</b>」とあります。御社は2015年設立の一般社団法人なので、この制度の対象かは別途確認が必要です。</p>
+    <p class="tel">警視庁総務部用度課 入札担当（メニュー番号09507・内線22472）　03-3581-4321</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>東京都立大島海洋国際高等学校（8）実習船「大島丸」の船員派遣（複数単価契約）その4</h3>
+      <span class="fit c">可・本業外</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-00104</b>
+      <span class="k">締切</span><b>9/3 17:00</b>
+      <span class="k">種目</span><b>190 その他の業務委託等</b>
+      <span class="k">受付等級</span><b>A,B,C</b>
+      <span class="k">開札</span><b>9/24 13:00</b>
+    </div>
+    <p class="why">実習船の船員派遣。種目190で応募はできますが、<b>船員という専門職の供給であり、御社の事業とは重なりません。</b></p>
+  </article>
+
+  <div class="day"><span class="d">9月4日（金）</span><span class="hr"></span><span class="left" data-left="2026-09-04T16:00:00+09:00"></span></div>
+
+  <article class="case pick">
+    <div class="ctop">
+      <h3>世界都市文化フォーラム東京サミット ガラディナーにおける東京産農水産物のPRに係る業務委託</h3>
+      <span class="fit a">本命・要判断</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-00586</b>
+      <span class="k">締切</span><b>9/4 16:00</b>
+      <span class="k">種目</span><b>120 催事関係業務</b>
+      <span class="k">受付等級</span><b>C</b>
+      <span class="k">開札</span><b>9/16 10:00</b>
+      <span class="k">履行</span><b>〜2027-01-29</b>
+    </div>
+    <p class="why"><b>これは今回いちばんの掘り出し物です。</b>世界都市文化フォーラム（World Cities Culture Forum）は世界40都市超の文化政策担当が集まる国際会議で、その東京サミットの<b>ガラディナーで東京産の農水産物をPRする</b>という業務です。<b>海外要人の前で日本の産品を見せる</b>という構図は、御社がパリ・ドバイ・ロンドンで繰り返してきたことそのものです。受付等級Cで、種目120は登録済み。<b>単独で応募できます。</b><br><br>ただし概要は「別紙仕様書の通り」としか書かれていません。<b>備考に「公表期間中に必ず仕様書をダウンロードし、内容を十分確認の上で希望票を提出してください」と明記されています。</b></p>
+    <p class="tel">産業労働局総務部計理課 契約担当　03-5320-4631</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>当事者参画で進めるユニバーサルデザインの施設づくり講演会に係る業務委託</h3>
+      <span class="fit b">可</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-05066</b>
+      <span class="k">締切</span><b>9/4 16:00</b>
+      <span class="k">種目</span><b>116 映像等製作 または 120 催事関係業務</b>
+      <span class="k">受付等級</span><b>C</b>
+      <span class="k">開札</span><b>9/17 10:00</b>
+    </div>
+    <p class="why">講演会の運営業務。<b>要件が「116 または 120 のC」と定められており、御社は両方を持っています。</b>履行は2027年3月31日まで。規模は小さいとみられますが、<b>都の講演会運営の実績が1件増える</b>意味はあります。</p>
+    <p class="tel">福祉局総務部総務課 岩澤　03-5388-3940</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>令和8年度 一類感染症患者対応訓練における記録動画撮影及び配信業務委託</h3>
+      <span class="fit b">可</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-59621</b>
+      <span class="k">締切</span><b>9/4 16:00</b>
+      <span class="k">種目</span><b>116 映像等製作</b>
+      <span class="k">受付等級</span><b>C</b>
+      <span class="k">開札</span><b>9/17 10:00</b>
+      <span class="k">履行</span><b>〜2026-12-18</b>
+    </div>
+    <p class="why">訓練の記録動画の撮影と配信。種目116のC等級ちょうどで、<b>要件は御社に合致します。</b>ただし内容は撮影・配信の実務で、企画性は低いとみられます。</p>
+    <p class="tel">保健医療局総務部総務課 佐久間　03-5320-4025</p>
+  </article>
+
+  <article class="case">
+    <div class="ctop">
+      <h3>一時保護所入所児童の通学時の添乗業務委託（大田児童相談所）（概算契約）</h3>
+      <span class="fit c">可・本業外</span>
+    </div>
+    <div class="meta">
+      <span class="k">契約番号</span><b>08-07206</b>
+      <span class="k">締切</span><b>9/4 16:00</b>
+      <span class="k">種目</span><b>190 その他の業務委託等</b>
+      <span class="k">受付等級</span><b>A,B,C</b>
+      <span class="k">開札</span><b>9/18 10:00</b>
+    </div>
+    <p class="why">児童の通学添乗。資格上は応募できますが、<b>継続的な人員配置の業務で、御社の事業とは重なりません。</b></p>
+  </article>
+</section>
+
+<!-- ══ 手順 ══ -->
+<section>
+  <div class="shead"><h2>希望申請の手順</h2><span class="n">東京都入札契約ガイドブック 2026.8.1版</span></div>
+  <p class="sdesc"><b>郵送も持参もありません。添付書類もありません。</b>すべて電子調達システム上で完結します。所要は1案件あたり数分です。</p>
+  <div class="rule"></div>
+
+  <div class="pre">
+    <div class="row">
+      <span class="mk"></span>
+      <span class="tx"><b>電子証明書とICカードリーダが手元にあり、証明書が有効期限内であること</b>
+      <span>これがないとログインできず、何もできません。御社は東京都の入札参加資格を随時受付（2025年5月1日適用）で取得しているため、証明書はお持ちのはずです。<b>まず有効期限を確認してください。</b></span></span>
+    </div>
+    <div class="row">
+      <span class="mk"></span>
+      <span class="tx"><b>社会保険および雇用保険に加入していること</b>
+      <span>複数の案件で入札参加の必須要件として明記されています（適用除外の「任意適用事業所」を除く）。</span></span>
+    </div>
+    <div class="row">
+      <span class="mk"></span>
+      <span class="tx"><b>同じ案件に入札する他社と、資本関係・人的関係がないこと</b>
+      <span>「東京都建設工事等（物品買入れ等）競争入札参加資格登録事項にいう『関係する会社』」に該当すると入札できません。</span></span>
+    </div>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <h3>電子証明書をICカードリーダにセットする</h3>
+      <p>パソコンに挿した状態でブラウザを開きます。</p>
+    </li>
+    <li>
+      <h3>東京都電子調達システムの「電子入札」にログインする</h3>
+      <p><a href="https://www.e-procurement.metro.tokyo.lg.jp/ebd/index.jsp">e-procurement.metro.tokyo.lg.jp → 電子入札</a></p>
+      <div class="note"><b>稼働時間は 8:00〜21:00（土曜日を除く）。</b>締切当日の夜間には作業できません。</div>
+    </li>
+    <li>
+      <h3>業務メニューの「希望申請」をクリックする</h3>
+      <p>入札情報サービス（公開ページ）ではなく、ログイン後の電子入札側にあるメニューです。</p>
+    </li>
+    <li>
+      <h3>検索条件を入れて案件を呼び出す</h3>
+      <p>件名で探すより、<b>契約番号で引くのが確実です。</b>上のカードに全件の契約番号を載せてあります。</p>
+    </li>
+    <li>
+      <h3>先に仕様書をダウンロードして読む</h3>
+      <p>配布資料等の欄から取得できます。複数の案件の備考に「<b>仕様書を十分確認の上、希望票を提出すること</b>」と明記されています。</p>
+      <div class="note">とくに <b>08-00586（ガラディナー）</b>は概要が「別紙仕様書の通り」としか書かれておらず、<b>仕様書を見ないと業務範囲がわかりません。</b></div>
+    </li>
+    <li>
+      <h3>案件の「希望申請」欄の「提出」リンクをクリックする</h3>
+      <p>ここから希望票の入力画面に入ります。</p>
+    </li>
+    <li>
+      <h3>連絡先などの必要項目を入力し、希望票を提出する</h3>
+      <p><b>添付書類は不要です。</b>（組合が一括再委託を予定する場合のみ調書が要りますが、御社は該当しません。）</p>
+    </li>
+    <li>
+      <h3>受信画面が表示されたことを確認する</h3>
+      <p>申請書が東京都側で受信されると受信画面が出ます。<b>この画面が出ていなければ、提出は完了していません。</b></p>
+    </li>
+  </ol>
+
+  <div class="tip"><b>希望票を出しても、必ず指名されるとは限りません。</b>指名の可否は「東京都物品買入れ等指名競争入札参加者指名基準」により都が決めます。指名通知は<b>指名する相手にだけ</b>送られます。出しておかないと土俵に上がれない、という性格の手続きです。</div>
+</section>
+
+<!-- ══ 提出後 ══ -->
+<section>
+  <div class="shead"><h2>提出したあとの流れ</h2><span class="n">開札まで2〜4週間</span></div>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>時期</th><th>何が起きるか</th><th>御社がやること</th></tr></thead>
+    <tbody>
+      <tr><td class="m">開札の1週間前<br>（08-00051は9/11、08-00524は9/10と明記）</td><td>指名通知が届く。<b>指名された相手にだけ</b>送られる</td><td>受理を確認する</td></tr>
+      <tr><td class="m">指名後</td><td>仕様の疑問点を発注部署に照会できる期間がある</td><td>不明点を質問する</td></tr>
+      <tr><td class="m">開札前日まで</td><td>—</td><td><b>電子で入札書を提出する</b></td></tr>
+      <tr><td class="m">開札日</td><td>最低価格の提示者が落札</td><td>結果を確認する</td></tr>
+      <tr><td class="m">落札後</td><td>いずれも<b>電子契約対象案件</b></td><td>電子で契約を締結する</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══ 等級不足 ══ -->
+<section>
+  <div class="shead"><h2>種目はあるが、等級Cでは届かなかった案件</h2><span class="n">同期間に11件</span></div>
+  <p class="sdesc">同じ9月1日〜4日の締切で、<b>営業種目は登録済みなのに受付等級がA・Bのみで応募できなかった案件</b>です。応募できた11件と、ちょうど同数でした。<b>これが等級Cの機会損失の実額です。</b>9月14日から始まる定期受付で等級を上げるかどうかの、判断材料になります。</p>
+  <div class="rule"></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>締切</th><th>契約番号</th><th>種目</th><th>受付等級</th><th>件名</th></tr></thead>
+    <tbody>
+      <tr><td class="m">9/1 16:00</td><td class="m">08-00209</td><td>115 広告代理</td><td class="m">B</td><td>多摩ニュータウンに関するデジタルコンテンツ制作業務委託</td></tr>
+      <tr><td class="m">9/1 16:00</td><td class="m">08-21270</td><td>190 その他</td><td class="m">B</td><td>地下貯蔵タンク等の点検及び清掃並びに計量機点検委託</td></tr>
+      <tr><td class="m">9/2 17:00</td><td class="m">08-00033</td><td>120 催事関係業務</td><td class="m">B</td><td>「東京ベイeSGパートナー」出展ブース設営等業務委託（エコプロ）</td></tr>
+      <tr><td class="m">9/2 17:00</td><td class="m">08-00034</td><td>120 催事関係業務</td><td class="m">B</td><td>伝統と最先端テクノロジーが融合したモビリティのイベント運営業務委託（その3）</td></tr>
+      <tr><td class="m">9/3 16:00</td><td class="m">08-00314</td><td>115 広告代理</td><td class="m">B</td><td>自転車シェアリングに関する利用促進広告実施委託</td></tr>
+      <tr><td class="m">9/3 17:00</td><td class="m">08-00511</td><td>116 映像等製作</td><td class="m">A,B</td><td>東京リカレントナビに係るコンテンツ制作業務委託</td></tr>
+      <tr><td class="m">9/3 17:00</td><td class="m">08-00520</td><td>120 催事関係業務</td><td class="m">B</td><td>「女性活躍推進に向けたイベント」運営等業務委託</td></tr>
+      <tr><td class="m">9/4 16:00</td><td class="m">08-03106</td><td>120 催事関係業務</td><td class="m">A</td><td>装飾を通じた都庁の賑わい創出・魅力発信等業務委託</td></tr>
+      <tr><td class="m">9/4 16:00</td><td class="m">08-06017</td><td>115 広告代理</td><td class="m">A</td><td>令和8・9年度スタートアップエコシステムのプロモーション業務委託</td></tr>
+      <tr><td class="m">9/4 17:00</td><td class="m">08-15030</td><td>115 広告代理</td><td class="m">A,B</td><td>令和8年冬のTOKYO交通安全キャンペーン事業用ラジオスポットの制作及び放送実施委託</td></tr>
+      <tr><td class="m">9/4 17:00</td><td class="m">08-15034</td><td>115 広告代理</td><td class="m">A,B</td><td>特殊詐欺被害防止強化期間におけるWEB等広告掲載委託</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip"><b>4日間で、催事関係業務だけで4件が等級で落ちています。</b>「東京ベイeSGパートナー」も「モビリティのイベント運営」も「女性活躍推進イベント」も「都庁の賑わい創出」も、<b>中身は御社の本業です。</b>受付等級がB・Aだったというだけで応募できませんでした。</div>
+</section>
+
+<footer>
+  出典：東京都電子調達システム 入札情報サービス「発注予定情報」（2026年9月1日 実測・令和8年度分328件を全ページ走査）／東京都入札契約ガイドブック（物品等委託）2026年8月1日版。<br>
+  金額は発注予定表に掲載されないため記載していません。仕様書は電子調達システムにログインのうえ取得してください。
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  function fmt(ms){
+    if(ms<=0) return "締切を過ぎました";
+    var m=Math.floor(ms/60000), h=Math.floor(m/60), d=Math.floor(h/24);
+    if(d>0) return d+"日 "+(h%24)+"時間";
+    if(h>0) return h+"時間 "+(m%60)+"分";
+    return m+"分";
+  }
+  function tick(){
+    var now=Date.now();
+    var cd=document.getElementById("cd");
+    if(cd){
+      var t=new Date(cd.getAttribute("data-deadline")).getTime();
+      cd.textContent=fmt(t-now);
+    }
+    var els=document.querySelectorAll("[data-left]");
+    for(var i=0;i<els.length;i++){
+      var e=els[i], v=new Date(e.getAttribute("data-left")).getTime()-now;
+      e.textContent = v>0 ? "あと "+fmt(v) : "受付終了";
+    }
+  }
+  tick();
+  setInterval(tick,30000);
+})();
+</script>
