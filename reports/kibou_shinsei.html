@@ -129,6 +129,8 @@ section{margin-top:52px}
 }
 .case.pick{border-color:var(--accent);border-left-width:4px}
 .case.done{border-left:4px solid var(--ok)}
+.case.off{border-left:4px solid var(--muted);opacity:.72}
+.fit.x{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-2)}
 .ctop{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
 .case h3{font-size:16px;line-height:1.55;letter-spacing:.01em;flex:1}
 .fit{
@@ -223,11 +225,11 @@ footer{
 <header>
   <p class="eyebrow">東京都電子調達システム / 希望制指名競争入札</p>
   <h1>希望申請 作業票</h1>
-  <p class="sub">2026年9月1日（火）時点で受付中の案件のうち、<b>御社の営業種目に登録があり、受付等級にCが含まれるもの</b>を締切順に並べました。東京都電子調達システムの発注予定表を本日実測しています。</p>
+  <p class="sub">2026年9月1日（火）時点で受付中の案件のうち、<b>御社の営業種目に登録があり、受付等級にCが含まれるもの</b>を締切順に並べました。東京都電子調達システムの発注予定表を本日実測しています。<br><b>9月1日、都立学校・海外大学連携交流事業（08-80023）は仕様書を確認のうえ見送りとご判断いただきました。</b>提出予定は 9/3 の Tokyo DX/AX、判断待ちが 9/4 のガラディナーです。</p>
   <div class="clock">
-    <span class="lbl">最も近い締切まで</span>
-    <span class="big" id="cd" data-deadline="2026-09-01T16:00:00+09:00">—</span>
-    <span class="what">都立学校・海外大学連携交流事業等運営業務委託（08-80023）／ 食用菌培養装置等撤去作業委託（08-30183）</span>
+    <span class="lbl">次に提出する案件の締切まで</span>
+    <span class="big" id="cd" data-deadline="2026-09-03T16:00:00+09:00">—</span>
+    <span class="what">「Tokyo DX/AX Connect Day 2026」運営等業務委託（08-00051）／ 9月3日（木）16:00</span>
   </div>
 </header>
 
@@ -239,10 +241,10 @@ footer{
 
   <div class="day today"><span class="d">9月1日（火）</span><span class="hr"></span><span class="left" data-left="2026-09-01T16:00:00+09:00"></span></div>
 
-  <article class="case pick done">
+  <article class="case off">
     <div class="ctop">
       <h3>令和8年度 都立学校・海外大学連携交流事業等運営業務委託</h3>
-      <span class="fit a">本命・決定済</span>
+      <span class="fit x">見送り</span>
     </div>
     <div class="meta">
       <span class="k">契約番号</span><b>08-80023</b>
@@ -251,7 +253,9 @@ footer{
       <span class="k">受付等級</span><b>C</b>
       <span class="k">開札</span><b>9/17 9:40</b>
     </div>
-    <p class="why"><b>都立高校生と海外大学生の英語による交流事業</b>の企画・運営、会場手配、<b>通訳者等の手配</b>、そして<b>海外大学との連携に係る経費支払業務</b>。海外送金の実務まで自社で持つ事業者は多くありません。令和7年度は落札385万円・入札5社。<b>生島様が8月31日に「応募する」と決定済み。</b></p>
+    <p class="why"><b>9月1日、仕様書を確認したうえで見送りとご判断いただきました。</b>希望申請は提出しません。<br><br>
+    <b>仕様書からわかったこと（次に同種案件が出たときの判断材料）。</b>実施は<b>令和8年11月13日（金）の1日のみ</b>で、<b>受託者が確保する新宿の貸会議室（180名規模）と、都立高校1校の2会場を同時並行で運営</b>します。通訳は①1名以上・②2名以上。会場費、参加生徒・大学生<b>全員の傷害保険</b>（死亡2,000万円）、そして<b>海外大学への連携事業費の海外送金</b>まで受託者の負担です。<br><br>
+    <b>そのうえで、契約金額に含めよと指定された「連携事業費」の金額が、仕様書のどこにも書かれていませんでした。</b>入札額を組むうえでの前提が欠けた構造になっています。令和7年度は落札385万円・入札5社。</p>
     <p class="tel">教育庁総務部契約管財課 矢萩　03-5320-6725</p>
   </article>
 
