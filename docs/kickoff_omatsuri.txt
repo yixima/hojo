@@ -1,22 +1,23 @@
-リポジトリ yixima/hojo で作業します。以下を順に実行してください。
+リポジトリ yixima/hojo で作業します。まず次を実行してください。
 
+cd /home/user/hojo
 git fetch origin claude/public-bid-search-workflow-uzj3te
 git checkout claude/public-bid-search-workflow-uzj3te
 git pull origin claude/public-bid-search-workflow-uzj3te
 ./bin/today.sh
 
-そのうえで、この順で読んでから作業を始めてください。
+そのうえで、この順に読んでから作業を始めてください。
 
 1. CLAUDE.md
 2. docs/manual/manual_v17_all_in_one.md（汎用マニュアル v17。以降すべての応答に常時適用）
-3. docs/handoff_omatsuri.md ← **引き継ぎ書。ここに全部書いてあります**
+3. docs/kobo_anken_hikitsugi_20260902_v1.md ← 引き継ぎファイル。ここに全部書いてあります
 4. workflow/eligibility.md の [15][17][18]
 
 やることは、2027年国際園芸博覧会協会の公募型プロポーザル
 「主催者催事『おまつり歳時記プロジェクト（仮）』にかかる実施計画作成業務委託」への応募です。
 生島様は 2026-09-01 に「申請する」と決定済みです。
 
-**直近の締切は 2026年9月7日（月）17時必着。参加意向申出と秘密保持誓約書の2件を同時に出します。**
+直近の締切は 2026年9月7日（月）17時必着。参加意向申出と秘密保持誓約書の2件を同時に出します。
 要領・様式一式は docs/omatsuri/ に取得済みで、再ダウンロードは不要です。
 
-引き継ぎ書の §8「生島様に確認すべきこと」の1〜4から着手してください。
+引き継ぎファイルの「§8 次に最初に行うこと」の1行目から始めてください。
