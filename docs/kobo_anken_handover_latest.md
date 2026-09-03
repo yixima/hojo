@@ -425,7 +425,7 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
 
 | ファイル | 何のために／中に何が書いてあるか |
 |---|---|
-| `CLAUDE.md` | **リポジトリの絶対ルール。最初に読む。**汎用マニュアルの常時適用、日付を実測から取る義務、ファイル構成、技術的注意、調査の原則 |
+| `CLAUDE.md` | **リポジトリの絶対ルール。最初に読む。**汎用マニュアルの常時適用、日付を実測から取る義務、ファイル構成、技術的注意、調査の原則、**引き継ぎファイルの保存先と更新手順** |
 | `docs/manual/manual_v17_all_in_one.md` | **汎用マニュアル v17 全部入り（1098行）。全応答に常時適用。**第1部コアカード＋第2部本編（全条文）＋第3部失敗記録19件 |
 | `docs/manual/L0_core_card_v17.md` | 同コアカード（第1部の抜粋・139行）。全部入りと重複 |
 | `bin/today.sh` | **現在日時（JST）を出す。日付はここからのみ取得する** |
@@ -494,6 +494,7 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
   まさに「漏れなく記載すると言うだけでは毎回抜けが出る」ために作られたものだった。
 - **再発防止＝発動すべきだった条項**：**§10-5**。
   引き継ぎファイルを作るときは、**最初に §10-5 を開いて10章の見出しを写してから書く。**
+  **2026-09-03、この手順を `CLAUDE.md` にも明記した。**
 
 ### 6-2. **「応募可」と報告してから、仕様書で覆した**（2件）
 
@@ -554,14 +555,15 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
 - **どう直したか**：**再公開の前に必ず `action: "read"` で現在の版を読み、
   その上に差分を載せる。**
 
-### 6-8. ツール実行の不具合（§10-5 の記録義務）
+### 6-8. ツール実行の不具合と、破壊的操作の監査記録（§10-5・§10-6）
 
 - **東京都電子調達システムの「入札結果一覧」（page=3/act=14）はシステムエラーを返す。**
   2026-08-31 に確認。**回避策として「入札（見積）経過情報」（page=3/act=4）を使う。**
   `bin/tokyo_bid_results.py` がそれ。
-- **GitHub MCP サーバーが 2026-09-01 に一時切断され、再接続した。** 作業への影響はなかった。
+- **GitHub MCP サーバーが 2026-09-01 と 09-03 に一時切断され、いずれも再接続した。**
+  作業への影響はなかった。
 - **Google Drive の `update_file` はタイトルと親フォルダしか変更できず、本文の更新ができない。**
-  そのため、本ファイルの v2 は**新規作成し、v1 をゴミ箱へ移した**（§10-6 の監査記録に相当）。
+  そのため、更新のたびに**同じ名前で新規作成し、旧版をゴミ箱へ移す**。
   - 2026-09-03 削除：`kobo_anken_hikitsugi_20260902_v1.md`
     （Drive ID `1Q5nEP6B73yfAIpA171YuLgA0zFoNjEqr`・58,263 バイト・作成 2026-09-02T10:47:00Z）
   - 2026-09-03 削除：`kobo anken.md`
@@ -691,7 +693,7 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
 
 - 作業ディレクトリ **`/home/user/hojo`**
 - リポジトリ **`yixima/hojo`**／ブランチ **`claude/public-bid-search-workflow-uzj3te`**
-- **2026-09-03 15:07 時点ですべてコミット・プッシュ済み。未コミットの変更はない**
+- **2026-09-03 15:44 時点ですべてコミット・プッシュ済み。未コミットの変更はない**
 - Google Drive の保存先
   - **引き継ぎファイル → `claude_handover/kobo_anken/`（ID: `1K7jXA20Gp2d9addg8oRnvIxcbEQLx7lY`）**
     固定名 `kobo_anken_handover_latest.md`
@@ -883,16 +885,23 @@ git push -u origin claude/public-bid-search-workflow-uzj3te
 
 ネットワーク失敗時のみ、2秒→4秒→8秒→16秒で最大4回リトライする。
 
-### 10-9. Artifact の更新
+### 10-9. 引き継ぎファイルを Drive へ保存する（**固定名・毎回この手順**）
 
-**必ず先に現在の版を読んでから。**
-
-```
-Artifact(action="read", url="https://claude.ai/code/artifact/d7ef2e57-991a-4997-82ba-572bd1a1ba45")
-→ 差分をローカルファイルに反映
-→ Artifact(file_path="reports/dashboard.html",
-            url="https://claude.ai/code/artifact/d7ef2e57-991a-4997-82ba-572bd1a1ba45")
-```
+1. `claude_handover/kobo_anken/`（ID `1K7jXA20Gp2d9addg8oRnvIxcbEQLx7lY`）の中を
+   **タイトルで検索**して現行版のファイルIDを得る
+   （`update_file` は本文を差し替えられないので、IDを覚えても意味がない）
+2. **同じ名前で新規作成**する
+   ```
+   mcp__Google_Drive__create_file(
+     title="kobo_anken_handover_latest.md",
+     parentId="1K7jXA20Gp2d9addg8oRnvIxcbEQLx7lY",
+     contentMimeType="text/markdown",
+     disableConversionToGoogleType=true,
+     textContent=<本文>)
+   ```
+3. **旧版をゴミ箱へ移す**（`mcp__Google_Drive__trash_file(fileId=<旧ID>)`）
+4. **削除した版のファイル名・ID・サイズ・作成日時を §6-8 に1行追記する**（§10-6）
+5. 保存の直前に `./bin/today.sh` を再実行して日付を確認する
 
 ### 10-10. 守ること（`CLAUDE.md` と マニュアル v17 より）
 
@@ -907,6 +916,7 @@ Artifact(action="read", url="https://claude.ai/code/artifact/d7ef2e57-991a-4997-
 - **§8-11 `nohup … &` を使わない**
 - **§0-14 条項の定員制。**新しい失敗が起きても、まず既存条項で説明できないかを検討する
 - **§10-5 引き継ぎファイルは、この10章がすべて埋まって初めて完了**
+- **§10-6 破壊的操作（削除・上書き）は、復元と検証に必要な情報を記録に残す**
 
 ---
 
@@ -923,6 +933,7 @@ Artifact(action="read", url="https://claude.ai/code/artifact/d7ef2e57-991a-4997-
 - 次の1行目 → §8
 - 何が終わっていないか → §7
 - どのコマンドで動かすか → §10
+- この引き継ぎ自体をどう更新するか → §10-9
 - 過去に何を間違えたか → §6
 
 **答えは「はい」。**
