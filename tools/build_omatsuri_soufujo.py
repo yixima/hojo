@@ -13,7 +13,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Pt
 
 OUT = 'docs/omatsuri/submit/omatsuri_00_soufujo.docx'
-ADDRESS = '東京都渋谷区神宮前6-18-10 海老名ビル4F'
+ADDRESS = '〒150-0001　東京都渋谷区神宮前6-18-10　海老名ビル4F'
 NAME = '一般社団法人ジャパンプロモーション'
 REPRESENTATIVE = '代表理事　生島　儀尊'
 
@@ -50,8 +50,10 @@ def main():
     p(ADDRESS, R)
     p(NAME, R)
     p(REPRESENTATIVE + '　　　　印', R)
-    if a.tanto_name or a.tanto_tel:
+    # 差出人が代表者本人のときは「担当」行を重ねない（同じ名前が2行続くのを避ける）
+    if a.tanto_name and a.tanto_name.replace('　', '') != REPRESENTATIVE.replace('　', ''):
         p(f'担当　{a.tanto_shozoku}　{a.tanto_name}'.strip(), R)
+    if a.tanto_tel or a.tanto_mail:
         p(f'電話　{a.tanto_tel}　E-mail　{a.tanto_mail}'.strip(), R)
     p()
     p('２０２７年国際園芸博覧会 主催者催事「おまつり歳時記プロジェクト（仮）」に', C)

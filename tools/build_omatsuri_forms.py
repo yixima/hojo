@@ -28,7 +28,7 @@ SRC = 'docs/omatsuri/04_yousikimatome_omaturi.docx'
 OUT = 'docs/omatsuri/submit'
 
 # profile/company-profile.yaml より（status: confirmed の値のみ使う）
-ADDRESS = '東京都渋谷区神宮前6-18-10 海老名ビル4F'
+ADDRESS = '〒150-0001　東京都渋谷区神宮前6-18-10　海老名ビル4F'
 NAME = '一般社団法人ジャパンプロモーション'
 REPRESENTATIVE = '代表理事　生島　儀尊'
 

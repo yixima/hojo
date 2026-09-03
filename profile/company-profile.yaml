@@ -15,6 +15,9 @@ basic:
   established: 2015-10             # status: confirmed [C]
   representative: 生島 儀尊（代表理事）  # status: confirmed [B]
   address: 東京都渋谷区神宮前6-18-10 海老名ビル4F  # status: confirmed [B]
+  postal_code: "150-0001"          # status: confirmed（生島様 2026-09-03）
+  tel: "03-5766-2450"              # status: confirmed（生島様 2026-09-03）
+  email: ikushima@japanpromotion.org  # status: confirmed（生島様 2026-09-03）代表理事 生島様の業務用アドレス
   website: https://www.japanpromotion.org
   own_ec: https://wabisabistore.net/en/   # WABI SABI STORE（伝統工芸品の越境EC）
 
