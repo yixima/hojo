@@ -10,7 +10,7 @@ git pull origin claude/public-bid-search-workflow-uzj3te
 
 1. CLAUDE.md
 2. docs/manual/manual_v17_all_in_one.md（汎用マニュアル v17。以降すべての応答に常時適用）
-3. docs/kobo_anken_hikitsugi_20260902_v1.md ← 引き継ぎファイル。ここに全部書いてあります
+3. docs/"kobo anken.md" ← 引き継ぎファイル。ここに全部書いてあります
 4. workflow/eligibility.md の [15][17][18]
 
 やることは、2027年国際園芸博覧会協会の公募型プロポーザル
