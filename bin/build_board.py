@@ -9,14 +9,17 @@
 
 並びの原則（この順序を動かさない）
 --------------------------------
-1. **いま決める** — 締切7日以内で、応募できるもの。**これが唯一の判断面である**
-2. **進行中** — 応募すると決めたもの
-3. **まだ公告されていないが、必ず出る案件** — 状態欄が `【予測】` で始まるもの。
+1. **いま決める** — 締切7日以内・応募できる・**かつ締切を一次資料で確認済みのもの**。
+   **これが唯一の判断面である**
+2. **判断する前に、締切を確認するもの** — 締切7日以内だが `締切確認日` が空のもの。
+   **確認していない締切で判断させない**（2026-09-04 の福島県の事故）
+3. **進行中** — 応募すると決めたもの
+4. **まだ公告されていないが、必ず出る案件** — 状態欄が `【予測】` で始まるもの。
    **締切欄の日付は周期からの推定であって、確定日ではない**
-4. **見ておく** — 締切8〜120日
-5. **等級が壁になった案件** — 定期受付（9/14〜10/30）の判断材料
-6. **次年度候補** — 締切超過・見送り。**前回の締切月ごとに束ねる**
-7. **見送りの基準** — なぜ落としたかの物差し
+5. **見ておく** — 締切8〜120日
+6. **等級が壁になった案件** — 定期受付（9/14〜10/30）の判断材料
+7. **次年度候補** — 締切超過・見送り。**前回の締切月ごとに束ねる**
+8. **見送りの基準** — なぜ落としたかの物差し
 
 残日数は `data-deadline` からブラウザ側で計算する。**数値を直書きしない**（CLAUDE.md）。
 
@@ -146,7 +149,8 @@ WATCH_MAX = 120  # 「見ておく」の上限。これより先は次年度候�
 def buckets(rows, now):
     """**判定は日ではなく日時で行う。**締切当日の夕方には、その案件はもう終わっている。"""
     td = now.date()
-    b = {'now': [], 'going': [], 'coming': [], 'watch': [], 'grade': [], 'next': [], 'out': []}
+    b = {'now': [], 'unverified': [], 'going': [], 'coming': [], 'watch': [],
+         'grade': [], 'next': [], 'out': []}
     for r in rows:
         d = parse_date(r['締切'])
         k = classify(r)
@@ -156,6 +160,8 @@ def buckets(rows, now):
         # **残りは「日」ではなく「秒」で持つ。**0日と「もう過ぎた」は違う
         rec['secs'] = int((rec['at'] - now).total_seconds()) if rec['at'] else None
         rec['closed'] = rec['secs'] is not None and rec['secs'] <= 0
+        rec['verified'] = bool((r.get('締切確認日') or '').strip())
+        rec['gate'] = (r.get('締切種別') or '').strip()
 
         if k == 'out':
             b['out'].append(rec)
@@ -173,6 +179,12 @@ def buckets(rows, now):
         if (left is None or rec['closed'] or k in ('decided_no', 'rec_no', 'ng')
                 or left > WATCH_MAX):
             b['next'].append(rec)
+            continue
+        if left <= 7 and not rec['verified']:
+            # **締切を一次資料で確認していないものは、判断面に出さない。**
+            # 2026-09-04、福島県の案件で企画提案書の期限を「参加申込」と誤って転記し、
+            # 3日前に閉じていた関門を「残り14時間・応募できます」と出した
+            b['unverified'].append(rec)
             continue
         b['now' if left <= 7 else 'watch'].append(rec)
 
@@ -209,10 +221,14 @@ def card(rec, lead=False):
         o.append('<div class="dl" data-deadline="%s"><div class="days"></div>'
                  '<div class="bar"><i></i></div><div class="date">%s 締切%s</div></div>'
                  % (rec['at'].strftime('%Y-%m-%dT%H:%M'),
-                    rec['at'].strftime('%Y-%m-%d %H:%M'),
-                    '' if rec['exact'] else '<span class="est">時刻未確認・17時とみなして計算</span>'))
+                    rec['at'].strftime('%Y-%m-%d %H:%M') + ' ' + (rec['gate'] or '種別未確認'),
+                    ('' if rec['exact'] else '<span class="est">時刻未確認・17時とみなして計算</span>')
+                    + ('' if rec['verified'] else
+                       '<span class="est">一次資料で未確認</span>')))
     facts = [('種別', r['種別']), ('予定価格', r['予定価格']), ('格付・等級', r['格付']),
-             ('資格', r['資格要否']), ('初報', r['初報日'])]
+             ('資格', r['資格要否']),
+             ('締切の確認', (r.get('締切確認日') or '') + ' ' + (r.get('締切種別') or '')
+              if (r.get('締切確認日') or '').strip() else '**未確認**')]
     o.append('<dl class="facts">')
     for k, v in facts:
         o.append('<div><dt>%s</dt><dd>%s</dd></div>' % (esc(k), md(v) or '—'))
@@ -314,6 +330,21 @@ def build(rows, now):
                                 for x in lost),
                        now.strftime('%-m月%-d日 %H:%M')))
 
+    fixed = [x for x in b['now'] + b['unverified'] + b['watch'] + b['next']
+             if '締切を訂正した' in x['r']['状態']]
+    if fixed:
+        lede.append('<p style="border-left:3px solid var(--crit);padding-left:14px">'
+                    '<strong>一次資料と突き合わせて、締切を訂正した案件が %d件あります。</strong>'
+                    '%s。<b>いずれも公募型プロポーザルの二段構え（参加申込 → 企画提案書）で、'
+                    '後段の企画提案書の期限を前段の「参加申込」と取り違えて転記していました。</b>'
+                    '検査の仕組みごと作り直しました'
+                    '（報告書 <code>docs/report_kanmon_20260904.md</code>）。</p>'
+                    % (len(fixed),
+                       '／'.join('%s（%s → <b>%s %s</b>）'
+                                 % (esc(x['r']['案件名'][:24]), esc(x['r']['発注機関']),
+                                    x['at'].strftime('%-m/%-d %H:%M'), esc(x['gate']))
+                                 for x in fixed)))
+
     priced = [x for x in b['now'] + b['going'] + b['coming'] + b['grade']
               if any(k in x['r']['予定価格'] for k in ('前年度', '令和', '【推定】', '万円'))]
     if priced:
@@ -327,7 +358,7 @@ def build(rows, now):
     if b['grade']:
         lede.append('<p><strong>等級で届かなかった案件が、いま %d件あります。</strong>'
                     'いずれも中身は御社の本業です。<b>9月14日に始まる東京都の定期受付が、'
-                    'この壁を動かせる唯一の機会です。</b>4番の節にまとめました。</p>' % len(b['grade']))
+                    'この壁を動かせる唯一の機会です。</b>6番の節にまとめました。</p>' % len(b['grade']))
     lede.append('<p><strong>巡回について。</strong>自動巡回は週1回（毎週月曜8時）です。'
                 'ところが東京都の希望申請期間は<b>5〜7日しかありません</b>。'
                 '<b>週次のままでは窓を丸ごと逃す周期にあります。</b>'
@@ -351,22 +382,36 @@ def build(rows, now):
                      '<b>この画面を開いたままにしていても数字は正しくなりません。'
                      '読み直すときは再読み込みしてください。</b>', body))
 
-    # ── 2. 進行中 ──
+    # ── 2. 締切が未確認 ──
+    if b['unverified']:
+        o.append(section(2, '判断する前に、締切を確認するもの',
+                         '%d件' % len(b['unverified']),
+                         '締切が7日以内だが、<b>その締切を一次資料で確認していないもの。</b>'
+                         '確認するまで「いま決める」には出しません。'
+                         '<b>2026-09-04、企画提案書の期限を「参加申込」と取り違えて転記し、'
+                         '3日前に閉じていた関門を「残り14時間・応募できます」と出しました。'
+                         '公募型プロポーザルは二段構えで、先に来るのは参加申込です。</b>'
+                         '募集要領のスケジュール表を開き、<b>いちばん早い関門の日付と時刻</b>を'
+                         '台帳の <code>締切種別</code>・<code>締切確認日</code> に'
+                         '入れてから判断します。',
+                         '\n'.join(card(rec) for rec in b['unverified'])))
+
+    # ── 3. 進行中 ──
     if b['going']:
-        o.append(section(2, '進行中', '%d件' % len(b['going']),
+        o.append(section(3, '進行中', '%d件' % len(b['going']),
                          '申請すると決めたもの。<b>作業が止まっていないかを見る節です。</b>',
                          '\n'.join(card(rec) for rec in b['going'])))
 
-    # ── 3. 公告待ち ──
+    # ── 4. 公告待ち ──
     if b['coming']:
-        o.append(section(3, 'まだ公告されていないが、必ず出る案件',
+        o.append(section(4, 'まだ公告されていないが、必ず出る案件',
                          '%d件' % len(b['coming']),
                          '過去の公告周期から、出ることが分かっているもの。'
                          '<b>カードの日付は周期からの推定であって、確定した締切ではありません。</b>'
                          '公告を待ってから準備を始めると間に合わない案件を、ここに置きます。',
                          '\n'.join(card(rec, lead=True) for rec in b['coming'])))
 
-    # ── 4. 見ておく ──
+    # ── 5. 見ておく ──
     if b['watch']:
         cols = [('残り', days_cell, 'd'),
                 ('締切', lambda x: dl_label(x), 'd'),
@@ -374,24 +419,24 @@ def build(rows, now):
                 ('発注機関', lambda x: esc(x['r']['発注機関']), ''),
                 ('金額', lambda x: md(x['r']['予定価格']), ''),
                 ('状態', lambda x: md(first_sentence(x['r']['状態'])), '')]
-        o.append(section(4, '見ておく', '%d件' % len(b['watch']),
+        o.append(section(5, '見ておく', '%d件' % len(b['watch']),
                          '締切まで8〜%d日。<b>まだ決めなくてよいが、準備の要否だけ見ておくもの。</b>'
                          % WATCH_MAX, table(b['watch'], cols)))
 
-    # ── 5. 等級の壁 ──
+    # ── 6. 等級の壁 ──
     if b['grade']:
         cols = [('締切', lambda x: dl_label(x), 'd'),
                 ('案件名', lambda x: esc(x['r']['案件名']), ''),
                 ('発注機関', lambda x: esc(x['r']['発注機関']), ''),
                 ('要求等級', lambda x: esc(x['r']['格付']), 'g'),
                 ('過去の落札額', lambda x: md(x['r']['予定価格']), '')]
-        o.append(section(5, '等級が壁になった案件', '%d件' % len(b['grade']),
+        o.append(section(6, '等級が壁になった案件', '%d件' % len(b['grade']),
                          '<b>種目は登録済みなのに、受付等級が届かず応募できなかったもの。</b>'
                          '東京都の定期受付は <b>9月14日〜10月30日</b>。'
                          '<b>ここに並んだ件数と中身が、等級引上げを申請するかどうかの材料になります。</b>',
                          table(b['grade'], cols)))
 
-    # ── 6. 次年度候補 ──
+    # ── 7. 次年度候補 ──
     if b['next']:
         cols = [('前回の締切', lambda x: x['d'].isoformat() if x['d'] else '—', 'd'),
                 ('案件名', lambda x: esc(x['r']['案件名']), ''),
@@ -415,14 +460,14 @@ def build(rows, now):
             blocks.append('<details%s><summary>%s<span class="cnt">%d件</span></summary>%s</details>'
                           % (' open' if mo == (td.month % 12) + 1 else '',
                              esc(name), len(g), table(g, cols)))
-        o.append(section(6, '次年度候補', '%d件' % len(b['next']),
+        o.append(section(7, '次年度候補', '%d件' % len(b['next']),
                          '<b>締切が過ぎたもの・見送ると決めたもの・資格が届かなかったものを、'
                          'すべてここに寄せています。</b>公募は毎年ほぼ同じ時期に出るので、'
                          '<b>前回の締切月ごとにまとめました。来年その月が来たら、この束を開いて発注者を見に行きます。</b>'
                          '来月の束だけ開いてあります。', ''.join(blocks)))
 
-    # ── 7. 見送りの基準 ──
-    o.append(section(7, '見送りの基準', 'eligibility.md [15]〜[18]',
+    # ── 8. 見送りの基準 ──
+    o.append(section(8, '見送りの基準', 'eligibility.md [15]〜[18]',
                      'なぜ落としたかの物差し。<b>この4つに当たる案件は、種目と等級が合っていても取りません。</b>',
                      CRITERIA))
 
@@ -757,10 +802,12 @@ def main():
     rows = load()
     b, body = build(rows, now)
     if '--check' in sys.argv:
-        for k in ('now', 'going', 'coming', 'watch', 'grade', 'next', 'out'):
+        for k in ('now', 'unverified', 'going', 'coming', 'watch', 'grade',
+                  'next', 'out'):
             print('%-6s %3d' % (k, len(b[k])))
         total = sum(len(b[k]) for k in
-                    ('now', 'going', 'coming', 'watch', 'grade', 'next', 'out'))
+                    ('now', 'unverified', 'going', 'coming', 'watch', 'grade',
+                     'next', 'out'))
         print('合計   %3d / 台帳 %d' % (total, len(rows)))
         assert total == len(rows), '**仕分けで行が落ちている**'
         return
@@ -768,9 +815,10 @@ def main():
                    encoding='utf-8')
     print('%s を書き出しました（%s 現在・台帳%d行）'
           % (OUT, now.strftime('%Y-%m-%d %H:%M'), len(rows)))
-    print('いま決める %d / 進行中 %d / 公告待ち %d / 見ておく %d / 等級の壁 %d / 次年度 %d / 対象外 %d'
-          % (len(b['now']), len(b['going']), len(b['coming']), len(b['watch']),
-             len(b['grade']), len(b['next']), len(b['out'])))
+    print('いま決める %d / 締切未確認 %d / 進行中 %d / 公告待ち %d / 見ておく %d'
+          ' / 等級の壁 %d / 次年度 %d / 対象外 %d'
+          % (len(b['now']), len(b['unverified']), len(b['going']), len(b['coming']),
+             len(b['watch']), len(b['grade']), len(b['next']), len(b['out'])))
 
 
 if __name__ == '__main__':
