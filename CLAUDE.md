@@ -111,3 +111,36 @@
 
 **「現在募集中のもの」だけを見てはならない。** 翌年度事業の委託先は前年度中に
 公告・決定される。各機関の**過年度アーカイブ**を必ず掘ること（runbook 手順2.5）。
+
+## 引き継ぎファイルの保存先（2026-09-03 生島様の指示で確定）
+
+**Google Drive `claude_handover/kobo_anken/` に、
+`kobo_anken_handover_latest.md` という固定名で保存する。**
+
+- Drive フォルダID `1K7jXA20Gp2d9addg8oRnvIxcbEQLx7lY`
+  （親 `claude_handover` = `1pihJMWXzwvq0xbacGJVQH5gbW26BpH-n`）
+- リポジトリ側の正本は `docs/kobo_anken_handover_latest.md`。**内容は両者で同一に保つ**
+- **中身は 汎用マニュアル v17 §10-5 の必須10章**
+  （①依頼の原文 ②確定した事実と決定＋理由 ③却下した案と理由 ④発行した全ファイルの説明
+  　⑤調整・変更の経緯 ⑥失敗と改善 ⑦未完了 ⑧次に最初に行うこと ⑨前提条件 ⑩コマンド）
+  **書き始める前に §10-5 を開いて10章の見出しを写す。** 独自の章立てにしない
+
+### 更新のしかた（Drive の制約）
+
+**Google Drive の `update_file` はタイトルと親フォルダしか変更できず、本文を差し替えられない。**
+そのため更新のたびに、
+
+1. **同じ名前で新規作成**（`create_file` / `contentMimeType: text/markdown` /
+   `disableConversionToGoogleType: true`）
+2. **旧版をゴミ箱へ移す**（`trash_file`）
+3. **削除した版のファイル名・Drive ID・サイズ・作成日時を、引き継ぎファイルの
+   「失敗と改善」章に1行追記する**（マニュアル §10-6 破壊的操作の監査記録）
+
+**Drive のファイルIDは更新のたびに変わる。IDを覚えず、
+`claude_handover/kobo_anken/` の中をタイトルで探すこと。**
+
+### 命名について
+
+§10-5 は「ファイル名にチャット名・日付・バージョン情報を含める」と定めるが、
+**生島様のご指示による固定名を優先する。日付とバージョンは本文ヘッダで管理する。**
+固定名 `kobo_anken_handover_latest.md` は §7-11（`^[A-Za-z0-9._-]+$`）を満たしている。

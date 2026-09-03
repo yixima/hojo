@@ -1,14 +1,22 @@
-# kobo anken
+# kobo_anken_handover_latest
 
-- ファイル名 **`kobo anken.md`**（生島様のご指定・2026-09-03）
-- 初版作成 **2026-09-02（水）19:33 JST**／**更新 2026-09-03（木）15:07 JST**（`./bin/today.sh` 実測）
-- チャット名 **kobo anken**／版 **v2**
-- リポジトリ **yixima/hojo**／ブランチ **`claude/public-bid-search-workflow-uzj3te`**
+- **保存先（2026-09-03 の指示で変更）**
+  - Google Drive **`claude_handover/kobo_anken/kobo_anken_handover_latest.md`**（**固定名**）
+  - GitHub `yixima/hojo`／ブランチ `claude/public-bid-search-workflow-uzj3te`／
+    パス `docs/kobo_anken_handover_latest.md`
+- 初版作成 **2026-09-02（水）19:33 JST**／**更新 2026-09-03（木）15:42 JST**（`./bin/today.sh` 実測）
+- チャット名 **kobo anken**／版 **v3**
 - 準拠 **汎用マニュアル v17 §10-5**（必須構成10章）
 
-> **※ 本ファイルは §10-5 の命名規則（チャット名・日付・バージョン情報を含める）に対して、
-> 生島様のご指定（2026-09-03）を優先し、ファイル名を `kobo anken.md` としている。
-> 日付とバージョンは、このヘッダで管理する。**
+> **※ ファイル名は固定名 `kobo_anken_handover_latest.md` である（生島様のご指示・2026-09-03）。**
+> **§10-5 は「ファイル名にチャット名・日付・バージョン情報を含める」と定めるが、
+> ご指示の固定名を優先し、日付とバージョンはこのヘッダで管理する。**
+> なお固定名は §7-11（`^[A-Za-z0-9._-]+$`）を満たしている。
+>
+> **更新のしかた（重要）**：Google Drive の `update_file` はタイトルと親フォルダしか
+> 変更できず、本文を差し替えられない。**更新のたびに同じ名前で新規作成し、旧版をゴミ箱へ移す。**
+> そのため **Drive のファイルID は毎回変わる。ID を覚えず、
+> `claude_handover/kobo_anken/` の中をタイトルで探すこと。**
 
 **このファイルを新しいチャットに貼り付ければ、そのまま作業を続けられる。**
 **まず §10「使用したコマンド・手順」の冒頭ブロックを実行すること。**
@@ -46,6 +54,8 @@
 > （以下、直前の依頼を再掲）
 
 > 引き継ぎを更新してください。ファイル名は「kobo anken」に。
+
+> マニュアル更新。引き継ぎの保存先が変わりました。以後は Drive の claude_handover/kobo_anken/ に kobo_anken_handover_latest.md という固定名で保存してください。
 
 ### 1-3. 判定基準として述べられた原文（逐語・`workflow/eligibility.md` に収録）
 
@@ -388,7 +398,7 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
 
 | ファイル | 置き場所 | 何のために作ったか／中に何が書いてあるか |
 |---|---|---|
-| **`kobo anken.md`** | `docs/`＋Google Drive | **本ファイル。**マニュアル §10-5 の必須10章に沿った引き継ぎ。次のチャットに貼れば作業を継続できる。**旧名 `kobo_anken_hikitsugi_20260902_v1.md` から 2026-09-03 に改名した（§5）** |
+| **`kobo_anken_handover_latest.md`** | **Drive `claude_handover/kobo_anken/`**＋リポジトリ `docs/` | **本ファイル。**マニュアル §10-5 の必須10章に沿った引き継ぎ。次のチャットに貼れば作業を継続できる。**固定名。更新は同名で新規作成し旧版をゴミ箱へ移す**（改名の経緯は §5） |
 | `docs/kickoff_omatsuri.txt` | `docs/` | 新チャットの1通目に貼る起動文（短縮版）。本ファイルを貼る場合は不要 |
 
 ### 4-2. おまつり歳時記の応募に使う資料（`docs/omatsuri/`・**12点すべて2026-09-01に協会サイトから取得済み**）
@@ -465,6 +475,7 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
 | **2026-09-02** | **DX/AX のリマインダー（`trig_01DKvHUMxwt12or56pkqKUkB`）を削除した** | 9/3 09:30 に発火する設定のまま残っていた。**案件は見送り済みで不要だったため** |
 | **2026-09-03** | **ファイル名を `kobo anken.md` にした（v2）** | `kobo_anken_hikitsugi_20260902_v1.md`。**生島様が2度「ファイル名は kobo anken に」とご指示されたため、§10-5 の命名規則と §7-11（`^[A-Za-z0-9._-]+$`）より、ご指定を優先した。**日付とバージョンはファイル名から外し、本文ヘッダで管理する。拡張子 `.md` だけは §10-5 の「必ず Markdown ファイルで提供する」を満たすために残した |
 | **2026-09-03** | **日付が 9/2 から 9/3 に変わったため、残日数と発送期限の記述を更新した** | 「9/2 時点で残り5日」「郵送は9月4日までが安全」と書いていた。**9月4日は『明日』になった** |
+| **2026-09-03** | **保存先を Drive `claude_handover/kobo_anken/`、ファイル名を固定名 `kobo_anken_handover_latest.md` にした（v3）** | Drive `全国統一入札資格_2026` に `kobo anken.md` として置いていた。**生島様が「マニュアル更新。引き継ぎの保存先が変わりました」とご指示されたため。**固定名になったので、以後は版ごとにファイル名が変わらない。**空白が無くなり §7-11 を満たすようになった** |
 
 ---
 
@@ -553,8 +564,12 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
   そのため、本ファイルの v2 は**新規作成し、v1 をゴミ箱へ移した**（§10-6 の監査記録に相当）。
   - 2026-09-03 削除：`kobo_anken_hikitsugi_20260902_v1.md`
     （Drive ID `1Q5nEP6B73yfAIpA171YuLgA0zFoNjEqr`・58,263 バイト・作成 2026-09-02T10:47:00Z）
-  - v2 の Drive ID は `1KdzV0JSa7CEgNV1wm0C3kWbFRwQU-0tK`
-  - 内容は本ファイル v2 に引き継がれており、GitHub の履歴にも残っている
+  - 2026-09-03 削除：`kobo anken.md`
+    （Drive ID `1KdzV0JSa7CEgNV1wm0C3kWbFRwQU-0tK`・60,342 バイト・作成 2026-09-03T06:13:46Z）
+    保存先が `claude_handover/kobo_anken/` に変わり、固定名になったため
+  - **内容はすべて本ファイルに引き継がれており、GitHub の履歴にも残っている**
+  - **この「同名で新規作成 → 旧版をゴミ箱」は、以後の更新でも毎回発生する。
+    そのたびに §6-8 に1行ずつ追記すること（§10-6 破壊的操作の監査記録）**
 - **上記以外に、未反映のまま終わった作業はない。**
   §7 に挙げたものは「着手していない」のであって「途中で止まった」のではない。
 
@@ -677,8 +692,10 @@ git checkout -b <新ブランチ名> origin/claude/public-bid-search-workflow-uz
 - 作業ディレクトリ **`/home/user/hojo`**
 - リポジトリ **`yixima/hojo`**／ブランチ **`claude/public-bid-search-workflow-uzj3te`**
 - **2026-09-03 15:07 時点ですべてコミット・プッシュ済み。未コミットの変更はない**
-- Google Drive の保存先フォルダ
-  **`全国統一入札資格_2026`（ID: `1jMRvEndX0NBNj2Ad5X4nrAgT5nm2fMGs`）**
+- Google Drive の保存先
+  - **引き継ぎファイル → `claude_handover/kobo_anken/`（ID: `1K7jXA20Gp2d9addg8oRnvIxcbEQLx7lY`）**
+    固定名 `kobo_anken_handover_latest.md`
+  - 週次レポート等 → `全国統一入札資格_2026`（ID: `1jMRvEndX0NBNj2Ad5X4nrAgT5nm2fMGs`）
 - 生島様のメール **iximay@gmail.com**
 - 使えるコネクタ：Gmail／Google Drive／Google Calendar／GitHub
 - **WebFetch ツールは公的機関サイトに遮断される。curl を使う**
@@ -883,7 +900,7 @@ Artifact(action="read", url="https://claude.ai/code/artifact/d7ef2e57-991a-4997-
   完了・未完了・次／提示物の扱い／裏取り／用語の初出説明／中断の理由／日時の基準日）
 - **§0-10② 送信直前の関門9項。1つでも「未」があれば送信しない**
 - **§7-11 納品・共有するファイル名は `^[A-Za-z0-9._-]+$` のみ**（共有前に正規表現で検査）。
-  **ただし本ファイルは生島様のご指定により `kobo anken.md`（空白を含む）としている**
+  本ファイルの固定名 `kobo_anken_handover_latest.md` はこれを満たす
 - **§2-9 やり切る。**中断してよいのは ①質問が必要 ②承認待ち ③エラー ④危険 の4つだけ。
   「区切りがよい」「長くなった」は中断の理由にならない。中断するなら理由を必ず書く
 - **§3-7 現在日時を思い込まない。**`./bin/today.sh` で実測する
