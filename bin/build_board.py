@@ -39,11 +39,31 @@ OUT = ROOT / 'reports' / 'dashboard.html'
 
 
 def today():
-    """**日付は必ず bin/today.sh から取る。**推測しない（CLAUDE.md 最重要）。"""
+    """**日時は必ず bin/today.sh から取る。**推測しない（CLAUDE.md 最重要）。
+
+    **時刻まで返す。**2026-09-03 22時、締切を「日」でしか見ていなかったため、
+    その日の16時に受付を終えた案件を「いま決める」の先頭に出した（§3-7）。
+    """
     s = subprocess.run([str(ROOT / 'bin' / 'today.sh')],
                        capture_output=True, text=True, check=True).stdout
     m = re.search(r'(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})', s)
-    return (datetime.date(int(m[1]), int(m[2]), int(m[3])), '%s:%s' % (m[4], m[5]))
+    return datetime.datetime(int(m[1]), int(m[2]), int(m[3]), int(m[4]), int(m[5]))
+
+
+# 締切時刻が分からないときに、この時刻で締まったものとみなす。
+# **公的機関の「必着」は原則として執務時間内に終わる。**推定であることを画面に明記する
+DEFAULT_CLOSE = datetime.time(17, 0)
+
+
+def deadline_at(rec):
+    """締切の「日時」を返す。時刻欄が空なら DEFAULT_CLOSE を当てる（推定）。"""
+    if rec['d'] is None:
+        return None, False
+    t = (rec['r'].get('締切時刻') or '').strip()
+    m = re.fullmatch(r'(\d{1,2}):(\d{2})', t)
+    if m:
+        return datetime.datetime.combine(rec['d'], datetime.time(int(m[1]), int(m[2]))), True
+    return datetime.datetime.combine(rec['d'], DEFAULT_CLOSE), False
 
 
 # ── 分類の語彙 ──────────────────────────────────────────
@@ -123,13 +143,19 @@ def md(s):
 WATCH_MAX = 120  # 「見ておく」の上限。これより先は次年度候補に寄せる
 
 
-def buckets(rows, td):
+def buckets(rows, now):
+    """**判定は日ではなく日時で行う。**締切当日の夕方には、その案件はもう終わっている。"""
+    td = now.date()
     b = {'now': [], 'going': [], 'coming': [], 'watch': [], 'grade': [], 'next': [], 'out': []}
     for r in rows:
         d = parse_date(r['締切'])
         k = classify(r)
         left = (d - td).days if d else None
         rec = dict(r=r, d=d, left=left, k=k)
+        rec['at'], rec['exact'] = deadline_at(rec)
+        # **残りは「日」ではなく「秒」で持つ。**0日と「もう過ぎた」は違う
+        rec['secs'] = int((rec['at'] - now).total_seconds()) if rec['at'] else None
+        rec['closed'] = rec['secs'] is not None and rec['secs'] <= 0
 
         if k == 'out':
             b['out'].append(rec)
@@ -140,11 +166,12 @@ def buckets(rows, td):
         if k == 'forecast':
             b['coming'].append(rec)
             continue
-        if k == 'ng' and left is not None and left >= 0 and '等級' in r['状態'] + r['資格要否']:
+        if k == 'ng' and not rec['closed'] and left is not None and '等級' in r['状態'] + r['資格要否']:
             # 生きている案件が等級で落ちた。**定期受付（9/14〜10/30）の判断材料になる**
             b['grade'].append(rec)
             continue
-        if left is None or left < 0 or k in ('decided_no', 'rec_no', 'ng') or left > WATCH_MAX:
+        if (left is None or rec['closed'] or k in ('decided_no', 'rec_no', 'ng')
+                or left > WATCH_MAX):
             b['next'].append(rec)
             continue
         b['now' if left <= 7 else 'watch'].append(rec)
@@ -155,7 +182,7 @@ def buckets(rows, td):
             # 次年度候補は「来年いつ見るか」で並べる。年をまたいで月日だけを見る
             v.sort(key=lambda x: ((x['d'] or far).month, (x['d'] or far).day))
         else:
-            v.sort(key=lambda x: (x['d'] or far))
+            v.sort(key=lambda x: (x['at'] or datetime.datetime(2099, 1, 1)))
     return b
 
 
@@ -178,10 +205,12 @@ def card(rec, lead=False):
     o.append('<div class="chead"><div class="ctitle"><h3>%s</h3><div class="org">%s ／ %s</div></div>'
              '<span class="pill %s">%s</span></div>' %
              (esc(r['案件名']), esc(r['発注機関']), esc(r['応募形態'] or '—'), cls, label))
-    if rec['d']:
+    if rec['at']:
         o.append('<div class="dl" data-deadline="%s"><div class="days"></div>'
-                 '<div class="bar"><i></i></div><div class="date">%s 締切</div></div>'
-                 % (rec['d'].isoformat(), rec['d'].isoformat()))
+                 '<div class="bar"><i></i></div><div class="date">%s 締切%s</div></div>'
+                 % (rec['at'].strftime('%Y-%m-%dT%H:%M'),
+                    rec['at'].strftime('%Y-%m-%d %H:%M'),
+                    '' if rec['exact'] else '<span class="est">時刻未確認・17時とみなして計算</span>'))
     facts = [('種別', r['種別']), ('予定価格', r['予定価格']), ('格付・等級', r['格付']),
              ('資格', r['資格要否']), ('初報', r['初報日'])]
     o.append('<dl class="facts">')
@@ -217,16 +246,27 @@ def section(num, title, count, desc, body):
             % (num, esc(title), esc(count), desc, body))
 
 
+def dl_label(rec):
+    """表の締切セル。時刻が推定のときは、推定であると分かるようにする。"""
+    if rec['at'] is None:
+        return '—'
+    return '%s%s' % (rec['at'].strftime('%m-%d %H:%M'),
+                     '' if rec['exact'] else '<span class="est">推定</span>')
+
+
 def days_cell(rec):
-    if rec['left'] is None:
+    if rec['at'] is None:
         return '<span style="color:var(--muted)">—</span>'
-    if rec['left'] < 0:
-        return '<span style="color:var(--muted)">超過</span>'
-    return '<span class="dl" data-deadline="%s"><span class="days" style="font-size:14px"></span></span>' % rec['d'].isoformat()
+    if rec['closed']:
+        return '<span style="color:var(--muted)">受付終了</span>'
+    return ('<span class="dl" data-deadline="%s">'
+            '<span class="days" style="font-size:14px"></span></span>'
+            % rec['at'].strftime('%Y-%m-%dT%H:%M'))
 
 
-def build(rows, td, now_hm):
-    b = buckets(rows, td)
+def build(rows, now):
+    td = now.date()
+    b = buckets(rows, now)
     # **本命は台帳の状態欄で宣言する。**ここに案件名を書かない（毎回の書き換えを避ける）
     LEAD = ('拾い物', '本命', 'いちばん')
     o = []
@@ -237,7 +277,7 @@ def build(rows, td, now_hm):
              '<br>この画面は <code>data/ledger.csv</code> から <code>bin/build_board.py</code> が生成しています</div></div>'
              '<div class="stamp"><div>生成<b>%s</b></div><div>台帳<b>%d</b></div>'
              '<div>いま決める<b>%d</b></div><div>進行中<b>%d</b></div></div></header>'
-             % (td.strftime('%m.%d'), len(rows), len(b['now']), len(b['going'])))
+             % (now.strftime('%m.%d %H:%M'), len(rows), len(b['now']), len(b['going'])))
 
     # ── 冒頭 ──
     lede = ['<div class="lede">']
@@ -245,15 +285,35 @@ def build(rows, td, now_hm):
                 '<b>いま判断が要るものが %d件</b>、進行中が %d件です。'
                 'この画面は上から順に「決める → 進めている → 見ておく → 来年」で並べてあります。'
                 '<b>1番の節だけ見れば、今日決めることは足ります。</b></p>'
-                % (td.strftime('%Y年%-m月%-d日'), now_hm, len(rows), len(b['now']), len(b['going'])))
+                % (now.strftime('%Y年%-m月%-d日'), now.strftime('%H:%M'),
+                   len(rows), len(b['now']), len(b['going'])))
     if b['now']:
         items = []
         for rec in b['now'][:5]:
             items.append('<li><span class="dl" data-deadline="%s"><b class="days" style="font-size:15px"></b></span>'
-                         ' ／ %s <span style="color:var(--muted)">（%s）</span></li>'
-                         % (rec['d'].isoformat(), esc(rec['r']['案件名'][:46]), esc(rec['r']['発注機関'])))
+                         ' ／ %s <span style="color:var(--muted)">（%s・%s締切%s）</span></li>'
+                         % (rec['at'].strftime('%Y-%m-%dT%H:%M'), esc(rec['r']['案件名'][:42]),
+                            esc(rec['r']['発注機関']), rec['at'].strftime('%-m/%-d %H:%M'),
+                            '' if rec['exact'] else '・時刻未確認'))
         lede.append('<p><strong>締切が近い順に。</strong></p><ul style="margin:0 0 10px;padding-left:20px">%s</ul>'
                     % ''.join(items))
+    lost = [x for x in b['next']
+            if x['closed'] and x['k'] == 'open' and x['left'] is not None and x['left'] >= 0]
+    if lost:
+        lede.append('<p style="border-left:3px solid var(--crit);padding-left:14px">'
+                    '<strong>本日、判断しないまま受付が終わった案件が %d件あります。</strong>'
+                    '%s。<b>この画面は %s に作っています。'
+                    '締切は「日」ではなく「日時」で持つように直しました</b>'
+                    '（報告書 <code>docs/report_kigen_jikoku_20260903.md</code>）。'
+                    '受付が終わったものは、以下の判断面には出しません。</p>'
+                    % (len(lost),
+                       '／'.join('%s（%s %s締切%s）' % (esc(x['r']['案件名'][:26]),
+                                                   esc(x['r']['発注機関']),
+                                                   x['at'].strftime('%-m/%-d %H:%M'),
+                                                   '' if x['exact'] else '・<b>時刻未確認</b>')
+                                for x in lost),
+                       now.strftime('%-m月%-d日 %H:%M')))
+
     priced = [x for x in b['now'] + b['going'] + b['coming'] + b['grade']
               if any(k in x['r']['予定価格'] for k in ('前年度', '令和', '【推定】', '万円'))]
     if priced:
@@ -285,8 +345,11 @@ def build(rows, td, now_hm):
         body = '<p class="note">締切7日以内で応募できる案件はありません。</p>'
     o.append(section(1, 'いま決める', '%d件' % len(b['now']),
                      '<b>締切まで7日以内で、資格のうえで応募できるもの</b>だけを置いています。'
-                     '資格で落ちたもの・見送ると決めたものはここに出しません。'
-                     '<b>この節が唯一の判断面です。</b>', body))
+                     '資格で落ちたもの・見送ると決めたもの・<b>受付時刻を過ぎたもの</b>は'
+                     'ここに出しません。<b>この節が唯一の判断面です。</b>'
+                     '残り時間は閲覧している時刻から計算しているので、'
+                     '<b>この画面を開いたままにしていても数字は正しくなりません。'
+                     '読み直すときは再読み込みしてください。</b>', body))
 
     # ── 2. 進行中 ──
     if b['going']:
@@ -306,7 +369,7 @@ def build(rows, td, now_hm):
     # ── 4. 見ておく ──
     if b['watch']:
         cols = [('残り', days_cell, 'd'),
-                ('締切', lambda x: x['d'].isoformat(), 'd'),
+                ('締切', lambda x: dl_label(x), 'd'),
                 ('案件名', lambda x: esc(x['r']['案件名']), ''),
                 ('発注機関', lambda x: esc(x['r']['発注機関']), ''),
                 ('金額', lambda x: md(x['r']['予定価格']), ''),
@@ -317,7 +380,7 @@ def build(rows, td, now_hm):
 
     # ── 5. 等級の壁 ──
     if b['grade']:
-        cols = [('締切', lambda x: x['d'].isoformat(), 'd'),
+        cols = [('締切', lambda x: dl_label(x), 'd'),
                 ('案件名', lambda x: esc(x['r']['案件名']), ''),
                 ('発注機関', lambda x: esc(x['r']['発注機関']), ''),
                 ('要求等級', lambda x: esc(x['r']['格付']), 'g'),
@@ -334,7 +397,10 @@ def build(rows, td, now_hm):
                 ('案件名', lambda x: esc(x['r']['案件名']), ''),
                 ('発注機関', lambda x: esc(x['r']['発注機関']), ''),
                 ('種別', lambda x: esc(x['r']['種別']), ''),
-                ('落とした理由・状態', lambda x: md(first_sentence(x['r']['状態'])), '')]
+                ('落とした理由・状態',
+                 lambda x: ('<span class="est">判断しないまま受付終了</span> '
+                            if x['closed'] and x['k'] == 'open' and x['left'] is not None
+                            and x['left'] >= 0 else '') + md(first_sentence(x['r']['状態'])), '')]
         groups = {}
         for rec in b['next']:
             groups.setdefault(rec['d'].month if rec['d'] else 0, []).append(rec)
@@ -620,45 +686,63 @@ summary .cnt{
   font-family:"Roboto Mono",monospace; font-size:11.5px; color:var(--muted); font-weight:400;
 }
 details .scroll{border:none; border-radius:0}
+
+/* ── 受付が終わったもの ─────────────────────────────── */
+.days.over{color:var(--muted)!important; font-size:15px}
+.card.over{opacity:.55}
+.card.over .ctitle h3{text-decoration:line-through; text-decoration-color:var(--line-strong)}
+.est{
+  display:inline-block; margin-left:8px; padding:1px 6px; border-radius:2px;
+  font-size:10.5px; font-weight:700; letter-spacing:.04em;
+  background:var(--warn-soft); color:var(--warn); border:1px solid var(--warn);
+  font-family:"Zen Kaku Gothic New",sans-serif;
+}
 </style>"""
 
 # 残日数はここで計算する。**HTML に数値を書かない**
 TAIL = r"""<script>
 (function(){
-  // 残日数は閲覧時に計算する。数値の直書きをやめ、日付の陳腐化を防ぐ。
-  var JST=9*60;
-  function todayJST(){
+  // **残り時間は閲覧時に計算する。**数値を直書きしない。
+  // そして「日」ではなく「分」で数える。2026-09-03、締切当日の16時に終わった案件を
+  // 22時の時点で「本日」と表示し、まだ応募できるかのように見せた（CLAUDE.md）。
+  function nowJST(){
     var n=new Date();
-    var utc=n.getTime()+n.getTimezoneOffset()*60000;
-    var j=new Date(utc+JST*60000);
-    return new Date(j.getFullYear(),j.getMonth(),j.getDate());
+    return new Date(n.getTime()+n.getTimezoneOffset()*60000+9*60*60000);
   }
-  var t=todayJST();
+  var t=nowJST();
   document.querySelectorAll('.dl[data-deadline]').forEach(function(el){
-    var p=el.getAttribute('data-deadline').split('-');
-    var d=new Date(+p[0],+p[1]-1,+p[2]);
-    var days=Math.round((d-t)/86400000);
+    var v=el.getAttribute('data-deadline').split(/[-T:]/);
+    var d=new Date(+v[0],+v[1]-1,+v[2],+(v[3]||17),+(v[4]||0));
+    var mins=Math.floor((d-t)/60000);
     var box=el.querySelector('.days'), bar=el.querySelector('.bar i');
     if(!box) return;
-    var label=days<0?'超過':(days===0?'本日':days);
-    box.innerHTML=label+(days>0?'<small>日</small>':'');
-    var urgent=days<=7;
+    var label, urgent=true;
+    if(mins<=0){ label='受付終了'; }
+    else if(mins<60){ label=mins+'<small>分</small>'; }
+    else if(mins<48*60){ label=Math.floor(mins/60)+'<small>時間</small>'; }
+    else { var days=Math.floor(mins/1440); label=days+'<small>日</small>'; urgent=days<=7; }
+    box.innerHTML=label;
     box.classList.toggle('urgent',urgent);
+    box.classList.toggle('over',mins<=0);
     if(bar){
-      var pct=days<0?100:Math.max(4,Math.min(100,Math.round((1-days/60)*100)));
+      var pct=mins<=0?100:Math.max(4,Math.min(100,Math.round((1-mins/(60*24*60))*100)));
       bar.style.width=pct+'%';
       bar.classList.toggle('urgent',urgent);
     }
-    var pill=el.closest('.card') && el.closest('.card').querySelector('.pill');
-    if(pill && days<0){ pill.textContent='締切超過'; pill.className='pill p-off'; }
+    var card=el.closest('.card'), pill=card&&card.querySelector('.pill');
+    if(pill&&mins<=0){
+      pill.textContent='受付終了';
+      pill.className='pill p-off';
+      card.classList.add('over');
+    }
   });
-  // ヘッダーに閲覧日を表示
+  // ヘッダーに閲覧日時を出す。**生成した時刻と、読んでいる時刻は違う。**
   var st=document.querySelector('.stamp');
   if(st){
-    var n=new Date(), utc=n.getTime()+n.getTimezoneOffset()*60000, j=new Date(utc+JST*60000);
     var pad=function(x){return (x<10?'0':'')+x;};
     var el=document.createElement('div');
-    el.innerHTML='閲覧日<b>'+pad(j.getMonth()+1)+'.'+pad(j.getDate())+'</b>';
+    el.innerHTML='閲覧<b>'+pad(t.getMonth()+1)+'.'+pad(t.getDate())+' '
+      +pad(t.getHours())+':'+pad(t.getMinutes())+'</b>';
     st.appendChild(el);
   }
 })();
@@ -666,10 +750,12 @@ TAIL = r"""<script>
 """
 
 
+
 def main():
-    td, hm = today()
+    now = today()
+    td = now.date()
     rows = load()
-    b, body = build(rows, td, hm)
+    b, body = build(rows, now)
     if '--check' in sys.argv:
         for k in ('now', 'going', 'coming', 'watch', 'grade', 'next', 'out'):
             print('%-6s %3d' % (k, len(b[k])))
@@ -680,7 +766,8 @@ def main():
         return
     OUT.write_text(HEAD + '\n\n<div class="wrap">\n' + body + '\n</div>\n\n' + TAIL,
                    encoding='utf-8')
-    print('%s を書き出しました（%s 現在・台帳%d行）' % (OUT, td, len(rows)))
+    print('%s を書き出しました（%s 現在・台帳%d行）'
+          % (OUT, now.strftime('%Y-%m-%d %H:%M'), len(rows)))
     print('いま決める %d / 進行中 %d / 公告待ち %d / 見ておく %d / 等級の壁 %d / 次年度 %d / 対象外 %d'
           % (len(b['now']), len(b['going']), len(b['coming']), len(b['watch']),
              len(b['grade']), len(b['next']), len(b['out'])))
