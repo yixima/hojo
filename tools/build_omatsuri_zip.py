@@ -116,6 +116,33 @@ def main():
         # 展開したときに印刷順で並ぶか
         if sorted(names) != names:
             print('  NG 名前順が印刷順になっていない:', sorted(names)); ng += 1
+    # ── 最終関門：ZIP を展開し直し、**実際に描画して**1ページ・A4 を確かめる ──
+    # v1 ではここを省き、文字列抽出だけで「合格」と報告して、
+    # 2ページに溢れた様式をそのまま渡しかけた（L2 記録）。
+    import subprocess, tempfile
+    ex = tempfile.mkdtemp(prefix='zipcheck-')
+    with zipfile.ZipFile(OUT) as z:
+        z.extractall(ex)
+    docs = sorted(os.path.join(ex, n) for n in os.listdir(ex) if n.endswith('.docx'))
+    env = dict(os.environ)
+    env['HOME'] = tempfile.mkdtemp(prefix='lo-')
+    subprocess.run(['soffice', '--headless', '--norestore', '--convert-to', 'pdf',
+                    '--outdir', ex] + docs, check=True, capture_output=True,
+                   env=env, timeout=900)
+    import pymupdf
+    print('  ── ZIP を展開して描画した結果 ──')
+    for src in docs + [os.path.join(ex, '01_teishutsu_manual.pdf')]:
+        pdf = src if src.endswith('.pdf') else src[:-5] + '.pdf'
+        d = pymupdf.open(pdf)
+        w = round(d[0].rect.width * 25.4 / 72, 1)
+        h = round(d[0].rect.height * 25.4 / 72, 1)
+        a4 = abs(w - 210) < 1 and abs(h - 297) < 1
+        one = d.page_count == 1 or src.endswith('manual.pdf')
+        mark = 'OK ' if (a4 and one) else 'NG '
+        if not (a4 and one):
+            ng += 1
+        print(f'  {mark}{os.path.basename(src):<34} {d.page_count} ページ  {w}×{h}mm')
+
     if ng:
         raise SystemExit('不備があるため発行しない。')
     print('  検査をすべて通過した。')
