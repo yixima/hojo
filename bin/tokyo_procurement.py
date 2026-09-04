@@ -30,6 +30,7 @@ p-portal と違い、**ここは POST が通る。**
 import html
 import re
 import subprocess
+import time
 import sys
 import urllib.parse
 from pathlib import Path
@@ -51,19 +52,38 @@ hItemTokutei hitemRirekiPublishFlg dateStart dateEnd resultWarningFlg
 syumokuCdList""".split()
 
 
-def post(fields):
-    """CP932 でエンコードして POST する。セッションは cookie jar で保つ。"""
+def post(fields, tries=4):
+    """CP932 でエンコードして POST する。セッションは cookie jar で保つ。
+
+    **失敗しても1回で諦めない。**2026-09-04、詳細パスの途中で curl が
+    exit 35（TLSハンドシェイク失敗）を返し、`check=True` がその場で例外を投げて
+    巡回が3回連続で落ちた。**サイトは HTTP 200 で応答しており、遮断ではなく不安定だった。**
+    CLAUDE.md に「取得の失敗は3種類ある。不安定はリトライする。諦めてはいけない」と
+    書いてありながら、この関数だけがリトライを持っていなかった。
+
+    待ちは 1→2→4 秒（`bin/fetchlib.py` と同じ）。**cookie jar は消さない。**
+    消すとセッションが切れて、続きのページ送りが成立しない。
+    """
     body = '&'.join(
         '%s=%s' % (k, urllib.parse.quote(str(v).encode('cp932')))
         for k, v in fields)
-    r = subprocess.run(
-        ['curl', '-sSL', '-A', UA, '--max-time', '40', '--compressed',
-         '-b', str(JAR), '-c', str(JAR),
-         '-H', 'Referer: ' + URL,
-         '-H', 'Content-Type: application/x-www-form-urlencoded',
-         '--data-binary', body, URL],
-        capture_output=True, check=True)
-    return r.stdout.decode('cp932', 'replace')
+    cmd = ['curl', '-sSL', '-A', UA, '--max-time', '40', '--compressed',
+           '--retry', '2', '--retry-connrefused',
+           '-b', str(JAR), '-c', str(JAR),
+           '-H', 'Referer: ' + URL,
+           '-H', 'Content-Type: application/x-www-form-urlencoded',
+           '--data-binary', body, URL]
+    last = None
+    for i in range(tries):
+        r = subprocess.run(cmd, capture_output=True)
+        if r.returncode == 0 and len(r.stdout) > 200:
+            return r.stdout.decode('cp932', 'replace')
+        last = 'exit=%d size=%d %s' % (r.returncode, len(r.stdout),
+                                       r.stderr.decode('utf-8', 'replace')[:120])
+        if i < tries - 1:
+            time.sleep(2 ** i)
+    raise RuntimeError('POST %s が %d回とも失敗した: %s'
+                       % (dict(fields).get('page'), tries, last))
 
 
 def search(keyword='', era='5', y_from='8', y_to='9'):
