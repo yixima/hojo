@@ -8,7 +8,7 @@
 - **保存先（固定）**
   - Google Drive `claude_handover/kobo_anken/kobo_anken_jizokuka_kokyaku_handover_latest.md`（固定名）＋履歴 `..._20260904_v1.md`
   - GitHub `yixima/hojo`／ブランチ **`claude/kobo-anken-sustainability-subsidies-b9o870`**／`docs/handover/`
-- **作成**：2026-09-04（金）18:08 JST（`./bin/today.sh` 実測）／版 **v1（改名後の初版）**
+- **作成**：2026-09-04（金）18:01 JST（`./bin/today.sh` 実測）／版 **v1（改名後の初版）**
 - **準拠**：汎用マニュアル v41 コアカード §5.5〜§5.6。配布元から curl で取得して適用（リポジトリ内の `docs/manual/` は v17 のまま）
 - **環境**：`[Code]`／`/home/user/hojo`
 
@@ -22,7 +22,7 @@
 ```handover-manifest
 {
   "manifest_version": 1,
-  "generated_at": "2026-09-04 18:08 JST",
+  "generated_at": "2026-09-04 18:01 JST",
   "source": "manual",
   "cwd": "/home/user/hojo",
   "branch": "claude/kobo-anken-sustainability-subsidies-b9o870",
@@ -139,7 +139,7 @@
 | いつ | 何を変えたか | 変える前 |
 |---|---|---|
 | 2026-09-04 17:40 | 枝名 `kobo_anken_jizokuka` で引き継ぎを初版保存（リポジトリ＋Drive 2本） | 無し |
-| 2026-09-04 18:08 | **枝名を `kobo_anken_jizokuka_kokyaku` に改名し、目的を「顧客向けの申請補助案内の企画」に書き換えた。** 旧名の Drive 2本はゴミ箱へ（§6） | 自社申請の作業を前提にしていた。未回答4点を伺う設計だった |
+| 2026-09-04 18:01 | **枝名を `kobo_anken_jizokuka_kokyaku` に改名し、目的を「顧客向けの申請補助案内の企画」に書き換えた。** 旧名の Drive 2本はゴミ箱へ（§6） | 自社申請の作業を前提にしていた。未回答4点を伺う設計だった |
 | 2026-09-04 | GビズID書類申請の所要を「最大1か月」に改めた | 分岐元・企画案は「数週間」 |
 | 2026-09-04 | 適用するマニュアルを配布元の v41 にした（CLAUDE.md は v17 参照のまま・未修正） | v17 |
 
