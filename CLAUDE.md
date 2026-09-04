@@ -215,4 +215,12 @@ Artifact は Claude Code の右側ペインで開き、共有もできる。
 | 中身 | URL | 元ファイル |
 |---|---|---|
 | 公募ボード（週次巡回が更新） | https://claude.ai/code/artifact/d7ef2e57-991a-4997-82ba-572bd1a1ba45 | `reports/dashboard.html` |
-| **おまつり歳時記 進行盤** | https://claude.ai/code/artifact/604bc596-e160-44a6-8b92-8ea6b305fb58 | このセッションで作成 |
+| **おまつり歳時記 進行盤** | https://claude.ai/code/artifact/604bc596-e160-44a6-8b92-8ea6b305fb58 | `docs/omatsuri/submit/omatsuri_shinko_ban.html` |
+
+### セッションの守備範囲（2026-09-04 生島様の指示）
+
+> 「このセッションではお祭り歳時記のことだけをやります」
+
+**枝 `kobo_anken_omatsuri` のセッションは、おまつり歳時記だけを扱う。**
+東京都の希望申請・持続化補助金・定期受付・週次巡回は**このセッションの対象外**とし、台帳と `docs/omatsuri/submit/omatsuri_tsugi_no_yotei.md` に記録したうえで親セッションへ渡す。
+**進行盤（Artifact）にも、おまつり歳時記以外を載せない。**

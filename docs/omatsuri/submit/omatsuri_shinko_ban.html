@@ -1,0 +1,448 @@
+<title>おまつり歳時記 進行盤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap">
+
+<style>
+  :root{
+    --paper:#f5f6f8;
+    --card:#ffffff;
+    --sunk:#eceef2;
+    --rule:#d9dde5;
+    --rule-soft:#e8ebf0;
+    --ink:#171b22;
+    --ink-2:#3d4553;
+    --muted:#6b7482;
+    --ai:#2b4a7d;        /* 藍 — 構造・見出し */
+    --ai-soft:#e7edf6;
+    --shu:#b23a2c;       /* 朱 — 朱肉／朱書き。切迫と失注にだけ使う */
+    --shu-soft:#fbecea;
+    --matsu:#3f6f54;     /* 松葉 — 完了 */
+    --matsu-soft:#e8f1eb;
+    --kohaku:#8a6420;    /* 琥珀 — 未回答・保留 */
+    --kohaku-soft:#f8f0dd;
+    --shadow:0 1px 2px rgba(23,27,34,.06), 0 8px 24px -16px rgba(23,27,34,.28);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1319;
+      --card:#161b23;
+      --sunk:#1c222b;
+      --rule:#2b333f;
+      --rule-soft:#232a34;
+      --ink:#e9ecf1;
+      --ink-2:#c2c9d4;
+      --muted:#8e98a7;
+      --ai:#8fb2e0;
+      --ai-soft:#1a2636;
+      --shu:#e58a7c;
+      --shu-soft:#2e1c1a;
+      --matsu:#8cc4a3;
+      --matsu-soft:#17261d;
+      --kohaku:#d9b46a;
+      --kohaku-soft:#2a2318;
+      --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -18px rgba(0,0,0,.9);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1319; --card:#161b23; --sunk:#1c222b; --rule:#2b333f; --rule-soft:#232a34;
+    --ink:#e9ecf1; --ink-2:#c2c9d4; --muted:#8e98a7;
+    --ai:#8fb2e0; --ai-soft:#1a2636; --shu:#e58a7c; --shu-soft:#2e1c1a;
+    --matsu:#8cc4a3; --matsu-soft:#17261d; --kohaku:#d9b46a; --kohaku-soft:#2a2318;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -18px rgba(0,0,0,.9);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    font-size:14.5px; line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1020px; margin:0 auto; padding:34px 22px 72px;
+        display:flex; flex-direction:column; gap:34px}
+  .mono{font-family:"Roboto Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+        font-variant-numeric:tabular-nums}
+
+  /* ── 見出し ── */
+  .masthead{display:flex; flex-direction:column; gap:10px;
+            border-bottom:2px solid var(--ink); padding-bottom:16px}
+  .eyebrow{font-size:11.5px; letter-spacing:.16em; color:var(--muted);
+           text-transform:uppercase; font-weight:500}
+  h1{font-family:"Zen Old Mincho",serif; font-weight:700;
+     font-size:clamp(25px,4.4vw,36px); line-height:1.28; margin:0;
+     text-wrap:balance; letter-spacing:.01em}
+  .sub{color:var(--ink-2); max-width:62ch; margin:0}
+  .stamp{display:flex; flex-wrap:wrap; gap:8px 18px; align-items:baseline;
+         font-size:12.5px; color:var(--muted)}
+  .stamp b{color:var(--ink-2); font-weight:500}
+
+  /* ── いま効いている3つ ── */
+  .now{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(258px,1fr))}
+  .now-item{background:var(--card); border:1px solid var(--rule); border-radius:3px;
+            padding:15px 16px 15px 19px; position:relative; box-shadow:var(--shadow);
+            display:flex; flex-direction:column; gap:6px}
+  .now-item::before{content:""; position:absolute; inset:0 auto 0 0; width:4px;
+                    background:var(--tone,var(--ai))}
+  .now-when{font-size:11.5px; letter-spacing:.08em; color:var(--tone,var(--ai));
+            font-weight:700}
+  .now-title{font-weight:700; font-size:15px; line-height:1.5; text-wrap:balance}
+  .now-body{font-size:13px; color:var(--ink-2); margin:0}
+
+  /* ── 節 ── */
+  section{display:flex; flex-direction:column; gap:14px}
+  h2{font-family:"Zen Old Mincho",serif; font-size:19px; font-weight:700; margin:0;
+     display:flex; align-items:baseline; gap:11px}
+  h2 .idx{font-family:"Roboto Mono",monospace; font-size:12px; color:var(--muted);
+          font-weight:500; letter-spacing:.06em}
+  .lead{margin:0; color:var(--ink-2); max-width:66ch}
+
+  /* ── 関門の階段（順序に意味がある） ── */
+  .gates{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
+  .gate{display:grid; grid-template-columns:96px 22px 1fr; gap:0 14px;
+        padding:13px 0; border-top:1px solid var(--rule-soft); align-items:start}
+  .gate:first-child{border-top:none}
+  .gate-date{font-size:12.5px; color:var(--ink-2); padding-top:2px; font-weight:500}
+  .gate-date small{display:block; color:var(--muted); font-weight:400; font-size:11.5px}
+  .track{position:relative; display:flex; justify-content:center; padding-top:5px}
+  .track::before{content:""; position:absolute; top:0; bottom:-13px; width:1.5px;
+                 background:var(--rule)}
+  .gate:last-child .track::before{bottom:50%}
+  .dot{position:relative; width:11px; height:11px; border-radius:50%;
+       background:var(--paper); border:2px solid var(--rule); margin-top:4px}
+  .gate[data-state="done"] .dot{background:var(--matsu); border-color:var(--matsu)}
+  .gate[data-state="live"] .dot{background:var(--shu); border-color:var(--shu);
+       box-shadow:0 0 0 4px var(--shu-soft)}
+  .gate-main{display:flex; flex-direction:column; gap:3px; min-width:0}
+  .gate-name{font-weight:700; font-size:14.5px}
+  .gate-note{font-size:13px; color:var(--ink-2); margin:0}
+  .gate-note em{font-style:normal; color:var(--shu); font-weight:700}
+  .tag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em;
+       padding:1px 7px; border-radius:2px; vertical-align:2px; margin-left:7px}
+  .tag.done{background:var(--matsu-soft); color:var(--matsu)}
+  .tag.wait{background:var(--sunk); color:var(--muted)}
+  .tag.act{background:var(--shu-soft); color:var(--shu)}
+
+  /* ── 表 ── */
+  .tablewrap{overflow-x:auto; border:1px solid var(--rule); border-radius:3px;
+             background:var(--card); box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; min-width:620px; font-size:13.5px}
+  th,td{text-align:left; padding:11px 14px; border-top:1px solid var(--rule-soft);
+        vertical-align:top}
+  thead th{border-top:none; background:var(--sunk); font-size:11.5px; font-weight:700;
+           letter-spacing:.07em; color:var(--muted); white-space:nowrap}
+  td.due{white-space:nowrap; font-weight:700}
+  td.due small{display:block; font-weight:400; color:var(--muted); font-size:11.5px}
+  tr[data-tone="shu"] td.due{color:var(--shu)}
+  tr[data-tone="ai"] td.due{color:var(--ai)}
+  tr[data-tone="kohaku"] td.due{color:var(--kohaku)}
+  .name{font-weight:700; display:block; margin-bottom:2px}
+  .meta{color:var(--muted); font-size:12px}
+  .fit{display:inline-block; font-size:11px; font-weight:700; padding:1px 6px;
+       border-radius:2px; background:var(--ai-soft); color:var(--ai); white-space:nowrap}
+  .fit.no{background:var(--sunk); color:var(--muted)}
+
+  /* ── 未回答 ── */
+  .asks{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(276px,1fr))}
+  .ask{background:var(--kohaku-soft); border:1px solid var(--rule); border-radius:3px;
+       padding:14px 16px; display:flex; flex-direction:column; gap:7px}
+  .ask h3{margin:0; font-size:14px; font-weight:700; line-height:1.5}
+  .ask .deadline{font-size:11.5px; font-weight:700; color:var(--kohaku); letter-spacing:.04em}
+  .ask ol{margin:0; padding-left:1.15em; font-size:13px; color:var(--ink-2);
+          display:flex; flex-direction:column; gap:3px}
+
+  /* ── 申告 ── */
+  .miss{border:1px solid var(--shu); border-left-width:4px; border-radius:3px;
+        background:var(--shu-soft); padding:16px 18px;
+        display:flex; flex-direction:column; gap:9px}
+  .miss h3{margin:0; font-size:14.5px; font-weight:700; color:var(--shu)}
+  .miss p{margin:0; font-size:13.5px; color:var(--ink-2)}
+  .miss ul{margin:0; padding-left:1.15em; font-size:13.5px; color:var(--ink-2)}
+
+  .foot{border-top:1px solid var(--rule); padding-top:16px; color:var(--muted);
+        font-size:12px; display:flex; flex-direction:column; gap:5px}
+  a{color:var(--ai)}
+  :focus-visible{outline:2px solid var(--ai); outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+  @media (max-width:560px){
+    .gate{grid-template-columns:78px 20px 1fr}
+    .wrap{padding:26px 15px 56px; gap:28px}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">一般社団法人ジャパンプロモーション ／ 公募型プロポーザル</div>
+    <h1>おまつり歳時記 進行盤</h1>
+    <p class="sub">２０２７年国際園芸博覧会 主催者催事「おまつり歳時記プロジェクト（仮）」にかかる
+      実施計画作成業務委託。本業務の上限 1,430万円、後続の実施運営は 1.1〜4億円を単独随意契約の予定。</p>
+    <div class="stamp mono">
+      <span>基準 <b>2026-09-04 17:45 JST</b></span>
+      <span>協会サイト再取得 <b>2026-09-04 17:36</b>（公告時から変更なし）</span>
+      <span>この盤は<b>おまつり歳時記のみ</b>を扱う</span>
+    </div>
+  </header>
+
+  <div class="now">
+    <div class="now-item" style="--tone:var(--shu)">
+      <div class="now-when mono">本日 — 未確認</div>
+      <div class="now-title">発送後の電話連絡</div>
+      <p class="now-body">045-307-2065 へ。<b>要領に明記された義務</b>で、抜けると届いていても
+        受け付けられない恐れ。受付は平日 9〜12時／13〜17時。済んでいなければ月曜9時が最初の機会。</p>
+    </div>
+    <div class="now-item" style="--tone:var(--ai)">
+      <div class="now-when mono">9月10日（木）まで</div>
+      <div class="now-title">提案資格確認結果メールの受信</div>
+      <p class="now-body">宛先は <b>ikushima@japanpromotion.org</b>。
+        資格が認められれば<b>業務説明資料</b>が併せて届く。
+        <b>10日を過ぎても届かないときは放置せず 045-307-2065 へ。</b></p>
+    </div>
+    <div class="now-item" style="--tone:var(--kohaku)">
+      <div class="now-when mono">9月10日（木）まで</div>
+      <div class="now-title">管理技術者・担当技術者の指名</div>
+      <p class="now-body"><b>兼任不可</b>。この2名が決まらないと参考様式3〜5が1枚も書けない。
+        業務実績20点は2名それぞれで判定され、最大8点の差がつく。</p>
+    </div>
+  </div>
+
+  <section>
+    <h2><span class="idx">01</span>関門</h2>
+    <p class="lead">協会が公表したスケジュール。<strong>関門は順番に開き、前を通らないと次に進めない。</strong>
+      出典は案件ページ（2026-09-04 17:36 JST 再取得）と提案書作成要領。</p>
+    <ul class="gates">
+      <li class="gate" data-state="done">
+        <div class="gate-date mono">9月7日<small>月・17時必着</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">参加意向申出書・秘密保持誓約書<span class="tag done">発送済</span></span>
+          <p class="gate-note">9月4日に書留で発送。送付状／参加意向申出書（第1号様式）／誓約書（参考様式1）／
+            業務実績の契約書の写し／守秘義務誓約書（参考様式10-1）の5点。</p>
+        </div>
+      </li>
+      <li class="gate" data-state="live">
+        <div class="gate-date mono">9月10日<small>木・まで</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">提案資格確認結果通知（電子メール）<span class="tag act">受信確認</span></span>
+          <p class="gate-note">宛先は <span class="mono">ikushima@japanpromotion.org</span>。
+            資格が認められれば、第6号様式と<strong>業務説明資料</strong>が併せて届く。
+            <em>10日を過ぎても届かないときは放置せず電話する。</em></p>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="gate-date mono">9月17日<small>木・17時</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">質問書（参考様式2）締切</span>
+          <p class="gate-note"><strong>メール提出・word形式・送信後に必ず電話連絡。</strong>
+            主題は「参加条件3(2)イ／評価基準②にいう<strong>国際博覧会</strong>がBIE認定に限られるか」。
+            ここで業務実績20点のうち<strong>最大8点</strong>が決まる。</p>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="gate-date mono">9月24日<small>木・まで</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">質問回答<span class="tag wait">待ち</span></span>
+          <p class="gate-note">回答を提案書へ反映する。</p>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="gate-date mono">9月29日<small>火・17時</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">提案書一式 締切</span>
+          <p class="gate-note">第5号様式・参考様式3〜6・8・持続可能性チェックシート。
+            <strong>持参または書留郵送。メール不可。</strong>
+            提案内容は A3もしくはA4（併用可）・片面10頁以内・原則11ポイント。</p>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="gate-date mono">10月上旬<small>〜中旬</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">ヒアリング・評価委員会</span>
+          <p class="gate-note">配点40点。<strong>実施しなかった場合はC評価（24点）</strong>になる。
+            提案内容とヒアリングにD・E評価があると原則として選定されない。</p>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="gate-date mono">10月下旬<small>以降</small></div>
+        <div class="track"><span class="dot"></span></div>
+        <div class="gate-main">
+          <span class="gate-name">結果通知 → 契約締結</span>
+          <p class="gate-note">履行期限は12月28日（月）。</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="idx">02</span>資料を待たずに進められること</h2>
+    <p class="lead">業務説明資料が届くのは9月10日前後。そこから提案書まで<strong>19日</strong>しかない。
+      届いてから始めると間に合わない。</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>期限</th><th>やること</th><th>なぜ今か</th></tr></thead>
+        <tbody>
+          <tr data-tone="shu">
+            <td class="due mono">9/10</td>
+            <td><span class="name">管理技術者・担当技術者を決める</span>
+              <span class="meta">参考様式3・4・5</span></td>
+            <td><strong>兼任不可。</strong>人が決まらないと様式が1枚も書けない</td>
+          </tr>
+          <tr data-tone="ai">
+            <td class="due mono">9/17</td>
+            <td><span class="name">②「国際博覧会における行催事」の実績を洗い出す</span>
+              <span class="meta">候補：熊本県庁 パリJAPAN EXPO ステージ出演／東京都中小企業振興公社
+                ジャパンエキスポ WABI SABI／九州経済連合会 ラグビーW杯欧州プロモーション</span></td>
+            <td>①かつ②でA（10点）、①または②でC（6点）。<strong>2名分で最大8点差</strong></td>
+          </tr>
+          <tr data-tone="ai">
+            <td class="due mono">9/17</td>
+            <td><span class="name">質問書の案を固める</span></td>
+            <td>「国際博覧会」の範囲が確定しないと、上の②が使えるか決まらない</td>
+          </tr>
+          <tr data-tone="kohaku">
+            <td class="due mono">9/29</td>
+            <td><span class="name">一般事業主行動計画2件を策定し労働局へ届け出る</span>
+              <span class="meta">次世代育成支援対策推進法／女性活躍推進法</span></td>
+            <td>WLB加点2点。<strong>従業員101人未満のみ加算。</strong>
+              評価方法(15)は見積金額を合計点で割るため、分母が増えて二重に効く</td>
+          </tr>
+          <tr data-tone="kohaku">
+            <td class="due mono">9/29</td>
+            <td><span class="name">障害者雇用の現況を確認する</span></td>
+            <td>従業員40人未満なら1人以上の雇用でWLB1点</td>
+          </tr>
+          <tr data-tone="kohaku">
+            <td class="due mono">9/29</td>
+            <td><span class="name">持続可能性チェックシートを記入する</span></td>
+            <td>提案書の添付物。資料を待たずに埋められる</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">03</span>決めていただくこと</h2>
+    <p class="lead">いずれも<strong>生島様しか決められない</strong>もの。
+      左の期限は「決まっていないと、その先の作業が始められなくなる日」。</p>
+    <div class="asks">
+      <div class="ask">
+        <div class="deadline mono">9月10日（木）まで</div>
+        <h3>管理技術者・担当技術者の指名</h3>
+        <ol>
+          <li>管理技術者 1名（<strong>参加企業に所属していること</strong>）</li>
+          <li>担当技術者 1名以上（<strong>管理技術者との兼任は不可</strong>）</li>
+        </ol>
+        <p class="gate-note" style="font-size:12.5px;margin:0">
+          この2名が決まらないと参考様式3（業務実施体制）・4（経歴等）・5（同種類似実績）が
+          1枚も書けない。<strong>業務実績20点は2名それぞれで判定される。</strong></p>
+      </div>
+      <div class="ask">
+        <div class="deadline mono">9月17日（木）まで</div>
+        <h3>業務実績として何を出すか</h3>
+        <ol>
+          <li>① 公益法人等発注・3,000人以上の計画策定＋実施運営</li>
+          <li>② 国際博覧会における日本伝統文化発信の行催事</li>
+        </ol>
+        <p class="gate-note" style="font-size:12.5px;margin:0">
+          <strong>①かつ②でA（10点）、①または②でC（6点）。2名分で最大8点差。</strong>
+          ①は東京手仕事 MAISON &amp; OBJET PARIS 2025（40,986,000円）で確定。
+          <strong>②に何を充てるかが未決。</strong></p>
+      </div>
+      <div class="ask">
+        <div class="deadline mono">9月29日（火）17時</div>
+        <h3>見積金額の方針</h3>
+        <ol>
+          <li>上限 14,300,000円（税込）／<strong>見積書は税抜で書く</strong></li>
+          <li>「令和田楽」の創作計画、トゥンクトゥンクねぶた1台・協賛ねぶた1台の製作費は<strong>除く</strong></li>
+        </ol>
+        <p class="gate-note" style="font-size:12.5px;margin:0">
+          評価方法(15)は<strong>見積金額 ÷ 合計点＝1点あたりの費用</strong>で、少ないほど優れているとする。
+          <strong>価格も効くが、純粋な価格勝負ではない。</strong></p>
+      </div>
+      <div class="ask">
+        <div class="deadline mono">10月上旬〜中旬</div>
+        <h3>ヒアリングの登壇者</h3>
+        <ol>
+          <li>理解力・専門技術力 20点</li>
+          <li>取り組み意欲 20点</li>
+        </ol>
+        <p class="gate-note" style="font-size:12.5px;margin:0">
+          <strong>配点40点は単独最大。実施しなかった場合はC評価（24点）になる。</strong>
+          提案内容とヒアリングに<strong>D・E評価があると原則として選定されない。</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">04</span>配点 ─ どこで点が動くか</h2>
+    <p class="lead">評価委員1名あたり<strong>206点</strong>。委員5名で1,030点満点。
+      出典は提案書評価基準（<span class="mono">03_hyoukakijyun2_omaturi.pdf</span>）。</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>評価項目</th><th>配点</th><th>段階</th><th>着目点</th></tr></thead>
+        <tbody>
+          <tr><td><span class="name">業務実績</span></td><td class="due mono">20</td>
+            <td class="mono meta">A/C/E</td>
+            <td>管理技術者10・担当技術者10。<strong>①かつ②でA、①または②でC</strong></td></tr>
+          <tr><td><span class="name">提案内容ア</span></td><td class="due mono">20</td>
+            <td class="mono meta">A〜E</td>
+            <td>博覧会の理念・テーマを理解し、来場者に訴求できるか</td></tr>
+          <tr data-tone="ai"><td><span class="name">提案内容イ</span></td><td class="due mono">30</td>
+            <td class="mono meta">A〜E</td>
+            <td><strong>日本各地のまつり団体を招聘し、これまでの実績とネットワークを駆使できるか</strong></td></tr>
+          <tr><td><span class="name">提案内容ウ</span></td><td class="due mono">20</td>
+            <td class="mono meta">A〜E</td>
+            <td>構成案を踏まえ、コンセプトを分かりやすく伝える演出か</td></tr>
+          <tr data-tone="ai"><td><span class="name">提案内容エ</span></td><td class="due mono">30</td>
+            <td class="mono meta">A〜E</td>
+            <td><strong>2027年1月以降の実施運営を見据えた人員確保・体制・スケジュール。安全な計画か</strong></td></tr>
+          <tr data-tone="shu"><td><span class="name">ヒアリング</span></td><td class="due mono">40</td>
+            <td class="mono meta">A〜E</td>
+            <td><strong>理解力・専門技術力20／取り組み意欲20</strong></td></tr>
+          <tr><td><span class="name">ワーク・ライフ・バランス等</span></td><td class="due mono">6</td>
+            <td class="mono meta">加点</td>
+            <td>一般事業主行動計画2件で2点。<strong>従業員101人未満のみ加算</strong></td></tr>
+          <tr data-tone="shu"><td><span class="name">業務遂行能力</span></td><td class="due mono">40</td>
+            <td class="mono meta">A/C/E</td>
+            <td><strong>事業経費の積算は妥当で、費用対効果が高いか</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lead"><strong>点の重心は「エ（実施運営を見据えた体制）30点」「ヒアリング40点」
+      「業務遂行能力＝積算40点」に寄っている。</strong>
+      合計110点、全体の53%。提案書の作り込みは、まずここに配分する。</p>
+  </section>
+
+  <footer class="foot">
+    <div>出典：協会 案件ページ（2026-09-04 17:36 JST 再取得・公告時から変更なし）
+      ／ 提案書作成要領 ／ 提案書評価基準 ／ <span class="mono">data/ledger.csv</span>（269行・<span class="mono">bin/days_left.py</span> で再計算）
+      ／ リマインダー3件は実際に取得して確認</div>
+    <div>提出先：公益社団法人２０２７年国際園芸博覧会協会 行催事部 行催事課（藤田・山中・宮下）
+      〒231-0013 横浜市中区住吉町１丁目13番 松村ビル本館 ／ <span class="mono">045-307-2065</span></div>
+    <div>他の案件（東京都の希望申請・持続化補助金・定期受付）はこの盤の対象外。
+      台帳 <span class="mono">data/ledger.csv</span> と
+      <span class="mono">docs/omatsuri/submit/omatsuri_tsugi_no_yotei.md</span> に記録済み。</div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var now = new Date();
+    document.querySelectorAll('[data-left]').forEach(function (el) {
+      var t = new Date(el.getAttribute('data-left'));
+      var ms = t - now;
+      if (isNaN(t)) { el.textContent = '—'; return; }
+      if (ms <= 0) { el.textContent = '受付終了'; return; }
+      var h = ms / 3600000;
+      el.textContent = h < 48
+        ? Math.floor(h) + '時間'
+        : Math.floor(h / 24) + '日';
+    });
+  })();
+</script>
