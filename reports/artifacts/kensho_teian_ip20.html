@@ -1,0 +1,364 @@
+
+<title>案内の第20回適合検証</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#F6F7F5;--paper:#FFFFFF;--ink:#1C2A2E;--muted:#5F6E71;--rule:#D5DCDA;--accent:#0E6B71;--accent-soft:#E2F0F0;
+ --ok:#2F7A3E;--ok-bg:#E4F2E6;--warn:#9A5A0F;--warn-bg:#F7EBD6;--bad:#A3312B;--bad-bg:#F7E1DF;--quote:#F1F4F2;--code:#EEF1F0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111819;--paper:#182022;--ink:#E4EAE8;--muted:#9AABAE;--rule:#2E3A3D;--accent:#63C3C8;--accent-soft:#16383B;
+ --ok:#8ED39A;--ok-bg:#1E3A26;--warn:#F0B86B;--warn-bg:#3E2E15;--bad:#F09A94;--bad-bg:#43211F;--quote:#1E282A;--code:#20292B}}
+:root[data-theme="dark"]{--bg:#111819;--paper:#182022;--ink:#E4EAE8;--muted:#9AABAE;--rule:#2E3A3D;--accent:#63C3C8;--accent-soft:#16383B;
+ --ok:#8ED39A;--ok-bg:#1E3A26;--warn:#F0B86B;--warn-bg:#3E2E15;--bad:#F09A94;--bad-bg:#43211F;--quote:#1E282A;--code:#20292B}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Sans JP",system-ui,-apple-system,"Hiragino Sans",sans-serif;font-size:15px;line-height:1.85;margin:0}
+.wrap{max-width:52rem;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+.sheet{background:var(--paper);border:1px solid var(--rule);padding:2.5rem clamp(1.25rem,4vw,3rem)}
+h1{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:700;font-size:1.65rem;line-height:1.45;margin:0 0 1.25rem;text-wrap:balance;letter-spacing:.01em}
+h2{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;font-weight:700;font-size:1.25rem;margin:2.75rem 0 .9rem;padding-top:1.1rem;border-top:2px solid var(--accent);text-wrap:balance}
+h3{font-size:1.02rem;font-weight:700;margin:1.8rem 0 .6rem;color:var(--accent)}
+p{margin:.6rem 0}
+ul,ol{padding-left:1.4rem;margin:.5rem 0}
+li{margin:.25rem 0}
+hr{border:0;border-top:1px solid var(--rule);margin:2rem 0}
+blockquote{margin:1.2rem 0;padding:1rem 1.25rem;background:var(--quote);border-left:3px solid var(--accent);color:var(--ink)}
+blockquote p{margin:.45rem 0}
+code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.86em;background:var(--code);padding:.1em .35em;border-radius:3px}
+pre{background:var(--code);padding:.9rem 1rem;overflow-x:auto;border-radius:4px;font-size:.84rem;line-height:1.6}
+pre code{background:none;padding:0}
+.tw{overflow-x:auto;margin:1rem 0;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;line-height:1.6;font-variant-numeric:tabular-nums}
+th,td{padding:.5rem .7rem;border-bottom:1px solid var(--rule);vertical-align:top;text-align:left}
+th{background:var(--accent-soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:.05em .55em;border-radius:999px;font-size:.82rem;font-weight:700;white-space:nowrap}
+.tag.ok{color:var(--ok);background:var(--ok-bg)}.tag.warn{color:var(--warn);background:var(--warn-bg)}.tag.bad{color:var(--bad);background:var(--bad-bg)}
+a{color:var(--accent);word-break:break-all}
+strong{font-weight:700}
+.meta{color:var(--muted);font-size:.85rem;letter-spacing:.04em;text-transform:none;margin-bottom:1.5rem;border-bottom:1px solid var(--rule);padding-bottom:1rem}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div class="wrap"><div class="sheet"><div class="meta">yixima/hojo · docs/jizokuka_kokyaku/kensho_teian_ip20_20260907.md</div><h1>「補助金申請サポートのご案内」（2026-03-24版）は第20回公募に当てはまるか — 検証と調整の提案</h1>
+<ul>
+<li>基準日時：2026-09-07 21:26 Mon JST（<code>./bin/today.sh</code> をシェル置換で埋め込み）</li>
+<li>検証対象：Drive「マイ iMac／営業／持続化補助金」の <code>補助金申請サポートのご案内.pdf</code>・<code>海外向け販売促進パッケージ.pdf</code>（いずれも 2026-03-24。第19回＝締切2026-04-30 向けに作成）</li>
+<li>突き合わせ先（一次資料・すべて【確認済】）</li>
+<li>小規模事業者持続化補助金＜一般型 通常枠＞<strong>第20回公募 公募要領 第8版（2026-07-21・44頁）</strong> https://r6.jizokukahojokin.info/doc/r6_koubover8_ip20.pdf → <code>docs/jizokuka_ippan/r6_koubover8_ip20.pdf</code></li>
+<li>同 <strong>第19回 公募要領 第6版（2026-03-06・42頁）</strong> https://r6.jizokukahojokin.info/doc/r6_koubover6_ip19.pdf → <code>docs/jizokuka_ippan/r6_koubover6_ip19.pdf</code></li>
+<li>第19回と第20回の本文を機械的に差分抽出（1,016行）。以下の「変わった」は、この差分に実際に現れたものだけを書いた</li>
+<li>扱い：<strong>読むだけ</strong>（§6 の案内文は Keynote へ貼る用の完成文）</li>
+</ul>
+<hr />
+<h2>0. 結論（5行）</h2>
+<ol>
+<li><strong>制度の骨格（一般型通常枠・補助率2/3・上限50万＋特例で最大250万・対象事業者の従業員数）は変わっていない。</strong> 案内の基本線はそのまま使える。</li>
+<li><strong>案内の記載のうち5か所が第20回では誤りになる。</strong> 締切日程／ウェブサイト関連費の上限（1/4・50万 → <strong>30万円</strong>）／<strong>広報費にも30万円の上限が新設</strong>／賃金引上げ特例の要件（最低賃金＋50円 → <strong>1人あたり給与支給総額＋3.0%</strong>）／「毎年2回募集」の記述（第20回は年1回の間隔）。</li>
+<li><strong>販売ツール制作セット（654,000円）は、カタログ＝広報費、オンラインストア＝ウェブサイト関連費に分かれ、それぞれ上限30万円がかかる。</strong> 3月版の試算（補助436,000円）は、<strong>カタログとストアの内訳がどちらも45万円以下なら成立する</strong>が、片方に偏ると補助が最大136,000円減る。<strong>内訳を見積書で明示する</strong>必要がある。</li>
+<li><strong>第三者支援（行政書士）の申告義務が厳格化した。</strong> 様式2に支援者と「着手金・成功報酬など名目を問わない金額」を書かないと不採択・取消。案内にはこの1行が要る。</li>
+<li><strong>調整は「案内の書き換え」だけでは足りない。商品側の設計変更が3つ必要</strong>：①カタログとストアを<strong>別契約・各50万円以下</strong>にする（1件50万円超は2者見積が必要になった）②<strong>海外展示会出展（当社の本業）を同じ申請に組み込む</strong>と、上限50万〜250万円を使い切れる ③スケジュールを<strong>交付決定（2027年4〜5月見込み）〜2028年3月31日</strong>に合わせる。</li>
+</ol>
+<hr />
+<h2>1. 案内の記載を1行ずつ突き合わせた結果</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>案内（3月版）の記載</th>
+<th>第20回 公募要領</th>
+<th>判定</th>
+<th>直し方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>制度名：一般型 通常枠</td>
+<td>同じ</td>
+<td><span class="tag ok">適合</span></td>
+<td>そのまま</td>
+</tr>
+<tr>
+<td>2</td>
+<td>補助率2/3・上限50万・インボイス特例＋50万・賃金引上げ特例＋150万・両特例で最大250万</td>
+<td>同じ（P.7）。賃金引上げ特例の<strong>赤字事業者は3/4</strong></td>
+<td><span class="tag ok">適合</span></td>
+<td>「赤字事業者は補助率3/4」を追記してもよい</td>
+</tr>
+<tr>
+<td>3</td>
+<td>賃金引上げ特例の中身（案内は金額しか書いていない）</td>
+<td><strong>要件が変わった</strong>。第19回「事業場内最低賃金＋50円」→ 第20回「<strong>2027-04-01〜2028-03-31 の12か月と前年同月の12か月を比べ、従業員1人あたり給与支給総額を年平均3.0%以上増やす</strong>」。目標値を採択後に従業員へ表明。賃金台帳12か月分×2回の提出。<strong>従業員がいない事業者は対象外</strong>（算定できない）</td>
+<td><span class="tag warn">要注意</span></td>
+<td>「＋150万」を前面に出さない。<strong>従業員のいる事業者だけが対象</strong>と明記。工芸の個人作家は多くが対象外</td>
+</tr>
+<tr>
+<td>4</td>
+<td>活用例：海外展示会出展（出展料・通訳・旅費）</td>
+<td>④展示会等出展費：出展料・運搬費・通訳料・翻訳料。<strong>出展申込みは交付決定前でも可</strong>、ただし<strong>請求書発行日・支払日が交付決定日より前だと対象外</strong>。開催が補助事業期間外なら対象外（P.14-15）。⑤旅費：エコノミー・宿泊代は可。日当・タクシー・ビジネスクラス不可、<strong>必要最低限の人数のみ</strong></td>
+<td><span class="tag ok">適合</span></td>
+<td>「申込みは先にできる。支払いは交付決定後」を追記</td>
+</tr>
+<tr>
+<td>5</td>
+<td>活用例：海外向けHP制作（多言語サイト・越境EC・販促動画・海外SEO）</td>
+<td>③ウェブサイト関連費に「商品販売のためのウェブサイト作成」「掲載する画像・動画の作成費」が明記。ただし<strong>上限30万円（税込）・単独申請不可</strong>（P.13）。SEO・動画も同じ枠</td>
+<td><span class="tag bad">要修正</span></td>
+<td>「30万円が上限」に書き換え。動画・SEOを足しても枠は増えないと明記</td>
+</tr>
+<tr>
+<td>6</td>
+<td>対象事業者：商業・サービス業5人以下／製造業その他20人以下</td>
+<td>同じ（P.4）。宿泊・娯楽業は20人以下</td>
+<td><span class="tag ok">適合</span></td>
+<td>そのまま</td>
+</tr>
+<tr>
+<td>7</td>
+<td>締切：2026-04-30 17:00／様式4発行締切 2026-04-16</td>
+<td><strong>申請受付 2026-11-05（木）〜12-15（火）17:00／様式4発行受付締切 2026-12-04（金）</strong>（P.3・P.22）。要領内で12/15の曜日が「火」と「木」で食い違うが、2026-12-15は火曜</td>
+<td><span class="tag bad">要修正</span></td>
+<td>日程を差し替え。<strong>様式4は商工会議所・商工会が発行し、締切後はいかなる理由でも発行されない</strong>ことを追記</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ウェブサイト関連費のみ不可・申請額の1/4・最大50万</td>
+<td>「のみ不可」は同じ。<strong>上限は30万円（税込）に変更</strong>（第19回「1/4・最大50万」の文言が削除された）</td>
+<td><span class="tag bad">要修正</span></td>
+<td>「30万円（税込）」に書き換え</td>
+</tr>
+<tr>
+<td>9</td>
+<td>支援内容：行政書士による経営計画の整理・文章化・書類作成支援</td>
+<td>注意事項（P.1）：「<strong>事業者自らが検討している記載が見られない場合は不採択・取消</strong>」「第三者の支援を受けているのに様式2に<strong>相手方と金額（着手金・成功報酬など名目を問わず）</strong>を書かないと虚偽報告」「第三者支援者にヒアリング・現地調査あり」。GビズIDの共有は規約違反</td>
+<td><span class="tag bad">要修正</span></td>
+<td>「代行」に読める表現を避け、「<strong>事業者自身が策定する計画の整理を支援</strong>」とする。<strong>様式2に支援者名と報酬を申告する</strong>旨と、GビズIDは事業者本人が操作する旨を追記</td>
+</tr>
+<tr>
+<td>10</td>
+<td>支援費用：着手金5万円＋採択額の15%</td>
+<td>金額規制はない。ただし「サービス内容と乖離した高額なアドバイス料金」への注意喚起（P.1）と申告義務</td>
+<td><strong>適合（申告が条件）</strong></td>
+<td>金額はそのまま。申告する旨を1行</td>
+</tr>
+<tr>
+<td>11</td>
+<td>近年は毎年2回募集</td>
+<td>第19回（4月締切）→第20回（12月締切）と<strong>約8か月空いた</strong>。「次回はいつ」は第20回締切後に案内（P.3）</td>
+<td><span class="tag bad">要修正</span></td>
+<td>「次回の時期は未定」に改める</td>
+</tr>
+<tr>
+<td>12</td>
+<td>不採択時は次回の着手金無料</td>
+<td>制度上の制約なし。ただし<strong>第20回で採択された事業者は、事業効果報告の提出後さらに1年間は再申請できない</strong>（P.5）</td>
+<td>適合</td>
+<td>そのまま。再申請制限は採択後の注意として案内の外へ</td>
+</tr>
+<tr>
+<td>13</td>
+<td>試算：ツール654,000円→補助436,000円</td>
+<td>広報費上限30万＋ウェブ費上限30万（各2/3）＋通常枠上限50万</td>
+<td><span class="tag warn">条件付きで成立</span></td>
+<td>§2</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>2. 試算の検証（654,000円の内訳しだいで変わる）</h2>
+<p>前提：カタログ（印刷物）＝②広報費、オンラインストア＝③ウェブサイト関連費。各経費区分の補助金交付申請額の上限30万円（税込）。補助率2/3。通常枠上限50万円。</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>カタログ</th>
+<th>ストア</th>
+<th>補助額</th>
+<th>3月版（436,000円）との差</th>
+<th>2者見積</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>654,000</td>
+<td>0</td>
+<td>300,000</td>
+<td>−136,000</td>
+<td>要（1件50万円超）</td>
+</tr>
+<tr>
+<td>450,000</td>
+<td>204,000</td>
+<td>436,000</td>
+<td>±0</td>
+<td>不要</td>
+</tr>
+<tr>
+<td>327,000</td>
+<td>327,000</td>
+<td>436,000</td>
+<td>±0</td>
+<td>不要</td>
+</tr>
+<tr>
+<td>204,000</td>
+<td>450,000</td>
+<td>436,000</td>
+<td>±0</td>
+<td>不要</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>どちらか一方が45万円を超えると補助が減り始める。</strong> 3月版の試算は「内訳がほぼ半々」なら第20回でも正しい。</li>
+<li><strong>発注1件あたり50万円（税込）超は2者以上の見積が必要</strong>（第19回は100万円超。P.22）。654,000円を1本の契約にすると、顧客は当社以外の見積を取らねばならない。</li>
+<li><strong>広報費のみ・ウェブ費のみの申請は不可。広報費＋ウェブ費の2区分だけで「ほかの経費と一緒」の要件を満たすかは、要領に明文がない。</strong> → §7 で事務局確認事項にした。展示会出展費か旅費を1項目足せば、この論点自体が消える。</li>
+</ul>
+<hr />
+<h2>3. 第20回で新たに効く条項（案内に無く、追記が要るもの）</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>条項</th>
+<th>内容</th>
+<th>案内への影響</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>補助対象事業の要件（4）新設</td>
+<td><strong>事業効果報告時の売上高・売上総利益が補助事業終了時より増加する見込み</strong>を、市場・顧客分析と数値根拠つきで様式2に書く（P.6）</td>
+<td>「海外販売の売上見込み」を数字で書く支援が要る。当社の実績（成約率12.2%等）は根拠に使える</td>
+</tr>
+<tr>
+<td>補助事業実施期間</td>
+<td><strong>交付決定日〜2028-03-31</strong>。実績報告 2028-04-10。採択発表 2027年3月頃、交付決定はその1〜2か月後（P.3・P.24）</td>
+<td>ツール制作・出展とも<strong>2027年4〜5月以降に発注・支払い、2028-03-31までに完了</strong>。JAPAN EXPO PARIS 2027（7月）は期間内。2028年4月以降の展示会は使えない</td>
+</tr>
+<tr>
+<td>見積書の提出期限</td>
+<td>2028-02-29（P.3）</td>
+<td>採択後、当社が見積書を出す期限</td>
+</tr>
+<tr>
+<td>広報費の範囲拡大</td>
+<td>ネット広告・SNS広告・電子パンフレット・宣伝用画像動画が③から②広報費へ移動（P.12）</td>
+<td>「販促動画」は広報費30万枠。ウェブ枠とは別枠なので、使い分けで合計60万まで</td>
+</tr>
+<tr>
+<td>再申請制限</td>
+<td>第20回採択者は事業効果報告後さらに1年間は再申請不可（P.5）</td>
+<td>「毎回申請できる」とは案内しない</td>
+</tr>
+<tr>
+<td>加点</td>
+<td>一般事業主行動計画策定加点・くるみん等・経営力向上計画・事業承継（60歳以上＋後継者）・賃金引上げ加点（＋2.0%）など（P.33-40）</td>
+<td>支援メニューに「使える加点の棚卸し」を入れる</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>4. 商品・スキーム側の調整提案（案内文の書き換えより先に決めること）</h2>
+<h3>提案A：カタログとストアを別契約・別見積にし、各50万円以下にする</h3>
+<ul>
+<li>根拠：経費区分が別（②と③）で上限が別々に効く。1件50万円超の2者見積義務を避けられる。</li>
+<li>注意：<strong>分割発注と見なされないよう、成果物・納期・請求を実際に分ける</strong>（同じ日に同じ請求書で出さない）。▶要裏取り：2契約に分けることの可否／確信度〈未確認・推測〉／確認先〈補助金事務局 03-6634-9307〉／未確認で進めた場合〈交付決定後に1件と認定され、2者見積の不備で対象外になるリスク〉</li>
+</ul>
+<h3>提案B：「ツール制作セット＋海外展示会出展」を1つの補助事業として提案する</h3>
+<ul>
+<li>根拠：ツールだけでは補助は最大436,000円（上限50万に届かない）。<strong>④展示会等出展費＋⑤旅費には30万の上限がない</strong>ので、インボイス特例（上限100万）や両特例（250万）の事業者は出展費で枠を使い切れる。当社の本業（JAPAN EXPO PARIS・MAISON&amp;OBJET 等の出展支援）がそのまま補助対象になる。</li>
+<li>条件：出展料の<strong>請求・支払いが交付決定後</strong>（申込みは先でよい）。開催が2028-03-31まで。<strong>国の助成を受ける出展（JETRO等）との重複は不可</strong>。</li>
+<li>効果：「販売ツール」と「販売の場」を一体で提案でき、審査要件（4）の売上見込みも書きやすい。</li>
+</ul>
+<h3>提案C：スケジュールを第20回に合わせて2027年に置く</h3>
+<ul>
+<li>申請 2026-11-05〜12-15 → 採択 2027年3月頃 → 交付決定 2027年4〜5月頃 → 制作・出展 → 2028-03-31 完了 → 実績報告 2028-04-10。</li>
+<li>顧客への案内は<strong>「2027年の海外出展・海外販売に向けた準備を、いま申請する」</strong>という時間軸にする。</li>
+<li>様式4は商工会議所・商工会が発行する。<strong>発行依頼は12-04まで、多くの会議所は内部の受付期限をさらに前に置く</strong>【未確認・推測】→ 顧客には「11月中に商工会議所へ行く」と案内する。</li>
+</ul>
+<h3>提案D：支援スキーム（行政書士法人GOAL）の見せ方</h3>
+<ul>
+<li>「書類作成支援」ではなく「<strong>事業者が自ら策定する経営計画・補助事業計画の整理と数値根拠づくりの支援</strong>」と書く（P.1 の不採択条件を避ける）。</li>
+<li><strong>様式2に支援者名と報酬額を申告する</strong>ことを、顧客にも支援者にも前提として明記。</li>
+<li>GビズIDプライムは<strong>事業者本人が取得・操作</strong>する（第三者への開示は規約違反）。<strong>未取得なら書類申請で最大1か月</strong>（gbiz-id.go.jp 2026-07-09告知）。12-15 に間に合わせるには<strong>10月中に着手</strong>。</li>
+<li>対象になりにくい顧客（従業員なしの個人作家）には賃金引上げ特例を勧めない。インボイス特例（免税→登録事業者）は個人作家に当てはまりやすい。</li>
+</ul>
+<hr />
+<h2>5. 変更点だけを見た「変わらなかったもの」（安心材料）</h2>
+<ul>
+<li>一般型通常枠の名称・補助率2/3・上限50万・特例の金額・対象事業者の従業員数基準・電子申請のみ・GビズIDプライム必須・商工会議所地区／商工会地区の窓口分け・「ウェブ費のみ不可」・後払い・審査あり。</li>
+</ul>
+<hr />
+<h2>6. 修正後の案内文（全文・Keynote に貼る用）</h2>
+<blockquote>
+<p>表題：海外向け販売ツール制作セットのご依頼を検討する皆様へ　専門家による補助金申請サポートのご案内（2026年11月受付開始・第20回公募版）</p>
+<p>現在公募中の補助金で、本ツール制作と海外出展に活用できる補助金があります。弊社提携の行政書士事務所の専門家に、申請のサポートをご相談いただけます。</p>
+<p><strong>申請サポートを行う補助金の概要</strong>
+1. 制度名：小規模事業者持続化補助金＜一般型 通常枠＞（第20回公募）
+2. 補助額：通常枠 上限50万円。インボイス特例で＋50万円、賃金引上げ特例で＋150万円（両方で最大250万円）。※特例には要件があります（下記7）
+3. 補助率：2/3（賃金引上げ特例の赤字事業者は3/4）。補助金は後払い、審査あり
+4. 活用できる取組例：
+・海外展示会への出展（出展料・運搬費・通訳料・翻訳料、エコノミー航空券・宿泊費 ※国の助成を受ける出展は不可）
+・海外向け販売カタログ・販促動画（広報費：補助金申請額の上限30万円）
+・海外販売用オンラインストア・多言語サイト（ウェブサイト関連費：補助金申請額の上限30万円。この経費だけでの申請は不可）
+5. 対象事業者：商業・サービス業 従業員5人以下／製造業その他 従業員20人以下
+6. 公募スケジュール：申請受付 2026年11月5日（木）〜12月15日（火）17:00／事業支援計画書（様式4）の発行依頼は12月4日（金）まで（商工会議所・商工会が発行。締切後は発行されません）。採択発表は2027年3月頃、事業の実施は交付決定後〜2028年3月31日
+7. 重要な注意点：
+・経営計画・補助事業計画は事業者ご自身が策定するものです。専門家はその整理と数値根拠づくりを支援します
+・専門家の支援を受ける場合、申請書（様式2）に支援者名と報酬額を記載する義務があります（記載がないと不採択）
+・申請にはGビズIDプライムが必要です（事業者ご本人が取得・操作。取得に最大1か月）
+・賃金引上げ特例は「従業員1人あたり給与支給総額を年3%以上引き上げる」事業者が対象です。従業員のいない事業者は対象外です
+・出展料等の請求・支払いは交付決定後に行う必要があります（出展の申込みは先にできます）
+8. 支援内容：行政書士による経営計画の整理・文章化・数値根拠の整備・申請書類作成の支援、使える加点項目の確認
+9. 支援依頼費用：着手金5万円＋補助金採択額の15%（この金額は様式2に申告します）</p>
+<p><strong>補助金活用シミュレーション</strong>（カタログ制作327,000円＋オンラインストア327,000円＝654,000円の場合）
+・通常のご依頼：654,000円
+・補助金を活用した場合：補助額 436,000円（カタログ218,000円＋ストア218,000円）／支援依頼料 着手金50,000円＋成果報酬65,400円＝115,400円／最終的な支出 333,400円
+・海外展示会出展を加えた場合：出展費・旅費も2/3補助（上限は特例により50万〜250万円）
+※カタログとオンラインストアは別契約でお見積りします（各経費の上限30万円と、1件50万円超の2者見積要件に対応するため）</p>
+<p>・ご依頼の場合、行政書士事務所への着手金5万円がかかります。
+・着手のうえ不採択となった場合は、次回公募の申請サポートを着手金なしでご依頼いただけます（次回公募の時期は未定です）。</p>
+<p>まずはメールに記載のリンクより必要事項をご記入のうえお問合せください。支援法人である行政書士法人GOALのご担当者よりご連絡し、申請可能かのヒアリングのうえ支援を開始します。</p>
+</blockquote>
+<p>（図の指示：3月版のシミュレーション図は、左「通常の依頼 654,000」／右「補助金活用 333,400」の構図をそのまま使い、右側に「＋海外出展」の第3列を足す）</p>
+<hr />
+<h2>7. 事務局に確認すべき点（案内を配る前に）</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>確認事項</th>
+<th>確認先</th>
+<th>未確認で進めた場合のリスク</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>広報費＋ウェブサイト関連費の2区分だけの申請は「ウェブ費のみ／広報費のみ」の禁止に当たらないか</td>
+<td>商工会議所地区事務局 03-6634-9307（商工会地区は各商工会）</td>
+<td>2区分だけの顧客が形式不備になる</td>
+</tr>
+<tr>
+<td>2</td>
+<td>カタログとストアを別契約にした場合、「1件50万円超」の判定は契約単位でよいか</td>
+<td>同上</td>
+<td>交付決定後に1件と認定され、2者見積不備で対象外</td>
+</tr>
+<tr>
+<td>3</td>
+<td>海外展示会の出展料を主催者へ交付決定前に「申込み」だけ済ませ、請求・支払いを交付決定後にできるか（主催者側の支払条件）</td>
+<td>JAPAN EXPO 等の主催者</td>
+<td>出展料が対象外になる</td>
+</tr>
+<tr>
+<td>4</td>
+<td>商工会議所ごとの様式4の内部受付期限</td>
+<td>顧客の所在地の商工会議所・商工会</td>
+<td>12/4 に間に合わない</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>8. 次の一手</h2>
+<ol>
+<li>提案A〜Dの採否を生島様に決めていただく（とくにB：出展をセットにするか）</li>
+<li>決まった形で §6 の案内文を確定し、Keynote（<code>.key</code>）を生島様側で更新する（当社では .key を編集できない）</li>
+<li>§7 の1・2を事務局にメールで確認する（原則メール。文案は次回作成）</li>
+<li>顧客リスト（Drive「営業／顧客向け資料等」「リスト」）から第20回の対象候補を洗い出す</li>
+</ol></div></div>
