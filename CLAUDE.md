@@ -231,6 +231,7 @@ Artifact は Claude Code の右側ペインで開き、共有もできる。
 | 公募ボード（週次巡回が更新） | https://claude.ai/code/artifact/d7ef2e57-991a-4997-82ba-572bd1a1ba45 | `reports/dashboard.html` |
 | **おまつり歳時記 進行盤** | https://claude.ai/code/artifact/604bc596-e160-44a6-8b92-8ea6b305fb58 | `docs/omatsuri/submit/omatsuri_shinko_ban.html` |
 | **等級と種目の壁**（東京都 定期受付の判断） | https://claude.ai/code/artifact/55827a63-9c96-4992-8295-9cee3c590e19 | `reports/tokyo_teiki_uketsuke.html` |
+| **報告が途切れた2日間**（9/11 の停止事故の検証報告） | https://claude.ai/code/artifact/630da5f8-6eeb-4ec8-9c4b-65bb0e2c720e | `reports/report_chudan_20260911.html` |
 
 ### セッションの守備範囲（2026-09-04 生島様の指示）
 
