@@ -34,6 +34,8 @@ import html
 import re
 import subprocess
 import sys
+
+import heartbeat
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -294,6 +296,17 @@ def build(rows, now):
              '<div class="stamp"><div>生成<b>%s</b></div><div>台帳<b>%d</b></div>'
              '<div>いま決める<b>%d</b></div><div>進行中<b>%d</b></div></div></header>'
              % (now.strftime('%m.%d %H:%M'), len(rows), len(b['now']), len(b['going'])))
+
+    # **報告が途絶えていたら、途絶えていたことを画面の先頭に出す。**
+    # 止まったことに止まっている側が気づけないのが、2026-09-09〜11 の事故だった
+    beat_text, beat_bad = heartbeat.describe(now)
+    if beat_bad:
+        o.append('<div class="lede" style="border-left-color:var(--crit)">'
+                 '<p><strong>この画面の更新が途切れていました。</strong>%s。'
+                 '<b>毎朝08:00に自動で報告する仕組み（心拍）を入れ、'
+                 'その心拍が止まったときに、この赤い帯が出るようにしました。</b>'
+                 '空白の間に締切を迎えたものは、5番の「次年度候補」に日付順で入っています。</p></div>'
+                 % esc(beat_text))
 
     # ── 冒頭 ──
     lede = ['<div class="lede">']
