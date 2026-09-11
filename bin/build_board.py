@@ -796,10 +796,40 @@ TAIL = r"""<script>
 
 
 
+def audit_ledger(rows):
+    """**台帳の書式を点検する。壊れていたら止める。**
+
+    2026-09-05、別セッションが `締切` 欄に `2026-09-29 17:00` と日時を書き込み、
+    `parse_date()` が弾いて **その行の締切が「不明」に化けた。**
+    進行中の最重要案件から残り時間の表示が静かに消えていた。
+    **書式違反は、エラーにならずに情報を失わせる。**だから明示的に点検する。
+    """
+    ng = []
+    for i, r in enumerate(rows, start=2):          # 2 = ヘッダの次の行
+        d = (r.get('締切') or '').strip()
+        t = (r.get('締切時刻') or '').strip()
+        c = (r.get('締切確認日') or '').strip()
+        if re.match(r'\d{4}-\d{2}-\d{2}[ T]', d):
+            ng.append((i, '締切欄に日時が入っている（時刻は締切時刻欄へ）', d))
+        if t and not re.fullmatch(r'\d{1,2}:\d{2}', t):
+            ng.append((i, '締切時刻の書式が不正', t))
+        if c and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', c):
+            ng.append((i, '締切確認日の書式が不正', c))
+        if c and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', d):
+            ng.append((i, '確認日があるのに締切が日付でない', d))
+    return ng
+
+
 def main():
     now = today()
     td = now.date()
     rows = load()
+    ng = audit_ledger(rows)
+    if ng:
+        print('**台帳の書式に問題がある。直してから作り直すこと。**')
+        for line, why, val in ng:
+            print('  %d行目 %s: %r' % (line, why, val))
+        sys.exit(2)
     b, body = build(rows, now)
     if '--check' in sys.argv:
         for k in ('now', 'unverified', 'going', 'coming', 'watch', 'grade',

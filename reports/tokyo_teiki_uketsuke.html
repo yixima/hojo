@@ -1,0 +1,298 @@
+<title>等級と種目の壁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+/* 藍を軸にした配色。公募ボード（江戸紫）の姉妹だが、
+   こちらは「見張る画面」ではなく「一度だけ出す申請書」なので色を分けている。 */
+:root{
+  --ground:#F1F4F8;
+  --surface:#FFFFFF;
+  --surface-2:#E7ECF3;
+  --ink:#16202E;
+  --ink-2:#46566B;
+  --muted:#77869A;
+  --line:#DBE2EB;
+  --line-strong:#BCC7D6;
+  --accent:#1F4E79;        /* 藍 */
+  --accent-soft:#E4EDF6;
+  --gain:#16624A;          /* 緑青。足せば取れるもの */
+  --gain-soft:#E2F0EA;
+  --loss:#8C2F27;          /* 錆。いま失っているもの */
+  --loss-soft:#F8E9E7;
+  --warn:#8A6410;
+  --warn-soft:#FBF2DF;
+  --shadow:0 1px 2px rgba(22,32,46,.06), 0 10px 28px -16px rgba(22,32,46,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F151D; --surface:#18212C; --surface-2:#212C3A;
+    --ink:#E9EEF5; --ink-2:#B6C3D2; --muted:#8494A7;
+    --line:#2A3644; --line-strong:#3D4C5E;
+    --accent:#7FB0DC; --accent-soft:#1B2C3D;
+    --gain:#6FC2A2; --gain-soft:#133026;
+    --loss:#E8918A; --loss-soft:#33201E;
+    --warn:#DDAE5B; --warn-soft:#33290F;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F151D; --surface:#18212C; --surface-2:#212C3A;
+  --ink:#E9EEF5; --ink-2:#B6C3D2; --muted:#8494A7;
+  --line:#2A3644; --line-strong:#3D4C5E;
+  --accent:#7FB0DC; --accent-soft:#1B2C3D;
+  --gain:#6FC2A2; --gain-soft:#133026;
+  --loss:#E8918A; --loss-soft:#33201E;
+  --warn:#DDAE5B; --warn-soft:#33290F;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.8; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px; margin:0 auto; padding:0 22px 80px; display:flex; flex-direction:column; gap:40px}
+.mono{font-family:"Roboto Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ── 見出し ─────────────────────────────── */
+header{padding:40px 0 0; display:flex; flex-direction:column; gap:20px}
+h1{
+  font-family:"Shippori Mincho",serif; font-weight:700; margin:0;
+  font-size:clamp(27px,4.4vw,38px); line-height:1.28; letter-spacing:.02em; text-wrap:balance;
+}
+.kicker{
+  font-size:11.5px; letter-spacing:.16em; color:var(--accent); font-weight:700;
+}
+.stand{color:var(--ink-2); font-size:15px; margin:0; max-width:62ch}
+.stand b{color:var(--ink)}
+
+/* 受付の窓 */
+.window{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+}
+.window div{background:var(--surface); padding:13px 16px}
+.window dt{font-size:11px; letter-spacing:.1em; color:var(--muted); margin-bottom:3px}
+.window dd{margin:0; font-size:15px; font-weight:500}
+.window .big{font-family:"Roboto Mono",monospace; font-size:27px; line-height:1.15; color:var(--accent); font-weight:500}
+.window .big.urgent{color:var(--loss)}
+
+/* ── 節 ─────────────────────────────────── */
+section{display:flex; flex-direction:column; gap:16px}
+h2{
+  font-family:"Shippori Mincho",serif; font-size:20px; font-weight:700; margin:0;
+  letter-spacing:.03em; padding-bottom:9px; border-bottom:1px solid var(--line-strong);
+}
+h2 .sub{font-family:"Zen Kaku Gothic New",sans-serif; font-size:12.5px; font-weight:400; color:var(--muted); margin-left:10px; letter-spacing:0}
+p{margin:0; max-width:66ch}
+
+/* いま持っている資格 */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:560px}
+th,td{padding:10px 15px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-size:11px; letter-spacing:.09em; color:var(--muted); background:var(--surface-2); white-space:nowrap; font-weight:700}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+.free{color:var(--gain); font-weight:700}
+
+/* 失っているもの */
+.loss-list{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden}
+.loss-row{
+  background:var(--surface); padding:13px 16px;
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 18px; align-items:baseline;
+}
+.loss-row .why{grid-column:1/-1; font-size:12.5px; color:var(--muted)}
+.loss-row .amt{font-family:"Roboto Mono",monospace; font-size:16px; font-weight:500; color:var(--loss); white-space:nowrap}
+.loss-row .amt.est{color:var(--warn)}
+.loss-row .nm{font-size:14px; font-weight:500}
+.blocker{
+  display:inline-block; margin-right:8px; padding:1px 7px; border-radius:2px;
+  font-family:"Roboto Mono",monospace; font-size:11px; font-weight:500;
+  background:var(--loss-soft); color:var(--loss); border:1px solid var(--loss);
+}
+.blocker.k{background:var(--warn-soft); color:var(--warn); border-color:var(--warn)}
+
+/* 判断ブロック */
+.decision{
+  background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent);
+  border-radius:0 4px 4px 0; padding:22px 24px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:14px;
+}
+.dhead{display:flex; gap:13px; align-items:baseline; flex-wrap:wrap}
+.tag{
+  flex:none; font-family:"Roboto Mono",monospace; font-size:13px; font-weight:500;
+  width:26px; height:26px; display:grid; place-items:center; border-radius:2px;
+  background:var(--accent); color:var(--surface);
+}
+:root[data-theme="dark"] .tag,
+:root:not([data-theme="light"]) .tag{color:#0F151D}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .tag{color:#fff}}
+.dhead h3{margin:0; font-size:17px; font-weight:700; line-height:1.5; flex:1 1 240px; text-wrap:balance}
+.rec{
+  padding:11px 15px; border-radius:3px; font-size:14px;
+  background:var(--gain-soft); border-left:2px solid var(--gain); color:var(--ink-2);
+}
+.rec b{color:var(--gain)}
+.rec.hold{background:var(--warn-soft); border-left-color:var(--warn)}
+.rec.hold b{color:var(--warn)}
+.pt{display:flex; flex-direction:column; gap:5px; font-size:13.5px; color:var(--ink-2)}
+.pt div{display:grid; grid-template-columns:5.5em minmax(0,1fr); gap:12px}
+.pt dt{font-size:11px; letter-spacing:.08em; color:var(--muted); padding-top:4px}
+.pt dd{margin:0}
+.pt b{color:var(--ink)}
+
+/* 手続き */
+ol.steps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden}
+ol.steps li{background:var(--surface); padding:13px 16px; display:grid;
+  grid-template-columns:6.5em minmax(0,1fr); gap:14px; align-items:baseline; font-size:13.5px}
+ol.steps .when{font-family:"Roboto Mono",monospace; color:var(--accent); font-weight:500; white-space:nowrap}
+ol.steps b{color:var(--ink)}
+
+.note{font-size:12.5px; color:var(--muted); max-width:70ch}
+footer{border-top:1px solid var(--line); padding-top:20px; font-size:12.5px; color:var(--muted);
+  display:flex; flex-direction:column; gap:6px}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">東京都 物品買入れ等 競争入札参加資格 ／ 令和9・10年度 定期受付</div>
+  <h1>等級と種目の壁</h1>
+  <p class="stand">御社は東京都の名簿に<b>登載済み</b>です。応募できない案件があるのは、登載の有無ではなく<b>等級がCであること</b>と<b>その営業種目を持っていないこと</b>の2つが理由です。<b>この2つを動かせる機会は、2年に一度の定期受付しかありません。</b></p>
+  <dl class="window">
+    <div><dt>受付開始まで</dt><dd class="big" id="d-open">—</dd></div>
+    <div><dt>受付終了まで</dt><dd class="big" id="d-close">—</dd></div>
+    <div><dt>受付期間</dt><dd class="mono">2026-09-14 → 10-30</dd></div>
+    <div><dt>新しい資格が使える日</dt><dd class="mono">2027-04-01</dd></div>
+    <div><dt>いまの資格の期限</dt><dd class="mono">2027-03-31</dd></div>
+  </dl>
+</header>
+
+<section>
+  <h2>いま持っているもの<span class="sub">受付番号 22104577 ／ 申請局 財務局・交通局・水道局・下水道局</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>種目</th><th>名称</th><th>登録している品目</th><th>等級順位</th><th>空き</th></tr></thead>
+    <tbody>
+      <tr><td class="n">115</td><td>広告代理</td><td class="n">07, 98</td><td class="n">C-0002-50</td><td class="n">品目 6</td></tr>
+      <tr><td class="n">116</td><td>映像等製作</td><td class="n">01, 03</td><td class="n">C-0050-66</td><td class="n">品目 6</td></tr>
+      <tr><td class="n">120</td><td>催事関係業務</td><td class="n">01, 03, 04, 98</td><td class="n">C-0000-33</td><td class="n">品目 4</td></tr>
+      <tr><td class="n">190</td><td>その他の業務委託等</td><td class="n">08</td><td class="n">C-0198-50</td><td class="n">品目 7</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">営業種目は<b>10種目・各8品目まで</b>。いま使っているのは<span class="free">4種目</span>で、<span class="free">6種目ぶん空いています</span>。<b>取得後の追加・変更は一切できません。</b>次に動かせるのは2028年秋です。</p>
+</section>
+
+<section>
+  <h2>この2週間で、壁に当たった案件<span class="sub">金額は入札経過調書の実額。推定はその旨を記載</span></h2>
+  <div class="loss-list">
+    <div class="loss-row">
+      <div class="nm"><span class="blocker">等級A</span>令和9年 東京消防出初式 運営支援（集合）</div>
+      <div class="amt">1億538万円</div>
+      <div class="why">令和7年度の同名案件をTSP太陽が<b>1者応札</b>で落札。毎年出る反復案件で、中身は御社の本業。</div>
+    </div>
+    <div class="loss-row">
+      <div class="nm"><span class="blocker">等級A</span>令和8・9年度 スタートアップエコシステムのプロモーション</div>
+      <div class="amt">3億7,400万円</div>
+      <div class="why">博報堂プロダクツが1者応札で落札。種目115は持っているが等級が届かない。</div>
+    </div>
+    <div class="loss-row">
+      <div class="nm"><span class="blocker">等級A</span>第39回 全国健康福祉祭東京大会 気運醸成事業</div>
+      <div class="amt est">3,000〜7,000万円</div>
+      <div class="why"><b>ねんりんピック東京2028の第1号発注。</b>前例がないため推定。都の「気運醸成」案件の実績は3,245万〜7,370万円。</div>
+    </div>
+    <div class="loss-row">
+      <div class="nm"><span class="blocker">等級B</span>「女性活躍推進に向けたイベント」運営等</div>
+      <div class="amt">219万4,500円</div>
+      <div class="why">令和7年度の同名案件。金額は小さい。</div>
+    </div>
+    <div class="loss-row">
+      <div class="nm"><span class="blocker k">種目134</span>令和8年「とうきょう こども アンケート」調査結果の分析</div>
+      <div class="amt est">非公開</div>
+      <div class="why"><b>等級ではなく種目が無い。</b>営業種目は「企画立案支援」で、御社の登録4種目に含まれない。</div>
+    </div>
+  </div>
+  <p class="note">8月31日の実測では、希望申請を受付中の28件のうち<b>等級不足で10件・種目未登録で10件</b>を逃していました。9月7日の実測では、御社の種目で受付中だった6件のうち<b>2件が等級A・Bで届きませんでした。</b></p>
+</section>
+
+<section>
+  <h2>決めていただく3点<span class="sub">8月31日にお伺いして以来、未回答</span></h2>
+
+  <div class="decision">
+    <div class="dhead"><span class="tag">a</span><h3>種目120「催事関係業務」に、品目05「都市装飾」を足すか</h3></div>
+    <dl class="pt">
+      <div><dt>現状</dt><dd>品目は 01（催事の企画から会場設営まで）・03（舞台照明等の演出）・04（会場運営・展示業務）・98（その他）の<b>4つ。8つまで取れます。</b></dd></div>
+      <div><dt>効き方</dt><dd>品目は等級と違い、<b>足しても他に影響しません。</b>該当する案件が指名の対象に入るだけです。</dd></div>
+      <div><dt>落とし穴</dt><dd>都市装飾は<b>施工寄り</b>で、`eligibility.md` [15]（施工単体は取らない）と方向が逆です。指名が増えても取りに行かない案件が増える可能性があります。</dd></div>
+    </dl>
+    <div class="rec"><b>足しておく。</b>枠が4つ空いており、足すことの費用はゼロ。取りに行くかどうかは案件ごとに決められます。<b>2年間動かせないことを考えると、選択肢を狭める理由がありません。</b></div>
+  </div>
+
+  <div class="decision">
+    <div class="dhead"><span class="tag">b</span><h3>営業種目そのものを足すか</h3></div>
+    <dl class="pt">
+      <div><dt>候補</dt><dd><b>134 企画立案支援</b>（9/7に1件、種目が無いために落としました）／101 印刷／114 運送等請負／105 警備・受付</dd></div>
+      <div><dt>落とし穴</dt><dd><b>申請した種目の売上高がゼロだと、その種目はX格（無格付）になります。</b>数を増やせばよいものではありません。X格は多くの案件で受付等級から外れます。</dd></div>
+      <div><dt>要確認</dt><dd><b>134「企画立案支援」に計上できる売上が、直近の決算にありますか。</b>あるなら足す価値があります。無ければX格になり、足す意味が薄くなります。</dd></div>
+    </dl>
+    <div class="rec hold"><b>134 企画立案支援だけを検討する。</b>他の3つは本業から遠く、X格を増やすだけになります。<b>まず売上の内訳をご確認ください。</b>そこが決まらないと判断できません。</div>
+  </div>
+
+  <div class="decision">
+    <div class="dhead"><span class="tag">c</span><h3>等級Cを上げられるか</h3></div>
+    <dl class="pt">
+      <div><dt>決まり方</dt><dd><b>客観点</b>（売上高・自己資本額・従業員数・流動比率・営業年数・障害者雇用率）と<b>主観点</b>（種目別売上高）を出し、<b>低いほうが採用されます。</b></dd></div>
+      <div><dt>効き方</dt><dd>ここが唯一、<b>1億円級の案件に手が届くようになる</b>項目です。出初式・ねんりんピック・国民文化祭は、いずれも等級A・Bが中心になる見込みです。</dd></div>
+      <div><dt>要確認</dt><dd><b>直近の決算書がまだ拝見できていません。</b>売上高・自己資本額・従業員数が分かれば、Bに届くかどうかをその場で判定できます。</dd></div>
+    </dl>
+    <div class="rec hold"><b>決算書をお預かりできれば判定します。</b>上げられるかどうかは計算で決まるもので、希望では動きません。<b>届かない場合でも、それが分かること自体が来期の目標になります。</b></div>
+  </div>
+</section>
+
+<section>
+  <h2>手続き<span class="sub">電子証明書は取得済みのはず。有効期限だけ要確認</span></h2>
+  <ol class="steps">
+    <li><span class="when">いますぐ</span><span><b>電子証明書の有効期限を確認する。</b>現在の資格を随時受付で取得しているため、お持ちのはずです。期限切れなら再取得に日数がかかります。</span></li>
+    <li><span class="when">いますぐ</span><span><b>直近の決算書をご用意ください。</b>(b)と(c)の判定に要ります。売上高・自己資本額・従業員数・流動比率・営業年数、そして<b>種目別の売上内訳</b>。</span></li>
+    <li><span class="when">09-14</span><span>受付開始。<b>初日に出す必要はありません</b>が、書類の不備で差し戻されると時間を失います。</span></li>
+    <li><span class="when">10-30</span><span><b>受付終了。ここを逃すと次は2028年秋です。</b></span></li>
+    <li><span class="when">2027-04-01</span><span>新しい資格が使えるようになる日。<b>それまでの間（2026年度後半）は今の資格で戦います。</b></span></li>
+  </ol>
+  <p class="note"><b>随時受付との違い。</b>随時受付は承認された翌月1日から使えますが、<b>定期受付をしないと2027年4月以降の資格が無くなります。</b>2027年度の国民文化祭・2028年度のねんりんピックは、定期受付で取った資格の期間に当たります。</p>
+</section>
+
+<footer>
+  <div>出典：令和8年7月29日付 東京都公報（特定調達公告版）／競争入札参加資格審査結果通知書（受付番号22104577）／東京都電子調達システムの入札経過調書。</div>
+  <div>金額に「推定」と書いたものは、同種案件の実績から見積もったものです。実額は入札経過調書から採っています。</div>
+  <div>手引の全体は <span class="mono">docs/tokyo_qualification.md</span>。</div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  // 残り日数は閲覧時に計算する。数値を直書きしない。
+  function todayJST(){
+    var n=new Date();
+    var j=new Date(n.getTime()+n.getTimezoneOffset()*60000+9*60*60000);
+    return new Date(j.getFullYear(),j.getMonth(),j.getDate());
+  }
+  var t=todayJST();
+  function put(id,y,m,d,label){
+    var el=document.getElementById(id); if(!el) return;
+    var days=Math.round((new Date(y,m-1,d)-t)/86400000);
+    if(days>0){ el.textContent=days+'日'; }
+    else if(days===0){ el.textContent='本日'; el.classList.add('urgent'); }
+    else { el.textContent='経過'; el.classList.add('urgent'); }
+    if(days>0&&days<=7) el.classList.add('urgent');
+  }
+  put('d-open',2026,9,14);
+  put('d-close',2026,10,30);
+})();
+</script>
