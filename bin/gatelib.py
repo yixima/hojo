@@ -53,6 +53,12 @@ DATE_PATS = [
     (re.compile(r'(20\d{2})[/\-.](\d{1,2})[/\-.](\d{1,2})'), 'seireki'),
 ]
 
+# **年を省いた日付。**日本の募集要領のスケジュール表は、先頭の1行にだけ年を書き、
+# 以降は「９月14日（月曜日）17時」のように月日だけを並べる書き方が非常に多い。
+# 2026-09-14、新潟県の案件でこれに当たり、**関門を1つも拾えなかった。**
+# 拾えないことはエラーにならず、「不一致の証拠が無い」が「一致」に化ける（§3-11）。
+MONTHDAY = re.compile(r'([0-9０-９]{1,2})\s*月\s*([0-9０-９]{1,2})\s*日')
+
 TIME_PATS = [
     (re.compile(r'正午'), lambda m: datetime.time(12, 0)),
     (re.compile(r'(\d{1,2})\s*[:：]\s*(\d{2})'), lambda m: datetime.time(int(m[1]), int(m[2]))),
@@ -93,8 +99,12 @@ def normalize(text):
     return re.sub(r'\n\s*\n+', '\n', t)
 
 
-def find_dates(t):
-    """本文中の日付を、重複を除いて出現順に返す。"""
+def find_dates(t, anchor=None):
+    """本文中の日付を、重複を除いて出現順に返す。
+
+    `anchor` は**年を省いた月日に貸す年**の基準日。行ごとに解析するため、
+    年は文書の先頭にしか書かれていないことが多い（§ MONTHDAY の注記）。
+    """
     seen, out = set(), []
     for pat, era in DATE_PATS:
         for m in pat.finditer(t):
@@ -116,6 +126,33 @@ def find_dates(t):
         if keep and s < keep[-1][1]:
             continue
         keep.append((s, e, d))
+
+    # 年を省いた月日を、**直前に現れた年つきの日付から年を借りて**拾う。
+    # 借りた結果が基準より前の月日になるなら、翌年へ送る（スケジュール表は前へ進む）。
+    # **借りる相手がいないときは拾わない。**年を当て推量しない。
+    if keep or anchor:
+        extra = []
+        for m in MONTHDAY.finditer(t):
+            if any(m.start() < e and s < m.end() for s, e, _ in keep):
+                continue                      # 年つきの日付と重なっている
+            try:
+                mo = int(m.group(1).translate(Z2H))
+                da = int(m.group(2).translate(Z2H))
+            except ValueError:
+                continue
+            before = [d for s, e, d in keep if e <= m.start()]
+            base = before[-1] if before else (keep[0][2] if keep else anchor)
+            if base is None:
+                continue
+            y = base.year
+            if (mo, da) < (base.month, base.day):
+                y += 1
+            try:
+                extra.append((m.start(), m.end(), datetime.date(y, mo, da)))
+            except ValueError:
+                continue
+        if extra:
+            keep = sorted(keep + extra)
     return keep
 
 
@@ -147,9 +184,25 @@ def _time_in(seg):
     return None
 
 
-def _line_gates(line, fwd, back):
+def _year_anchor(t):
+    """年が明記されている日付のうち、最も早いものを返す。無ければ None。"""
+    found = []
+    for pat, era in DATE_PATS:
+        for m in pat.finditer(t):
+            g1 = m.group(1)
+            try:
+                y = (2018 + (1 if g1 == '元' else int(g1.translate(Z2H)))) if era == 'wareki' \
+                    else int(g1.translate(Z2H))
+                found.append(datetime.date(y, int(m.group(2).translate(Z2H)),
+                                           int(m.group(3).translate(Z2H))))
+            except ValueError:
+                continue
+    return min(found) if found else None
+
+
+def _line_gates(line, fwd, back, anchor=None):
     """1行を [(種別, 日付, 時刻, 抜粋)] にする。**行が1レコードである。**"""
-    ds = find_dates(line)
+    ds = find_dates(line, anchor)
     if not ds:
         return []
     if len(ds) == 1:
@@ -178,9 +231,16 @@ def extract_gates(text, fwd=140, back=60):
     **種別が読めなかった日付も '不明' として返す。捨てない。**
     捨てると「不一致の証拠が無い」が「一致」に化ける（フェイルセーフの向きが逆になる）。
     """
+    t = normalize(text)
+    # **年の基準を文書全体から先に1つ決める。**行ごとに解析するため、
+    # 「９月14日」のような年なしの行は、単独では何年か分からない。
+    # **基準は「年が実際に書かれている日付のうち最も早いもの」に限る。**
+    # 年を借りて解決した日付を基準にすると、基準そのものが後ろへずれ、
+    # それより前の月日が翌年へ送られる（2026-09-14 に実際に1年ずれた）。
+    anchor = _year_anchor(t)
     out = []
-    for line in normalize(text).split('\n'):
-        out += _line_gates(line, fwd, back)
+    for line in t.split('\n'):
+        out += _line_gates(line, fwd, back, anchor)
     return out
 
 
