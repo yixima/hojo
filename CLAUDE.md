@@ -158,6 +158,17 @@
 **「現在募集中のもの」だけを見てはならない。** 翌年度事業の委託先は前年度中に
 公告・決定される。各機関の**過年度アーカイブ**を必ず掘ること（runbook 手順2.5）。
 
+**案件そのものより上流に、財源がある（2026-09-15 生島様のご指摘で判明）。**
+「地域未来交付金」を巡回先に持っていなかった。台帳・巡回先・キーワード辞書に1件も無かった。
+これは当社が申請するものではなく**交付先は地方公共団体**だが、
+自治体がこの国費で行う観光誘客・海外販路開拓・ブランド育成・催事は、
+**そのまま当社が受託してきた委託業務**である。
+**交付決定の一覧は、公告が出る数か月前に読める先行指標である。**
+
+- 巡回先＝`workflow/sources.yaml` の `tier_chiiki_mirai`
+- R8の抽出表＝`data/chiiki_mirai_r8.csv`（206件。うちソフト191件・約75億円）
+- **交付決定＝公募が出る、ではない。**直営・随契もある。**台帳には入れない**（母集団であって案件ではない）
+
 ## 引き継ぎファイルの保存先（2026-09-03 生島様の指示で確定）
 
 **Google Drive `claude_handover/kobo_anken/` に、
@@ -232,6 +243,7 @@ Artifact は Claude Code の右側ペインで開き、共有もできる。
 | **おまつり歳時記 進行盤** | https://claude.ai/code/artifact/604bc596-e160-44a6-8b92-8ea6b305fb58 | `docs/omatsuri/submit/omatsuri_shinko_ban.html` |
 | **等級と種目の壁**（東京都 定期受付の判断） | https://claude.ai/code/artifact/55827a63-9c96-4992-8295-9cee3c590e19 | `reports/tokyo_teiki_uketsuke.html` |
 | **報告が途切れた2日間**（9/11 の停止事故の検証報告） | https://claude.ai/code/artifact/630da5f8-6eeb-4ec8-9c4b-65bb0e2c720e | `reports/report_chudan_20260911.html` |
+| **地域未来交付金という財源**（案件の上流。自治体が委託を出す原資） | https://claude.ai/artifact/KNDJEEaZm59fy6vUXCMfbT | `reports/chiiki_mirai_koufukin.html` |
 
 ### セッションの守備範囲（2026-09-04 生島様の指示）
 

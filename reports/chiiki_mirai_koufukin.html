@@ -1,0 +1,212 @@
+<title>地域未来交付金という財源</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+/* 萌葱（もえぎ）。地場産業と地域の色。
+   板＝江戸紫／定期受付＝藍／障害報告＝朱 と系統を分け、種類を取り違えないようにする。 */
+:root{
+  --ground:#F9FAF7; --surface:#FFFFFF; --surface-2:#EFF2EC;
+  --ink:#171C18; --ink-2:#414A42; --muted:#78826F;
+  --line:#E2E7DC; --line-strong:#C6CFBC;
+  --accent:#2E6B4F; --accent-soft:#E6F0E8;
+  --gold:#8A6A16; --gold-soft:#F7F0DC;
+  --crit:#9E3B2E;
+  --shadow:0 1px 2px rgba(23,28,24,.05), 0 10px 28px -16px rgba(23,28,24,.22);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ground:#11150F; --surface:#1A1F18; --surface-2:#232A20;
+  --ink:#EDF2E9; --ink-2:#C0C9BA; --muted:#8B957F;
+  --line:#2A3226; --line-strong:#3E4838;
+  --accent:#8FCBA6; --accent-soft:#1D2E23;
+  --gold:#D9B863; --gold-soft:#332A14;
+  --crit:#E8907F;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --ground:#11150F; --surface:#1A1F18; --surface-2:#232A20;
+  --ink:#EDF2E9; --ink-2:#C0C9BA; --muted:#8B957F;
+  --line:#2A3226; --line-strong:#3E4838;
+  --accent:#8FCBA6; --accent-soft:#1D2E23;
+  --gold:#D9B863; --gold-soft:#332A14;
+  --crit:#E8907F;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding-block:0 90px;padding-left:22px;padding-right:22px}
+h1,h2{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;margin:0;text-wrap:balance}
+.mast{border-bottom:2px solid var(--accent);padding-block:44px 22px;margin-bottom:34px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.mast h1{font-size:clamp(27px,5vw,40px);font-weight:700;line-height:1.28;letter-spacing:.02em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 24px;margin-top:16px;font-size:12.5px;color:var(--muted);
+  font-family:"Roboto Mono",monospace}
+.lede{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:2px;padding:24px 28px;box-shadow:var(--shadow);margin-bottom:36px}
+.lede p{margin:0 0 12px;max-width:62ch} .lede p:last-child{margin-bottom:0}
+.lede strong{color:var(--accent)}
+.figs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:38px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:18px 20px;box-shadow:var(--shadow)}
+.fig .k{font-size:11px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+.fig .v{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;
+  font-size:26px;font-weight:500;line-height:1.1;color:var(--ink)}
+.fig.lead .v{color:var(--accent)}
+.fig .s{font-size:12px;color:var(--muted);margin-top:6px}
+section{margin-bottom:46px}
+section>h2{font-size:20px;font-weight:700;letter-spacing:.04em;padding-bottom:10px;
+  border-bottom:1px solid var(--line);margin-bottom:20px}
+p{margin:0 0 14px;max-width:66ch} b{font-weight:700;color:var(--ink)}
+code{font-family:"Roboto Mono",monospace;font-size:.87em;background:var(--surface-2);
+  padding:1px 5px;border-radius:2px;color:var(--ink-2)}
+.flow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:18px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:16px 18px;box-shadow:var(--shadow)}
+.step .n{font-family:"Roboto Mono",monospace;font-size:11px;color:var(--accent);font-weight:700}
+.step .t{font-weight:700;margin:4px 0 4px;font-size:14.5px}
+.step .d{font-size:12.5px;color:var(--muted);line-height:1.7}
+.step.here{border-color:var(--accent);border-left-width:3px;background:var(--accent-soft)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;background:var(--surface);margin-bottom:14px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:10px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:700;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.warn{background:var(--gold-soft);border-left:3px solid var(--gold);padding:14px 20px;
+  border-radius:0 2px 2px 0;font-size:14px;color:var(--ink-2);margin-bottom:16px}
+.warn b{color:var(--ink)}
+ul{margin:0 0 16px;padding-left:20px;max-width:66ch} li{margin-bottom:7px}
+.foot{border-top:1px solid var(--line);padding-top:22px;margin-top:52px;font-size:12.5px;color:var(--muted)}
+a{color:var(--accent)} a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:560px){.wrap{padding-left:16px;padding-right:16px}}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="eyebrow">内閣官房 地域未来戦略本部事務局 ／ 内閣府 地方創生推進事務局</div>
+  <h1>地域未来交付金という財源</h1>
+  <div class="meta">
+    <span>基準日時 2026-09-15 21:47 JST</span>
+    <span>一次資料 chisou.go.jp（令和8年4月公表）</span>
+    <span>抽出表 data/chiiki_mirai_r8.csv</span>
+  </div>
+</header>
+
+<div class="lede">
+  <p><strong>これは当社が申請する補助金ではありません。</strong>交付を受けるのは<b>地方公共団体</b>です。</p>
+  <p>しかし、自治体がこの国費で実施する事業——<b>観光誘客・海外販路開拓・ブランド育成・催事・出展</b>——は、
+  <b>当社が受託してきた委託業務そのもの</b>です。つまりこれは応募先ではなく、
+  <strong>案件の財源であり、公告が出る数か月前に読める先行指標</strong>です。</p>
+  <p>令和8年度分は<b>すでに交付決定が済んでいます</b>（3月31日・4月1日・4月7日）。
+  <b>どの自治体が、どの分野に、いくら確保したかは、もう公表されています。</b></p>
+</div>
+
+<div class="figs">
+  <div class="fig"><div class="k">令和8年度 当初予算</div><div class="v">1,600<span style="font-size:.55em">億円</span></div><div class="s">前年度比 400億円減／R7補正 1,000億円</div></div>
+  <div class="fig"><div class="k">交付決定（地域未来推進型）</div><div class="v">3,434<span style="font-size:.55em">事業</span></div><div class="s">採択額 1,741億円</div></div>
+  <div class="fig lead"><div class="k">うち当社の領域（ソフト）</div><div class="v">191<span style="font-size:.55em">事業</span></div><div class="s">合計 75.1億円</div></div>
+  <div class="fig"><div class="k">台帳への登録</div><div class="v" style="font-size:20px">0<span style="font-size:.7em">件だった</span></div><div class="s">2026-09-15 に巡回先へ追加</div></div>
+</div>
+
+<section>
+  <h2>お金がどう流れて、当社の案件になるか</h2>
+  <div class="flow">
+    <div class="step"><div class="n">01</div><div class="t">国が予算をつける</div><div class="d">R8当初 1,600億円。前身は「新しい地方経済・生活環境創生交付金」、その前は「デジタル田園都市国家構想交付金」</div></div>
+    <div class="step"><div class="n">02</div><div class="t">自治体が計画を出す</div><div class="d">令和8年1月募集。補助率 1/2。都道府県15億円/年度・市区町村10億円/年度が上限</div></div>
+    <div class="step here"><div class="n">03</div><div class="t">交付決定（済）</div><div class="d"><b>3/31・4/1・4/7 に決定。3,434事業・1,741億円。一覧は公表済み。いまここ</b></div></div>
+    <div class="step"><div class="n">04</div><div class="t">自治体が委託を公告</div><div class="d"><b>これから数か月のあいだに出る。</b>ここが当社の入口</div></div>
+  </div>
+  <div class="warn"><b>交付決定＝公募が出る、ではありません。</b>自治体の直営、既存業者への随意契約もあります。
+  この一覧は<b>引き合いの母集団</b>であって案件そのものではないため、台帳（<code>data/ledger.csv</code>）には入れていません。</div>
+</section>
+
+<section>
+  <h2>当社の領域に金がついた事業 — 金額上位40</h2>
+  <p>「観光誘客・販路開拓・海外・展示会・商談会・ブランド・催事・出展・情報発信」を含む事業のうち、
+  施設整備を除いたもの。<b>全191件・合計75.1億円。</b>金額は国費の採択額です（自治体負担を含む事業費はこの2倍程度）。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>自治体</th><th>事業名</th><th style="text-align:right">採択額（国費）</th></tr></thead>
+    <tbody>
+<tr><td>宮城県 仙台市</td><td>地域と連携した地方への国内・国外誘客促進事業</td><td class="n">86,338万円</td></tr>
+<tr><td>石川県 志賀町</td><td>「志賀町ブランド」共生型滞在・地域循環モデル構築プロジェクト</td><td class="n">60,940万円</td></tr>
+<tr><td>石川県</td><td>能登半島地震からの段階的な観光再興に向けた県内全域での誘客促進</td><td class="n">33,491万円</td></tr>
+<tr><td>徳島県</td><td>インバウンドを核とした徳島地域経済活性化事業</td><td class="n">30,200万円</td></tr>
+<tr><td>群馬県</td><td>選ばれる「ぐんまブランド」育成プロジェクト</td><td class="n">24,398万円</td></tr>
+<tr><td>香川県</td><td>インバウンド需要等を呼び込むための夜型観光コンテンツ事業</td><td class="n">21,529万円</td></tr>
+<tr><td>福島県</td><td>福島県観光誘客促進プロジェクト</td><td class="n">20,544万円</td></tr>
+<tr><td>兵庫県 姫路市</td><td>大阪・関西万博等を契機とするインバウンドを軸とした活力ある観光地域づくりの推進</td><td class="n">14,786万円</td></tr>
+<tr><td>秋田県</td><td>秋田の観光誘客再構築事業</td><td class="n">14,518万円</td></tr>
+<tr><td>長崎県</td><td>長崎県産品海外展開プロジェクト</td><td class="n">14,301万円</td></tr>
+<tr><td>三重県</td><td>インバウンド誘客強化事業</td><td class="n">13,252万円</td></tr>
+<tr><td>栃木県</td><td>とちぎの食を核としたブランディングによる誘客促進事業</td><td class="n">12,618万円</td></tr>
+<tr><td>千葉県</td><td>千葉県・市原市・木更津市・大多喜町が連携した芸術祭を契機とした観光振興事業</td><td class="n">11,890万円</td></tr>
+<tr><td>静岡県</td><td>「推し活」消費を中心とした誘客促進事業</td><td class="n">11,885万円</td></tr>
+<tr><td>宮城県</td><td>「観光地域づくり」を核としたみやぎ誘客推進プロジェクト</td><td class="n">11,524万円</td></tr>
+<tr><td>宮崎県</td><td>大規模国際イベント等を契機とした”ひなた（宮崎）”観光の推進</td><td class="n">11,029万円</td></tr>
+<tr><td>兵庫県 豊岡市</td><td>豊岡ブランドの高付加価値化と地域経済循環最大化事業</td><td class="n">10,082万円</td></tr>
+<tr><td>鳥取県 鳥取市</td><td>インバウンド誘致で切り拓く麒麟のまち圏域の未来創造事業</td><td class="n">9,153万円</td></tr>
+<tr><td>福井県</td><td>稼げるふくいの農林水産業に向けたブランド力強化事業</td><td class="n">8,692万円</td></tr>
+<tr><td>高知県</td><td>農水産物・食品及び土佐酒輸出拡大プロジェクト推進事業を通じた地域の活性化</td><td class="n">8,653万円</td></tr>
+<tr><td>新潟県</td><td>３６５日いつでも選ばれる新潟へ！！観光資源を活かした誘客拡大事業</td><td class="n">8,469万円</td></tr>
+<tr><td>宮城県</td><td>インバウンド需要獲得と海外販路開拓の好循環創出事業</td><td class="n">8,180万円</td></tr>
+<tr><td>栃木県</td><td>栃木の山の恵みを生かした高付加価値インバウンド誘客事業</td><td class="n">8,085万円</td></tr>
+<tr><td>石川県</td><td>特色ある石川県産農林水産物のブランド化推進事業</td><td class="n">7,582万円</td></tr>
+<tr><td>茨城県</td><td>稼げるインバウンド茨城・誘客促進事業</td><td class="n">6,847万円</td></tr>
+<tr><td>島根県 海士町</td><td>海士町ブランドのD2C化から繋げる人材還流促進事業</td><td class="n">6,750万円</td></tr>
+<tr><td>熊本県 菊池市</td><td>菊池温泉街リブランディングによるインバウンド推進と稼げる観光体制づくり事業</td><td class="n">6,252万円</td></tr>
+<tr><td>岐阜県</td><td>稼ぐ力を高める県産品ブランド高付加価値化プロジェクト</td><td class="n">5,991万円</td></tr>
+<tr><td>新潟県</td><td>「佐渡島の金山」世界遺産登録を契機とした「オール新潟」周遊・誘客促進事業</td><td class="n">5,862万円</td></tr>
+<tr><td>新潟県 村上市</td><td>SIBを活用したブランド創出型スモールコンセッション　瀬波温泉MIRAIHUB(仮称)事業</td><td class="n">5,800万円</td></tr>
+<tr><td>青森県</td><td>「食の宝庫あおもり」販路開拓・認知度向上推進プロジェクト</td><td class="n">5,756万円</td></tr>
+<tr><td>鹿児島県</td><td>アフターコロナを見据えたインバウンド誘客支援事業</td><td class="n">5,735万円</td></tr>
+<tr><td>富山県</td><td>ポストコロナの海外展開事業</td><td class="n">5,611万円</td></tr>
+<tr><td>宮崎県</td><td>宮崎県の強みを生かした「５つのS」観光誘客促進プロジェクト事業</td><td class="n">5,475万円</td></tr>
+<tr><td>群馬県</td><td>ぐんまブランドのワールドワイド推進</td><td class="n">5,412万円</td></tr>
+<tr><td>青森県</td><td>青森独自のディープな体験を磨くインバウンド観光消費拡大プロジェクト</td><td class="n">5,268万円</td></tr>
+<tr><td>島根県</td><td>関西及び県内のゲートウェイを活用した外国人観光客誘致プロジェクト</td><td class="n">4,775万円</td></tr>
+<tr><td>宮城県</td><td>生産力強化×販路開拓×農山漁村発イノベーション推進事業</td><td class="n">4,494万円</td></tr>
+<tr><td>石川県</td><td>インバウンド再開を見据えたいしかわの魅力発信プロジェクト</td><td class="n">4,440万円</td></tr>
+<tr><td>福岡県 大牟田市</td><td>選ばれるマチとシゴトに向けた魅力向上・プロモーション事業</td><td class="n">4,396万円</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:13px;color:var(--muted)">全206件（施設整備寄り15件を含む）は <code>data/chiiki_mirai_r8.csv</code> にあります。</p>
+</section>
+
+<section>
+  <h2>都道府県別の厚み（当社の領域・上位8）</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>都道府県</th><th style="text-align:right">当社領域の採択額 合計</th></tr></thead>
+    <tbody>
+<tr><td>宮城県</td><td class="n">111,437万円</td></tr>
+<tr><td>石川県</td><td class="n">106,453万円</td></tr>
+<tr><td>群馬県</td><td class="n">33,843万円</td></tr>
+<tr><td>徳島県</td><td class="n">31,107万円</td></tr>
+<tr><td>兵庫県</td><td class="n">30,604万円</td></tr>
+<tr><td>福島県</td><td class="n">25,321万円</td></tr>
+<tr><td>栃木県</td><td class="n">22,329万円</td></tr>
+<tr><td>新潟県</td><td class="n">21,706万円</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>ここから何をするか</h2>
+  <ul>
+    <li><b>抽出した自治体の調達ページを、名指しで巡回先に足す。</b>いまの巡回は「過去に案件が出た機関」を回っている。この一覧は<b>これから出す機関</b>を教える</li>
+    <li><b>上位の県は直接あたる価値がある。</b>長崎県産品海外展開（1億4,301万円）・高知県 農水産物輸出拡大（8,653万円）・福井県 ブランド力強化（8,692万円）は、当社の海外販路開拓の実績がそのまま噛み合う</li>
+    <li><b>次回の募集時期を追う。</b>令和8年1月募集の次がいつかは未公表。募集が決まれば、その約3か月後に交付決定、さらに数か月後に委託の公告という周期になる</li>
+    <li><b>評価基準に「地域の多様な主体の参画」がある。</b>自治体は計画段階から民間の参画を求められる。<b>公告を待つ側ではなく、計画づくりに入る側に回れる余地がある</b></li>
+  </ul>
+</section>
+
+<div class="foot">
+  <ul>
+    <li>【確認済】一次資料＝内閣府「地域未来交付金（地域未来推進型）の交付対象事業の決定について」令和8年4月・152頁
+      （<code>suishin/pdf/r8_suishin_1.pdf</code>）、および「地域未来交付金について」令和8年4月</li>
+    <li>【確認済】R8当初 1,600億円・R7補正 1,000億円。前年度比400億円減</li>
+    <li>【未確認・推測】3,434事業のうち何件が委託として公告されるかは不明。<b>当社領域191件は「見込み」であって案件ではない</b></li>
+    <li>【不明】次回の募集時期。内閣府のページに記載がない</li>
+    <li>抽出は事業名の語で機械的に行った。取りこぼしがありうるため、原本にあたる価値は残る</li>
+  </ul>
+</div>
+</div>
