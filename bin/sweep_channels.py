@@ -43,7 +43,12 @@ NOT = re.compile(
     r'個人情報|サイトマップ|アクセシビリティ|お問い合わせ|プライバシー|'
     r'エリアの|一覧$|一覧です|検索について|検索サービス|リンク集|利用開始|利用団体|'
     r'とは、|を探したい|はこちら|ください$|できます$|しています$|'
-    r'を探しています|募集を締め切|受付を終了')
+    r'を探しています|募集を締め切|受付を終了|'
+    # **事務局サイトのお知らせ文。**制度の回次の話であって案件ではない
+    r'掲載しました|公開しました|公表しました|更新しました|開始しました|'
+    r'締切済|公募を締め切|お待ちください|ご覧いただけます|情報を掲載|'
+    r'修正について|意見招請|の各案件について|スケジュール$|採択後に必要|'
+    r'へ応募する|まとめサイト|新旧対照表|概要動画|操作手引き|よくあるご質問')
 
 
 def norm(s):
@@ -108,9 +113,27 @@ def main():
     with ThreadPoolExecutor(max_workers=8) as ex:
         pages = list(ex.map(lambda c: fetch(c['URL']), chans))
 
+    # 制度の回次を見に行くだけのチャネルは、**案件として差を取らない。**
+    # 事務局サイトのお知らせを毎日165件出せば、読まれなくなる。
+    # 読まれない一覧は、無い一覧と同じである（2026-09-16 実測）。
+    progs = {}
+    ppath = os.path.join(ROOT, 'data', 'programs.csv')
+    if os.path.exists(ppath):
+        with io.open(ppath, encoding='utf-8') as f:
+            progs = {r['制度ID']: r for r in csv.DictReader(f)}
+
     total_new = 0
     dead = []
     for c, raw in zip(chans, pages):
+        if c.get('用途') == '制度更新':
+            pr = progs.get(c.get('紐づく制度ID') or '')
+            print('\n□ %-18s %s ［制度の更新監視］' % (c['チャネルID'], c['名称']))
+            if pr:
+                print('   紐づく制度：%s' % pr['制度名'])
+                print('   台帳の締切 %s ／ 公募開始 %s ／ 最終確認 %s'
+                      % (pr['締切'] or '—', pr['公募開始'] or '—', pr['最終確認日'] or '**未**'))
+            print('   **案件としての差は取らない。**回次が変わっていないかを人が見る')
+            continue
         ts = titles(raw) if raw else []
         if not raw:
             dead.append(c)

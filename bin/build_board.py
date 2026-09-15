@@ -168,6 +168,12 @@ def buckets(rows, now):
         if k == 'out':
             b['out'].append(rec)
             continue
+        # **締切をまだ取れていない新規案件。**日付が無いと従来は「次年度候補」へ落ち、
+        # いま動いている案件が来年の束に隠れた（2026-09-16 実測）。
+        # 状態欄に「締切未取得」と書いた行は、日付の有無にかかわらず確認面へ出す。
+        if '締切未取得' in r['状態'] and not rec['closed']:
+            b['unverified'].append(rec)
+            continue
         if k == 'decided_go' and (left is None or left >= 0):
             b['going'].append(rec)
             continue
