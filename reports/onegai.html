@@ -1,0 +1,196 @@
+<title>生島様にお願いする3件</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+/* 柿渋（かきしぶ）。手順書の色。
+   板＝江戸紫／定期受付＝藍／障害報告＝朱／交付金＝萌葱／分母＝藍墨茶 と系統を分ける。 */
+:root{
+  --ground:#FBF8F4; --surface:#FFFFFF; --surface-2:#F2ECE4;
+  --ink:#1D1814; --ink-2:#4A423A; --muted:#807567;
+  --line:#E7DFD4; --line-strong:#CFC2B0;
+  --accent:#8C4A2F; --accent-soft:#F6EAE3;
+  --ok:#3D6B45; --ok-soft:#E8F1E8;
+  --wait:#8A6A16; --wait-soft:#FAF2DE;
+  --shadow:0 1px 2px rgba(29,24,20,.05), 0 10px 28px -16px rgba(29,24,20,.22);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ground:#14110E; --surface:#1D1916; --surface-2:#282219;
+  --ink:#F1ECE5; --ink-2:#C9C0B4; --muted:#938877;
+  --line:#2F281F; --line-strong:#463C2E;
+  --accent:#E09070; --accent-soft:#33201A;
+  --ok:#8CC496; --ok-soft:#1B2E1F;
+  --wait:#D8B05C; --wait-soft:#332A14;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --ground:#14110E; --surface:#1D1916; --surface-2:#282219;
+  --ink:#F1ECE5; --ink-2:#C9C0B4; --muted:#938877;
+  --line:#2F281F; --line-strong:#463C2E;
+  --accent:#E09070; --accent-soft:#33201A;
+  --ok:#8CC496; --ok-soft:#1B2E1F;
+  --wait:#D8B05C; --wait-soft:#332A14;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+ font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+ font-size:15.5px;line-height:1.9;-webkit-font-smoothing:antialiased}
+.wrap{max-width:840px;margin:0 auto;padding-block:0 92px;padding-left:22px;padding-right:22px}
+h1,h2{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;margin:0;text-wrap:balance}
+.mast{border-bottom:2px solid var(--accent);padding-block:44px 22px;margin-bottom:32px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.mast h1{font-size:clamp(27px,5vw,40px);font-weight:700;line-height:1.28;letter-spacing:.02em}
+.meta{margin-top:14px;font-size:12.5px;color:var(--muted);font-family:"Roboto Mono",monospace}
+.task{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+ border-radius:2px;padding:26px 28px;margin-bottom:22px;box-shadow:var(--shadow)}
+.task h2{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:.03em}
+.task .why{font-size:13.5px;color:var(--muted);margin-bottom:16px;max-width:64ch}
+.num{display:inline-block;font-family:"Roboto Mono",monospace;font-size:12px;color:var(--accent);
+ font-weight:700;letter-spacing:.08em;margin-bottom:6px}
+ol.steps{margin:0 0 4px;padding-left:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-left:34px;margin-bottom:11px;max-width:64ch}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:.35em;
+ width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
+ border:1px solid var(--accent);font-family:"Roboto Mono",monospace;font-size:11.5px;
+ font-weight:700;display:grid;place-items:center;line-height:1}
+p{margin:0 0 14px;max-width:66ch} b{font-weight:700;color:var(--ink)}
+code{font-family:"Roboto Mono",monospace;font-size:.86em;background:var(--surface-2);
+ padding:1px 6px;border-radius:2px;color:var(--ink-2);word-break:break-all}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;background:var(--surface);margin-bottom:14px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:10.5px;letter-spacing:.07em;color:var(--muted);font-weight:700;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+.note{background:var(--wait-soft);border-left:2px solid var(--wait);padding:12px 16px;
+ border-radius:0 2px 2px 0;font-size:13.5px;color:var(--ink-2);margin:0 0 14px;max-width:66ch}
+.note b{color:var(--ink)}
+.pick{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-bottom:14px}
+.opt{background:var(--surface-2);border:1px solid var(--line);border-radius:2px;padding:16px 18px}
+.opt.rec{border-color:var(--ok);background:var(--ok-soft)}
+.opt .t{font-weight:700;font-size:15px;margin-bottom:5px}
+.opt .t .tag{font-size:10.5px;color:var(--ok);border:1px solid var(--ok);border-radius:2px;
+ padding:1px 7px;margin-left:8px;vertical-align:middle;font-weight:700}
+.opt .d{font-size:13px;color:var(--ink-2);line-height:1.75}
+.done{background:var(--ok-soft);border-left:3px solid var(--ok)}
+.done h2{color:var(--ok)}
+.foot{border-top:1px solid var(--line);padding-top:22px;margin-top:48px;font-size:12.5px;color:var(--muted)}
+.foot ul{padding-left:18px;margin:0} .foot li{margin-bottom:6px}
+a{color:var(--accent)} a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:560px){.wrap{padding-left:16px;padding-right:16px}}
+</style>
+<div class="wrap">
+<header class="mast">
+  <div class="eyebrow">公募案件セッション ／ 依頼事項</div>
+  <h1>生島様にお願いする3件</h1>
+  <div class="meta">基準日時 2026-09-16 16:38 JST ／ commit 3cab41f</div>
+</header>
+
+<div class="task">
+  <div class="num">お願い 01</div>
+  <h2>チャンスナビで、3件の締切を引いていただけますか</h2>
+  <p class="why">私（クラウドのセッション）はナビにログインできません。
+  そして<b>トップの一覧は回転表示で、朝に見えた3件は夕方には消えていました。</b>
+  締切は、ログイン後の検索画面にしかありません。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>案件名（この文字列で検索してください）</th><th>なぜ要るか</th></tr></thead>
+    <tbody>
+      <tr><td><b>令和8年度第39回全国健康福祉祭東京大会に関する都内区市町村等ＰＲブース出展業務委託</b>（単価契約）</td><td>ねんりんピック2028。<b>台帳には「気運醸成」しか無く、この別契約を知りませんでした</b></td></tr>
+      <tr><td><b>第39回全国健康福祉祭東京大会宿泊輸送等運営業務委託</b></td><td>同上。宿泊・輸送は大会運営の中核</td></tr>
+      <tr><td><b>令和8年度東京ｉＣＤＣフォーラム運営業務委託</b></td><td>フォーラム運営＝種目120の範囲</td></tr>
+    </tbody>
+  </table></div>
+  <ol class="steps">
+    <li><code>https://www.chancenavi.jp/bcn/</code> を開き、ログインする</li>
+    <li>トップの <b>「入札・発注案件を探す」</b> を押す</li>
+    <li>フリーワード欄に <b>「全国健康福祉祭」</b> と入れて検索する（2件が出るはずです）</li>
+    <li>各案件を開き、<b>「申込期限」「参加申込締切」「入札書提出期限」</b>のいずれかの<b>日付と時刻</b>を控える</li>
+    <li>同じ手順で <b>「iCDC」</b> または <b>「ＩＣＤＣ」</b> を検索する</li>
+  </ol>
+  <p class="note"><b>日付だけでなく、必ず時刻まで。</b>「本日」は、まだ間に合うのか、もう終わったのかが読み分けられません。
+  あわせて<b>「参加申込」なのか「提案書」なのか</b>も控えてください。公募型は二段構えで、<b>先に来るのは参加申込</b>です。</p>
+  <p>この5つ（案件名・日付・時刻・種別・URL）をお送りいただければ、私が台帳に入れ、板の判断面に載せます。</p>
+</div>
+
+<div class="task">
+  <div class="num">お願い 02</div>
+  <h2>週次巡回を直します。AとB、どちらにしますか</h2>
+  <p class="why"><b>リポジトリの問題とコネクタの問題は、原因が同じでした。</b>
+  週次巡回の Routine は発火のたびに<b>新しいセッション</b>を作りますが、
+  その新セッションに<b>リポジトリもコネクタも付いていません。</b></p>
+  <div class="scroll"><table>
+    <thead><tr><th>日付</th><th>症状</th><th>本当の原因</th></tr></thead>
+    <tbody>
+      <tr><td>09-07</td><td>git push が「リポジトリ未認可」で拒否。新規4件が反映されず</td><td>新セッションに <code>yixima/hojo</code> が付いていない</td></tr>
+      <tr><td>09-07</td><td>Gmail・Google Drive が使えずレポートを送れず</td><td>新セッションにコネクタが付いていない</td></tr>
+      <tr><td>09-14</td><td>発火したが成果が残らなかった</td><td>同上（作業はしても保存先が無い）</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>アカウント側の問題ではありません。</b>2026-09-16 に実測しました——
+  Gmail・Google Calendar・Google Drive はいずれも<b>接続済みで、このセッションでは使える状態</b>です。
+  足りないのは <b>Routine が作る新セッションへの引き継ぎ</b>だけです。</p>
+  <div class="pick">
+    <div class="opt rec"><div class="t">案A<span class="tag">おすすめ</span></div>
+      <div class="d"><b>週次巡回を、このセッションに結び付ける。</b>
+      リポジトリもコネクタも揃っているので、そのまま動きます。
+      <b>生島様の操作は不要</b>——「Aで」とだけお返事いただければ、私が切り替えます。<br>
+      短所：巡回がこのセッションの中で走るぶん、セッションが重くなります
+      （引き継ぎの目安は50%。現在は約33%）</div></div>
+    <div class="opt"><div class="t">案B</div>
+      <div class="d"><b>Routine を作り直す。</b>毎回リポジトリ付きの新セッションが作られます。
+      セッションは重くなりませんが、<b>下の7手順を生島様に操作していただく</b>必要があります</div></div>
+  </div>
+  <p><b>案Bを選ばれた場合の手順</b></p>
+  <ol class="steps">
+    <li>ブラウザで <code>https://claude.ai/code</code> を開く</li>
+    <li>左メニューの <b>Routines</b>（定期実行）を開く</li>
+    <li><b>New Routine</b>（新規作成）を押す</li>
+    <li><b>Repository／Source に <code>yixima/hojo</code> を選ぶ ← ここが今まで空でした</b>。
+        Branch は <code>claude/public-bid-search-workflow-uzj3te</code></li>
+    <li><b>Connectors で Gmail と Google Drive の両方にチェック ← ここも空でした</b></li>
+    <li>Schedule を <b>毎週月曜 08:00</b>（内部表記 <code>0 23 * * 0</code>）にし、
+        Prompt は私がお渡しする全文を貼る。保存する</li>
+    <li>古い「公募案件 週次巡回（ジャパンプロモーション）」を<b>削除</b>し、
+        新しいものを<b>1回だけ手動実行</b>して確かめる</li>
+  </ol>
+  <p class="note"><b>直ったかどうかの見分け方。</b>翌朝の私の報告に
+  「週次巡回が台帳に N件を追記した（commit ○○）」と
+  「iximay@gmail.com へレポートを送信した」の<b>2行が出れば成功</b>です。
+  <b>出なければ、まだ直っていません。</b>黙って成功したことにはしません。</p>
+</div>
+
+<div class="task">
+  <div class="num">お願い 03</div>
+  <h2>東京都の定期受付 ― 期限は10月30日です</h2>
+  <p class="why">「あとでやる」と承りました。<b>受付は10月30日（金）まで。残り44日です。</b>
+  取得後の種目変更は一切できないため、決める前に材料をご覧ください。</p>
+  <p>判断が要るのは3点です ── <b>①品目05を取るか ②種目134を足すか ③等級をCのままにするか上げるか。</b>
+  材料は判断シートにまとめてあります。</p>
+  <p><a href="https://claude.ai/code/artifact/55827a63-9c96-4992-8295-9cee3c590e19">等級と種目の壁（判断シート）を開く</a></p>
+  <p class="note"><b>10月に入ったら、毎朝の報告で残り日数を申し上げます。</b>
+  制度台帳に前段関門（電子証明書・決算書）ごと登録済みです。</p>
+</div>
+
+<div class="task done">
+  <div class="num">承りました</div>
+  <h2>本日いただいたご決定</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>件</th><th>ご決定</th><th>処理</th></tr></thead>
+    <tbody>
+      <tr><td>宮崎県 農産加工品等外食産業プロモーション（本日17時）</td><td><b>しない</b></td><td>台帳に【生島様 2026-09-16：見送り】を記録。判断面から外しました</td></tr>
+      <tr><td>チャンスナビの事業者登録</td><td><b>済んでいる</b></td><td>台帳の3件から「登録待ち」の記述を外しました。<b>残る壁は、私がログインできないことだけ</b>です</td></tr>
+      <tr><td>おまつり歳時記（9/8メール・9/9原本）</td><td><b>別セッションで進行中</b></td><td>当セッションの追跡対象から外し、提案書 9/29 17時のみ見ます</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="foot">
+  <ul>
+    <li>【確認済】Gmail・Google Calendar・Google Drive は接続済み・このセッションで有効（2026-09-16 実測）</li>
+    <li>【確認済】東京都電子調達システムに「入札公告の一覧」は無い。発注予定・入札経過・入札結果のみ。<b>公告は東京都公報（特定調達公告版・財務局発行）に出る</b></li>
+    <li>【確認済】チャンスナビのトップは回転表示。朝8時の3件は同日16時に消えていた</li>
+    <li>【未確認】お願い01の3件の締切。<b>私には取得経路がありません</b></li>
+    <li>掃引の観測は <code>data/sweep_log.csv</code> に毎回追記します。回転で消えても、記録は残ります</li>
+  </ul>
+</div>
+</div>
