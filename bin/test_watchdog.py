@@ -183,6 +183,17 @@ check('締切欄への日時の混入は止める', len(_ng), 1)
 b = bb.buckets([_row(案件名='予測もの', 状態='【予測】まだ公告されていない')], _now)
 check('【予測】は締切が無くても公告待ちに出る', (len(b['coming']), len(b['next'])), (1, 0))
 
+# ── 3.8 列名そのものの破壊（BOM）を捕まえるか ─────────────
+# 2026-09-16、枝の統合で BOM（U+FEFF）がヘッダ先頭に入り、`r['初報日']` が
+# KeyError になった。**板は初報日を読まないため平然と動き、どの検査も鳴らなかった。**
+_bom = dict(_base)
+_bom['\ufeff初報日'] = _bom.pop('初報日')
+_ng, _free = bb.audit_ledger([_bom])
+check('BOM混入を止める', any('列が想定と違う' in m for _, m, _ in _ng), True)
+
+_ng, _free = bb.audit_ledger([_row(案件名='正常')])
+check('正常な列では鳴らない', [m for _, m, _ in _ng], [])
+
 # ── 4. 台帳の件数が減っていないか（破壊の検出） ─────────────
 check('台帳が空でない', len(led) > 200, True)
 
