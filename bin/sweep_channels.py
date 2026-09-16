@@ -31,6 +31,7 @@ from concurrent.futures import ThreadPoolExecutor
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CH = os.path.join(ROOT, 'data', 'channels.csv')
 LEDGER = os.path.join(ROOT, 'data', 'ledger.csv')
+LOG = os.path.join(ROOT, 'data', 'sweep_log.csv')
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
 
 # 案件らしさ。**「募集」だけでは参加者募集も拾うので、発注側の語を要求する**
@@ -69,12 +70,24 @@ def fetch(url):
 
 
 def titles(raw):
-    """本文から案件名らしき行を拾う。**行構造を壊さない**（gatelib と同じ理由）。"""
+    """本文から案件名らしき行を拾う。**行構造を壊さない**（gatelib と同じ理由）。
+
+    直前の `href` を一緒に返す。**見出しだけ持ち帰っても、あとで辿れない。**
+    """
     b = re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', raw, flags=re.S | re.I)
+    # リンクは行の頭に印として残してから、タグを落とす
+    b = re.sub(r'<a\s[^>]*href=["\']([^"\']+)["\'][^>]*>',
+               lambda m: '\n\x01' + m.group(1) + '\x02', b, flags=re.I)
     b = re.sub(r'</(tr|p|div|li|h[1-6]|dt|dd|td|a)>', '\n', b, flags=re.I)
     b = re.sub(r'<[^>]+>', ' ', b).replace('&nbsp;', ' ')
     out, seen = [], set()
     for ln in b.split('\n'):
+        href = ''
+        m = re.match(r'\x01([^\x02]*)\x02', ln)
+        if m:
+            href = m.group(1)
+            ln = ln[m.end():]
+        ln = ln.replace('\x01', ' ').replace('\x02', ' ')
         ln = ' '.join(ln.split())
         ln = re.sub(r'^【[^】]*】', '', ln).strip()
         if not (10 <= len(ln) <= 110):
@@ -85,8 +98,33 @@ def titles(raw):
         if k in seen:
             continue
         seen.add(k)
-        out.append(ln)
+        out.append((ln, href))
     return out
+
+
+def absolutize(base, href):
+    """相対リンクを絶対URLにする。**辿れないリンクは無いのと同じ。**"""
+    if not href or href.startswith(('javascript:', '#', 'mailto:')):
+        return ''
+    if href.startswith('http'):
+        return href
+    m = re.match(r'(https?://[^/]+)', base)
+    root = m.group(1) if m else ''
+    if href.startswith('/'):
+        return root + href
+    return base.rsplit('/', 1)[0] + '/' + href.lstrip('./')
+
+
+def save_log(rows_):
+    """観測を追記する。**上書きしない。**回転表示は、日をまたいで初めて全量になる。"""
+    if not rows_:
+        return
+    new = not os.path.exists(LOG)
+    with io.open(LOG, 'a', encoding='utf-8', newline='') as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(['観測日時', 'チャネルID', '見出し', 'リンク', '判定'])
+        w.writerows(rows_)
 
 
 def ledger_keys():
@@ -122,6 +160,13 @@ def main():
         with io.open(ppath, encoding='utf-8') as f:
             progs = {r['制度ID']: r for r in csv.DictReader(f)}
 
+    # **見たものは、その場で保存する。**
+    # 2026-09-16、チャンスナビのトップが**回転表示**であることが判明した。
+    # 朝8時に見えたねんりんピック2件は、夕方には消えていた。
+    # 出力を標準出力に流すだけでは、回転で消えたものは二度と辿れない。
+    stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+    log = []
+
     total_new = 0
     dead = []
     for c, raw in zip(chans, pages):
@@ -140,18 +185,24 @@ def main():
             print('\n■ %-18s %s' % (c['チャネルID'], c['名称']))
             print('   **取得できなかった。「案件なし」ではない。**判定不能として扱う')
             continue
-        new = [t for t in ts if not known(norm(t), keys)]
+        new = [(t, h) for t, h in ts if not known(norm(t), keys)]
         total_new += len(new)
+        log += [(stamp, c['チャネルID'], t, absolutize(c['URL'], h),
+                 '未登録' if (t, h) in new else '既知') for t, h in ts]
         print('\n■ %-18s %s' % (c['チャネルID'], c['名称']))
         print('   案件らしき見出し %d件 ／ うち**台帳に無い %d件**' % (len(ts), len(new)))
-        for t in new[:15]:
+        for t, h in new[:15]:
             print('     ・%s' % t[:100])
+            if h:
+                print('       %s' % absolutize(c['URL'], h)[:110])
         if len(new) > 15:
             print('     …ほか %d件' % (len(new) - 15))
 
+    save_log(log)
     print('\n' + '=' * 62)
     print('**台帳に無い見出し 合計 %d件 ／ 取得できなかったチャネル %d件**'
           % (total_new, len(dead)))
+    print('観測 %d行を data/sweep_log.csv に追記した（回転表示への備え）' % len(log))
     print('**台帳は書き換えていない。**見出しは案件とは限らない。'
           '一次資料を開き、締切種別と締切確認日を埋めてから台帳へ入れること。')
     return 0

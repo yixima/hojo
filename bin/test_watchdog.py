@@ -147,6 +147,21 @@ b = bb.buckets([_row(案件名='締切未取得だが終了', 締切='2026-09-01
                      状態='**締切未取得。**掃引で発見')], _now)
 check('締切未取得でも受付が終わっていれば確認面に出さない', len(b['unverified']), 0)
 
+# ── 3.6 掃引がリンクを持ち帰り、観測を保存するか ─────────────
+# 2026-09-16、チャンスナビのトップが**回転表示**であることが判明した。
+# 見出しを標準出力に流すだけでは、回転で消えたものは二度と辿れない。
+h2 = ('<ul><li><a href="/bcn/detail/123">令和8年度なんとか運営業務委託</a></li>'
+      '<li><a href="https://example.jp/x">別件の業務委託の募集</a></li></ul>')
+t2 = sw.titles(h2)
+check('見出しと一緒にリンクを持ち帰る', [x[1] for x in t2],
+      ['/bcn/detail/123', 'https://example.jp/x'])
+check('相対リンクを絶対URLにする',
+      sw.absolutize('https://www.chancenavi.jp/bcn/', '/bcn/detail/123'),
+      'https://www.chancenavi.jp/bcn/detail/123')
+check('javascript: は辿れないので捨てる',
+      sw.absolutize('https://x.jp/a/', 'javascript:void(0);'), '')
+check('絶対URLはそのまま', sw.absolutize('https://x.jp/a/', 'https://y.jp/b'), 'https://y.jp/b')
+
 # ── 4. 台帳の件数が減っていないか（破壊の検出） ─────────────
 check('台帳が空でない', len(led) > 200, True)
 

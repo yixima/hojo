@@ -1,8 +1,8 @@
 チャネルID,名称,URL,発注主体の型,用途,紐づく制度ID,取得方法,巡回頻度_日,最終巡回日,最終取得件数,状態,なぜ必要か
-chancenavi,ビジネスチャンス・ナビ2020,https://www.chancenavi.jp/bcn/,登録制ポータル,案件探索,,curl,3,,,未巡回,**登録必須を「見られない」と誤断定し、どのスクリプトも一度も叩いていなかった。トップページに案件が公開されている。2026-09-15 に TOKYO LIGHTS 等4件の未登録を検出**
+chancenavi,ビジネスチャンス・ナビ2020,https://www.chancenavi.jp/bcn/,登録制ポータル,案件探索,,curl,1,2026-09-16,,未巡回,**登録必須を「見られない」と誤断定し、どのスクリプトも一度も叩いていなかった。トップページに案件が公開されている。2026-09-15 に TOKYO LIGHTS 等4件の未登録を検出**／**2026-09-16：トップの「入札・発注情報エリア」は回転表示であることが判明。**朝8時に見えたねんりんピック2件（PRブース出展・宿泊輸送）と東京iCDCフォーラムは、同日16時には消えていた。**1回の掃引では母集団の一部しか見えない。**だから観測を data/sweep_log.csv に毎回追記する。**詳細と締切はログイン後の「入札・発注案件を探す」でしか取れない。**
 tokyo-sangyo-rodo,東京都 産業労働局 観光部 公募・募集,https://www.sangyo-rodo.metro.tokyo.lg.jp/tourism/shisaku/,実行委員会・局直営,案件探索,,curl,3,,,未巡回,**TOKYO LIGHTS 2027（実行委員会）はここに出た。電子調達システムには載らない**
 tokyo-startup,東京都 スタートアップ戦略推進本部 事業者募集,https://www.startupandglobalfinancialcity.metro.tokyo.lg.jp/startup/initiatives/,局直営,案件探索,,curl,3,,,未巡回,**SusHi Tech Tokyo 2027 はここに出た。仕様説明会の参加申請が先行関門**
-tokyo-procurement,東京都 電子調達システム（発注予定・入札経過）,https://www.e-procurement.metro.tokyo.lg.jp/,自治体本体,案件探索,,POST(CP932),7,,,巡回中,既存。**都本体の契約だけ。実行委員会・協議会の案件はここに載らない**
+tokyo-procurement,東京都 電子調達システム（発注予定・入札経過）,https://www.e-procurement.metro.tokyo.lg.jp/,自治体本体,案件探索,,POST(CP932),7,,,巡回中,既存。**都本体の契約だけ。実行委員会・協議会の案件はここに載らない**／**2026-09-16：このシステムに「入札公告の一覧」は無い。**メニューは 東京都公報特定調達公告版／年間発注予定／発注予定／入札(見積)経過／入札結果一覧／有資格者名簿 のみ。**公告そのものは東京都公報（特定調達公告版・財務局発行）に出る**
 expo2027,2027年国際園芸博覧会協会 契約情報,https://expo2027yokohama.or.jp/contract/,協会,案件探索,,curl,3,,,巡回中,既存。最重点
 jgrants,jGrants 公開API（補助金の全国横断）,https://api.jgrants-portal.go.jp/exp/v1/public/subsidies,省庁・自治体,案件探索,,API,3,,,巡回中,既存。**補助金はここに集まる。ただし国の大型制度は自前サイトのみのことがある**
 monodukuri,ものづくり補助金 総合サイト,https://portal.monodukuri-hojo.jp/,省庁（事務局）,制度更新,monodukuri-global,curl,7,,,未巡回,"**グローバル枠 上限3,000万円。台帳・巡回先に1件も無かった**"
