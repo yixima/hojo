@@ -1,0 +1,228 @@
+<title>見落としを検出できる分母</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+/* 藍墨茶（あいすみちゃ）に山吹。仕組みの図面の色。
+   板＝江戸紫／定期受付＝藍／障害報告＝朱／交付金＝萌葱 と系統を分ける。 */
+:root{
+  --ground:#F7F8F9; --surface:#FFFFFF; --surface-2:#EDEFF2;
+  --ink:#15181C; --ink-2:#3E454E; --muted:#727A85;
+  --line:#E0E4E9; --line-strong:#C3CAD3;
+  --accent:#27384A; --accent-soft:#E7ECF1;
+  --gold:#A5761B; --gold-soft:#FAF2DF;
+  --bad:#9C3327; --bad-soft:#FAEBE8;
+  --ok:#2F6A4A;
+  --shadow:0 1px 2px rgba(21,24,28,.05), 0 10px 28px -16px rgba(21,24,28,.24);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ground:#0F1215; --surface:#181C21; --surface-2:#21262D;
+  --ink:#EBEEF2; --ink-2:#BDC5CE; --muted:#858E99;
+  --line:#272D35; --line-strong:#3A424C;
+  --accent:#9CB6D0; --accent-soft:#1C2632;
+  --gold:#D8B05C; --gold-soft:#332A14;
+  --bad:#E2897C; --bad-soft:#331E1A;
+  --ok:#82C4A0;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.72);
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1215; --surface:#181C21; --surface-2:#21262D;
+  --ink:#EBEEF2; --ink-2:#BDC5CE; --muted:#858E99;
+  --line:#272D35; --line-strong:#3A424C;
+  --accent:#9CB6D0; --accent-soft:#1C2632;
+  --gold:#D8B05C; --gold-soft:#332A14;
+  --bad:#E2897C; --bad-soft:#331E1A;
+  --ok:#82C4A0;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.72);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+ font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+ font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding-block:0 92px;padding-left:22px;padding-right:22px}
+h1,h2{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif;margin:0;text-wrap:balance}
+.mast{border-bottom:2px solid var(--accent);padding-block:44px 22px;margin-bottom:34px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;color:var(--gold);font-weight:700;margin-bottom:12px}
+.mast h1{font-size:clamp(27px,5vw,40px);font-weight:700;line-height:1.28;letter-spacing:.02em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:16px;font-size:12.5px;color:var(--muted);font-family:"Roboto Mono",monospace}
+.lede{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--bad);
+ border-radius:2px;padding:24px 28px;box-shadow:var(--shadow);margin-bottom:34px}
+.lede p{margin:0 0 12px;max-width:64ch} .lede p:last-child{margin-bottom:0}
+.lede strong{color:var(--bad)}
+section{margin-bottom:46px}
+section>h2{font-size:20px;font-weight:700;letter-spacing:.04em;padding-bottom:10px;
+ border-bottom:1px solid var(--line);margin-bottom:20px}
+p{margin:0 0 14px;max-width:68ch} b{font-weight:700;color:var(--ink)}
+code{font-family:"Roboto Mono",monospace;font-size:.86em;background:var(--surface-2);padding:1px 5px;border-radius:2px;color:var(--ink-2)}
+.figs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));margin-bottom:34px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:17px 19px;box-shadow:var(--shadow)}
+.fig .k{font-size:11px;letter-spacing:.07em;color:var(--muted);margin-bottom:5px}
+.fig .v{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;font-size:25px;font-weight:500;line-height:1.1}
+.fig.bad .v{color:var(--bad)} .fig.ok .v{color:var(--ok)}
+.fig .s{font-size:12px;color:var(--muted);margin-top:5px}
+.layers{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-bottom:20px}
+.layer{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);
+ border-radius:2px;padding:18px 20px;box-shadow:var(--shadow)}
+.layer .t{font-weight:700;font-size:15px;margin-bottom:4px}
+.layer .f{font-family:"Roboto Mono",monospace;font-size:11.5px;color:var(--gold);margin-bottom:8px}
+.layer .d{font-size:13px;color:var(--ink-2);line-height:1.75}
+.round{background:var(--surface);border:1px solid var(--line);border-radius:2px;
+ padding:17px 20px;margin-bottom:11px;box-shadow:var(--shadow);
+ display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:baseline}
+.round .rn{font-family:"Roboto Mono",monospace;font-size:12px;color:var(--gold);font-weight:700;grid-row:span 3}
+.round .rt{font-weight:700;font-size:15.5px}
+.round .rd{font-size:13.5px;color:var(--ink-2)}
+.round .rf{font-size:13.5px;background:var(--gold-soft);border-left:2px solid var(--gold);
+ padding:7px 12px;border-radius:0 2px 2px 0;color:var(--ink-2)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;background:var(--surface);margin-bottom:14px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:640px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:10.5px;letter-spacing:.07em;color:var(--muted);font-weight:700;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+tr.dead{opacity:.55} tr.dead td:first-child{text-decoration:line-through;text-decoration-color:var(--line-strong)}
+tr.warn td{background:var(--gold-soft)}
+.bad{color:var(--bad);font-weight:700}
+.flow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:16px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:15px 17px;box-shadow:var(--shadow)}
+.step .n{font-family:"Roboto Mono",monospace;font-size:10.5px;color:var(--gold);font-weight:700}
+.step .t{font-weight:700;margin:3px 0 4px;font-size:14px}
+.step .d{font-size:12.5px;color:var(--muted);line-height:1.7}
+ul{margin:0 0 16px;padding-left:20px;max-width:68ch} li{margin-bottom:7px}
+.foot{border-top:1px solid var(--line);padding-top:22px;margin-top:52px;font-size:12.5px;color:var(--muted)}
+a{color:var(--accent)} a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media (max-width:560px){.wrap{padding-left:16px;padding-right:16px}}
+</style>
+<div class="wrap">
+<header class="mast">
+  <div class="eyebrow">公募案件セッション ／ 母集団の再定義</div>
+  <h1>見落としを検出できる分母</h1>
+  <div class="meta"><span>基準日時 2026-09-15 22:14 Tue JST</span><span>commit b605b15</span><span>検査 36件すべて通過</span></div>
+</header>
+
+<div class="lede">
+  <p><strong>原因は「探し方が下手」ではありませんでした。</strong>
+  <b>探す場所と、あるはずのものの一覧を持っていませんでした。</b></p>
+  <p>見つけたものしか記録しない設計では、<strong>見落としは定義上、検出できません。</strong>
+  「あるはずのものが無い」と言うには、先に「あるはず」の一覧が要ります。それが分母です。</p>
+  <p>9月11日の報告停止と同じ型でした——<b>エラーを見張って、沈黙を見張っていなかった。</b></p>
+</div>
+
+<div class="figs">
+  <div class="fig bad"><div class="k">取り逃していた案件</div><div class="v">4<span style="font-size:.5em">件</span></div><div class="s">いずれも東京都系・当社の本業</div></div>
+  <div class="fig bad"><div class="k">見えていなかった場所</div><div class="v">7<span style="font-size:.5em">チャネル</span></div><div class="s">うちナビは一度も叩いていなかった</div></div>
+  <div class="fig"><div class="k">台帳272件の内訳</div><div class="v">2.9<span style="font-size:.5em">%</span></div><div class="s">補助金は8件。97%が発注案件だった</div></div>
+  <div class="fig ok"><div class="k">検査</div><div class="v">36<span style="font-size:.5em">件</span></div><div class="s">壊して落ちることを確認済み</div></div>
+</div>
+
+<section>
+  <h2>分母は3つのファイルで定義する</h2>
+  <p><b>ここに無いものは、永久に見つかりません。</b>だから足すときは一次資料を読み、
+  <code>最終確認日</code> を埋めます。空のままなら検査が止めます。</p>
+  <div class="layers">
+    <div class="layer"><div class="t">制度</div><div class="f">data/programs.csv ／ 13件</div>
+      <div class="d">補助金・融資・資格・無償支援。当社が申請するもの、産地に使わせるもの。
+      <b>廃止した制度も行として残す</b>——消すと、また誰かが善意で書き戻す</div></div>
+    <div class="layer"><div class="t">場所</div><div class="f">data/channels.csv ／ 12件</div>
+      <div class="d">案件が現れうる場所。ポータル・局のページ・実行委員会。
+      <b>叩いて台帳との差を出す。差が出るのが正常である</b></div></div>
+    <div class="layer"><div class="t">案件</div><div class="f">data/ledger.csv ／ 276件</div>
+      <div class="d">個別の案件（既存）。締切は日時で持ち、<b>二段構えの早いほうの関門</b>を入れる</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>取り逃していた4件</h2>
+  <p>8月末から9月頭にかけて、<b>東京都系の本業案件が4件まとめて閉じていました。</b>
+  電子調達システムにも、巡回先のどこにも現れない経路でした。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>案件</th><th>関門</th><th>結果</th></tr></thead>
+    <tbody><tr><td>SusHi Tech Tokyo 2027 企画・運営等業務<div class="sub">東京都 スタートアップ戦略推進本部</div></td><td>説明会申請 7/10 18時【厳守】→ 応募 8/3 17時</td><td class="bad">43日前に終了</td></tr>
+<tr><td>多摩の森 活性化プロジェクト機運醸成事業<div class="sub">多摩の森・大自然公園構想推進協議会</div></td><td>応募届 9/1 正午【厳守】</td><td class="bad">14日前に終了</td></tr>
+<tr><td>TOKYO LIGHTS 2027 企画・運営等業務委託<div class="sub">プロジェクションマッピング国際アワードTOKYO実行委員会</div></td><td>9/1 正午必着</td><td class="bad">14日前に終了</td></tr>
+<tr><td>Tokyo Tokyo Delicious Museum 2027 企画運営業務<div class="sub">東京都産業労働局観光部</div></td><td>9/3 正午必着</td><td class="bad">12日前に終了</td></tr></tbody>
+  </table></div>
+  <p><b>穴①</b> ビジネスチャンス・ナビを、どのスクリプトも一度も叩いていませんでした。
+  「登録必須」を「見られない」と誤って断定していました。<b>トップページは公開されています。</b><br>
+  <b>穴②</b> <b>実行委員会・協議会の発注は、自治体の電子調達システムに載りません。</b>
+  TOKYO LIGHTS は実行委員会、SusHi Tech は局のWebページでの「事業者募集」でした。</p>
+</section>
+
+<section>
+  <h2>5巡で何を直したか</h2>
+  <div class="round"><div class="rn">第1巡</div><div class="rt">母集団を定義する</div><div class="rd">制度を第一級の実体にした。`data/programs.csv`（13制度）と検査 `bin/programs.py` を作った。</div><div class="rf">**自分の未確認6件を検出して exit 2 で止まった。**検査が最初に告発したのは自分だった。</div></div>
+<div class="round"><div class="rn">第2巡</div><div class="rt">一次資料で裏取りする</div><div class="rd">13制度の根拠URLを実際に叩いた。</div><div class="rf">**中小機構と日本公庫の2件が404。**自分で確かめずにURLを書いていた。さらに**ビジネスチャンス・ナビを誰も叩いていない**ことが判明し、**未登録案件4件を検出。**</div></div>
+<div class="round"><div class="rn">第3巡</div><div class="rt">探す場所を定義する</div><div class="rd">`data/channels.csv`（12チャネル）と掃引 `bin/sweep_channels.py` を作った。差を出すだけで書き換えない。</div><div class="rf">**未巡回7チャネル＝見えていなかった場所の数。**掃引の初回で台帳に無い見出しを49件検出。その中に**ねんりんピックの別契約2本**（PRブース出展・宿泊輸送）があった。</div></div>
+<div class="round"><div class="rn">第4巡</div><div class="rt">読める精度にする</div><div class="rd">ノイズ語を落とし、見落とし4件を台帳に記録（272→276行）。前段関門の予告を検査に入れた。</div><div class="rf">ノイズを31→15件に半減。**読まれない一覧は、無い一覧と同じである。**</div></div>
+<div class="round"><div class="rn">第5巡</div><div class="rt">壊して鳴ることを確かめる</div><div class="rd">`bin/test_watchdog.py`（16件）。検出器をわざと2箇所壊して再実行した。</div><div class="rf">**16件成功／壊した版では2件失敗。**鳴ることを確かめずに「監視を入れた」とは言わない。</div></div>
+</section>
+
+<section>
+  <h2>制度台帳 — 13件</h2>
+  <p><code>最終確認日</code>が「未」の行は、<b>一次資料を自分で読んでいない</b>という意味です。
+  検査が終了コード2で止めます。取り消し線は廃止済みです。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>制度／所管</th><th>種別</th><th>当社の立ち位置</th><th>上限</th><th>前段関門</th><th>最終確認</th></tr></thead>
+    <tbody><tr><td>小規模事業者持続化補助金＜一般型・通常枠＞第20回<div class="sub">中小企業庁</div></td><td>補助金</td><td>支援側（産地・事業者に使わせる）</td><td class="n">基本50万円＋インボイス特例50万円＋賃金引上げ特例150万円（両特例は200万円上乗せ）＝最大250万円</td><td>事業支援計画書（様式4）の発行受付締切 2026-12-04（商工会・商工会議所）。ここが実質の期限</td><td class="n">2026-09-15</td></tr>
+<tr><td>小規模事業者持続化補助金＜共同・協業型＞第3回<div class="sub">中小企業庁</div></td><td>補助金</td><td>申請者（当社が支援機関として申請）</td><td class="n">上限3,000万円（参画10者以上）／2,000万円（5〜9者）</td><td>GビズIDプライム（取得済）</td><td class="n">2026-08-31</td></tr>
+<tr><td>ものづくり補助金 グローバル枠<div class="sub">中小企業庁</div></td><td>補助金</td><td>支援側（産地・事業者に使わせる）</td><td class="n">3,000万円（大幅賃上げ特例で4,000万円）</td><td>GビズIDプライム・電子申請</td><td class="n">2026-09-15</td></tr>
+<tr><td>伝統的工芸品産業支援補助金<div class="sub">経済産業省</div></td><td>補助金</td><td>支援側／共同申請</td><td class="n">原則2,000万円</td><td>—</td><td class="n">2026-09-15</td></tr>
+<tr><td>TAKUMI NEXT（日本の食品等の海外展開支援）<div class="sub">ジェトロ（日本貿易振興機構）</div></td><td>無償支援</td><td>支援側（産地に周知）</td><td class="n">—</td><td>—</td><td class="n">2026-09-15</td></tr>
+<tr><td>新輸出大国コンソーシアム パートナーによるハンズオン支援業務（業務委託先の公募）<div class="sub">ジェトロ 海外展開支援部 中堅中小企業課</div></td><td>委託公募</td><td>受託者</td><td class="n">1委託620万円（税別）上限・出来高精算＋出張費実費。採択240名程度</td><td>公募説明書の交付申請（odb-hands-on@jetro.go.jp へメール）</td><td class="n">2026-09-08</td></tr>
+<tr><td>中小機構 海外展開ハンズオン支援<div class="sub">中小機構</div></td><td>無償支援</td><td>支援側（自治体・支援機関も対象）</td><td class="n">—</td><td>—</td><td class="n">2026-09-15</td></tr>
+<tr><td>日本政策金融公庫 海外展開・事業再編資金<div class="sub">日本政策金融公庫</div></td><td>融資</td><td>支援側（産地・事業者に使わせる）</td><td class="n">融資限度額 7,200万円</td><td>—</td><td class="n">2026-09-15</td></tr>
+<tr class="dead"><td>JAPANブランド育成支援等事業<div class="sub">中小機構</div></td><td>補助金</td><td>—</td><td class="n">—</td><td>—</td><td class="n">2026-09-15</td></tr>
+<tr><td>地域未来交付金（地域未来推進型ほか）<div class="sub">内閣官房 地域未来戦略本部事務局／内閣府 地方創生推進事務局</div></td><td>交付金（財源）</td><td>受託者（自治体が発注する委託の原資）</td><td class="n">都道府県15億円/年度・市区町村10億円/年度（自治体への交付上限）</td><td>—</td><td class="n">2026-09-15</td></tr>
+<tr><td>東京都 競争入札参加資格 定期受付<div class="sub">東京都</div></td><td>資格</td><td>申請者</td><td class="n">—</td><td>電子証明書・決算書</td><td class="n">2026-09-09</td></tr>
+<tr><td>全省庁統一資格<div class="sub">各府省庁</div></td><td>資格</td><td>申請者（D等級取得済）</td><td class="n">—</td><td>—</td><td class="n">2026-08-31</td></tr>
+<tr><td>ビジネスチャンス・ナビ2020（事業者登録）<div class="sub">東京都・東京都中小企業振興公社</div></td><td>資格</td><td>申請者</td><td class="n">—</td><td>—</td><td class="n">2026-09-15</td></tr></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>チャネル台帳 — 12件</h2>
+  <p>黄色が<b>未巡回＝いま見えていない場所</b>です。毎朝の心拍で掃引します。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>名称</th><th>発注主体の型</th><th>取得方法</th><th>状態</th></tr></thead>
+    <tbody><tr class="warn"><td>ビジネスチャンス・ナビ2020</td><td>登録制ポータル</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr class="warn"><td>東京都 産業労働局 観光部 公募・募集</td><td>実行委員会・局直営</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr class="warn"><td>東京都 スタートアップ戦略推進本部 事業者募集</td><td>局直営</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr><td>東京都 電子調達システム（発注予定・入札経過）</td><td>自治体本体</td><td>POST(CP932)</td><td class="n">巡回中</td></tr>
+<tr><td>2027年国際園芸博覧会協会 契約情報</td><td>協会</td><td>curl</td><td class="n">巡回中</td></tr>
+<tr><td>jGrants 公開API（補助金の全国横断）</td><td>省庁・自治体</td><td>API</td><td class="n">巡回中</td></tr>
+<tr class="warn"><td>ものづくり補助金 総合サイト</td><td>省庁（事務局）</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr class="warn"><td>持続化補助金＜一般型・通常枠＞商工会議所地区</td><td>省庁（事務局）</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr class="warn"><td>持続化補助金＜一般型・通常枠＞商工会地区</td><td>省庁（事務局）</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr><td>ジェトロ 調達・公募情報</td><td>独法</td><td>curl</td><td class="n">巡回中</td></tr>
+<tr class="warn"><td>中小機構 調達・公募情報</td><td>独法</td><td>curl</td><td class="n">未巡回</td></tr>
+<tr><td>内閣府 地域未来交付金</td><td>省庁</td><td>curl</td><td class="n">巡回中</td></tr></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>毎朝まわる循環</h2>
+  <div class="flow">
+    <div class="step"><div class="n">08:00</div><div class="t">検査4本</div><div class="d">台帳の書式／制度台帳／締切の解析20件／検出器16件。<b>落ちたら止まる</b></div></div>
+    <div class="step"><div class="n">次に</div><div class="t">掃引</div><div class="d">12チャネルを叩き、<b>台帳に無い見出し</b>を出す。一次資料で締切を確かめてから台帳へ</div></div>
+    <div class="step"><div class="n">次に</div><div class="t">予告</div><div class="d">60日以内の動き。<b>前段関門を必ず併記</b>（例：様式4は12/4、申請は12/15）</div></div>
+    <div class="step"><div class="n">最後に</div><div class="t">報告</div><div class="d">72時間以内の締切を全件。<b>新規0件でも黙って終わらない</b>。心拍が36時間途切れれば板に赤帯</div></div>
+  </div>
+  <p><b>前段関門を併記する理由。</b>持続化補助金 第20回の申請締切は12月15日ですが、
+  商工会・商工会議所が出す事業支援計画書（様式4）の受付締切は<b>12月4日</b>です。
+  <b>実質の期限は11日早い。</b>締切だけを見ていると、間に合うつもりで間に合いません。</p>
+</section>
+
+<div class="foot">
+  <ul>
+    <li>【確認済】持続化補助金 第20回＝受付11/5開始・様式4は12/4・締切12/15 17:00。
+      <b>補助上限は基本50万円＋両特例200万円上乗せで最大250万円</b>、補助率2/3（賃金引上げ特例の赤字事業者は3/4）。
+      公募要領第8版 p.7-8 で直接確認</li>
+    <li>【確認済】TAKUMI NEXT は2026年度の募集終了（締切 2026-04-24）</li>
+    <li>【確認済】JAPANブランド育成支援等事業は現存しない。架空の締切が雛形に残っていたため削除した</li>
+    <li>【未確認・推測】ものづくり補助金グローバル枠の補助率・上限は二次情報による。<b>公募要領での確認は未了</b></li>
+    <li>【未確認・推測】中小機構・日本公庫の制度内容は二次情報による。<b>当初書いたURLは2件とも404だった</b></li>
+    <li>【不明】チャンスナビの「入札・発注情報エリア」はJavaScriptで、curlでは一覧が取れない。<b>登録後の確認が要る</b></li>
+  </ul>
+</div>
+</div>

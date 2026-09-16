@@ -1,0 +1,357 @@
+<title>報告が途切れた2日間</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+/* 朱（しゅ）＝ 印章の色。報告書であることを示す軸色。
+   板（公募ボード）の江戸紫、判断シートの藍とは別系統にして、種類を取り違えないようにする。 */
+:root{
+  --ground:#FBF9F7;
+  --surface:#FFFFFF;
+  --surface-2:#F4F0EC;
+  --ink:#1F1A17;
+  --ink-2:#4E453E;
+  --muted:#847A72;
+  --line:#E8E1DA;
+  --line-strong:#D2C7BC;
+  --accent:#B7472A;         /* 朱 */
+  --accent-soft:#FBEDE8;
+  --ok:#3C6B4B;             /* 苔 */
+  --ok-soft:#E9F1EA;
+  --gap:#9A8F85;
+  --shadow:0 1px 2px rgba(31,26,23,.05), 0 10px 28px -16px rgba(31,26,23,.22);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#16130F; --surface:#1F1B17; --surface-2:#2A241E;
+    --ink:#F2ECE5; --ink-2:#CBC0B5; --muted:#968B80;
+    --line:#332C25; --line-strong:#4A4038;
+    --accent:#E8886A; --accent-soft:#3A2019;
+    --ok:#8FC39F; --ok-soft:#1C2E22;
+    --gap:#7A7168;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#16130F; --surface:#1F1B17; --surface-2:#2A241E;
+  --ink:#F2ECE5; --ink-2:#CBC0B5; --muted:#968B80;
+  --line:#332C25; --line-strong:#4A4038;
+  --accent:#E8886A; --accent-soft:#3A2019;
+  --ok:#8FC39F; --ok-soft:#1C2E22;
+  --gap:#7A7168;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.85; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:820px; margin:0 auto; padding-block:0 96px; padding-left:22px; padding-right:22px}
+
+h1,h2,h3{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif; text-wrap:balance; margin:0}
+.mast{border-bottom:2px solid var(--accent); padding-block:44px 22px; margin-bottom:38px}
+.eyebrow{
+  font-size:11.5px; letter-spacing:.18em; color:var(--accent); font-weight:700;
+  margin-bottom:12px;
+}
+.mast h1{font-size:clamp(27px,5vw,40px); font-weight:700; line-height:1.28; letter-spacing:.02em}
+.meta{
+  display:flex; flex-wrap:wrap; gap:6px 24px; margin-top:18px;
+  font-size:12.5px; color:var(--muted); font-family:"Roboto Mono",monospace;
+}
+
+/* 要旨 */
+.lede{
+  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+  border-radius:2px; padding:24px 28px; box-shadow:var(--shadow); margin-bottom:46px;
+}
+.lede p{margin:0 0 12px; max-width:62ch}
+.lede p:last-child{margin-bottom:0}
+.lede strong{color:var(--accent)}
+
+section{margin-bottom:52px}
+section > h2{
+  font-size:20px; font-weight:700; letter-spacing:.04em;
+  padding-bottom:10px; border-bottom:1px solid var(--line); margin-bottom:22px;
+}
+section > h2 .num{
+  font-family:"Roboto Mono",monospace; font-size:13px; color:var(--accent);
+  margin-right:12px; font-weight:500;
+}
+h3{font-size:16px; font-weight:700; margin:30px 0 10px; letter-spacing:.02em}
+p{margin:0 0 14px; max-width:64ch}
+b{font-weight:700; color:var(--ink)}
+code{
+  font-family:"Roboto Mono",monospace; font-size:.87em;
+  background:var(--surface-2); padding:1px 5px; border-radius:2px; color:var(--ink-2);
+}
+
+/* 空白の実測 */
+.gaugebox{
+  background:var(--surface); border:1px solid var(--line); border-radius:2px;
+  padding:22px 26px; box-shadow:var(--shadow); margin-bottom:26px;
+}
+.gaugebox .big{
+  font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  font-size:clamp(30px,7vw,46px); font-weight:500; line-height:1.05; color:var(--accent);
+}
+.gaugebox .big small{font-size:.4em; color:var(--muted); margin-left:8px; letter-spacing:.04em}
+.gaugebox .ends{
+  display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  font-family:"Roboto Mono",monospace; font-size:12.5px; color:var(--muted); margin-top:14px;
+}
+.track{height:6px; background:var(--surface-2); border-radius:3px; overflow:hidden; margin-top:8px}
+.track i{display:block; height:100%; width:100%;
+  background:repeating-linear-gradient(90deg,var(--accent) 0 7px,transparent 7px 14px)}
+
+/* 鎖 */
+.chain{
+  display:flex; gap:6px; flex-wrap:wrap; align-items:stretch;
+  margin:6px 0 18px; padding:0; list-style:none;
+}
+.chain li{
+  flex:1 1 76px; min-width:70px; border:1px solid var(--line-strong); border-radius:2px;
+  background:var(--surface); padding:11px 8px; text-align:center;
+}
+.chain li .n{font-family:"Roboto Mono",monospace; font-size:10.5px; color:var(--muted)}
+.chain li .d{font-family:"Roboto Mono",monospace; font-size:14px; font-weight:500; margin-top:2px}
+.chain li .s{font-size:10.5px; color:var(--ok); margin-top:4px; font-weight:700}
+.chain li.broken{
+  border-style:dashed; border-color:var(--accent); background:var(--accent-soft);
+}
+.chain li.broken .d{color:var(--accent)}
+.chain li.broken .s{color:var(--accent)}
+.caption{font-size:12.5px; color:var(--muted); margin:0 0 22px; max-width:64ch}
+
+/* 表 */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:2px; background:var(--surface); margin-bottom:18px}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:520px}
+th,td{padding:11px 15px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-size:11px; letter-spacing:.08em; color:var(--muted); font-weight:700; background:var(--surface-2); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.k{font-family:"Roboto Mono",monospace; white-space:nowrap; color:var(--ink-2); font-variant-numeric:tabular-nums}
+.ok{color:var(--ok); font-weight:700}
+.bad{color:var(--accent); font-weight:700}
+
+/* 引用（自分が過去に書いた文） */
+blockquote{
+  margin:0 0 18px; padding:14px 20px; border-left:3px solid var(--line-strong);
+  background:var(--surface-2); color:var(--ink-2); font-size:14px; border-radius:0 2px 2px 0;
+}
+blockquote p{margin:0 0 6px; max-width:60ch}
+blockquote p:last-child{margin:0}
+
+/* 二層の対策 */
+.layers{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); margin-bottom:20px}
+.layer{background:var(--surface); border:1px solid var(--line); border-radius:2px; padding:20px 22px; box-shadow:var(--shadow)}
+.layer .tag{
+  display:inline-block; font-size:10.5px; letter-spacing:.1em; font-weight:700;
+  color:var(--accent); background:var(--accent-soft); border:1px solid var(--accent);
+  padding:2px 9px; border-radius:2px; margin-bottom:10px;
+}
+.layer h3{margin:0 0 8px; font-size:16px}
+.layer p{font-size:14px; margin:0 0 8px}
+.layer p:last-child{margin:0}
+
+ul{margin:0 0 16px; padding-left:20px; max-width:64ch}
+li{margin-bottom:6px}
+
+.foot{border-top:1px solid var(--line); padding-top:22px; margin-top:56px; font-size:12.5px; color:var(--muted)}
+.foot ul{padding-left:18px}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+@media (max-width:560px){ .wrap{padding-left:16px; padding-right:16px} }
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">汎用マニュアル v59 セッション宛 ／ 障害報告</div>
+  <h1>報告が途切れた2日間</h1>
+  <div class="meta">
+    <span>発信：公募案件セッション <code>yixima/hojo</code></span>
+    <span>作成：2026-09-11 19:52 JST</span>
+    <span>対象条項：§2-18 / §2-20 / §2-9 / §3-15 / §0-14</span>
+  </div>
+</header>
+
+<div class="lede">
+  <p><strong>応答をまたぐ処理は存在しない</strong>という構造（§2-18）を、条文としては正確に知っていた。
+  そのうえで、その構造の上に<b>「単発予約を自分の手で繋ぐ鎖」</b>という仕組みを自分で建てた。</p>
+  <p>鎖は1本切れれば止まる。そして<b>止まったことを誰にも知らせない。</b>2日5時間40分、実際に止まった。</p>
+  <p><strong>新条項は提案しない。</strong>本件は既存条項で全面的に説明できる（§0-14 条項の定員制）。
+  足りなかったのは条項ではなく<b>発動</b>である。</p>
+</div>
+
+<section>
+  <h2><span class="num">01</span>何が起きたか</h2>
+
+  <div class="gaugebox">
+    <div class="big">2<small>日</small>5<small>時間</small>40<small>分</small></div>
+    <div class="track"><i></i></div>
+    <div class="ends">
+      <span>最後の報告 2026-09-09 10:04</span>
+      <span>指摘を受けた 2026-09-11 15:44</span>
+    </div>
+  </div>
+
+  <p>定期報告は <code>send_later</code>（1回だけ発火する予約）を、
+  <b>「今回の報告の中で、次回の予約を1本入れる」</b>という形で繋いでいた。
+  <code>list_triggers</code> で全件を確認した結果が下である。7本すべて <code>run_once_fired</code>、後続なし。</p>
+
+  <ol class="chain">
+    <li><span class="n">1</span><div class="d">09-01</div><div class="s">繋いだ</div></li>
+    <li><span class="n">2</span><div class="d">09-04</div><div class="s">繋いだ</div></li>
+    <li><span class="n">3</span><div class="d">09-05</div><div class="s">繋いだ</div></li>
+    <li><span class="n">4</span><div class="d">09-07</div><div class="s">繋いだ</div></li>
+    <li><span class="n">5</span><div class="d">09-08</div><div class="s">繋いだ</div></li>
+    <li><span class="n">6</span><div class="d">09-08</div><div class="s">繋いだ</div></li>
+    <li><span class="n">7</span><div class="d">09-09</div><div class="s">繋いだ</div></li>
+    <li class="broken"><span class="n">8</span><div class="d">—</div><div class="s">作らず</div></li>
+  </ol>
+  <p class="caption">7本目に応答したあと、次の環を作らなかった。鎖はそこで終わり、以後いかなる予約も存在しなかった。
+  再開の合図になったのは、生島様からのご指摘である。<b>自力では検出していない。</b></p>
+
+  <p><b>週次巡回の Routine は壊れていない。</b><code>trig_01NgT5dQwMBGg8APfz8YSG9K</code> は正常に生存しており、
+  次回は 2026-09-14 08:06 JST。壊れたのは<b>日次報告の鎖だけ</b>である（§3-15：原因を1つに丸めない）。</p>
+</section>
+
+<section>
+  <h2><span class="num">02</span>被害</h2>
+  <p>締切が動いている案件について、2日以上、判断材料が生島様の画面に届かなかった。
+  <b>実際に失われたものがある。</b>停止が解除された当日、17:00 に3件が同時に閉じた。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>案件</th><th>発注</th><th>関門</th><th>結果</th></tr></thead>
+    <tbody>
+      <tr><td>GREEN×EXPO 2027 会場内学習プログラム開発及び運営業務委託<br><span style="color:var(--muted);font-size:12px">上限2,700万円（税込）</span></td><td>2027年国際園芸博覧会協会</td><td class="k">09-11 17:00<br>参加意向申出</td><td class="bad">判断を仰げず終了</td></tr>
+      <tr><td>「第７回食品工場Week」出展に係る装飾委託業務</td><td>やまぐち産業振興財団</td><td class="k">09-11 17:00<br>参加表明</td><td class="bad">判断を仰げず終了</td></tr>
+      <tr><td>「第４回九州機械要素技術展」出展に係る装飾委託業務</td><td>やまぐち産業振興財団</td><td class="k">09-11 17:00<br>参加表明</td><td class="bad">判断を仰げず終了</td></tr>
+    </tbody>
+  </table></div>
+  <p>9/9 に報告が続いていれば、2日間の検討時間があった。
+  <b>締切管理の業務における報告の停止は、遅延ではない。</b>届かなかった報告は案件を1件丸ごと失わせる。
+  3件とも台帳に「判断しないまま受付終了」と原因つきで記録した。</p>
+</section>
+
+<section>
+  <h2><span class="num">03</span>直接原因</h2>
+  <p><b>単発予約の鎖には、自己修復も不在検知もない。</b></p>
+  <ul>
+    <li>各環の生成は<b>私の手作業</b>であり、手作業は抜ける。</li>
+    <li>抜けても<b>エラーは出ない。</b>予約が「無い」ことは、誰も観測していないからである。</li>
+    <li>監視の言葉でいえば、<b>エラーの発生を見張っていて、沈黙を見張っていなかった。</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">04</span>拡大原因 — なぜ2日も気づけなかったか</h2>
+
+  <h3>① 沈黙は画面に出ない</h3>
+  <p>生島様の画面には、公募ボードが<b>9/9 時点の内容のまま</b>表示され続けていた。
+  <b>古い情報は「古い」とは表示されない。</b>正しい情報と見分けがつかない。
+  更新が止まっているという事実を、<b>成果物そのものが隠していた。</b></p>
+
+  <h3>② 同じ失敗を、私は既に文書化していた</h3>
+  <p>別 Routine（Mac の監視）のプロンプトに、私はこう書いていた。</p>
+  <blockquote>
+    <p>細かい確認（<code>send_later</code> の鎖）が主役で、これはその鎖が切れたときに拾うための保険である。</p>
+    <p>この監視は一度、17時間半にわたり無言で停止した実績がある。</p>
+  </blockquote>
+  <p><b>同じ設計の弱点を、同じ言葉で、自分で書いていた。</b>
+  そちらには保険（毎時の定期実行）を付け、<b>こちらには付けなかった。</b>
+  知識としては持っていたが、<b>適用しなかった。</b>§0-14 の言う通り、足りないのは条項ではなく発動である。</p>
+
+  <h3>③ §2-20 を、報告の鎖に適用していなかった</h3>
+  <p>§2-20 は「完了した単位は、その応答の中で永続化まで済ませる。次の応答に持ち越すと、そこで失われる」と定める。
+  <b>次回の予約は、まさに『次の応答に持ち越したら失われるもの』だった。</b>
+  私はこれを「報告のおまけ」と扱い、完了単位として扱っていなかった。</p>
+</section>
+
+<section>
+  <h2><span class="num">05</span>再発防止 — 既存条項の発動経路を強化する</h2>
+
+  <div class="layers">
+    <div class="layer">
+      <span class="tag">第 1 層</span>
+      <h3>鎖を廃し、定期実行に置き換えた</h3>
+      <p><code>trig_013J6yq98fZPqmqdvcfdLmDs</code> ／ <code>0 23 * * *</code>（毎日 08:00 JST）／このセッションに直結。
+      次回発火 2026-09-12 08:05 JST。</p>
+      <p><b>1日抜けても翌朝また鳴る。</b>生成者が私（抜ける）からサーバ（抜けない）に変わったことが本質である。</p>
+    </div>
+    <div class="layer">
+      <span class="tag">第 2 層</span>
+      <h3>不在検知を成果物の上に置いた</h3>
+      <p><code>bin/heartbeat.py</code> が前回報告からの空白を測り、<b>36時間</b>を超えるとボード最上部に赤帯が出る。</p>
+      <p>④①への直接の回答である。<b>私が黙っても、画面が黙らない。</b></p>
+    </div>
+  </div>
+
+  <p>定期実行のプロンプトには、次を明記した。</p>
+  <ul>
+    <li><code>today.sh</code> → <code>build_board.py --check</code> → <code>heartbeat.py --check</code> →
+      Artifact を <code>read</code> してから再公開 → <code>heartbeat.py --stamp</code> → push</li>
+    <li><b>72時間以内に閉じる締切を全件書く</b></li>
+    <li>前回報告からの空白時間を書く</li>
+    <li><b>「新規0件・変化なしでも必ず報告する。黙って終わらない」</b></li>
+    <li><b>自分自身の <code>enabled</code> と <code>next_run_at</code> を毎回確認する</b>（監視が死んだことを監視する）</li>
+  </ul>
+
+  <h3>発動すべきだった条項（§10-4 ⑤）</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>条項</th><th>どう効くべきだったか</th></tr></thead>
+    <tbody>
+      <tr><td class="k">§2-18</td><td>「応答の間に裏側で作業は進まない」を<b>知っていた</b>。ならば継続の仕組みは<b>手作業ではなく外部の定期実行に預けるべき</b>だった。条文の適用先が「言い方の禁止」に留まり、<b>仕組みの設計にまで及んでいなかった。</b></td></tr>
+      <tr><td class="k">§2-20</td><td>次回予約は「持ち越したら失われるもの」であり、<b>その応答内で永続化すべき完了単位</b>だった。</td></tr>
+      <tr><td class="k">§2-9</td><td>9/9 の応答は、鎖を繋がずに終わった時点で未完了だった。<b>未完了なら理由を書く</b>義務があるが、書いていない。書けば気づけた。</td></tr>
+      <tr><td class="k">§3-15</td><td>「巡回が止まった」と一括りにせず、週次巡回（正常）と日次報告（停止）を分けて確認した。<span class="ok">本件では守れている。</span></td></tr>
+      <tr><td class="k">§0-14</td><td>上の4条項ですべて説明できる。<b>したがって新条項は作らない。</b>強化したのは発動経路（cron と heartbeat）である。</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2><span class="num">06</span>マニュアル側への提案（条文の追加ではない）</h2>
+  <p>§0-14 に従い、新条項は提案しない。<b>§2-18 の適用範囲の拡張</b>を1点だけ提案する。</p>
+  <blockquote>
+    <p><b>§2-18 への追記案（1文）</b></p>
+    <p>応答をまたいで継続すべき業務を仕組みに預けるときは、<b>単発の予約を自分で繋ぐ方式を採らない。</b>
+    定期実行に預け、<b>前回実行からの空白時間を成果物の上に表示する</b>（不在検知）。</p>
+  </blockquote>
+  <p>理由：§2-18 は現在「<b>そう言ってはいけない</b>」（実態のない「処理中です」の禁止）を定めているが、
+  <b>「ではどう作るか」を定めていない。</b>本件は、§2-18 を完全に理解したうえで、
+  その理解が<b>設計に届かなかった</b>事例である。禁止の条文に<b>代替の設計を1行添える</b>ことで発動経路が閉じる。</p>
+  <p>これは v17 が採り、v59 まで引き継がれている方針（<b>新設0件・既存条項の適用範囲と発動経路の強化</b>）と同じ形である。</p>
+</section>
+
+<section>
+  <h2><span class="num">07</span>検証 — 言いっぱなしにしない</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>確認したこと</th><th>方法</th><th>結果</th></tr></thead>
+    <tbody>
+      <tr><td>鎖が7本とも発火済みで、8本目が無い</td><td><code>list_triggers</code> 全件</td><td class="ok">確認済</td></tr>
+      <tr><td>週次巡回が生きている</td><td>同上</td><td class="ok">確認済（次回 09-14 08:06 JST）</td></tr>
+      <tr><td>新しい定期実行に次回発火が入っている</td><td><code>create_trigger</code> の戻り値</td><td class="ok">確認済（09-12 08:05 JST）</td></tr>
+      <tr><td>不在検知が異常を検出できる</td><td><code>heartbeat.py --check</code></td><td class="ok">確認済（閾値36時間）</td></tr>
+      <tr><td><b>赤帯がボードに実際に出る</b></td><td><b><code>data/heartbeat.json</code> をわざと 9/8 09:00 に書き換えて再生成</b></td><td class="ok">確認済</td></tr>
+    </tbody>
+  </table></div>
+  <p>最後の1行は<b>「壊してみる」方式</b>で検証した。<code>--check</code> が「空白 3日6時間」と報告して終了コード1を返し、
+  ボード本文に「この画面の更新が途切れていました」が出現することを確認。
+  正しい値へ戻して再生成し、赤帯が消えることも確認した。</p>
+  <p>過去に <code>audit_ledger()</code> をわざと台帳を壊して検証したのと同じ手順である。
+  <b>装置が鳴ることを確かめずに「監視を入れました」と言わない。</b></p>
+</section>
+
+<div class="foot">
+  <ul>
+    <li>【確認済】現在日時 2026-09-11 19:52 JST（<code>./bin/today.sh</code> で実測）</li>
+    <li>【確認済】台帳 272行。本日 17:00 に受付を終えた案件 3件</li>
+    <li>【未確認・推測】空白が生じた2日間に新規公告があったか否かは、次回の巡回で確定する</li>
+    <li>正本は <code>docs/report_chudan_20260911.md</code>。この画面はその表示版である</li>
+  </ul>
+</div>
+
+</div>

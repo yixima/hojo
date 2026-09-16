@@ -1,19 +1,57 @@
 # 巡回対象の情報源
 #
-# ネットワーク設定：**Full（全ドメイン許可）** を採用（2026-08-19 決定）。
+# ネットワーク設定：**Full（全ドメイン許可）** を採用（2026-08-26 決定）。
 # 公募情報のドメイン空間は予測不能であることがDNS実測で判明したため
 # （末尾の domain_survey を参照）、許可リスト方式は採らない。
 #
 # 巡回先は「ドメインを列挙できるか」とは別問題として、組織カテゴリで網羅する。
-#
-# 【2026-08-19 第2回巡回で判明・重要】
-# 巡回時は必ずブラウザ相当の User-Agent を付けること。
-#   curl -A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
-#            (KHTML, like Gecko) Chrome/128.0 Safari/537.36'
-# www.chusho.meti.go.jp と www.meti.go.jp は CloudFront の UA フィルタにより、
-# curl のデフォルト UA では 403 を返す。ブラウザ相当の UA なら 200。
-# これはネットワークポリシーの問題ではない。第1回巡回で経産省系が読めなかった
-# 原因はこれだった可能性が高い。
+
+
+# =====================================================================
+# 調達ポータル・事業者登録が必要なプラットフォーム
+# =====================================================================
+# 2026-08-26 追加。案件は「機関のサイト」だけでなく「調達ポータル」にも出る。
+# 特にビジネスチャンス・ナビは登録なしでは応募自体ができない。
+procurement_platforms:
+  - name: ビジネスチャンス・ナビ
+    url: https://www.chancenavi.jp/bcn/
+    scope: 東京都・東京都中小企業振興公社ほかの調達
+    registration: 事業者登録が必須
+    priority: 最優先
+    note: |
+      公社の委託案件は希望申出をこのポータルでのみ受け付ける。
+      公告から締切まで7〜10日しかないため、未登録だと物理的に応募できない。
+      **御社の主力案件（東京手仕事 MAISON&OBJET）がこの経路。登録状況を要確認。**
+  - name: 調達ポータル
+    url: https://www.p-portal.go.jp/pps-web-biz/UAA01/OAA0101
+    scope: 国の機関の調達（入札公告・企画競争・意見招請・落札結果）
+    registration: 全省庁統一資格と連動
+    archive: https://www.p-portal.go.jp/pps-web-biz/UAB02/OAB0201  # 落札実績情報の一覧
+    note: POST検索フォーム（CSRFトークンあり）。府省庁・都道府県・品目分類で絞込可能。
+  - name: Jグランツ
+    url: https://www.jgrants-portal.go.jp/
+    api: https://api.jgrants-portal.go.jp/exp/v1/public/subsidies
+    scope: 国・自治体の補助金（委託事業は含まない）
+    registration: GビズIDプライム（取得済み）
+    note: 公開APIで全国の募集中補助金を構造化取得できる。補助金についてはこれで網羅。
+
+# =====================================================================
+# 過年度アーカイブ（終了案件）の経路 ― カレンダー構築の材料
+# =====================================================================
+archives:
+  note: |
+    **初回サーチ最大の欠陥は、ここを見なかったことだった。**
+    翌年度事業の委託先は前年度中に決まるため、「現在の新着」だけでは
+    翌年度案件を丸ごと取り逃す。詳細は runbook 手順2.5 を参照。
+  verified:
+    - { org: 東京都中小企業振興公社, url: "https://www.tokyo-kosha.or.jp/kosha/keiyaku/end/index.html", years: 令和2〜7年度 }
+    - { org: 中小機構, url: "https://www.smrj.go.jp/procurement/solicitation/expiry/index.html" }
+    - { org: 伝統的工芸品産業振興協会, url: "https://kyokai.kougeihin.jp/association_cat/公募公告/", note: 過去分も同一ページに残る }
+    - { org: 調達ポータル, url: "https://www.p-portal.go.jp/pps-web-biz/UAB02/OAB0201", note: 落札実績情報の一覧 }
+  todo: |
+    未探索：47都道府県、45外郭団体、90市区、府省庁のアーカイブページ。
+    次回以降の巡回で各組織のアーカイブURLを特定し、ここへ追記していく。
+    **これが完了するまで、網羅性は「現在募集中のもの」に限定される。**
 
 # =====================================================================
 # 巡回先：組織カテゴリ別
@@ -35,53 +73,13 @@ tier_a:
       url: https://kyokai.kougeihin.jp/association_cat/公募公告/
       note: |
         最重要。「海外におけるテストマーケティング業務」「海外における実演・
-        ワークショップ業務」など、御社の主力事業とほぼ完全に一致する企画提案募集を出す。
-
-        【2026-08-20 訂正】公募公告カテゴリ121件を全数走査した結果、
-        **「毎年4月上旬公告・5月中旬締切」は誤りだった。** 公告時期は年ごとに動く：
-          令和6年度: 2024-06-26 公告 / 2024-07-12 締切
-          令和7年度: 2025-06-23 公告 / 2025-08-11 締切
-          令和8年度: 2026-04-01 公告 / 2026-05-15 締切
-        → **監視期間は 3月中旬〜7月上旬。** 4月だけ見ていると2年分を取り逃す。
-        6月下旬は2年連続で公告されており、むしろ本命に近い。
-
-        英語・翻訳業務（企画競争）は5年連続で必ず出る（2022-07-04, 2023-06-09,
-        2024-03-25, 2025-06-17, 2026-06-15 各締切）。規模は小さいが協会との
-        取引実績を作る入口になる。
+        ワークショップ業務」など、御社の主力事業とほぼ完全に一致する企画提案募集を
+        毎年4月上旬に公告し5月中旬に締め切る。2027年3月中旬から厳重監視。
 
     - name: 公益財団法人東京都中小企業振興公社
       domain: tokyo-kosha.or.jp
       also: tokyoteshigoto.tokyo   # 「東京手仕事」事業サイト。地域TLD
-      note: |
-        御社の受託実績あり（令和4・5・7年度）。展示会出展助成事業も実施。
-        【2026-08-19 確認】**tier_a で最も打率が高い発注元。**
-        契約情報は https://www.tokyo-kosha.or.jp/kosha/keiyaku/index.html に一覧があり、
-        件名・公表日・希望申出期間・受付状況が表で読める（ログイン不要）。
-        応募は「ビジネスチャンス・ナビ」（https://www.chancenavi.jp/bcn/、登録無料）経由。
-        **東京都の入札参加資格は不要。** 選定の制限は5項目のみ（法令上の許可、経営状態、
-        営業経歴1年以上、指名停止、社会的信用）。
-        令和8年度は海外関連業務を年間を通じて発注している（Tokyo SMEサポートデスク インド、
-        海外ビジネス・チャレンジ塾、ベトナム現地商談会、タイ／ベトナム現地幹部人材育成講座、
-        Food Japan 2026、海外企業とのイノベーション創出支援事業（マレーシア）等）。
-        端境期でも案件が出るため、7〜11月も毎週確認する価値がある。
-
-        【2026-08-20 追加】過年度契約情報（令和5〜7年度）から、
-        **毎年必ず出る案件**が判明した。これが最良の予測材料になる：
-          - 「東京手仕事」MAISON & OBJET 出展及びポップアップストア運営（3年連続・**最重要**）
-            令和7年度分は 2025-03-18 入札 → 次回は 2027年2〜3月と予測
-          - 東京都伝統工芸品展 運営管理業務（第68回→令和7年度→第70回）8月中旬公告
-          - TOKYO職人展 運営管理業務（3年連続）5月中旬公告
-          - 海外テストマーケティング・商談会 企画運営等委託（令和5・6・7年度）
-          - 東京インターナショナル・ギフト・ショー 公社パビリオン運営（春2025・春2026）
-          - 海外展示会出展ブース装飾等委託（Ambiente / ATX WEST / D&M WEST /
-            NIPPON HAKU BANGKOK / POWERGEN / Food Japan 等、通年で随時）
-        過年度一覧: https://www.tokyo-kosha.or.jp/kosha/keiyaku/end/index.html
-
-        **ビジネスチャンス・ナビはログイン不要で検索・詳細閲覧ができる**（2026-08-20 確認）。
-        `workflow/fetch_chancenavi.py` で取得できる。ログインが要るのは
-        添付資料（仕様書・予定価格）の閲覧と、希望申請・入札などの送信操作のみ。
-        公社案件の「契約方法」（希望制指名競争入札／総合評価方式入札など）は
-        公社サイトの一覧には出ず、ナビの詳細ページにしかない。**必ずナビ側も見ること。**
+      note: 御社の受託実績あり（令和4・5・7年度）。展示会出展助成事業も実施。
 
     - name: 自治体国際化協会（CLAIR / クレア）
       domain: clair.or.jp
@@ -90,44 +88,11 @@ tier_a:
         海外事務所を持ち、自治体の国際化・海外プロモーションを支援する総務省系団体。
         海外事務所単位で現地イベント・展示会出展の委託を出すことがあり、
         御社の「自治体の海外展開支援」と最も近い発注元の一つ。**新規開拓の本命。**
-        【2026-08-19 確認】**調達・入札の専用ページは存在しない。** 公募は
-        トップページの新着情報に混ざって出る（JETプログラム関連は jetprogramme.org 側）。
-        巡回は https://www.clair.or.jp/ と https://www.clair.or.jp/index-news.html を見る。
-        助成事業（多文化共生／国際交流支援／自治体国際協力促進／経済活動助成）は
-        すべて地方自治体等が対象で、御社は直接応募できない。ただし自治体が受給し
-        御社が執行を受託する構図は成立する。
-        営業導線として次の2つが有効：
-          - プロモーションアドバイザー制度（海外プロモーション専門家を自治体に紹介）
-            交流支援部経済交流課 keishin@clair.or.jp / 03-5213-1726
-          - 海外活動支援（自治体の海外での販路拡大・観光PRを海外事務所が支援）
-            総務部企画調査課 kikaku@clair.or.jp / 03-5213-1722
 
     - name: 独立行政法人日本貿易振興機構（JETRO）
       domain: jetro.go.jp
       url: https://www.jetro.go.jp/procurement/
-      note: |
-        海外展示会ジャパンパビリオンの運営受託。
-        **入札情報と公募情報がページ分離されているため、毎回両方を見ること。**
-          入札情報: https://www.jetro.go.jp/procurement/bid.html
-          公募情報: https://www.jetro.go.jp/procurement/publicoffer.html
-        海外展開支援部 国際博覧会課（Tel 03-3582-4688 / ODE@jetro.go.jp）は
-        国際博覧会の日本館業務を「総合プロデュース」「行催事」「運営」「設計・監理」に
-        分割発注する。2026-08-19時点でベオグラード博の行催事（限度額3.27億円）と
-        運営が公告中。**公募形式は全省庁統一資格が不要な場合がある**（行催事業務が実例）。
-        入札形式でも「JETRO発行の等級確認結果通知書」で統一資格を代替できる制度がある。
-
-        【2026-08-20 追加】ジャパンパビリオンの「設計・監理等」は展示会ごとに
-        **開催の約1年前に入札公告される**。実測（設計監理カテゴリ）：
-          2025-07-14 Gulfood 2026 / 2025-07-17 BIOFACH 2026
-          2025-08-01 Seafood Expo North America 2026 / 2025-08-21 FHA 2026
-          2025-09-08 Seafood Expo Global 2026 / 2025-10-21 Summer Fancy Food Show 2026
-          2025-10-22 National Restaurant Association Show 2026 / 2025-11-19 THAIFEX 2026
-          2026-03-23 SIAL Paris 2026
-          2026-06-26 Sirha 2027 / 2026-07-13 BIOFACH 2027 / 2026-07-27 SENA 2027
-        → **7〜11月がジャパンパビリオン設計・監理の公告シーズン。** 下記の
-        季節調整で「端境期」としていた時期が、JETROに関してはむしろ本番。
-        いずれも食品系展示会のため御社の主戦場ではないが、ブース設計施工の
-        実績づくりとJETROとの取引開始の入口になる。
+      note: 海外展示会ジャパンパビリオンの運営受託。調達情報ページを確認する。
 
     - name: 独立行政法人中小企業基盤整備機構（中小機構）
       domain: smrj.go.jp
@@ -135,18 +100,7 @@ tier_a:
 
     - name: 中小企業庁
       domain: chusho.meti.go.jp
-      note: |
-        小規模事業者持続化補助金＜共同・協業型＞など。支援機関側で申請できる制度がある。
-        【2026-08-19 確認】巡回先は3ページに分かれている。
-          補助金: https://www.chusho.meti.go.jp/koukai/hojyokin/kobo.html
-          委託事業: https://www.chusho.meti.go.jp/koukai/itaku/index.html
-          入札・その他: https://www.chusho.meti.go.jp/koukai/nyusatsu/index.html
-        **ブラウザ相当の User-Agent が必須**（冒頭の注記を参照）。
-        ＜共同・協業型＞以外の補助金（新事業進出、省力化投資、持続化の一般型・創業型・
-        災害支援枠、ものづくり等）は中小企業者・小規模事業者本人が対象で、
-        一般社団法人は申請できない。
-        ＜共同・協業型＞は一般社団法人が「地域振興等機関」として申請できる。
-        詳細は reports/kobo_report_20260819b.md の論点①〜③を参照。
+      note: 小規模事業者持続化補助金＜共同・協業型＞など。支援機関側で申請できる制度がある。
 
     - name: 独立行政法人国際交流基金（JF）
       domain: jpf.go.jp
@@ -217,28 +171,101 @@ tier_d_chambers:
 # ---------------------------------------------------------------------
 tier_e_prefectural_agencies:
   frequency: seasonal
+  source_of_truth: https://www.chusho.meti.go.jp/soudan/todou_sien.html
   note: |
-    **ここが最も見落としやすい発注元。** 都道府県本体ではなく外郭団体が
-    海外展示会出展事業の運営委託を出すケースが多い。御社の受注実績である
-    東京都中小企業振興公社がまさにこの類型。47都道府県すべてに同種団体がある。
-    名称もドメインもバラバラで規則性がないため、WebSearch を主とし、
-    確認できたものを下に追記して育てる。
-  verified:
-    - { pref: 東京, name: 東京都中小企業振興公社, domain: tokyo-kosha.or.jp, note: 受注実績あり }
-    - { pref: 石川, name: 石川県産業創出支援機構（ISICO）, domain: isico.or.jp }
-    - { pref: 千葉, name: 千葉県産業振興センター, domain: ccjc-net.or.jp }
-    - { pref: 静岡, name: 静岡県国際経済振興会（SIBA）, domain: siba.or.jp }
-    - { pref: 京都, name: 京都産業21, domain: ki21.jp }
-    - { pref: 神奈川, name: 神奈川産業振興センター, domain: kipc.or.jp }
-    - { pref: 埼玉, name: 埼玉県産業振興公社, domain: saitama-j.or.jp }
-    - { pref: 愛知, name: あいち産業振興機構, domain: aibsc.jp }
-    - { pref: 北海道, name: 北海道中小企業総合支援センター, domain: hsc.or.jp }
-    - { pref: 福岡, name: 福岡県中小企業振興センター, domain: joho-fukuoka.or.jp }
-    - { pref: 大阪, name: 大阪産業局, domain: obda.or.jp }
-  todo: |
-    残り36県は未調査。次回以降、WebSearch で「◯◯県 中小企業振興公社 海外展示会 公募」
-    の形で確認し、判明したものをここに追記する。
-    兵庫県産業活性化センター（hyogo-iic.ne.jp）はDNS未解決。要再調査。
+    **最も見落としやすい発注元。** 都道府県本体ではなく外郭団体が海外展示会出展事業の
+    運営委託を出すケースが多い。御社の受注実績である東京都中小企業振興公社がこの類型。
+
+    2026-08-27、中小企業庁の公式一覧「都道府県等中小企業支援センター等」から
+    **47/47団体を確定**した。従来はドメインを推測していたため7件が誤っていた
+    （岐阜・山口・徳島・佐賀・大分・和歌山・宮崎）。**推測ではなく公式マスタを使うこと。**
+  verified_47:
+    - { pref: 北海道, name: "北海道中小企業総合支援センター", domain: www.hsc.or.jp }
+    - { pref: 福井, name: "ふくい産業支援センター", domain: www.fisc.jp }
+    - { pref: 青森, name: "21あおもり産業総合支援センター", domain: www.21aomori.or.jp }
+    - { pref: 滋賀, name: "滋賀県産業支援プラザ", domain: www.shigaplaza.or.jp }
+    - { pref: 岩手, name: "いわて産業振興センター", domain: www.joho-iwate.or.jp }
+    - { pref: 京都, name: "京都産業21", domain: www.ki21.jp }
+    - { pref: 宮城, name: "みやぎ産業振興機構", domain: www.joho-miyagi.or.jp }
+    - { pref: 大阪, name: "大阪産業局", domain: www.obda.or.jp }
+    - { pref: 秋田, name: "あきた企業活性化センター", domain: www.bic-akita.or.jp }
+    - { pref: 岐阜, name: "岐阜県産業経済振興センター", domain: www.gpc-gifu.or.jp }
+    - { pref: 山形, name: "山形県企業振興公社", domain: www.ynet.or.jp }
+    - { pref: 三重, name: "三重県産業支援センター", domain: www.miesc.or.jp }
+    - { pref: 福島, name: "福島県産業振興センター", domain: www.utsukushima.net }
+    - { pref: 富山, name: "富山県新世紀産業機構", domain: www.tonio.or.jp }
+    - { pref: 茨城, name: "いばらき中小企業グローバル推進機構", domain: www.iis-net.or.jp }
+    - { pref: 石川, name: "石川県産業創出支援機構", domain: www.isico.or.jp }
+    - { pref: 栃木, name: "栃木県産業振興センター", domain: www.tochigi-iin.or.jp }
+    - { pref: 島根, name: "しまね産業振興財団", domain: www.joho-shimane.or.jp }
+    - { pref: 群馬, name: "群馬県産業支援機構", domain: www.g-inf.or.jp }
+    - { pref: 岡山, name: "岡山県産業振興財団", domain: www.optic.or.jp }
+    - { pref: 千葉, name: "千葉県産業振興センター", domain: www.ccjc-net.or.jp }
+    - { pref: 広島, name: "ひろしま産業振興機構", domain: www.hiwave.or.jp }
+    - { pref: 埼玉, name: "埼玉県産業振興公社", domain: www.saitama-j.or.jp }
+    - { pref: 山口, name: "やまぐち産業振興財団", domain: yipf.or.jp }
+    - { pref: 東京, name: "東京都中小企業振興公社", domain: www.tokyo-kosha.or.jp }
+    - { pref: 徳島, name: "とくしま産業振興機構", domain: oursun.our-think.or.jp }
+    - { pref: 神奈川, name: "神奈川産業振興センター", domain: www.kipc.or.jp }
+    - { pref: 香川, name: "かがわ産業支援財団", domain: www.kagawa-isf.jp }
+    - { pref: 新潟, name: "にいがた産業創造機構", domain: www.nico.or.jp }
+    - { pref: 愛媛, name: "えひめ産業振興財団", domain: www.ehime-iinet.or.jp }
+    - { pref: 長野, name: "長野県産業振興機構", domain: www.nice-o.or.jp }
+    - { pref: 高知, name: "高知県産業振興センター", domain: www.joho-kochi.or.jp }
+    - { pref: 山梨, name: "やまなし産業支援機構", domain: www.yiso.or.jp }
+    - { pref: 福岡, name: "福岡県中小企業振興センター", domain: www.joho-fukuoka.or.jp }
+    - { pref: 静岡, name: "静岡県産業振興財団", domain: www.ric-shizuoka.or.jp }
+    - { pref: 佐賀, name: "佐賀県産業振興機構", domain: www.infosaga.or.jp }
+    - { pref: 愛知, name: "あいち産業振興機構", domain: www.aibsc.jp }
+    - { pref: 長崎, name: "長崎県産業振興財団", domain: www.joho-nagasaki.or.jp }
+    - { pref: 兵庫, name: "ひょうご産業活性化センター", domain: web.hyogo-iic.ne.jp }
+    - { pref: 熊本, name: "くまもと産業支援財団", domain: www.kmt-ti.or.jp }
+    - { pref: 奈良, name: "奈良県地域産業振興センター", domain: www.nara-sangyoshinko.or.jp }
+    - { pref: 大分, name: "大分県産業創造機構", domain: www.columbus.or.jp }
+    - { pref: 和歌山, name: "わかやま産業振興財団", domain: yarukiouendan.or.jp }
+    - { pref: 宮崎, name: "宮崎県産業振興機構", domain: www.mepo.or.jp }
+    - { pref: 鳥取, name: "鳥取県産業振興機構", domain: www.toriton.or.jp }
+    - { pref: 鹿児島, name: "かごしま産業支援センター", domain: www.kisc.or.jp }
+    - { pref: 沖縄, name: "沖縄県産業振興公社", domain: www.okinawa-ric.jp }
+
+  # 政令指定都市の産業振興財団（同じ公式一覧に掲載。都道府県センターとは別組織）
+  unreachable:
+    note: 2026-08-27 時点で接続が確立できない。URL変更またはアクセス制限の可能性。次回要再調査。
+    orgs:
+      - { pref: 愛媛, name: えひめ産業振興財団, domain: www.ehime-iinet.or.jp }
+      - { pref: 佐賀, name: 佐賀県産業振興機構, domain: www.infosaga.or.jp }
+
+  priority_targets:
+    note: |
+      **2026-08-27の巡回で判明した最重点。** 産業振興財団は県内企業を束ねた共同出展の
+      ブース装飾・設営を継続的に外部委託しており、御社の主力と直結する。
+      以下は実際に発注が確認できた団体。毎回の巡回で必ず確認すること。
+    orgs:
+      - { name: やまぐち産業振興財団, domain: yipf.or.jp, note: "年10本以上の出展に係る装飾委託業務" }
+      - { name: 京都産業21, domain: www.ki21.jp, note: "SEMICON京都パビリオン装飾／伝統産業の海外テストマーケティング" }
+      - { name: 大阪産業局, domain: www.obda.or.jp, note: "TENKA!プログラムの各展示会ブース企画・設営／クリエイター博覧会会場設営" }
+      - { name: 静岡県産業振興財団, domain: www.ric-shizuoka.or.jp, note: "県ブース設営等業務の企画提案コンペ" }
+      - { name: ひょうご産業活性化センター, domain: web.hyogo-iic.ne.jp, note: "県ブース装飾等委託業務" }
+      - { name: 大分県産業創造機構, domain: www.columbus.or.jp, note: "展示商談会 県ブース企画・運営委託" }
+      - { name: 宮崎県産業振興機構, domain: www.mepo.or.jp, note: "機械要素技術展の小間装飾等業務委託" }
+      - { name: さいたま市産業創造財団, domain: www.sozo-saitama.or.jp, note: "COMPAMED／electronica など海外見本市のブース装飾" }
+      - { name: 横浜企業経営支援財団, domain: www.idec.or.jp, note: "Ambiente／NY NOW／横浜パビリオン" }
+      - { name: 広島県産業振興機構, domain: www.hiwave.or.jp, note: "HIROSHIMA STARS 大規模見本市出展支援" }
+
+  city_centers:
+    - { name: "さっぽろ産業振興財団", domain: www.sec.or.jp }
+    - { name: "仙台市産業振興事業団", domain: www.siip.city.sendai.jp }
+    - { name: "千葉市産業振興財団", domain: www.chibashi-sangyo.or.jp }
+    - { name: "さいたま市産業創造財団", domain: www.sozo-saitama.or.jp }
+    - { name: "横浜企業経営支援財団", domain: www.idec.or.jp }
+    - { name: "川崎市産業振興財団", domain: www.kawasaki-net.ne.jp }
+    - { name: "静岡産業振興協会", domain: www.b-nest.jp }
+    - { name: "名古屋産業振興公社", domain: www.nipc.or.jp }
+    - { name: "京都高度技術研究所", domain: www.astem.or.jp }
+    - { name: "堺市産業振興センター", domain: www.sakai-ipc.jp }
+    - { name: "こうべ産業・就労支援財団", domain: www.kobe-ipc.or.jp }
+    - { name: "広島市産業振興センター", domain: www.ipc.city.hiroshima.jp }
+    - { name: "北九州産業学術推進機構", domain: www.ksrp.or.jp }
 
 # ---------------------------------------------------------------------
 # F. 自治体（都道府県・市区町村）
@@ -249,16 +276,109 @@ tier_f_municipalities:
     - { name: 東京都, domain: metro.tokyo.lg.jp, note: 東京2020仏国プロモーション実績 }
     - { name: 熊本県, domain: pref.kumamoto.jp, note: "2016-2024 パリJAPAN EXPO出展（lg.jp 無し）" }
     - { name: 岩手県, domain: pref.iwate.jp, note: "2019 伝統工芸品の仏国テスト販売（lg.jp 無し）" }
-    - { name: 山形県, domain: pref.yamagata.jp, note: "Drive上に費用試算資料あり（lg.jp 無し）" }
+    - { name: 山形県, domain: pref.yamagata.jp, note: "韓国市場周遊促進事業の公告実績（lg.jp 無し）" }
     - { name: 京都府, domain: pref.kyoto.jp, note: "Precious Kyoto でMaison&Objet出展の前例（lg.jp 無し）" }
     - { name: 富山県, domain: pref.toyama.jp, note: シンガポールNATAS出展事業の公募実績 }
     - { name: 愛媛県, domain: pref.ehime.jp, note: 海外富裕層向けコンテンツ造成事業の公募実績 }
-  designated_cities: |
-    政令指定都市20市＋中核市＋東京23区は、シティプロモーション・海外プロモーション・
-    姉妹都市交流事業の公募を出す。ドメインに規則性がないため WebSearch で拾う。
-    実例：川崎市（city.kawasaki.jp）、国立市（city.kunitachi.tokyo.jp）、
-    相模原市（city.sagamihara.kanagawa.jp）、足立区（city.adachi.tokyo.jp）
-  strategy: websearch_first
+    - { name: 福島県, domain: pref.fukushima.lg.jp, note: 2027国際園芸博覧会 出展業務委託を公告中 }
+  # 47都道府県の全ホストは workflow/pref_hosts.json に格納（DNS実測済み）
+  # 政令市20市＋東京23区＋中核市49市 = 90市区をDNSで実在確認（2026-08-26）
+  verified_cities:
+    - { city: 札幌, domain: www.city.sapporo.jp }
+    - { city: 仙台, domain: www.city.sendai.jp }
+    - { city: さいたま, domain: www.city.saitama.lg.jp }
+    - { city: 千葉, domain: www.city.chiba.jp }
+    - { city: 横浜, domain: www.city.yokohama.lg.jp }
+    - { city: 川崎, domain: www.city.kawasaki.jp }
+    - { city: 相模原, domain: www.city.sagamihara.kanagawa.jp }
+    - { city: 新潟, domain: www.city.niigata.lg.jp }
+    - { city: 静岡, domain: www.city.shizuoka.lg.jp }
+    - { city: 浜松, domain: www.city.hamamatsu.shizuoka.jp }
+    - { city: 名古屋, domain: www.city.nagoya.jp }
+    - { city: 京都, domain: www.city.kyoto.lg.jp }
+    - { city: 大阪, domain: www.city.osaka.lg.jp }
+    - { city: 堺, domain: www.city.sakai.lg.jp }
+    - { city: 神戸, domain: www.city.kobe.lg.jp }
+    - { city: 岡山, domain: www.city.okayama.jp }
+    - { city: 広島, domain: www.city.hiroshima.lg.jp }
+    - { city: 北九州, domain: www.city.kitakyushu.lg.jp }
+    - { city: 福岡, domain: www.city.fukuoka.lg.jp }
+    - { city: 熊本, domain: www.city.kumamoto.jp }
+    - { city: chiyoda区, domain: www.city.chiyoda.lg.jp }
+    - { city: chuo区, domain: www.city.chuo.lg.jp }
+    - { city: minato区, domain: www.city.minato.tokyo.jp }
+    - { city: shinjuku区, domain: www.city.shinjuku.lg.jp }
+    - { city: bunkyo区, domain: www.city.bunkyo.lg.jp }
+    - { city: taito区, domain: www.city.taito.lg.jp }
+    - { city: sumida区, domain: www.city.sumida.lg.jp }
+    - { city: koto区, domain: www.city.koto.lg.jp }
+    - { city: shinagawa区, domain: www.city.shinagawa.tokyo.jp }
+    - { city: meguro区, domain: www.city.meguro.tokyo.jp }
+    - { city: ota区, domain: www.city.ota.tokyo.jp }
+    - { city: setagaya区, domain: www.city.setagaya.lg.jp }
+    - { city: shibuya区, domain: www.city.shibuya.tokyo.jp }
+    - { city: suginami区, domain: www.city.suginami.tokyo.jp }
+    - { city: toshima区, domain: www.city.toshima.lg.jp }
+    - { city: kita区, domain: www.city.kita.lg.jp }
+    - { city: arakawa区, domain: www.city.arakawa.tokyo.jp }
+    - { city: itabashi区, domain: www.city.itabashi.tokyo.jp }
+    - { city: nerima区, domain: www.city.nerima.tokyo.jp }
+    - { city: adachi区, domain: www.city.adachi.tokyo.jp }
+    - { city: katsushika区, domain: www.city.katsushika.lg.jp }
+    - { city: edogawa区, domain: www.city.edogawa.tokyo.jp }
+    - { city: 旭川, domain: www.city.asahikawa.hokkaido.jp }
+    - { city: 函館, domain: www.city.hakodate.hokkaido.jp }
+    - { city: 青森, domain: www.city.aomori.aomori.jp }
+    - { city: 盛岡, domain: www.city.morioka.iwate.jp }
+    - { city: 秋田, domain: www.city.akita.lg.jp }
+    - { city: 郡山, domain: www.city.koriyama.lg.jp }
+    - { city: いわき, domain: www.city.iwaki.lg.jp }
+    - { city: 宇都宮, domain: www.city.utsunomiya.tochigi.jp }
+    - { city: 前橋, domain: www.city.maebashi.gunma.jp }
+    - { city: 高崎, domain: www.city.takasaki.gunma.jp }
+    - { city: 川越, domain: www.city.kawagoe.saitama.jp }
+    - { city: 船橋, domain: www.city.funabashi.lg.jp }
+    - { city: 柏, domain: www.city.kashiwa.lg.jp }
+    - { city: 八王子, domain: www.city.hachioji.tokyo.jp }
+    - { city: 横須賀, domain: www.city.yokosuka.kanagawa.jp }
+    - { city: 富山, domain: www.city.toyama.lg.jp }
+    - { city: 金沢, domain: www4.city.kanazawa.lg.jp }
+    - { city: 福井, domain: www.city.fukui.lg.jp }
+    - { city: 甲府, domain: www.city.kofu.yamanashi.jp }
+    - { city: 長野, domain: www.city.nagano.nagano.jp }
+    - { city: 岐阜, domain: www.city.gifu.lg.jp }
+    - { city: 豊橋, domain: www.city.toyohashi.lg.jp }
+    - { city: 豊田, domain: www.city.toyota.aichi.jp }
+    - { city: 岡崎, domain: www.city.okazaki.lg.jp }
+    - { city: 一宮, domain: www.city.ichinomiya.aichi.jp }
+    - { city: 大津, domain: www.city.otsu.lg.jp }
+    - { city: 豊中, domain: www.city.toyonaka.osaka.jp }
+    - { city: 東大阪, domain: www.city.higashiosaka.lg.jp }
+    - { city: 姫路, domain: www.city.himeji.lg.jp }
+    - { city: 西宮, domain: www.nishi.or.jp }
+    - { city: 尼崎, domain: www.city.amagasaki.hyogo.jp }
+    - { city: 奈良, domain: www.city.nara.lg.jp }
+    - { city: 和歌山, domain: www.city.wakayama.wakayama.jp }
+    - { city: 鳥取, domain: www.city.tottori.lg.jp }
+    - { city: 松江, domain: www.city.matsue.lg.jp }
+    - { city: 倉敷, domain: www.city.kurashiki.okayama.jp }
+    - { city: 福山, domain: www.city.fukuyama.hiroshima.jp }
+    - { city: 下関, domain: www.city.shimonoseki.lg.jp }
+    - { city: 高松, domain: www.city.takamatsu.kagawa.jp }
+    - { city: 松山, domain: www.city.matsuyama.ehime.jp }
+    - { city: 高知, domain: www.city.kochi.kochi.jp }
+    - { city: 久留米, domain: www.city.kurume.fukuoka.jp }
+    - { city: 長崎, domain: www.city.nagasaki.lg.jp }
+    - { city: 佐世保, domain: www.city.sasebo.lg.jp }
+    - { city: 大分, domain: www.city.oita.oita.jp }
+    - { city: 宮崎, domain: www.city.miyazaki.miyazaki.jp }
+    - { city: 鹿児島, domain: www.city.kagoshima.lg.jp }
+    - { city: 那覇, domain: www.city.naha.okinawa.jp }
+  unresolved:
+    - { city: 中野区, note: "city.nakano.lg.jp / city.nakano.tokyo.jp とも解決せず。要再調査" }
+  note: |
+    市区町村のドメインに規則性はない（city.X.lg.jp / city.X.jp / city.X.県名.jp が混在）。
+    上記90市区は実測で確定したもの。それ以外の一般市町村は WebSearch で拾う。
 
 # ---------------------------------------------------------------------
 # G. 観光協会・DMO・文化財団
@@ -290,7 +410,7 @@ tier_h_aggregators:
     - { name: J-Net21, domain: j-net21.smrj.go.jp, note: 中小機構運営。支援情報ヘッドライン }
 
 # =====================================================================
-# ドメイン実測調査（2026-08-19、DNS解決による全数検証）
+# ドメイン実測調査（2026-08-26、DNS解決による全数検証）
 # =====================================================================
 domain_survey:
   method: getent hosts による名前解決。HTTPは遮断されているためDNSで存在を確認した。
@@ -341,65 +461,25 @@ domain_survey:
       また新制度ができるたびに新ドメインが立つため、事前列挙は不可能。
       *.info をまとめて許可しておくのが現実的。
 
-  blocked_domains:
-    summary: |
-      2026-08-19 の巡回で egress ポリシーにより CONNECT が拒否された（502）ドメイン。
-      許可リストへの追加を検討する。プロキシの recentRelayFailures で確認できる：
-        curl -sS "$HTTPS_PROXY/__agentproxy/status"
-    verified:
-      - { domain: www.kougei.or.jp, note: "日本工芸会系。伝産協会は kyokai.kougeihin.jp で到達可のため実害は小" }
-      - { domain: www.mirasapo-plus.go.jp, note: "中小企業支援制度の横断検索。月次巡回で必要。追加推奨" }
-      - { domain: s-hojokin.jp, note: "省力化投資補助金事務局。優先度低" }
-    not_blocked_but_403:
-      - { domain: www.chusho.meti.go.jp, note: "UAフィルタ。ブラウザ相当UAで200" }
-      - { domain: www.meti.go.jp, note: "同上" }
 
-  # =====================================================================
-  # 落札金額はどこで取れるか（2026-08-20 実測）
-  # =====================================================================
-  award_amounts:
+  full_inventory:
+    surveyed: 2026-08-26
     summary: |
-      予定価格が非公開の案件でも、**過年度の落札金額から規模を推定できる**。
-      ただし公表しているのは国の機関だけで、東京都の外郭団体は公表していない。
-    published:
-      - org: JETRO
-        url: https://www.jetro.go.jp/procurement/contract.html
-        note: |
-          月次PDF。国内契約（競争入札／随意契約・競争性のあるもの／その他）と
-          海外契約（四半期）に分かれる。契約先・契約金額・落札率まで載る。
-          実測（2026-08-20）:
-            ベオグラード博 日本館 総合プロデュース・展示設計監理・広報
-              = 323,807,861円（大日本印刷、2026-02-19、企画競争、落札率100%）
-            ジャパンパビリオン 設計・監理等
-              = BIOFACH 2026 1,669,420円 ／ THAIFEX 2026 1,803,080円（株式会社アライズ）
-              → **500万円の足切り基準を下回る。設計・監理は狙う対象ではない**
-            海外ジャパンパビリオン 施工業務 = 21,317,269〜36,855,323円
-            ジャパン・パビリオン 出展運営   = 3,419,092〜22,114,248円
-              → **狙うべきはこちら**
-      - org: 独立行政法人国際交流基金（JF）
-        url: https://www.jpf.go.jp/j/about/bid/result/
-        note: |
-          案件ごとのページに 落札者・落札金額・予定価格・落札率 が全て載る。
-          最も情報量が多い。予定価格が分かるので落札率の相場も読める。
-      - org: 経済産業省
-        url: https://www.meti.go.jp/information_2/publicoffer/R_00_bid_news_list.html
-        note: |
-          年度ごとのExcel（物品役務等／委託契約 × 競争入札／随意契約）。
-          列に「予定価格（円）」「契約金額（円）」「落札率（％）」がある。
-          例: itaku_bid_r8.xlsx / itaku_zuikei_r8.xlsx
-          ただし予定価格は「非公表」の行も多い。
-    not_published:
-      - org: 公益財団法人東京都中小企業振興公社
-        note: |
-          **落札金額を公表していない。** 2026-08-20 に次を全て確認したが金額欄が無い：
-            契約情報ページ / 過年度契約情報（令和5〜7年度）/ 事業報告（令和6年度・全230頁）
-          事業報告には会期・会場・出展品数などの規模は載るが金額は無い。
-          （第68回東京都伝統工芸品展＝令和7年1月15〜20日・新宿髙島屋11階・40工芸品、
-            TOKYO職人展＝令和6年9月27日〜10月10日・伝統工芸青山スクエア・10工芸品13名）
-          ビジネスチャンス・ナビは「案件公表から落札者決定まで一貫」処理するため、
-          **ログインすれば落札結果を確認できる可能性が高い。次回ログイン時に要確認。**
-      - org: 伝統的工芸品産業振興協会
-        note: 結果公示のカテゴリが見当たらない。落札金額は未確認
+      巡回対象のドメインをDNSで全数実測し、以下を確定した。
+      これにより「どこを見るべきか」のリストは実質的に完成した。
+    counts:
+      都道府県: 47/47（pref_hosts.json に格納）
+      都道府県の産業振興外郭団体: 45/47（長野・鹿児島が未特定）
+      政令指定都市: 20/20
+      東京23区: 22/23（中野区が未特定）
+      中核市ほか主要市: 48/49
+      国の府省庁・独法・外郭団体: 30組織
+      観光協会・DMO・文化財団: 9組織
+      商工会議所・商工会・中央会: 8組織
+    method: |
+      getent hosts による名前解決。HTTPが遮断されていてもDNSは通るため、
+      到達性と実在を分けて確認できる。未特定のものは候補ドメインが解決しなかった
+      もので、次回巡回時にWebSearchで正式URLを特定する。
 
   qualification_sites:
     summary: 全省庁統一資格（申請中）に直結するサイト
@@ -409,3 +489,376 @@ domain_survey:
       - { domain: www.jgrants-portal.go.jp, note: jGrants }
     not_resolved:
       - { domain: www.chotatujouhou.go.jp, note: "統一資格審査申請・調達情報検索サイト。名前解決せず。URLが変わった可能性あり、要再調査" }
+
+# ══════════════════════════════════════════════════════════════
+# 自動巡回が構造的に不可能な巡回先（2026-08-27 検証）
+# ここに載るものは手作業で確認する。放置すると分母から欠落する。
+# ══════════════════════════════════════════════════════════════
+blocked_sources:
+  note: |
+    2026-08-27 に全経路（curl の UA・ヘッダ・TLS変更、Chromium/Playwright）を
+    試したうえでの確定結果。回避は試みない。手動確認の対象として記録する。
+  hosts:
+    - name: 岐阜県
+      url: https://www.pref.gifu.lg.jp/
+      症状: TLSハンドシェイクは成立するがサーバがリクエストを無応答で切断（curl 52）
+      判定: データセンターIPからの遮断とみられる
+      対処: 手動確認
+    - name: 山梨県
+      url: https://www.pref.yamanashi.jp/
+      症状: 同上
+      対処: 手動確認
+    - name: 公益財団法人えひめ産業振興財団
+      url: https://www.ehime-iinet.or.jp/
+      症状: 同上（URL自体は正しいことをWebSearchで確認済み）
+      対処: 手動確認
+    - name: 公益財団法人岡山県産業振興財団
+      url: https://www.optic.or.jp/
+      症状: HTTP 423 Locked。「Security check required」の人間確認画面が返る
+      判定: 明示的なボット対策。回避しない
+      対処: 手動確認
+    - name: 佐賀県地域産業支援センター
+      url_誤: https://www.infosaga.or.jp/    # NXDOMAIN。中小企業庁マスタの記載が古い
+      url_正: https://www.saga-itc.jp/       # 200 OK。こちらを使う
+      対処: sources.yaml のホストを saga-itc.jp に修正済み
+
+  flaky_sources:
+    note: |
+      遮断ではなく**断続的に失敗する**巡回先。リトライすれば通る。
+      blocked_sources と混同しないこと。諦めてはいけない。
+    hosts:
+      - name: 岡山県
+        url: https://www.pref.okayama.jp/
+        症状: |
+          同じURLが 000（0バイト）を返したり 200 を返したりする。
+          3回リトライすればほぼ通る。**必ずリトライすること。**
+          2026-08-28、1回目で諦めて「取得不可」と記録しかけた。
+        本文抽出の注意: |
+          メニュー（多言語切替・文字サイズ変更・分野でさがす）が
+          本文より前に大量に入るため、単純にタグを剥がすと
+          メニューだけが取れる。**<title> を見るのが最も速い。**
+          「結果の公表」が入っていれば終了済みと判断できる。
+      - name: VIPO（映像産業振興機構）
+        url: https://www.vipo.or.jp/
+        症状: 本文がJSで描画され、curlではナビゲーションしか取れない
+        対処: 手動確認
+
+  procurement_portals:
+    - name: 調達ポータル（p-portal）
+      url: https://www.p-portal.go.jp/pps-web-biz/UAA01/OAA0101
+      症状: |
+        検索フォームのGETは200で取得できる（CSRFトークンも取れる）が、
+        POSTすると必ず「不正な操作が行われました。トップページから
+        アクセスし直してください。」が返る。全hidden項目の完全再現、
+        セッション確立（トップ→検索画面の順に遷移）、Referer/Origin付与、
+        submit名のクエリ付与を試したが同じ。サーバ側で画面遷移状態を
+        検証しているため、JSを実行しないHTTPクライアントでは通らない。
+        実ブラウザ（Chromium）は当該ホストへの接続自体がリセットされる。
+      判定: 自動取得は不可
+      代替: |
+        国の機関の委託・入札は各省庁の調達情報ページと JETRO 入札情報から
+        取得できており、p-portal はその重複にあたる。優先度は低い。
+        必要なら手動で検索し、結果を data/ へ手置きする。
+
+# ══════════════════════════════════════════════════════════════
+# 2026-08-28 追加。東京都の発注情報は財務局の電子調達システムから取る。
+# 生活文化スポーツ局のサイトはJSレンダリングで読めないが、
+# 発注そのものはこちらに集まる。国民文化祭2027・ねんりんピック2028の入口。
+# ══════════════════════════════════════════════════════════════
+tier_tokyo_procurement:
+  note: |
+    東京都財務局「東京都入札契約ガイドブック（物品等委託）」で確認した。
+    「入札情報サービス」→「発注予定情報」で、営業種目と等級を指定すると
+    その時点で希望を受け付けている案件が一覧で出る。
+    入札情報サービスは24時間365日稼働。電子入札・資格審査は8:00〜21:00（土曜除く）。
+
+    **当社が狙う規模の案件は、ほぼすべて「希望制指名競争入札」になる。**
+    一般競争入札は物品・委託で予定価格4,000万円以上のものに限られる。
+    つまり「希望申請を受付期間内に出すこと」が勝負の分かれ目。
+  frequency: 週2回
+  orgs:
+    - name: 東京都電子調達システム（入札情報サービス）
+      url: https://www.e-procurement.metro.tokyo.lg.jp/
+      index: https://www.e-procurement.metro.tokyo.lg.jp/index.jsp
+      note: |
+        index.jsp のトップに契約制度・契約部署からのお知らせのPDFが
+        90本以上リンクされている。制度変更の追跡にも使える。
+      ガイドブック: https://www.e-procurement.metro.tokyo.lg.jp/documents/pdf20260803135720_1.pdf
+    - name: 東京都財務局 契約・入札情報
+      url: https://www.metro.tokyo.lg.jp/tosei/zaise/keiyaku
+      問い合わせ: 契約第二課 03-5388-2632
+
+  資格の期限:
+    現在の資格: 令和7・8年度分（有効期間は令和9年3月31日まで）
+    次の定期受付: 令和9・10年度用。**令和8年（2026年）の秋頃を予定**（ガイドブック明記）
+    随時受付: いつでも。審査基準は定期受付と同じ。**承認された翌月1日に適用**
+    定期受付: "**定期受付をした翌年度の4月1日に適用**"
+    結論: |
+      **両方やる。** 随時受付だけでは令和9年3月31日で切れ、
+      2027年度・2028年度の発注に届かない。
+      定期受付だけでは令和9年4月1日まで資格がなく、
+      2026年度後半に出る計画策定業務に応募できない。
+
+# ══════════════════════════════════════════════════════════════
+# 2026-08-28 追加。開催が確定した2027年の全国イベントの発注元。
+# 会期は2027年8月と11月。発注は2026年度後半から出る。
+# 到達できるURLは実際に叩いて確認した（上位機関の一覧は当てにならない）。
+# ══════════════════════════════════════════════════════════════
+tier_2027_national_events:
+  第13回全国和牛能力共進会_北海道:
+    会期: 2027-08-26 〜 08-30
+    当社適合: 高
+    根拠: |
+      北海道庁の公式説明に「実行委員会では、会場の設営や式典の運営、
+      交通輸送などの計画を検討している」と明記されている。
+      **設営・式典運営・輸送は当社の本業そのもの。**
+    frequency: 隔日
+    orgs:
+      - name: 第13回全国和牛能力共進会北海道実行委員会
+        url: https://zenkyo-hokkaido.jp/
+        事務局: 一般社団法人北海道酪農畜産協会
+        note: 2025-10-01 に事務所を移転し本格的な準備に入った
+      - name: 北海道 農政部生産振興局畜産振興課 全国和牛能力共進会北海道大会準備室
+        url: https://www.pref.hokkaido.lg.jp/ns/tss/224564.html
+        設置: 2025年5月
+      - name: 北海道 委託業務（入札・調達情報）
+        url: https://www.pref.hokkaido.lg.jp/category/d003/c006/s010/
+        note: |
+          **2026-08-28 に到達確認。当社領域のイベント運営委託が定常的に出ている。**
+          例：北海道ボッチャフェス2026運営委託、北海道みらい運動会in江別運営管理委託。
+          和牛全共に限らず巡回する価値がある。
+      - name: 北海道 プロポーザル
+        url: https://www.pref.hokkaido.lg.jp/category/d003/c006/s012/
+        note: 「地域おこし協力隊×ふるさと納税」タイアップPRイベント委託業務など
+      - name: 帯広市 入札・契約
+        url: https://www.city.obihiro.hokkaido.jp/sangyo/keiyaku/index.html
+        note: 審査会場・セリ参観会場。**旧URL /kurashi/nyusatsu/ は404**
+      - name: 音更町 第13回全国和牛能力共進会北海道大会
+        url: https://www.town.otofuke.hokkaido.jp/keizai/2027wagyuzenkyo/
+        note: 展示会場・催事会場
+      - name: 全国和牛能力共進会音更町魅力発信協議会
+        url: https://www.town.otofuke.hokkaido.jp/keizai/2027wagyuzenkyo/kyougikai.html
+        note: |
+          **第5の層。**町の中に別途、発信のための協議会が置かれている。
+          4層（実行委員会・道・市・町）だけを見ていると取りこぼす。
+      - name: 公益社団法人全国和牛登録協会
+        url: https://zenwa.jp/
+        note: トップページは202バイトのフレームのみ。実体は zenkyo-hokkaido.jp 側
+    確認済み_2026-08-28: 発注はまだ一件も出ていない
+
+  第46回全国豊かな海づくり大会_千葉:
+    会期: 2027-11-14
+    当社適合: 中
+    frequency: 週次
+    orgs:
+      - name: 千葉県 農林水産部水産課 全国豊かな海づくり大会推進室
+        url: https://www.pref.chiba.lg.jp/suisan/umidukuri/umidukuri-kaisai.html
+        電話: 043-223-3530
+      - name: 千葉県 入札・契約
+        url: https://www.pref.chiba.lg.jp/nyuu-kei/index.html
+        note: |
+          **到達できるのはこのパスだけ。**
+          /category/kensei/nyusatsu/ も /kaikei/nyuusatsu/ も404。
+          物品・委託等はページ内アンカー #anchor_5856
+      - name: 旭市
+        url: https://www.city.asahi.lg.jp/
+        note: 式典行事の会場（千葉県東総文化会館）
+      - name: 銚子市
+        url: https://www.city.choshi.chiba.jp/business/
+        note: 海上歓迎・放流行事の会場（銚子漁港）
+      - name: 公益社団法人全国豊かな海づくり推進協会
+        url: https://www.yutakanaumi.jp/
+    確認済み_2026-08-28: 発注はまだ一件も出ていない
+
+# ══════════════════════════════════════════════════════════════
+# 2026-08-28 追加。分母抽出では届かなかった一次発注者。
+# GREEN×EXPO 2027 の全県スイープ中に、協会そのものを見落としていたと判明した。
+# ══════════════════════════════════════════════════════════════
+tier_expo_association:
+  note: |
+    博覧会・万博の主催者そのものが、会期の1〜2年前から高頻度で委託を出す。
+    都道府県の「出展業務」だけを追っていると、桁の大きい主催者側の発注を全て逃す。
+    2027年国際園芸博覧会協会は直近2か月で委託等20件を公告していた。
+    催事企画・会場運営・工芸館運営・広報が中心で、当社の中核と重なる。
+  frequency: 週2回
+  orgs:
+    - name: 公益社団法人2027年国際園芸博覧会協会（GREEN×EXPO 2027）
+      contract_url: https://expo2027yokohama.or.jp/contract/
+      services_url: https://expo2027yokohama.or.jp/contract/services/
+      script: bin/expo2027.py
+      会期: 2027-03-19 〜 2027-09-26（横浜・旧上瀬谷通信施設）
+      発注の傾向: |
+        「参加意向申出書」の提出期限が公告から1〜2週間で来る二段構え。
+        提案書の締切だけを見ていると応募資格を失う。
+        上限額が明記される（クラフト館運営2億円、テーマフォーラム4,900万円など）。
+        「本業務を支障なく履行すれば後続業務を随意契約」という条項が付くものがある。
+    - name: 公益社団法人2025年日本国際博覧会協会（大阪・関西万博）
+      note: 会期終了。過年度の発注様式を次の博覧会の予測に使う
+    - name: 2027年国際園芸博覧会 神奈川県（開催地県）
+      url: https://www.pref.kanagawa.jp/docs/f6k/2027_kokusaiengeihaku/
+      note: 開催地県として約5,000㎡を出展。DB方式・機運醸成業務など別枠で発注する
+
+# GREEN×EXPO 全県スイープで新たに確認した発注者（bin/greenexpo_sweep.py と WebSearch）
+tier_green_expo_prefectures:
+  confirmed:
+    - {発注者: 福島県,   案件: 2027国際園芸博覧会への福島県出展業務委託}
+    - {発注者: 鹿児島県, 案件: GREEN×EXPO2027 鹿児島県屋内出展業務委託}
+    - {発注者: 福岡県,   案件: 屋内出展作品 設計・施工・維持管理業務委託}
+    - {発注者: 宮崎県,   案件: 屋外出展業務委託}
+    - {発注者: 富山県,   案件: 屋内出展施工業務委託}
+    - {発注者: 高知県,   案件: 高知県ブース出展等委託業務, url: https://www.pref.kochi.lg.jp/doc/2026061000221}
+    - {発注者: 神奈川県, 案件: 神奈川県出展事業（DB方式）, url: https://www.pref.kanagawa.jp/docs/f6k/2027_kokusaiengeihaku/proposal.html}
+    - {発注者: 福山市,   案件: 福山市出展総合プロデュース・広報業務}
+    - {発注者: 浜松市,   案件: 浜松市屋外出展業務, url: https://www.city.hamamatsu.shizuoka.jp/ryokuka/bid/engeihaku.html}
+  未公告の見込み: 残り38都道府県超
+  スイープ頻度: 毎月
+  note: |
+    bin/greenexpo_sweep.py は県サイトのサイト内検索URLを推測して叩くため、
+    4件しか拾えなかった。県ごとに検索パスが違うのが原因。
+    WebSearch を併用すると高知・神奈川・浜松が追加で見つかった。
+    **スイープは必ず両方を回すこと。**
+
+# ══════════════════════════════════════════════════════════════
+# 開催地が持ち回る全国イベント（2026-08-28 追加）
+#
+# これらは開催地が数年前に決まり、実行委員会が開催の1〜2年前から
+# 会場設営・催事企画・開会式運営・広報の委託を出す。
+# 「現在募集中」だけを見ていると、その全てを取り逃す。
+# 開催地が決まった時点で、その県の実行委員会を巡回先に加えること。
+# ══════════════════════════════════════════════════════════════
+tier_national_events:
+  note: |
+    実証済みの発注パターン。
+    ・国民文化祭 愛媛2028：開会式・閉会式の実施計画書策定および広報業務委託を
+      開催2年前（2026年7月）に企画提案募集。参加表明7/21、提案書7/27。
+    ・全国都市緑化フェア 京都丹波（第43回）：会場イベントの企画・運営業務を
+      亀岡市および実行委員会が公募型プロポーザルで発注。
+    ・文化庁：第42回国民文化祭 分野別フェスティバルの企画・運営業務を直接公募。
+    共通する構造は「開催県・開催市・実行委員会・所管省庁」の4層で
+    別々に発注が出ること。4層とも見ないと取りこぼす。
+  frequency: 毎月
+  script: bin/national_events_sweep.py
+  orgs:
+    - name: 文化庁（国民文化祭・分野別フェスティバル等）
+      url: https://www.bunka.go.jp/shinsei_boshu/kobo/
+      note: 分野別フェスティバルの企画・運営業務を直接公募する
+    - name: 公益財団法人都市緑化機構（全国都市緑化フェア）
+      url: https://urbangreen.or.jp/event/green-fair
+      note: フェア自体は開催地の実行委員会が発注する。機構は開催地一覧の情報源
+    - name: 第43回全国都市緑化フェアin京都丹波 実行委員会
+      url: https://kyototamba-fair.jp/news/
+      開催: 2026年度
+    - name: 愛媛県 国民文化祭推進室（愛顔えひめの文化祭2028）
+      url: https://www.pref.ehime.jp/site/kokubunsai/
+      開催: 2028年度
+      実績: 開会式・閉会式の実施計画書策定及び広報業務委託（2026年7月・募集終了）
+      note: 愛媛県サイトはデータセンターIPから遮断されている。WebSearch経由で追う
+    - name: 東京都 生活文化スポーツ局（第42回国民文化祭・令和9年度）
+      url: https://www.seikatubunka.metro.tokyo.lg.jp/bunka/bunka_jigyo/tokyo_bunkasai
+      開催: 2027年度（令和9年度）／開催地決定は2026年5月
+      note: |
+        **当社の地元・東京都での開催。最重点。**
+        国民文化祭は開催の1〜2年前から発注が始まる。開催地決定が2026年5月なので、
+        2026年度後半から2027年度前半にかけて、開会式・閉会式の企画運営、
+        会場設営、広報、分野別フェスティバルの委託が集中して出る。
+        東京都の競争入札参加資格者名簿への登載が前提になる可能性が高い。
+        **今のうちに資格を取得しておくこと。**
+    - name: 東京都福祉局（第27回全国障害者芸術・文化祭・令和9年度）
+      url: https://www.fukushi.metro.tokyo.lg.jp/shougai/koza/shoubunsai
+      開催: 2027年度（令和9年度）／国民文化祭と同時開催
+      note: 国民文化祭と一体で開催されるが、所管局が違うため発注は別枠で出る
+    - name: 東京都 入札・契約情報（生活文化スポーツ局の委託を含む）
+      url: https://www.zaimu.metro.tokyo.lg.jp/keiyaku/
+      note: |
+        生活文化スポーツ局の国民文化祭ページ（seikatubunka.metro.tokyo.lg.jp）は
+        Liferay製のSPAで、本文が静的HTMLに含まれない。curlでは中身が取れない。
+        **東京都の委託公募は財務局の入札・契約情報から追うこと。**
+    - name: 宮崎県 国民スポーツ大会（第81回・2027年）
+      url: https://www.pref.miyazaki.lg.jp/
+      開催: 2027年
+      note: 分母抽出で装飾・設営案件を5件出している既知の発注者。式典演出の発注を監視
+    - name: 長野県 国民スポーツ大会（第82回・2028年）
+      url: https://www.pref.nagano.lg.jp/
+      開催: 2028年
+    - name: 群馬県 国民スポーツ大会（第83回・2029年）
+      url: https://www.pref.gunma.jp/
+      開催: 2029年
+      note: FOODEX JAPAN2027 県ブース装飾でも発注実績がある
+
+  # 開催地が持ち回る主な全国イベント。開催地が判明したら orgs に追加していく
+  rotating_events:
+    - {name: 国民文化祭（文化庁・開催県）,       周期: 毎年, 発注時期: 開催の1〜2年前, 当社適合: 高（開会式・閉会式の企画運営）}
+    - {name: 全国都市緑化フェア,                周期: 毎年, 発注時期: 開催の1年前,   当社適合: 高（会場装飾・催事運営）}
+    - {name: 国際園芸博覧会,                    周期: 不定期, 次回: 2027年横浜,      当社適合: 最高}
+    - {name: 国民スポーツ大会（国体）,           周期: 毎年, 発注時期: 開催の1〜2年前, 当社適合: 中（式典演出・会場設営）}
+    - {name: 全国豊かな海づくり大会,             周期: 毎年, 発注時期: 開催の1年前,   当社適合: 中}
+    - {name: 全国植樹祭・全国育樹祭,             周期: 毎年, 発注時期: 開催の1年前,   当社適合: 中}
+    - {name: ねんりんピック（全国健康福祉祭）,    周期: 毎年, 発注時期: 開催の1年前,   当社適合: 中}
+    - {name: 全国産業教育フェア,                周期: 毎年, 発注時期: 開催の1年前,   当社適合: 中, 確認済: 愛媛(第37回)・佐賀(第36回)}
+    - {name: 全国和牛能力共進会,                周期: 5年,  当社適合: 中（会場設営・県ブース）}
+    - {name: 技能五輪全国大会・全国アビリンピック, 周期: 毎年, 当社適合: 中}
+    - {name: 全国菓子大博覧会,                  周期: 4年程度, 当社適合: 高（物産・展示）}
+    - {name: アジア競技大会,                    次回: 2026年愛知・名古屋, 当社適合: 中}
+  todo: |
+    上記 rotating_events の開催地を確定させ、各実行委員会のURLを orgs に追加する。
+    開催地は各主催団体の公式サイトに「開催一覧」がある。
+    確定した時点で、その開催県・開催市・実行委員会・所管省庁の4層を巡回先に加える。
+
+# ══════════════════════════════════════════════════════════════
+# 2026-08-28 追加。開催地の市として突出した発注密度を持つ。
+# 博覧会協会・神奈川県とは別枠で大量に発注する。
+# ══════════════════════════════════════════════════════════════
+tier_yokohama_greenexpo:
+  note: |
+    横浜市 脱炭素・GREEN×EXPO推進局の発注ページに、
+    2026-08-28 時点で**22件**が並んでいた。
+    催事の企画・運営、出展関連、賑わい創出、機運醸成、
+    レセプション・エクスカーション運営、展示物の企画・制作と、
+    当社の中核と重なるものが多い。
+
+    **このページは「所在地区分」「企業規模」「種目（委託）」を
+    構造化して明示している。** 本文を読まなくても応募可否が決まる。
+    「所在地区分：指定なし」なら応募可、「市内」なら不可。
+  url: https://www.city.yokohama.lg.jp/business/nyusatsu/kakukukyoku/2026/itaku/green/
+  frequency: 週2回
+  必要な登録種目: [イベント企画運営等, 各種調査企画, 広告, 看板等表示器具, B腕章・旗・幕]
+  判定手法: |
+    ページ内の「所在地区分」の値を読む。
+      指定なし → 応募可
+      市内     → 応募不可（当社は渋谷区の法人）
+    「企業規模」が「中小企業」の場合も要確認（一般社団法人の扱い）。
+
+
+# =====================================================================
+# 地域未来交付金（上流の情報源。**案件そのものではなく、案件の財源**）
+# =====================================================================
+# 2026-09-15 追加。生島様のご指摘で存在に気づいた。**それまで巡回先に無かった。**
+#
+# これは当社が申請する補助金ではない。**交付先は地方公共団体である。**
+# だが、自治体がこの国費で行う事業（観光誘客・海外販路開拓・ブランド育成・
+# 催事）は、**そのまま当社が受託してきた委託業務の中身**である。
+# つまりこれは「**どの自治体が、どの分野に、いくら国費を確保したか**」の一覧であり、
+# **公募が出る数か月前に読める先行指標**として使う。
+tier_chiiki_mirai:
+  - name: 地域未来交付金（内閣官房 地域未来戦略本部事務局／内閣府 地方創生推進事務局）
+    url: https://www.chisou.go.jp/sousei/about/chiikimiraikoufukin/index.html
+    suishin_url: https://www.chisou.go.jp/sousei/about/chiikimiraikoufukin/suishin/index.html
+    priority: 最優先（先行指標）
+    cycle: |
+      令和7年度補正で創設（前身＝新しい地方経済・生活環境創生交付金、
+      その前＝デジタル田園都市国家構想交付金）。
+      R8当初 1,600億円／R7補正 1,000億円。
+      令和8年1月募集 → **交付決定 3/31・4/1・4/7** → 4月に一覧を公表。
+      **募集は年複数回ある（令和7年度第2回、令和8年1月…）。次回の募集時期は未公表。**
+    what_to_read: |
+      「地域未来交付金（地域未来推進型）の交付対象事業の決定について」のPDF
+      （R8分＝ suishin/pdf/r8_suishin_1.pdf・152頁・3,434事業・1,741億円）。
+      別紙1が事業一覧、別紙2が都道府県別・市区町村別。
+    how_to_use: |
+      1. 一覧から当社の領域（観光誘客・販路開拓・海外・展示会・ブランド・催事）を抽出する
+      2. 抽出した自治体の**調達ページを名指しで巡回先に加える**
+      3. 交付決定は年度初め。**委託の公募はその後の数か月に出る**
+      抽出済みの表 → `data/chiiki_mirai_r8.csv`（206件。うちソフト191件・約75億円）
+    caution: |
+      **交付決定＝公募が出る、ではない。**自治体の直営・既存業者への随契もある。
+      一覧は「引き合いの母集団」であって案件ではない。台帳には入れない。

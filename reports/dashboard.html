@@ -1,0 +1,2154 @@
+<title>ジャパンプロモーション公募ボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+/* ── 江戸紫を軸にした配色。東京手仕事のイメージカラーに由来 ───────── */
+:root{
+  --ground:#FAF8FC;
+  --surface:#FFFFFF;
+  --surface-2:#F4F1F7;
+  --ink:#1C1722;
+  --ink-2:#4A4356;
+  --muted:#7A7288;
+  --line:#E5E0EC;
+  --line-strong:#CFC7DC;
+  --accent:#664A9E;        /* 江戸紫 */
+  --accent-soft:#EFE9F8;
+  --crit:#A82C46;          /* 茜 */
+  --crit-soft:#FBEBEE;
+  --warn:#9C6612;          /* 琥珀 */
+  --warn-soft:#FBF2E2;
+  --ok:#276B52;            /* 常磐 */
+  --ok-soft:#E5F2EC;
+  --off:#8A8398;
+  --off-soft:#F0EEF3;
+  --shadow:0 1px 2px rgba(28,23,34,.05), 0 8px 24px -12px rgba(28,23,34,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141119;
+    --surface:#1D1926;
+    --surface-2:#251F31;
+    --ink:#EFEBF5;
+    --ink-2:#C3BBD2;
+    --muted:#918AA1;
+    --line:#302941;
+    --line-strong:#453B59;
+    --accent:#B49AE4;
+    --accent-soft:#2A2140;
+    --crit:#F0899E;
+    --crit-soft:#3A1F28;
+    --warn:#E3B166;
+    --warn-soft:#372A16;
+    --ok:#79C7A6;
+    --ok-soft:#173328;
+    --off:#8B8399;
+    --off-soft:#262130;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141119;
+  --surface:#1D1926;
+  --surface-2:#251F31;
+  --ink:#EFEBF5;
+  --ink-2:#C3BBD2;
+  --muted:#918AA1;
+  --line:#302941;
+  --line-strong:#453B59;
+  --accent:#B49AE4;
+  --accent-soft:#2A2140;
+  --crit:#F0899E;
+  --crit-soft:#3A1F28;
+  --warn:#E3B166;
+  --warn-soft:#372A16;
+  --ok:#79C7A6;
+  --ok-soft:#173328;
+  --off:#8B8399;
+  --off-soft:#262130;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding:0 22px 80px}
+
+/* ── 見出し ───────────────────────────────────────────── */
+.mast{
+  border-bottom:1px solid var(--line);
+  padding:38px 0 24px; margin-bottom:34px;
+  display:flex; flex-wrap:wrap; gap:20px 32px; align-items:flex-end; justify-content:space-between;
+}
+.mast h1{
+  font-family:"Shippori Mincho",serif; font-weight:700;
+  font-size:clamp(26px,4vw,36px); line-height:1.3; margin:0;
+  letter-spacing:.02em; text-wrap:balance;
+}
+.mast .sub{color:var(--muted); font-size:13.5px; margin-top:6px}
+.stamp{
+  display:flex; gap:26px; font-size:12.5px; color:var(--muted);
+}
+.stamp b{display:block; font-family:"Roboto Mono",monospace; font-size:19px;
+  color:var(--ink); font-weight:500; font-variant-numeric:tabular-nums; line-height:1.2}
+
+/* ── 冒頭の判断 ───────────────────────────────────────── */
+.lede{
+  background:var(--surface); border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:3px; padding:22px 26px; margin-bottom:40px; box-shadow:var(--shadow);
+}
+.lede p{margin:0 0 10px; max-width:66ch}
+.lede p:last-child{margin-bottom:0}
+.lede strong{color:var(--accent); font-weight:700}
+
+/* ── セクション ───────────────────────────────────────── */
+section{margin-bottom:44px}
+.shead{display:flex; align-items:baseline; gap:12px; margin-bottom:4px; flex-wrap:wrap}
+.shead h2{
+  font-family:"Shippori Mincho",serif; font-size:19px; font-weight:700;
+  margin:0; letter-spacing:.03em;
+}
+.shead .n{
+  font-family:"Roboto Mono",monospace; font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.sdesc{color:var(--muted); font-size:13px; margin:0 0 18px; max-width:66ch}
+.rule{height:1px; background:var(--line); margin:0 0 18px}
+
+/* ── 案件カード ───────────────────────────────────────── */
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:20px 22px; margin-bottom:14px; box-shadow:var(--shadow);
+  display:grid; gap:14px;
+}
+.card.lead{border-color:var(--accent); border-width:1px 1px 1px 3px}
+.chead{display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap}
+.grade{
+  flex:none; width:30px; height:30px; border-radius:2px;
+  display:grid; place-items:center;
+  font-family:"Roboto Mono",monospace; font-weight:500; font-size:14px;
+  background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent);
+}
+.grade.b{background:var(--off-soft); color:var(--ink-2); border-color:var(--line-strong)}
+.grade.c{background:transparent; color:var(--muted); border-color:var(--line-strong)}
+.ctitle{flex:1 1 300px; min-width:0}
+.ctitle h3{
+  margin:0; font-size:16px; font-weight:700; line-height:1.5; text-wrap:balance;
+}
+.ctitle .org{color:var(--muted); font-size:12.5px; margin-top:3px}
+
+/* ── ステータス表示 ───────────────────────────────────── */
+.pill{
+  display:inline-flex; align-items:center; gap:6px; flex:none;
+  padding:3px 10px; border-radius:2px; font-size:11.5px; font-weight:700;
+  letter-spacing:.06em; border:1px solid;
+}
+.p-crit{background:var(--crit-soft); color:var(--crit); border-color:var(--crit)}
+.p-warn{background:var(--warn-soft); color:var(--warn); border-color:var(--warn)}
+.p-ok{background:var(--ok-soft); color:var(--ok); border-color:var(--ok)}
+.p-off{background:var(--off-soft); color:var(--off); border-color:var(--line-strong)}
+
+/* ── 締切カウンタ ─────────────────────────────────────── */
+.dl{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.dl .days{
+  font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  font-size:26px; font-weight:500; line-height:1; color:var(--ink);
+}
+.dl .days.urgent{color:var(--crit)}
+.dl .days small{font-size:12px; color:var(--muted); margin-left:3px; font-weight:400}
+.dl .date{font-size:12.5px; color:var(--muted); font-family:"Roboto Mono",monospace}
+.bar{flex:1 1 160px; height:4px; background:var(--surface-2); border-radius:2px; overflow:hidden; min-width:100px}
+.bar i{display:block; height:100%; background:var(--accent); border-radius:2px}
+.bar i.urgent{background:var(--crit)}
+
+/* ── 明細表 ───────────────────────────────────────────── */
+.facts{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:2px; background:var(--line); border:1px solid var(--line); border-radius:2px; overflow:hidden;
+}
+.facts div{background:var(--surface); padding:9px 12px}
+.facts dt{font-size:11px; color:var(--muted); letter-spacing:.06em; margin-bottom:2px}
+.facts dd{margin:0; font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums}
+.note{font-size:13.5px; color:var(--ink-2); margin:0; max-width:70ch}
+.note b{color:var(--ink)}
+.note.flag{
+  background:var(--warn-soft); border-left:2px solid var(--warn);
+  padding:10px 14px; border-radius:0 2px 2px 0; color:var(--ink-2);
+}
+.src{font-size:12px}
+.src a{color:var(--accent); text-decoration:none; border-bottom:1px solid var(--line-strong)}
+.src a:hover,.src a:focus-visible{border-bottom-color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:1px}
+
+/* ── 一覧表 ───────────────────────────────────────────── */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13px; min-width:640px}
+th,td{padding:9px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{
+  font-size:11px; letter-spacing:.08em; color:var(--muted); font-weight:700;
+  background:var(--surface-2); white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.d{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-2)}
+td.g{font-family:"Roboto Mono",monospace; color:var(--muted); text-align:center}
+.star{color:var(--accent); font-weight:700}
+
+/* ── 巡回記録 ─────────────────────────────────────────── */
+.foot{border-top:1px solid var(--line); padding-top:22px; margin-top:52px; font-size:12.5px; color:var(--muted)}
+.foot h3{font-family:"Shippori Mincho",serif; font-size:14px; color:var(--ink); margin:0 0 10px; letter-spacing:.04em}
+.foot ul{margin:0; padding-left:18px}
+.foot li{margin-bottom:4px}
+@media (max-width:560px){
+  .stamp{gap:18px}
+  .card{padding:16px}
+}
+.note.dec-go{border-left:3px solid #1f7a3d;background:rgba(31,122,61,.07)}
+.note.dec-no{border-left:3px solid #8a8f98;background:rgba(138,143,152,.07)}
+
+/* ── 次年度候補の月ごとの束 ─────────────────────────── */
+details{border:1px solid var(--line); border-radius:3px; background:var(--surface); margin-bottom:8px}
+details[open]{box-shadow:var(--shadow)}
+summary{
+  cursor:pointer; padding:11px 16px; font-weight:700; font-size:14px;
+  display:flex; align-items:center; gap:10px; list-style:none;
+}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸"; color:var(--accent); font-size:11px}
+details[open] summary::before{content:"▾"}
+details[open] summary{border-bottom:1px solid var(--line)}
+summary .cnt{
+  font-family:"Roboto Mono",monospace; font-size:11.5px; color:var(--muted); font-weight:400;
+}
+details .scroll{border:none; border-radius:0}
+
+/* ── 受付が終わったもの ─────────────────────────────── */
+.days.over{color:var(--muted)!important; font-size:15px}
+.card.over{opacity:.55}
+.card.over .ctitle h3{text-decoration:line-through; text-decoration-color:var(--line-strong)}
+.est{
+  display:inline-block; margin-left:8px; padding:1px 6px; border-radius:2px;
+  font-size:10.5px; font-weight:700; letter-spacing:.04em;
+  background:var(--warn-soft); color:var(--warn); border:1px solid var(--warn);
+  font-family:"Zen Kaku Gothic New",sans-serif;
+}
+</style>
+
+<div class="wrap">
+<header class="mast"><div><h1>公募案件ボード</h1><div class="sub">一般社団法人ジャパンプロモーション ／ 補助金・企画競争の巡回結果<br>この画面は <code>data/ledger.csv</code> から <code>bin/build_board.py</code> が生成しています</div></div><div class="stamp"><div>生成<b>09.15 08:08</b></div><div>台帳<b>272</b></div><div>いま決める<b>1</b></div><div>進行中<b>2</b></div></div></header>
+<div class="lede"><p><strong>2026年9月15日 08:08 現在。</strong>台帳 272件のうち、<b>いま判断が要るものが 1件</b>、進行中が 2件です。この画面は上から順に「決める → 進めている → 見ておく → 来年」で並べてあります。<b>1番の節だけ見れば、今日決めることは足ります。</b></p><p><strong>締切が近い順に。</strong></p><ul style="margin:0 0 10px;padding-left:20px"><li><span class="dl" data-deadline="2026-09-16T17:00"><b class="days" style="font-size:15px"></b></span> ／ 令和8年度 農産加工品等外食産業プロモーション連携業務 <span style="color:var(--muted)">（宮崎県・9/16 17:00締切）</span></li></ul><p style="border-left:3px solid var(--crit);padding-left:14px"><strong>一次資料と突き合わせて、締切を訂正した案件が 3件あります。</strong>令和8年度 農産加工品等外食産業プロモーション連（宮崎県 → <b>9/16 17:00 参加申込</b>）／2027国際園芸博覧会への福島県出展業務委託（福島県 → <b>9/1 12:00 参加申込</b>）／令和8年度 新潟観光ブランド形成促進事業 小学生（新潟県 → <b>9/14 17:00 参加申込</b>）。<b>いずれも公募型プロポーザルの二段構え（参加申込 → 企画提案書）で、後段の企画提案書の期限を前段の「参加申込」と取り違えて転記していました。</b>検査の仕組みごと作り直しました（報告書 <code>docs/report_kanmon_20260904.md</code>）。</p><p><strong>過去の落札額を調べました。</strong>いま判断が要る案件と、等級で落ちた案件のうち <b>4件</b>について、前年度の同種案件の落札金額・落札者・応札者数を各カードの「予定価格」欄に入れてあります。<b>東京都は発注予定表に予定価格を出しませんが、開札済みの案件は入札経過調書に落札額と全入札者の入札額が載ります。</b>年次で反復する案件なら、前年度の落札額がそのまま今年度の目安になります。</p><p><strong>等級で届かなかった案件が、いま 1件あります。</strong>いずれも中身は御社の本業です。<b>9月14日に始まる東京都の定期受付が、この壁を動かせる唯一の機会です。</b>6番の節にまとめました。</p><p><strong>巡回について。</strong>自動巡回は週1回（毎週月曜8時）です。ところが東京都の希望申請期間は<b>5〜7日しかありません</b>。<b>週次のままでは窓を丸ごと逃す周期にあります。</b>隔日への変更をご検討ください（報告書 <code>docs/report_junkai_20260903.md</code>）。</p></div>
+<section><div class="shead"><h2>1. いま決める</h2><span class="n">1件</span></div><p class="sdesc"><b>締切まで7日以内で、資格のうえで応募できるもの</b>だけを置いています。資格で落ちたもの・見送ると決めたもの・<b>受付時刻を過ぎたもの</b>はここに出しません。<b>この節が唯一の判断面です。</b>残り時間は閲覧している時刻から計算しているので、<b>この画面を開いたままにしていても数字は正しくなりません。読み直すときは再読み込みしてください。</b></p><div class="rule"></div><article class="card">
+<div class="chead"><div class="ctitle"><h3>令和8年度 農産加工品等外食産業プロモーション連携業務</h3><div class="org">宮崎県 ／ 単独</div></div><span class="pill p-crit">判断待ち</span></div>
+<div class="dl" data-deadline="2026-09-16T17:00"><div class="days"></div><div class="bar"><i></i></div><div class="date">2026-09-16 17:00 参加申込 締切</div></div>
+<dl class="facts">
+<div><dt>種別</dt><dd>企画提案競技</dd></div>
+<div><dt>予定価格</dt><dd>要確認</dd></div>
+<div><dt>格付・等級</dt><dd>B</dd></div>
+<div><dt>資格</dt><dd>不要</dd></div>
+<div><dt>締切の確認</dt><dd>2026-09-04 参加申込</dd></div>
+</dl>
+<p class="note"><b>2026-09-04：締切を訂正した。台帳の10/7は企画提案書の期限で、関門は参加申込9/16（水）17時である。</b>宮崎県の一次資料で確認：質問の締切9/2 17時／<b>参加申込書の提出締切9/16 17時</b>／企画提案書の提出締切10/7 17時。<b>まだ12日ある。参加申込を出すかどうかを決める必要がある。</b>福島県と同じ取り違えだが、こちらは間に合う。</p>
+<p class="src"><a href="https://www.pref.miyazaki.lg.jp/nogyoryutsu-brand/kense/chotatsu/20260817144037.html" target="_blank" rel="noopener">https://www.pref.miyazaki.lg.jp/nogyoryutsu-brand/kense/chotatsu/2026081714403</a></p>
+</article></section>
+<section><div class="shead"><h2>2. 判断する前に、締切を確認するもの</h2><span class="n">1件</span></div><p class="sdesc">締切が7日以内だが、<b>その締切を一次資料で確認していないもの。</b>確認するまで「いま決める」には出しません。<b>2026-09-04、企画提案書の期限を「参加申込」と取り違えて転記し、3日前に閉じていた関門を「残り14時間・応募できます」と出しました。公募型プロポーザルは二段構えで、先に来るのは参加申込です。</b>募集要領のスケジュール表を開き、<b>いちばん早い関門の日付と時刻</b>を台帳の <code>締切種別</code>・<code>締切確認日</code> に入れてから判断します。</p><div class="rule"></div><article class="card">
+<div class="chead"><div class="ctitle"><h3>令和8年度 戦略的海外ビジネス推進助成金（二次募集）</h3><div class="org">山口県 ／ 支援側</div></div><span class="pill p-crit">判断待ち</span></div>
+<div class="dl" data-deadline="2026-09-18T17:00"><div class="days"></div><div class="bar"><i></i></div><div class="date">2026-09-18 17:00 種別未確認 締切<span class="est">時刻未確認・17時とみなして計算</span><span class="est">一次資料で未確認</span></div></div>
+<dl class="facts">
+<div><dt>種別</dt><dd>補助金</dd></div>
+<div><dt>予定価格</dt><dd>要確認</dd></div>
+<div><dt>格付・等級</dt><dd>-</dd></div>
+<div><dt>資格</dt><dd>不要</dd></div>
+<div><dt>締切の確認</dt><dd><b>未確認</b></dd></div>
+</dl>
+<p class="note">営業機会</p>
+<p class="src"><a href="https://www.pref.yamaguchi.lg.jp/press/358841.html" target="_blank" rel="noopener">https://www.pref.yamaguchi.lg.jp/press/358841.html</a></p>
+</article></section>
+<section><div class="shead"><h2>3. 進行中</h2><span class="n">2件</span></div><p class="sdesc">申請すると決めたもの。<b>作業が止まっていないかを見る節です。</b></p><div class="rule"></div><article class="card">
+<div class="chead"><div class="ctitle"><h3>主催者催事「おまつり歳時記プロジェクト（仮）」実施計画作成業務委託</h3><div class="org">公益社団法人2027年国際園芸博覧会協会 ／ 単独可</div></div><span class="pill p-ok">申請すると決定</span></div>
+<div class="dl" data-deadline="2026-09-29T17:00"><div class="days"></div><div class="bar"><i></i></div><div class="date">2026-09-29 17:00 提案書 締切</div></div>
+<dl class="facts">
+<div><dt>種別</dt><dd>企画提案</dd></div>
+<div><dt>予定価格</dt><dd>1,430万円（上限・税込）／後続運営は1.1〜4億円想定</dd></div>
+<div><dt>格付・等級</dt><dd>S</dd></div>
+<div><dt>資格</dt><dd>不要（実績要件アで充足見込み）</dd></div>
+<div><dt>締切の確認</dt><dd>2026-09-03 提案書</dd></div>
+</dl>
+<p class="note">【生島様 2026-09-01：申請する】<b>2026-09-04 参加意向申出を発送し、9/7に協会が受領。ただし同日、業務実績を証明する書類について追加提出の依頼を受けた。</b>協会「ご提出いただいた業務実績を証明する書類では、3参加条件（2）と照査することができません。3参加条件（2）と照査できる仕様書等を9/8(火)17時までに電子メールにてご提出（原本は9/9(水)13時までに持参又は書留にて郵送）」。<b>契約書の写しだけでは「三千人以上」「計画策定業務および実施運営業務」が読み取れないため。</b>当社作成の対照表・メール文面・原本送付状は docs/omatsuri/submit/ に用意済み。<b>仕様書の写しのみ未入手（生島様の手元）。</b>次の関門＝9/10 提案資格確認結果通知（メール）／9/17 17時 質問書／9/29 17時 提案書。本業務上限1,430万円・後続の実施運営1.1〜4億円が単独随意契約。045-307-2065<b>2026-09-09 10:00 時点：9/8 17時のメール提出が行われたかは当セッションでは未確認。</b><b>原本の提出期限は本日9/9(水)13時（持参または書留郵送）で、残りわずか。</b>協会 行催事部行催事課 045-307-2065。<b>2026-09-11 15:46：締切欄を提案書（9/29 17時）へ進めた。</b>9/8 17時のメール提出と9/9 13時の原本提出が行われたかは、<b>当セッションでは依然として未確認。</b>協会からの提案資格確認結果通知（9/10までにメール）が届いたかもあわせて確認が要る。<b>任意だが 9/17(木)17時に質問書の締切がある（メール・Word・送信後に電話）。</b></p>
+<p class="src"><a href="https://expo2027yokohama.or.jp/contract/detail/20260827-001348.html" target="_blank" rel="noopener">https://expo2027yokohama.or.jp/contract/detail/20260827-001348.html</a></p>
+</article>
+<article class="card">
+<div class="chead"><div class="ctitle"><h3>小規模事業者持続化補助金＜共同・協業型＞第3回</h3><div class="org">中小企業庁 ／ 支援側</div></div><span class="pill p-ok">申請すると決定</span></div>
+<div class="dl" data-deadline="2026-09-30T17:00"><div class="days"></div><div class="bar"><i></i></div><div class="date">2026-09-30 17:00 申請 締切</div></div>
+<dl class="facts">
+<div><dt>種別</dt><dd>補助金</dd></div>
+<div><dt>予定価格</dt><dd>上限3,000万円（参画10者以上）／2,000万円（5〜9者）・公募要領P.8明示</dd></div>
+<div><dt>格付・等級</dt><dd>S</dd></div>
+<div><dt>資格</dt><dd>不要</dd></div>
+<div><dt>締切の確認</dt><dd>2026-08-31 申請</dd></div>
+</dl>
+<p class="note">【生島様 2026-08-31：検討中。企画を立てて申請したい】9/30 17:00 Jグランツ電子申請。<b>GビズIDプライム必須（未取得なら数週間・8/28からオンライン申請に不具合、9月上旬解消予定）</b>。参画事業者10者以上=3,000万円／5〜9者=2,000万円。「過去と同様の事業は対象外」は<b>審査視点が「過去の類似事業と比べて発展性はあるか」なので外せる</b>。企画案は workflow/jizokuka_kyodo_r8_3.md</p>
+<p class="src"><a href="https://r6.kyodokyogyohojokin.info/" target="_blank" rel="noopener">https://r6.kyodokyogyohojokin.info/</a></p>
+</article></section>
+<section><div class="shead"><h2>4. まだ公告されていないが、必ず出る案件</h2><span class="n">1件</span></div><p class="sdesc">過去の公告周期から、出ることが分かっているもの。<b>カードの日付は周期からの推定であって、確定した締切ではありません。</b>公告を待ってから準備を始めると間に合わない案件を、ここに置きます。</p><div class="rule"></div><article class="card lead">
+<div class="chead"><div class="ctitle"><h3>新輸出大国コンソーシアム パートナーによるハンズオン支援業務（業務委託先の公募）</h3><div class="org">JETRO（日本貿易振興機構）海外展開支援部 中堅中小企業課 ／ 単独（業務従事予定者を複数提示できる＝複数採択なら委託も複数）</div></div><span class="pill p-warn">公告待ち</span></div>
+<div class="dl" data-deadline="2027-01-16T17:00"><div class="days"></div><div class="bar"><i></i></div><div class="date">2027-01-16 17:00 種別未確認 締切<span class="est">時刻未確認・17時とみなして計算</span><span class="est">一次資料で未確認</span></div></div>
+<dl class="facts">
+<div><dt>種別</dt><dd>公募（業務委託先）</dd></div>
+<div><dt>予定価格</dt><dd><b>1委託あたり620万円（税別）を上限とする出来高精算。</b>国内外の出張経費は業務委託費とは別に実費精算。採択は240名程度</dd></div>
+<div><dt>格付・等級</dt><dd>S</dd></div>
+<div><dt>資格</dt><dd><b>不要。等級の指定がない。</b>採択後に全省庁統一資格（令和7・8・9年度）の写しを提出するのみ。当社のD等級で足りる</dd></div>
+<div><dt>締切の確認</dt><dd><b>未確認</b></dd></div>
+</dl>
+<p class="note">【予測】<b>公告はまだ出ていない。2026年12月下旬の公告を見込む。</b><b>公告の実績（一次資料で確認）：2024-12-26公告→2025-01-16 15時必着→2025-03中旬採択通知→2025-04-01履行開始。その前年は2023-12-26公告→説明会2024-01-11→2024-03中旬通知。</b>さらに前の2回は公告PDFのファイル名から2022-01-06と2022-12-23（本文未確認）。いずれも<b>12月下旬公告・1月中旬締切・3月中旬採択・4月1日履行開始</b>で一貫している。<b>上の締切2027-01-16は、この周期からの推定であって確定日ではない。</b><b>なぜ本命か。①一般社団法人でも応募できる（応募資格は「法人格を持つ企業・団体、地方公共団体を除く」のみ）。②全省庁統一資格の等級指定がない。JETROの入札はA・B等級に阻まれてきたが、この公募はD等級で届く。③1年ぶんの委託で、単発の催事ではない。④業務従事予定者を複数出せるので、通れば委託も複数になる。</b><b>未確認：応募者および業務従事予定者の要件は「公募説明書」にのみ書かれており、これは odb-hands-on@jetro.go.jp へメールで申請した者にだけ交付される。ここを取らないと可否が判定できない。</b><b>令和8年度分の公募ページは現在404で参照できず、2025年掲載分の一覧にも載っていない。一方でコンソーシアムの利用者側ページは「2026年度ハンズオン支援お申込み受付中」と表示しており、事業は継続している。</b>担当：榧木・紀伊・中野／03-3582-8333／〒107-6006 港区赤坂1-12-32 アーク森ビル6階</p>
+<p class="src"><a href="https://www.jetro.go.jp/procurement/publicoffer/odb/a01c8f0947d6e641.html" target="_blank" rel="noopener">https://www.jetro.go.jp/procurement/publicoffer/odb/a01c8f0947d6e641.html</a></p>
+</article></section>
+<section><div class="shead"><h2>5. 見ておく</h2><span class="n">3件</span></div><p class="sdesc">締切まで8〜120日。<b>まだ決めなくてよいが、準備の要否だけ見ておくもの。</b></p><div class="rule"></div><div class="scroll"><table><thead><tr>
+<th>残り</th>
+<th>締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>金額</th>
+<th>状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d"><span class="dl" data-deadline="2026-09-24T17:00"><span class="days" style="font-size:14px"></span></span></td>
+<td class="d">09-24 17:00<span class="est">推定</span></td>
+<td>2026年度 第2期 芸術文化魅力創出助成</td>
+<td>アーツカウンシル東京（東京都歴史文化財団）</td>
+<td>要確認</td>
+<td>新規</td>
+</tr>
+<tr>
+<td class="d"><span class="dl" data-deadline="2026-10-20T17:00"><span class="days" style="font-size:14px"></span></span></td>
+<td class="d">10-20 17:00<span class="est">推定</span></td>
+<td>令和8年度MICE誘致クライアントイベント（ジャカルタ）参加事業者募集</td>
+<td>公益財団法人東京観光財団（TCVB）</td>
+<td>-</td>
+<td>新規</td>
+</tr>
+<tr>
+<td class="d"><span class="dl" data-deadline="2026-12-28T17:00"><span class="days" style="font-size:14px"></span></span></td>
+<td class="d">12-28 17:00<span class="est">推定</span></td>
+<td>令和8年度「海外商談会出展支援事業」補助金</td>
+<td>鹿児島県</td>
+<td>要確認</td>
+<td>営業機会</td>
+</tr>
+</tbody></table></div></section>
+<section><div class="shead"><h2>6. 等級が壁になった案件</h2><span class="n">1件</span></div><p class="sdesc"><b>種目は登録済みなのに、受付等級が届かず応募できなかったもの。</b>東京都の定期受付は <b>9月14日〜10月30日</b>。<b>ここに並んだ件数と中身が、等級引上げを申請するかどうかの材料になります。</b></p><div class="rule"></div><div class="scroll"><table><thead><tr>
+<th>締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>要求等級</th>
+<th>過去の落札額</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">09-18 16:00</td>
+<td>令和8年度第39回全国健康福祉祭東京大会の開催を契機とした気運醸成事業実施委託</td>
+<td>東京都</td>
+<td class="g">A</td>
+<td>非公開／<b>【推定】3,000〜7,000万円</b>。都の「気運醸成」案件の実績は結婚7,370万円・東京女性未来フォーラム6,490万円・冬季パラ応援3,294万4,912円・女性活躍3,245万円</td>
+</tr>
+</tbody></table></div></section>
+<section><div class="shead"><h2>7. 次年度候補</h2><span class="n">234件</span></div><p class="sdesc"><b>締切が過ぎたもの・見送ると決めたもの・資格が届かなかったものを、すべてここに寄せています。</b>公募は毎年ほぼ同じ時期に出るので、<b>前回の締切月ごとにまとめました。来年その月が来たら、この束を開いて発注者を見に行きます。</b>来月の束だけ開いてあります。</p><div class="rule"></div><details><summary>9月に見に行く<span class="cnt">46件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2026-09-01</td>
+<td>2027国際園芸博覧会への福島県出展業務委託</td>
+<td>福島県</td>
+<td>公募型プロポーザル</td>
+<td>**2026-09-04：締切を訂正した。</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>首都圏・大阪圏向け動画プロモーション業務委託</td>
+<td>姫路市</td>
+<td>公募型プロポーザル</td>
+<td>新規</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>海外ビジネス人材育成及びオンラインを活用した海外販路開拓支援事業</td>
+<td>大阪産業局</td>
+<td>委託</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>GREEN×EXPO 2027 開催に係る交通需要マネジメント（TDM）実施業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>横浜グリーンエクスポにおける賓客受入等業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>瀬谷駅北口駅前広場から旧上瀬谷通信施設地区における緑花による装飾および育成業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>【公募型プロポーザル】瀬谷駅北口駅前広場から旧上瀬谷通信施設地区における緑花による装飾および育成業務委託</td>
+<td>横浜市</td>
+<td>企画提案</td>
+<td>新規（要締切確認）</td>
+</tr>
+<tr>
+<td class="d">2026-09-01</td>
+<td>令和8年度都立学校・海外大学連携交流事業等運営業務委託</td>
+<td>東京都 教育庁総務部契約管財課</td>
+<td>希望制指名競争入札</td>
+<td>【生島様 2026-09-01：見送り】仕様書を確認したうえでのご判断。</td>
+</tr>
+<tr>
+<td class="d">2026-09-02</td>
+<td>令和8年度「東京ベイeSGパートナー」出展ブース設営等業務委託（エコプロ）</td>
+<td>東京都 スタートアップ戦略推進本部戦略推進部戦略企画課</td>
+<td>希望制指名競争入札</td>
+<td>**種目120は登録済みだが受付等級Bのため、C等級の当社は応募できない。</td>
+</tr>
+<tr>
+<td class="d">2026-09-02</td>
+<td>令和8年度伝統と最先端テクノロジーが融合したモビリティのイベント運営業務委託（その3）</td>
+<td>東京都 スタートアップ戦略推進本部戦略推進部戦略企画課</td>
+<td>希望制指名競争入札</td>
+<td>**種目120は登録済みだが受付等級Bのため応募できない。</td>
+</tr>
+<tr>
+<td class="d">2026-09-03</td>
+<td>公募型プロポーザル方式「第13回“日本の食品”輸出EXPO WINTER」徳島県ブース装飾設置運営委託事業者募集に係る質問への回答について</td>
+<td>徳島県</td>
+<td>企画提案</td>
+<td>新規（応募可・参加申込9/3必着）</td>
+</tr>
+<tr>
+<td class="d">2026-09-03</td>
+<td>GREEN×EXPO 2027 メディアセンター関連業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>企画提案</td>
+<td>【生島様 2026-08-31：見送り】単独応募不可。</td>
+</tr>
+<tr>
+<td class="d">2026-09-03</td>
+<td>「女性活躍推進に向けたイベント」運営等業務委託</td>
+<td>東京都</td>
+<td>希望制指名競争入札</td>
+<td>**種目120は登録済みだが受付等級Bのため応募できない。</td>
+</tr>
+<tr>
+<td class="d">2026-09-03</td>
+<td>「Tokyo DX/AX Connect Day 2026」運営等業務委託</td>
+<td>東京都</td>
+<td>希望制指名競争入札</td>
+<td>【生島様 2026-09-01：見送り】「<b>価格勝負すぎて旨みがない</b>」とのご判断。</td>
+</tr>
+<tr>
+<td class="d">2026-09-03</td>
+<td>令和８年度万引き防止広報キャンペーンに関する業務委託</td>
+<td>警視庁</td>
+<td>希望制指名競争入札</td>
+<td>新規。</td>
+</tr>
+<tr>
+<td class="d">2026-09-03</td>
+<td>ＴＯＫＹＯ ＡＬＬＹマークの普及啓発に係るWEB広告掲出業務委託</td>
+<td>東京都総務局</td>
+<td>希望制指名競争入札</td>
+<td>契約番号08-00524。</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>令和8年度無形文化遺産保護条約に係る国際動向調査事業委託</td>
+<td>文化庁</td>
+<td>一般競争（総合評価）</td>
+<td>今回不可</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>公式ガイドブック企画・編集・制作および出版業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>入札</td>
+<td>単独応募不可（国際博/五輪の公式ガイドブック出版実績が必須）＋出版リスクを受託者が負担</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>令和8・9年度スタートアップエコシステムのプロモーション業務委託</td>
+<td>東京都</td>
+<td>希望制指名競争入札</td>
+<td>**種目115は登録済みだが受付等級Aのため応募できない。</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>世界都市文化フォーラム東京サミットガラディナーにおける東京産農水産物のＰＲに係る業務委託</td>
+<td>東京都産業労働局</td>
+<td>希望制指名競争入札</td>
+<td>【生島様 2026-09-01：見合わせ】「<b>責任者の要件は満たしているが、強くアピールするほどの実績もない</b>」とのご判断。</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>当事者参画で進めるユニバーサルデザインの施設づくり講演会に係る業務委託</td>
+<td>東京都福祉局</td>
+<td>希望制指名競争入札</td>
+<td>新規。</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>令和８年度一類感染症患者対応訓練における記録動画撮影及び配信業務委託</td>
+<td>東京都保健医療局</td>
+<td>希望制指名競争入札</td>
+<td>新規。</td>
+</tr>
+<tr>
+<td class="d">2026-09-04</td>
+<td>令和８年度特殊詐欺被害防止強化期間におけるＷＥＢ等広告掲載委託</td>
+<td>東京都総務局</td>
+<td>希望制指名競争入札</td>
+<td>契約番号08-15034。</td>
+</tr>
+<tr>
+<td class="d">2026-09-07</td>
+<td>子供・子育てメンターに係る保護者向けイベント運営業務委託</td>
+<td>東京都子供政策連携室</td>
+<td>希望制指名競争入札</td>
+<td>2026-09-03の巡回で発見。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>集団出展ブース装飾委託業務【LIFE×DESIGN 2027】</td>
+<td>公益財団法人わかやま産業振興財団</td>
+<td>公募型プロポーザル</td>
+<td>【生島様 2026-08-31：見送り】**施工会社が取る可能性が高い。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>「2027年ベオグラード国際博覧会」日本館 運営</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>一般競争入札</td>
+<td>**A又はB等級限定。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>「FHA Food &amp; Hospitality Asia 2027」ジャパンパビリオンの設計・監理等</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>一般競争入札</td>
+<td>【生島様 2026-08-31：見送り】D等級で応募できるが、約180万円と小規模かつ既存業者（アライズ）が4件中3件を取っている</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>令和８年度「東京都省エネ・再エネ住宅推進プラットフォーム」事業者向けイベント（仮称）運営支援等業務委託</td>
+<td>東京都住宅政策本部</td>
+<td>希望制指名競争入札</td>
+<td>**2026-09-03の巡回で発見。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>令和８年度「東京マイスター・アカデミー」事業の実施に係る業務委託</td>
+<td>東京都教育庁</td>
+<td>希望制指名競争入札</td>
+<td>2026-09-03の巡回で発見。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>令和８年度 東京こどもすくすく住宅認定制度の普及啓発に係る住宅情報系サイト等広告掲出委託</td>
+<td>東京都住宅政策本部</td>
+<td>希望制指名競争入札</td>
+<td>2026-09-03の巡回で発見。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>令和９年東京消防出初式運営支援委託（集合）</td>
+<td>東京消防庁</td>
+<td>希望制指名競争入札</td>
+<td>2026-09-03の巡回で発見。</td>
+</tr>
+<tr>
+<td class="d">2026-09-08</td>
+<td>令和８年「とうきょう こども アンケート」に係る調査結果の分析業務委託</td>
+<td>東京都子供政策連携室</td>
+<td>希望制指名競争入札</td>
+<td>2026-09-07の週次巡回で発見。</td>
+</tr>
+<tr>
+<td class="d">2026-09-10</td>
+<td>海外向けグリーンツーリズム推進事業セールスツール制作委託業務</td>
+<td>大分県</td>
+<td>企画提案競技</td>
+<td>【生島様 2026-08-31：見送り】制作単体のため</td>
+</tr>
+<tr>
+<td class="d">2025-09-11</td>
+<td>令和7年度「東京手仕事」プロジェクト 商品カタログ（英語版）等制作業務の委託</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（2026年9月上旬に令和8年度分の公告可能性・監視中）</td>
+</tr>
+<tr>
+<td class="d">2026-09-11</td>
+<td>GREEN×EXPO 2027 会場内学習プログラム開発及び運営業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>委託（公募型プロポーザル）</td>
+<td>**2026-09-11 17:00 に受付終了。</td>
+</tr>
+<tr>
+<td class="d">2026-09-11</td>
+<td>「第７回食品工場Week」出展に係る装飾委託業務</td>
+<td>公益財団法人やまぐち産業振興財団</td>
+<td>公募型プロポーザル</td>
+<td>**2026-09-11 17:00 に受付終了。</td>
+</tr>
+<tr>
+<td class="d">2026-09-11</td>
+<td>「第４回九州機械要素技術展」出展に係る装飾委託業務</td>
+<td>公益財団法人やまぐち産業振興財団</td>
+<td>公募型プロポーザル</td>
+<td>**2026-09-11 17:00 に受付終了。</td>
+</tr>
+<tr>
+<td class="d">2024-09-13</td>
+<td>「JAPAN TRADE EXHIBITION IN DUBAI 2025」における京都ブース設置・運営等業務 公募型プロポーザル審査の選定結果について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過（旧: 過年度実績（次回公告を待つ））</td>
+</tr>
+<tr>
+<td class="d">2026-09-14</td>
+<td>令和8年度 新潟観光ブランド形成促進事業 小学生向け観光副読本制作業務</td>
+<td>新潟県</td>
+<td>公募型プロポーザル</td>
+<td>**2026-09-14：締切を訂正した。</td>
+</tr>
+<tr>
+<td class="d">2026-09-14</td>
+<td>「2027年ベオグラード国際博覧会」日本館 展示・施工等</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>一般競争入札</td>
+<td>**A又はB等級限定。</td>
+</tr>
+<tr>
+<td class="d">2026-09-14</td>
+<td>スタートアップ向け広報イベントおよびアルムナイイベントの実施・運営等</td>
+<td>JETRO（日本貿易振興機構）イノベーション部スタートアップ課</td>
+<td>一般競争入札（総合評価落札方式）</td>
+<td>【生島様 2026-08-31：見送り】統一資格A・B・C限定でD等級では不可</td>
+</tr>
+<tr>
+<td class="d">2026-09-18</td>
+<td>「FOODEX JAPAN2027」群馬県ブース全体装飾等設営業務公募型プロポーザルの実施について</td>
+<td>群馬県</td>
+<td>企画提案</td>
+<td>【生島様 2026-08-31：見送り】**施工会社向け。</td>
+</tr>
+<tr>
+<td class="d">2025-09-19</td>
+<td>「第３回九州機械要素技術展」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2024-09-20</td>
+<td>「第５回フードテックジャパン」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2023-09-22</td>
+<td>「国際ロボット展２０２３」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-09-25</td>
+<td>「RoboNext2026」静岡県ブースに係る設営等業務</td>
+<td>静岡県産業振興財団</td>
+<td>企画提案コンペ</td>
+<td>【生島様 2026-08-31：見送り】施工単体のため。</td>
+</tr>
+</tbody></table></div></details><details open><summary>10月に見に行く<span class="cnt">2件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2025-10-15</td>
+<td>「第60回 スーパーマーケット・トレードショー2026」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2025-10-30</td>
+<td>PGI第7回BBCトーナメント競走集客イベント及び広告宣伝等運営管理業務の事業者募集について</td>
+<td>尼崎市</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+</tbody></table></div></details><details><summary>11月に見に行く<span class="cnt">3件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2025-11-21</td>
+<td>「第４回製造業カーボンニュートラル展」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2025-11-28</td>
+<td>国際フロンティア産業メッセ2026 開催等業務</td>
+<td>神戸市</td>
+<td>企画提案コンペ</td>
+<td>締切超過（来年度型・11月下旬公告）</td>
+</tr>
+<tr>
+<td class="d">2024-11-29</td>
+<td>「SXSW 2025 京都パビリオン」装飾等業務 公募型プロポーザル審査による事業者選定について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過（旧: 過年度実績（次回公告を待つ））</td>
+</tr>
+</tbody></table></div></details><details><summary>12月に見に行く<span class="cnt">1件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2025-12-03</td>
+<td>「第54回 国際ホテル・レストランショー」 KYOTOブースの装飾業務に係る公募型プロポーザル審査の実施について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+</tbody></table></div></details><details><summary>1月に見に行く<span class="cnt">3件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2020-01-10</td>
+<td>「千の葉の芸術祭」広報・プロモーション関連業務委託</td>
+<td>千葉市</td>
+<td>公募型プロポーザル</td>
+<td>過年度実績（令和元年12月公募・令和2年1月10日締切・受託候補者選定済み）。</td>
+</tr>
+<tr>
+<td class="d">2025-01-24</td>
+<td>京都ビジネス交流フェア２０２５」開催案内発送業務について</td>
+<td>京都県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-01-29</td>
+<td>令和8年度伝統的工芸品産業支援補助金</td>
+<td>経済産業省</td>
+<td>補助金</td>
+<td>締切超過</td>
+</tr>
+</tbody></table></div></details><details><summary>2月に見に行く<span class="cnt">6件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2027-02-04</td>
+<td>海外展示会「Bharat Mobility GLOBAL EXPO 2027」出展</td>
+<td>浜松市</td>
+<td>参加募集</td>
+<td>営業機会</td>
+</tr>
+<tr>
+<td class="d">2026-02-13</td>
+<td>令和8年度 越境EC出品支援事業に係る業務委託</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-02-17</td>
+<td>令和8年度 伝統工芸品 商品発表会・国内展示会の運営等に係る委託</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-02-17</td>
+<td>令和8年度 海外展示会出展に伴うブース装飾等の業務委託（ライフスタイル、医療系）</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-02-25</td>
+<td>令和8年度 伝統工芸品 常設販売コーナーにおける運営管理業務の委託</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-02-27</td>
+<td>「第27回全国農業担い手サミットinかごしま」会場設営等業務委託公募型プロポーザルの実施について</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+</tbody></table></div></details><details><summary>3月に見に行く<span class="cnt">7件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2026-03-03</td>
+<td>令和8年度「東京手仕事」プロジェクトにおける海外展示会の運営業務の委託（Maison &amp; Objet）</td>
+<td>東京都中小企業振興公社</td>
+<td>委託（希望申出）</td>
+<td>締切超過（次回2027年2月下旬公告見込・最重要監視対象）</td>
+</tr>
+<tr>
+<td class="d">2026-03-06</td>
+<td>令和8年度 訪日外国人観光客向け情報発信業務委託（Web・SNS）</td>
+<td>千葉市</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-03-12</td>
+<td>令和8年度 海外展開総合支援事業 タイ企業との商談会 設営・運営等業務委託</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-03-17</td>
+<td>令和8年度千葉市「食のブランド」プロモーション等業務委託</td>
+<td>千葉市</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-03-20</td>
+<td>国内在住外国人等インフルエンサーを活用した欧米豪市場向け情報発信業務委託に係る企画提案について</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-03-30</td>
+<td>令和8年度 海外展開総合支援事業 ベトナム企業との商談会 現地対応・設営・運営業務委託</td>
+<td>東京都中小企業振興公社</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2027-03-31</td>
+<td>未来の音楽家育成・国際芸術交流業務</td>
+<td>神戸市</td>
+<td>事業者募集</td>
+<td>要精査（神戸市。</td>
+</tr>
+</tbody></table></div></details><details><summary>4月に見に行く<span class="cnt">9件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2026-04-01</td>
+<td>公益財団法人京都産業２１ 令和８年度 京都府よろず支援拠点 相談ブース用パネル等のレンタルに係る事業者公募について</td>
+<td>京都県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-04-02</td>
+<td>伝統的工芸品PRのための広告出稿業務</td>
+<td>伝統的工芸品産業振興協会</td>
+<td>企画競争</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-04-02</td>
+<td>国際参加者会議（IPM）における横浜市主催レセプション・エクスカーション運営業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（最重点監視）</td>
+</tr>
+<tr>
+<td class="d">2026-04-03</td>
+<td>伝統的工芸品 映像企画・制作業者</td>
+<td>伝統的工芸品産業振興協会</td>
+<td>企画競争</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-04-13</td>
+<td>「2025NEW環境展」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-04-17</td>
+<td>公募型プロポーザル「『第38回日本ものづくりワールド機械要素技術展』静岡市共同出展ブースに係る設営等業務」</td>
+<td>静岡市</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-04-22</td>
+<td>産学金官連携タイ販路開拓業務</td>
+<td>郡山市</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（参加申込書及び企画提案書 令和8年4月22日17:15）。</td>
+</tr>
+<tr>
+<td class="d">2026-04-23</td>
+<td>【質問書の回答を掲載しました】欧州における商談会等への出展による販路開拓支援等業務委託（令和8年度「かごしま茶」の新たな販路開拓支援事業(かごしま茶「せいめい」研究会の活動支援））の公募について</td>
+<td>鹿児島県</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-04-27</td>
+<td>令和8年度 鹿児島空港国際線アウトバウンドプロモーション業務</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+</tbody></table></div></details><details><summary>5月に見に行く<span class="cnt">9件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2026-05-08</td>
+<td>令和８(2026)年度栃木県観光情報商談会運営等業務公募型プロポーザルの実施について</td>
+<td>栃木県</td>
+<td>企画提案</td>
+<td>過年度実績（参加表明5/8・提案書とも超過）</td>
+</tr>
+<tr>
+<td class="d">2026-05-11</td>
+<td>半導体関連企業人材確保・取引拡大等支援事業（海外展示会出展）業務委託の企画提案を募集します。</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-05-12</td>
+<td>「第３１回機械要素技術展」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-05-14</td>
+<td>「仙台ゆかりの漫画・アニメを活用した海外出展業務」に係る公募型プロポーザルの実施について</td>
+<td>仙台市</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-05-15</td>
+<td>海外における伝統的工芸品テストマーケティング業務</td>
+<td>伝統的工芸品産業振興協会</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-05-15</td>
+<td>海外における伝統的工芸品実演・ワークショップ業務</td>
+<td>伝統的工芸品産業振興協会</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-05-21</td>
+<td>【受託候補者を選定しました】「東北の県庁所在地六市連携によるインバウンド向け情報発信業務」の事業者を募集します</td>
+<td>仙台市</td>
+<td>委託公募</td>
+<td>締切超過（旧: 過年度実績（次回公告を待つ））</td>
+</tr>
+<tr>
+<td class="d">2025-05-28</td>
+<td>「SEMICON TAIWAN 2025 京都パビリオン」装飾等業務 公募型プロポーザル審査による事業者選定について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過（旧: 過年度実績（次回公告を待つ））</td>
+</tr>
+<tr>
+<td class="d">2026-05-28</td>
+<td>海外展示会出展支援事業（仙台グローバルスタートアップ・ハブ）の受託候補者を募集します</td>
+<td>仙台市</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+</tbody></table></div></details><details><summary>6月に見に行く<span class="cnt">11件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2021-06-11</td>
+<td>海外展開総合支援事業展示会プロモート事業業務委託</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-06-12</td>
+<td>【選定結果の公表】公募型プロポーザル「SDGs推進イベント事業会場設営及び運営業務」</td>
+<td>静岡市</td>
+<td>企画提案</td>
+<td>締切超過（旧: 過年度実績（次回公告を待つ））</td>
+</tr>
+<tr>
+<td class="d">2026-06-15</td>
+<td>育成講座「E-commerce Academy」専門家業務</td>
+<td>JETRO</td>
+<td>公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-06-15</td>
+<td>海外OTA等を活用したインバウンド誘客プロモーション事業（欧米豪市場向け）</td>
+<td>宮崎県</td>
+<td>企画提案競技</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-06-15</td>
+<td>令和8年度「この街のクリエイター博覧会2027」会場設営・運営管理業務</td>
+<td>大阪産業局</td>
+<td>公募</td>
+<td>締切超過（来年度型・5月公募開始/6月中旬締切）</td>
+</tr>
+<tr>
+<td class="d">2026-06-19</td>
+<td>2027年国際園芸博覧会屋内出展作品 設計・施工・維持管理業務委託</td>
+<td>福岡県</td>
+<td>企画提案公募</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-06-23</td>
+<td>「株式会社阪急阪神百貨店（阪神梅田本店）」との個別商談会 参加事業者の募集（締切：R8.6.23）</td>
+<td>石川県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2024-06-24</td>
+<td>SEMICON TAIWAN 2024小間装飾業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-06-26</td>
+<td>「Sirha 2027」ジャパンパビリオン設計・監理等</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>一般競争入札</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-06-29</td>
+<td>大規模輸出商談会への出展における鹿児島県ブースの設営・管理及び出展事業者へのサポート業務委託に係る公募型プロポーザルの実施について</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>過年度実績（参加申込6/29・提案書7/2とも超過。</td>
+</tr>
+<tr>
+<td class="d">2026-06-29</td>
+<td>鹿児島県インバウンドプロモーション動画制作業務委託に係る企画提案について</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>応募不可（参加申込書6/29・提案書7/6とも超過。</td>
+</tr>
+</tbody></table></div></details><details><summary>7月に見に行く<span class="cnt">31件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2026-07-02</td>
+<td>「第29回機械要素技術展［大阪］」宮崎県ブース 小間装飾等業務委託</td>
+<td>宮崎県産業振興機構</td>
+<td>公募</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-07-03</td>
+<td>海外市場適合クリエイティブ制作等業務</td>
+<td>中小機構</td>
+<td>公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-03</td>
+<td>令和8年度CEOネットワーク強化事業（インドCEO商談会）開催に係る業務請負</td>
+<td>中小機構</td>
+<td>公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-03</td>
+<td>「展示商談会出展支援事業（3展示会）」静岡県ブース設営等業務委託</td>
+<td>静岡県産業振興財団</td>
+<td>企画提案コンペ</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-07-06</td>
+<td>GREEN×EXPO 2027来場者向け展示物（資源循環の可視化・カーボンリサイクル）企画・制作業務委託</td>
+<td>横浜市</td>
+<td>公募型プロポーザル</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-06</td>
+<td>GREEN×EXPO 2027来場者向け展示物 企画・制作業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-07</td>
+<td>令和8年度 道市連携海外展開推進事業（インド市場）委託業務</td>
+<td>北海道</td>
+<td>プロポーザル</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-07</td>
+<td>令和８（2026）年度海外インフルエンサーを活用したいちごオーナー体験等による県産農産物及び農村の魅力発信事業委託業務に係る公募型プロポーザルの実施について</td>
+<td>栃木県</td>
+<td>企画提案</td>
+<td>過年度実績（参加表明7/7・提案書7/21とも超過）</td>
+</tr>
+<tr>
+<td class="d">2026-07-09</td>
+<td>展示商談会出展支援事業（3展示会）静岡県ブース設営等業務</td>
+<td>公益財団法人静岡県産業振興財団</td>
+<td>委託</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-09</td>
+<td>（2026/07/03 9:30 締切り）「2026年度 伝統的工芸品月間全国大会関連催事」物流（一括搬入・搬出）業務の入札について</td>
+<td>伝産協会</td>
+<td>入札</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2024-07-09</td>
+<td>関西圏での外商促進に係る物産展等開催運営業務公募型プロポーザルの実施について</td>
+<td>高知市</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-10</td>
+<td>海外展示会及び海外バイヤー招聘事業による、海外展開支援補助業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-10</td>
+<td>SEMICON Japan 2026 小間装飾業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-13</td>
+<td>「BIOFACH 2027」ジャパンパビリオンの設計・監理等</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>一般競争入札</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-07-13</td>
+<td>SEMICON Taiwan 2026 小間装飾業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-14</td>
+<td>「H2&amp;FC EXPO【秋】／BATTERY JAPAN【秋】」出展に係る装飾業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-16</td>
+<td>第42回国民文化祭 分野別フェスティバル 企画・運営業務</td>
+<td>文化庁</td>
+<td>公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-17</td>
+<td>【審査結果】令和８年度大分県介護の魅力発信事業（イベント開催）に係る企画提案の公募について</td>
+<td>大分県</td>
+<td>企画提案</td>
+<td>締切超過（旧: 過年度実績（次回公告を待つ））</td>
+</tr>
+<tr>
+<td class="d">2025-07-18</td>
+<td>「Ｈ２＆ＦＣＥＸＰＯ【秋】２０２５」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2023-07-21</td>
+<td>「FOOD STYLE Japan2023」出展に係る装飾委託業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2020-07-22</td>
+<td>海外展示会プロモート事業業務委託（タイ）【R2.7.8】</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-23</td>
+<td>令和8年度日本映画の海外発信事業 釜山ACFM ジャパンブース参加企業募集</td>
+<td>ユニジャパン／文化庁</td>
+<td>参加募集</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-27</td>
+<td>「Seafood Expo North America 2027」ジャパンパビリオンの設計・監理等</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>一般競争入札</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-07-27</td>
+<td>-京都ビジネス交流フェア2027-「グローバルテクノロジー京都展」開催業務に係る公募型プロポーザルの実施について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-27</td>
+<td>第29回機械要素技術展［大阪］（令和８年度）小間装飾等業務委託事業者を募集します</td>
+<td>宮崎県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-28</td>
+<td>広報・プロモーションおよび入場券販売促進にかかる企画・実施等業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>企画提案</td>
+<td>参加意向申出締切(7/28)を超過・応募不可。</td>
+</tr>
+<tr>
+<td class="d">2026-07-29</td>
+<td>世界へ羽ばたけ！県産品海外展開強化事業（米国）業務</td>
+<td>宮崎県</td>
+<td>企画提案競技</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-07-29</td>
+<td>Bharat Mobility GLOBAL EXPO 2027 The Components &amp; Technology Show出展に係る浜松市ブース出展登録及び装飾等業務（公募型プロポーザル）【浜松市海外経済交流推進協議会】（6月19日）</td>
+<td>浜松市</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-07-31</td>
+<td>令和8年度 多言語情報発信事業及び海外インフルエンサー等招請事業</td>
+<td>群馬県</td>
+<td>公募</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-07-31</td>
+<td>「とちぎ食品輸出商談会（韓国）」の参加事業者を募集します</td>
+<td>栃木県</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2024-07-31</td>
+<td>『関西四国合同広域商談会2025』発注企業募集案内資料の発送業務に係る公募について</td>
+<td>京都県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+</tbody></table></div></details><details><summary>8月に見に行く<span class="cnt">42件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">2026-08-04</td>
+<td>【一般競争入札公告】COMPAMED2026ブース装飾業務の公募について</td>
+<td>さいたま市産業創造財団</td>
+<td>入札</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-04</td>
+<td>【一般競争入札公告】electronica 2026ブース装飾業務の公募について</td>
+<td>さいたま市産業創造財団</td>
+<td>入札</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2020-08-05</td>
+<td>海外展示会プロモート事業業務委託（シンガポール）【R2.7.15】</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-05</td>
+<td>2027年国際園芸博覧会（GREEN×EXPO2027）鹿児島県屋内出展業務委託の企画提案を募集します</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2024-08-05</td>
+<td>「京都ビジネス交流フェア2025」開催業務に係る公募型プロポーザルの実施について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2022-08-05</td>
+<td>『 関西・四国合同広域商談会 』案内文書発送業務委託業者の募集について</td>
+<td>京都県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-05</td>
+<td>国際女性デーイベント「BE YOU in KOBE」企画運営業務【事業者募集】</td>
+<td>神戸市</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-06</td>
+<td>阪神北インバウンド向けWebプロモーション業務企画提案コンペの実施</td>
+<td>兵庫県</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-07</td>
+<td>２０２７年国際園芸博覧会 福山市出展総合プロデュース・広報業務に係るプロポーザルの実施について</td>
+<td>福山市</td>
+<td>企画提案</td>
+<td>過年度実績（参加申込7/23〜8/7で終了。</td>
+</tr>
+<tr>
+<td class="d">2025-08-07</td>
+<td>【募集を締め切りました】「令和7年度OMO物産展」の出品事業者募集について</td>
+<td>宮城県</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-10</td>
+<td>クラフト館西側スペース管理・運営室運営業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>企画提案</td>
+<td>参加意向申出締切(8/10 17時)を18日前に超過・応募不可。</td>
+</tr>
+<tr>
+<td class="d">2025-08-14</td>
+<td>-京都ビジネス交流フェア2026-「京都発・グローバルニッチ戦略展」開催業務に係る公募型プロポーザルの実施について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-14</td>
+<td>令和8年那覇市戦没者追悼式（第31回なぐやけの碑慰霊祭） 会場設営等業務委託に係る制限付き一般競争入札の実施</td>
+<td>那覇市</td>
+<td>入札</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-14</td>
+<td>令和８年度外国料理店・食材店との連携による外国人市民向け情報発信事業務委託</td>
+<td>千葉市</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-18</td>
+<td>令和8年度市内中小企業海外展開支援国内輸出商社等商談会開催運営業務（公募型プロポーザル方式）【浜松市海外経済交流推進協議会】（6月12日）</td>
+<td>浜松市</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-19</td>
+<td>SG第73回ボートレースダービー集客イベント及び広告宣伝等運営管理業務に係る事業者の募集について</td>
+<td>尼崎市</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-19</td>
+<td>令和8年度「えひめ防災フェア運営業務」に係る企画提案の募集について</td>
+<td>愛媛県</td>
+<td>企画提案</td>
+<td>応募不可（企画提案参加申込書の提出期限8/19を超過。</td>
+</tr>
+<tr>
+<td class="d">2026-08-19</td>
+<td>テーマフォーラム 企画・実施運営・情報発信等に係る業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>企画提案</td>
+<td>参加意向申出締切(8/19 17時)を超過・応募不可。</td>
+</tr>
+<tr>
+<td class="d">2026-08-20</td>
+<td>「和牛日本一鹿児島」プロジェクトに係るホテル・レストランフェアと連動した県産和牛のＰＲ業務委託に係る企画提案の募集</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>過年度実績（企画提案参加申込8/20 17時を超過。</td>
+</tr>
+<tr>
+<td class="d">2026-08-21</td>
+<td>「2027年ベオグラード国際博覧会」日本館 行催事業務</td>
+<td>JETRO（日本貿易振興機構）</td>
+<td>公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-21</td>
+<td>伝統産業事業者の海外展開戦略検討へ向けた海外テストマーケティング等業務</td>
+<td>京都産業21</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（来年度型・最重点監視）</td>
+</tr>
+<tr>
+<td class="d">2024-08-23</td>
+<td>SEMICON JAPAN 2024 小間装飾業務</td>
+<td>山口県産業支援機関</td>
+<td>委託公募</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-24</td>
+<td>令和8年度緊急的文化遺産保護国際貢献事業（専門家交流）実施委託業務</td>
+<td>文化庁</td>
+<td>委託</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-24</td>
+<td>令和8年度 県産木製品欧州販路開拓業務委託</td>
+<td>岐阜県</td>
+<td>一般競争入札</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">2026-08-26</td>
+<td>令和8年度 地域資源発掘型プログラム事業 地域観光プロモーター業務委託（第2回）</td>
+<td>公益財団法人東京観光財団（TCVB）</td>
+<td>業務委託</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-26</td>
+<td>「ひょうごフィールドパビリオンエクスカーション型磨き上げ業務」に係る公募型プロポーザルの実施</td>
+<td>兵庫県</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-27</td>
+<td>伝統工芸品の体験型ビジネス構築支援事業</td>
+<td>東京都中小企業振興公社</td>
+<td>支援事業</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>令和8年度「海外教育旅行の促進及びプログラムの付加価値向上事業」</td>
+<td>観光庁</td>
+<td>公募</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>令和8年度「地域のMICE誘致力強化促進事業」二次公募</td>
+<td>観光庁</td>
+<td>公募</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>令和8年度「観光コンテンツの持続的供給に資する質的価値の維持向上事業」</td>
+<td>観光庁</td>
+<td>公募</td>
+<td>新規（応募可）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>韓国市場における二次交通を活用した県内広域周遊促進事業業務委託</td>
+<td>山形県</td>
+<td>企画提案</td>
+<td>実質不可（参加申込が本日17時）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>中国・重慶「北陸3県工芸品フェア」出品事業者募集</td>
+<td>福井県</td>
+<td>参加募集</td>
+<td>営業機会</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>西区地域プレイヤー交流会「ENISHI MEETS 2027」企画・運営業務</td>
+<td>神戸市</td>
+<td>事業者募集</td>
+<td>新規（参加申請8/28）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>「BEYOND SDGs エコプロ」兵庫県ブース装飾等委託業務</td>
+<td>ひょうご産業活性化センター</td>
+<td>公募</td>
+<td>本日締切（8/28 17時必着）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>中国・重慶で開催する北陸3県工芸品フェアへの出品事業者を募集（石川県 締切：R8.8.28）</td>
+<td>石川県産業支援機関</td>
+<td>委託公募</td>
+<td>新規（要締切確認）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>第37回全国産業教育フェア愛媛大会公式Webページ作成業務委託公募型プロポーザルの実施について</td>
+<td>愛媛県</td>
+<td>企画提案</td>
+<td>新規（要締切確認）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>植物サイン作成・設置・管理業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>入札</td>
+<td>新規（一般競争入札・本日締切）</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>令和8年度 東京都エコ農産物におけるイベント販売・調査に関する業務委託</td>
+<td>東京都</td>
+<td>希望制指名競争入札</td>
+<td>受付等級B。</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>令和8年度 第1回ナイトタイム観光全般に関するフォーラムの開催に係る業務委託</td>
+<td>東京都</td>
+<td>希望制指名競争入札</td>
+<td>受付等級B。</td>
+</tr>
+<tr>
+<td class="d">2026-08-28</td>
+<td>令和8年度麻薬・覚醒剤・大麻乱用防止運動都民大会実施業務委託</td>
+<td>東京都</td>
+<td>希望制指名競争入札</td>
+<td>受付等級C。</td>
+</tr>
+<tr>
+<td class="d">2026-08-31</td>
+<td>令和8年度中小企業地域資源活用等促進事業 展示商談会 大分県ブースの企画・運営委託業務</td>
+<td>大分県産業創造機構</td>
+<td>公募</td>
+<td>参加申込期限(8/26)超過・要電話確認</td>
+</tr>
+<tr>
+<td class="d">2026-08-31</td>
+<td>屋内出展施設運営スタッフユニフォーム制作業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>入札</td>
+<td>新規（一般競争入札）</td>
+</tr>
+</tbody></table></div></details><details><summary>時期が決まっていないもの<span class="cnt">64件</span></summary><div class="scroll"><table><thead><tr>
+<th>前回の締切</th>
+<th>案件名</th>
+<th>発注機関</th>
+<th>種別</th>
+<th>落とした理由・状態</th>
+</tr></thead><tbody>
+<tr>
+<td class="d">—</td>
+<td>令和8年度コンテンツ海外展開促進事業（国際的イベント連携）</td>
+<td>経済産業省</td>
+<td>企画競争</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和8年度大規模イベント出展事業 委託業務</td>
+<td>北海道</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>江戸街道・広域エリア 海外旅行博・商談会出展およびセールスコール</td>
+<td>東京都エリアマネジメント関連</td>
+<td>企画提案</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和8年度シンガポールNATAS Holidays 2026 出展事業</td>
+<td>富山県（北陸国際観光テーマ地区推進協議会）</td>
+<td>プロポーザル</td>
+<td>締切超過</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和9年度JETプログラム来日直後オリエンテーション総合業務委託</td>
+<td>自治体国際化協会（CLAIR）</td>
+<td>プロポーザル</td>
+<td>要精査。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>IP360補助金（海外展開支援）</td>
+<td>VIPO</td>
+<td>補助金</td>
+<td>過年度実績（令和7年度の事業）。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>2027年国際園芸博覧会屋外出展業務委託</td>
+<td>宮崎県</td>
+<td>企画提案競技</td>
+<td>締切超過（結果公表済）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和8年度CEOネットワーク強化事業 商談会開催に係る業務請負（分野別・国別に複数本）</td>
+<td>中小機構</td>
+<td>公募</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>海外展示会&lt;食品分野&gt;及び海外バイヤー招聘事業による海外展開支援補助業務</td>
+<td>山口県産業振興財団</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>海外バイヤー招聘による県内地域産品の視察・商談等実施業務</td>
+<td>山口県産業振興財団</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>各種展示会 出展に係る装飾委託業務（年10本以上を継続発注）</td>
+<td>山口県産業振興財団</td>
+<td>委託</td>
+<td>継続監視（最重点）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>関西圏での外商促進に係る物産展等開催運営業務</td>
+<td>高知市</td>
+<td>公募型プロポーザル</td>
+<td>本日時点で高知市のプロポーザル一覧に掲載なし＝募集していない。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>東北の県庁所在地六市連携によるインバウンド向け情報発信業務</td>
+<td>仙台市</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>探究型国際交流フィールドワーク in せんだい実施業務委託</td>
+<td>仙台市</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「SEMICON Japan 2026 京都パビリオン」装飾等業務</td>
+<td>京都産業21</td>
+<td>公募型プロポーザル</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>大規模展示会活用プログラム「TENKA！」出展に伴うブース企画・設営業務（IPF Japan／東京ギフト・ショー LIFE×DESIGN／WHX Osaka等）</td>
+<td>大阪産業局</td>
+<td>公募</td>
+<td>継続監視（最重点）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>COMPAMED2026／electronica 2026 ブース装飾業務</td>
+<td>さいたま市産業創造財団</td>
+<td>一般競争入札</td>
+<td>締切超過（来年度型・海外見本市）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>SEMICON Taiwan 2026／SEMICON Japan 2026 小間装飾業務</td>
+<td>山口県産業振興財団</td>
+<td>委託</td>
+<td>締切超過（来年度型として監視）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>GREEN×EXPO 2027 会場内の催事場等における催事の企画・運営業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>過年度実績（結果掲載済み。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>GREEN×EXPO 2027 横浜市出展関連業務委託</td>
+<td>横浜市 脱炭素・GREEN×EXPO推進局</td>
+<td>公募型プロポーザル</td>
+<td>過年度実績（契約結果公表済み。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「SEMICON Japan 2026 京都パビリオン」装飾等業務 公募型プロポーザル審査による事業者選定について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「SEMICON Taiwan 2026 KYOTOパビリオン」装飾等業務 公募型プロポーザル審査による事業者選定について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>-京都ビジネス交流フェア2026-「京都発・グローバルニッチ戦略展」展示会場装飾及び印刷物作成等の業務に係る公募型プロポーザルに対する質問の回答について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>過年度実績（ページタイトルに【終了】。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「京都ビジネス交流フェア２０２３」展示会場装飾及び印刷物等作成・発送業務に係る公募型プロポーザルの実施について</td>
+<td>京都県産業支援機関</td>
+<td>企画提案</td>
+<td>過年度実績（2023年度の案件。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>【選定結果の公表】公募型プロポーザル「食品関連海外展開支援実施業務」</td>
+<td>静岡市</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>世界へ羽ばたけ！県産品海外展開強化事業（米国）業務企画提案競技の結果について</td>
+<td>宮崎県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>2027年国際園芸博覧会屋外出展業務委託に係る企画提案競技の結果について</td>
+<td>宮崎県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>大規模商談会出展（冷凍部門）に係る宮崎県ブース企画運営業務委託の企画提案競技（プロポーザル方式）の審査結果について</td>
+<td>宮崎県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和7年度宮崎県総合防災訓練に係る会場設営及び撤去等業務委託の一般競争入札（条件付）の結果について</td>
+<td>宮崎県</td>
+<td>入札</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>大阪・関西万博九州7県合同催事「宮崎県ブース」展示・運営等業務委託企画提案競技の結果について</td>
+<td>宮崎県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>2027年国際園芸博覧会屋内出展施工業務委託に係る公募型プロポーザル審査結果について</td>
+<td>富山県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>2026台北国際旅行博（ITF）出展に係る業務に係る公募型プロポーザル（技術提案）</td>
+<td>岡山県</td>
+<td>企画提案</td>
+<td>過年度実績（結果の公表済み。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「令和8年度「SIAL Paris 2026 ジャパンパビリオン」出展支援業務」企画提案審査委員会の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和5年度いわて農林水産物DX販路開拓・拡大戦略策定業務に係る企画提案選考委員会の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>台北国際観光博覧会（TTE)出展・運営支援業務に係る企画提案選考結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和8(2026)年度海外インフルエンサーを活用したいちごオーナー体験等による県産農産物及び農村の魅力発信事業委託業務公募型プロポーザルの審査結果について</td>
+<td>栃木県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>・令和7年度文化庁「国際文化交流・協力推進事業」（TICAD9関連イベントに係る調査及び企画運営実施業務）</td>
+<td>VIPO</td>
+<td>委託公募</td>
+<td>過年度実績（令和7年度文化庁事業。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>2024/06/17 入札・コンペ 終了 【一般競争入札公告】「RISTかがわ什器・備品等撤去及び処分業務」について</td>
+<td>香川県産業支援機関</td>
+<td>入札</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>【終了しました】東大阪市「2025大阪・関西万博 自治体参加催事」出展支援業務委託契約に係るプロポーザル参加事業者を募集します</td>
+<td>東大阪市</td>
+<td>企画提案</td>
+<td>過年度実績（受託候補者を決定済み。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>東大阪市「2025大阪・関西万博 自治体参加催事」出展支援業務委託契約に係るプロポーザルの選考結果</td>
+<td>東大阪市</td>
+<td>企画提案</td>
+<td>過年度実績（受託候補者を決定済み。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>新宿地区における「ナッシーリゾートin宮崎」PRイベント開催業務委託企画提案競技の結果について</td>
+<td>宮崎県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>首都圏における「行きたくなる宮崎へ」PRイベント開催業務委託に係る企画提案競技の結果について</td>
+<td>宮崎県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>第46回富山県伝統的工芸品展開催事業業務委託に係る公募型プロポーザルの審査結果について</td>
+<td>富山県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和８年度ＳＮＳ広告等を活用したインバウンド向け情報発信業務に係る公募型プロポーザル（技術提案）</td>
+<td>岡山県</td>
+<td>企画提案</td>
+<td>過年度実績（結果の公表済み。</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和7年度台湾現地PRイベント出展業務に係る企画提案審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「タイFITフェア出展・運営」業務企画提案審査の結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和7年度「東京インターナショナル・ギフト・ショー出展支援企画運営業務」の企画提案審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和7年度県産農林水産物のレストランフェア等企画運営業務に係る企画提案選考委員会の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「2024 Japanese Food Expo in ニューヨーク」出展支援業務企画提案選考委員会の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>「ニューヨーク トラベル＆アドベンチャーショー2025 出展業務」に係る企画提案選考委員会の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和5年度台湾現地PRイベント出展業務に係る企画提案の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和4年度「もりおか広域食の商談会・工芸展示商談会、工房見学会」開催事業企画運営業務に係る企画提案審査の結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和3年度いわてインバウンド総合プロモーション業務（台湾市場、香港市場）に係る企画提案審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和3年度いわてインバウンド総合プロモーション業務（中国市場、アセアン市場）に係る企画提案審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和3年度いわてインバウンド総合プロモーション業務（韓国市場）に係る企画提案審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>県産農林水産物のレストランフェア等企画運営業務企画提案選考委員会の審査結果について</td>
+<td>岩手県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>【審査結果掲載】第36回全国産業教育フェア佐賀大会視察に係る宿泊・輸送等計画作成業務の公募型プロポーザルの実施について</td>
+<td>愛媛県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和８(2026)年度栃木県観光情報商談会運営等業務委託公募型プロポーザルの審査結果について</td>
+<td>栃木県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>令和8(2026)年度「オールとちぎ移住・しごとフェア」業務委託公募型プロポーザルの実施結果について</td>
+<td>栃木県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>【審査結果】エンジンフォーラム神戸2026商談会出展支援事業業務企画提案競争実施のご案内</td>
+<td>福島県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>公募型プロポーザル結果の公表（令和8年度多言語情報発信事業及び海外インフルエンサー等招請事業）</td>
+<td>群馬県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>【募集終了しました】大隅観光・特産品ＰＲ事業（観光・特産品フェア開催事業）業務委託に係る企画提案を募集します！！</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>【募集終了しました】大隅観光・特産品PR事業（商談会等開催事業）業務委託に係る企画提案を募集します！！</td>
+<td>鹿児島県</td>
+<td>企画提案</td>
+<td>過年度実績（次回公告を待つ）</td>
+</tr>
+<tr>
+<td class="d">—</td>
+<td>2027年国際園芸博覧会賓客車両運行管理業務委託</td>
+<td>公益社団法人2027年国際園芸博覧会協会</td>
+<td>委託</td>
+<td>2026-08-31公告。</td>
+</tr>
+</tbody></table></div></details></section>
+<section><div class="shead"><h2>8. 見送りの基準</h2><span class="n">eligibility.md [15]〜[18]</span></div><p class="sdesc">なぜ落としたかの物差し。<b>この4つに当たる案件は、種目と等級が合っていても取りません。</b></p><div class="rule"></div>
+<div class="card">
+<p class="note"><b>[15] 施工単体は取らない。</b>運営・総合プロデュース・海外が当社の強み。
+ブース装飾や設営だけの案件は、施工会社が価格で取る。</p>
+<p class="note"><b>[16] 補助金と入札は判定軸が別。</b>補助金に入札参加資格は要らない。
+補助金で律速になるのは <b>GビズIDプライム</b>である。</p>
+<p class="note"><b>[17] 種目と等級が合っただけで「応募可」と報告しない。</b>
+判定は ①種目 → ②等級 → <b>③仕様書で実行条件と価格の前提を読む</b> → ④判断を仰ぐ、の順。
+仕様書で必ず見る5点：実施日と会場数／受託者が立て替える費目／
+<b>金額が明示されていない費目がないか</b>／人員要件／準備期間。</p>
+<p class="note flag"><b>[18] 価格勝負だけの案件は取らない。</b>
+①企画・構成を発注者が全部決めている ②固定費比率が高い
+③過去の入札で1位と2位の差が数%以内 ④価格のみで決まる。
+<b>Tokyo DX/AX はこの4つ全部に当たった</b>（会場費877.7万円が全社共通の固定費、
+前年は23社指名で1位と2位の差が1.4%）。</p>
+</div>
+</section>
+<div class="foot"><h3>この画面の作り方</h3><ul><li>元データは <code>data/ledger.csv</code>（272行）。<code>python3 bin/build_board.py</code> で作り直します</li><li>残日数は閲覧時にブラウザ側で計算しています。<b>数値は直書きしていません</b>（CLAUDE.md 最重要）</li><li>領域外・本業外として判断の対象から外したものが 29件あります。台帳には残していますが、この画面には出しません</li></ul></div>
+</div>
+
+<script>
+(function(){
+  // **残り時間は閲覧時に計算する。**数値を直書きしない。
+  // そして「日」ではなく「分」で数える。2026-09-03、締切当日の16時に終わった案件を
+  // 22時の時点で「本日」と表示し、まだ応募できるかのように見せた（CLAUDE.md）。
+  function nowJST(){
+    var n=new Date();
+    return new Date(n.getTime()+n.getTimezoneOffset()*60000+9*60*60000);
+  }
+  var t=nowJST();
+  document.querySelectorAll('.dl[data-deadline]').forEach(function(el){
+    var v=el.getAttribute('data-deadline').split(/[-T:]/);
+    var d=new Date(+v[0],+v[1]-1,+v[2],+(v[3]||17),+(v[4]||0));
+    var mins=Math.floor((d-t)/60000);
+    var box=el.querySelector('.days'), bar=el.querySelector('.bar i');
+    if(!box) return;
+    var label, urgent=true;
+    if(mins<=0){ label='受付終了'; }
+    else if(mins<60){ label=mins+'<small>分</small>'; }
+    else if(mins<48*60){ label=Math.floor(mins/60)+'<small>時間</small>'; }
+    else { var days=Math.floor(mins/1440); label=days+'<small>日</small>'; urgent=days<=7; }
+    box.innerHTML=label;
+    box.classList.toggle('urgent',urgent);
+    box.classList.toggle('over',mins<=0);
+    if(bar){
+      var pct=mins<=0?100:Math.max(4,Math.min(100,Math.round((1-mins/(60*24*60))*100)));
+      bar.style.width=pct+'%';
+      bar.classList.toggle('urgent',urgent);
+    }
+    var card=el.closest('.card'), pill=card&&card.querySelector('.pill');
+    if(pill&&mins<=0){
+      pill.textContent='受付終了';
+      pill.className='pill p-off';
+      card.classList.add('over');
+    }
+  });
+  // ヘッダーに閲覧日時を出す。**生成した時刻と、読んでいる時刻は違う。**
+  var st=document.querySelector('.stamp');
+  if(st){
+    var pad=function(x){return (x<10?'0':'')+x;};
+    var el=document.createElement('div');
+    el.innerHTML='閲覧<b>'+pad(t.getMonth()+1)+'.'+pad(t.getDate())+' '
+      +pad(t.getHours())+':'+pad(t.getMinutes())+'</b>';
+    st.appendChild(el);
+  }
+})();
+</script>
