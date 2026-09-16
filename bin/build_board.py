@@ -288,6 +288,108 @@ def days_cell(rec):
             % rec['at'].strftime('%Y-%m-%dT%H:%M'))
 
 
+def load_programs():
+    """制度台帳を読む。**無くても board は動く**（壊れた依存を作らない）。"""
+    f = ROOT / 'data' / 'programs.csv'
+    if not f.exists():
+        return []
+    with f.open(encoding='utf-8') as fh:
+        return [r for r in csv.DictReader(fh)]
+
+
+def _pdate(s):
+    m = re.match(r'(\d{4})-(\d{2})-(\d{2})', (s or '').strip())
+    if not m:
+        return None
+    try:
+        return datetime.date(*(int(x) for x in m.groups()))
+    except ValueError:
+        return None
+
+
+def timeline(b, now, days=31):
+    """**案件と制度を1本の時系列にする。**これがこの画面の主役である。
+
+    2026-09-16 に追加した。それまで**制度（補助金）がボードに1件も載っておらず**、
+    持続化補助金の様式4（12/4・申請締切より11日早い）のような
+    **前段の関門が画面に現れなかった。**
+    """
+    td = now.date()
+    rowsout = []
+
+    for rec in b['now'] + b['unverified'] + b['going'] + b['watch']:
+        if not rec['at'] or rec['closed']:
+            continue
+        if (rec['at'].date() - td).days > days:
+            continue
+        r = rec['r']
+        kind = {'now': '判断', 'going': '進行中'}.get(rec['k'], '案件')
+        if rec in b['going']:
+            tone, kind = 'ok', '進行中'
+        elif rec in b['unverified']:
+            tone, kind = 'warn', '要確認'
+        elif rec in b['now']:
+            tone, kind = 'crit', '**判断**'
+        else:
+            tone, kind = 'off', '見ておく'
+        rowsout.append((rec['at'], tone, kind, r['案件名'], r['発注機関'],
+                        rec['gate'] or '種別未確認', r['予定価格'] or '要確認',
+                        '' if rec['exact'] else '時刻未確認'))
+
+    # **同じものを2回出さない。**台帳に載っている制度は、案件の行で既に出ている
+    # （2026-09-16、持続化補助金＜共同・協業型＞第3回が2行になった）。
+    seen = {re.sub(r'[\s\u3000]', '', x[3]) for x in rowsout}
+
+    for pr in load_programs():
+        if not pr['状態'].startswith('現存'):
+            continue
+        if re.sub(r'[\s\u3000]', '', pr['制度名']) in seen:
+            continue
+        for col, label in (('公募開始', '公募開始'), ('締切', '締切')):
+            d = _pdate(pr.get(col))
+            if not d or not (0 <= (d - td).days <= days):
+                continue
+            at = datetime.datetime.combine(d, datetime.time(17, 0))
+            rowsout.append((at, 'prog', '制度・' + label, pr['制度名'], pr['所管'],
+                            pr['前段関門'] or '—', pr['上限額'] or '—', ''))
+
+    if not rowsout:
+        return ('<section><div class="shead"><h2>今月の関門</h2>'
+                '<span class="n">0件</span></div><div class="rule"></div>'
+                '<p class="sdesc">今後31日以内に閉じるものはありません。</p></section>')
+
+    rowsout.sort(key=lambda x: x[0])
+    tr = []
+    for at, tone, kind, name, org, gate, price, note in rowsout:
+        tr.append(
+            '<tr class="t-%s">'
+            '<td class="d"><span class="dl" data-deadline="%s">'
+            '<span class="days" style="font-size:15px"></span></span>'
+            '<div class="sub">%s%s</div></td>'
+            '<td><span class="kind k-%s">%s</span></td>'
+            '<td><b>%s</b><div class="sub">%s</div></td>'
+            '<td class="gate">%s</td>'
+            '<td class="money">%s</td></tr>'
+            % (tone, at.strftime('%Y-%m-%dT%H:%M'),
+               at.strftime('%-m/%-d %H:%M'),
+               ('<span class="est">時刻未確認</span>' if note else ''),
+               tone, md(esc(kind)), esc(name[:52]), esc(org[:30]),
+               esc(gate[:60]), esc(price[:46])))
+
+    return ('<section><div class="shead"><h2>今月の関門</h2>'
+            '<span class="n">%d件・31日以内</span></div>'
+            '<p class="sdesc"><b>案件の締切と、制度（補助金）の公募開始・締切を、'
+            '1本の時系列にしています。</b>'
+            '「前段の関門」の欄を必ず見てください——'
+            '<b>締切より前に閉じる窓があるものは、そちらが実質の期限です。</b></p>'
+            '<div class="rule"></div>'
+            '<div class="scroll"><table class="tl"><thead><tr>'
+            '<th>残り</th><th>区分</th><th>件名／発注</th>'
+            '<th>前段の関門</th><th>金額</th></tr></thead>'
+            '<tbody>%s</tbody></table></div></section>'
+            % (len(rowsout), ''.join(tr)))
+
+
 def build(rows, now):
     td = now.date()
     b = buckets(rows, now)
@@ -315,75 +417,44 @@ def build(rows, now):
                  % esc(beat_text))
 
     # ── 冒頭 ──
+    # **ここは判断面である。私の失敗の年表ではない。**
+    # 2026-09-16、生島様より「公募ボードはもっと見やすくすること」とのご指摘。
+    # 事故のたびに足した段落が消えずに積み上がり、冒頭が9段落になっていた。
+    # 経緯は `docs/` の報告書と CLAUDE.md にある。**画面には、いま決めることだけを出す。**
     lede = ['<div class="lede">']
-    lede.append('<p><strong>%s %s 現在。</strong>台帳 %d件のうち、'
-                '<b>いま判断が要るものが %d件</b>、進行中が %d件です。'
-                'この画面は上から順に「決める → 進めている → 見ておく → 来年」で並べてあります。'
-                '<b>1番の節だけ見れば、今日決めることは足ります。</b></p>'
-                % (now.strftime('%Y年%-m月%-d日'), now.strftime('%H:%M'),
-                   len(rows), len(b['now']), len(b['going'])))
-    if b['now']:
-        items = []
-        for rec in b['now'][:5]:
-            items.append('<li><span class="dl" data-deadline="%s"><b class="days" style="font-size:15px"></b></span>'
-                         ' ／ %s <span style="color:var(--muted)">（%s・%s締切%s）</span></li>'
-                         % (rec['at'].strftime('%Y-%m-%dT%H:%M'), esc(rec['r']['案件名'][:42]),
-                            esc(rec['r']['発注機関']), rec['at'].strftime('%-m/%-d %H:%M'),
-                            '' if rec['exact'] else '・時刻未確認'))
-        lede.append('<p><strong>締切が近い順に。</strong></p><ul style="margin:0 0 10px;padding-left:20px">%s</ul>'
-                    % ''.join(items))
+    n_act = len(b['now'])
+    if n_act:
+        lede.append('<p class="big"><strong>いま判断が要るのは %d件です。</strong>'
+                    '下の「今月の関門」で日付順に並べています。</p>' % n_act)
+    else:
+        lede.append('<p class="big"><strong>いま判断が要る案件はありません。</strong>'
+                    '次に来るものは「今月の関門」にあります。</p>')
     lost = [x for x in b['next']
             if x['closed'] and x['k'] == 'open' and x['left'] is not None and x['left'] >= 0]
     if lost:
-        lede.append('<p style="border-left:3px solid var(--crit);padding-left:14px">'
-                    '<strong>本日、判断しないまま受付が終わった案件が %d件あります。</strong>'
-                    '%s。<b>この画面は %s に作っています。'
-                    '締切は「日」ではなく「日時」で持つように直しました</b>'
-                    '（報告書 <code>docs/report_kigen_jikoku_20260903.md</code>）。'
-                    '受付が終わったものは、以下の判断面には出しません。</p>'
+        lede.append('<p class="alert"><strong>本日、判断しないまま受付が終わった案件が %d件あります。</strong>'
+                    '%s</p>'
                     % (len(lost),
-                       '／'.join('%s（%s %s締切%s）' % (esc(x['r']['案件名'][:26]),
-                                                   esc(x['r']['発注機関']),
-                                                   x['at'].strftime('%-m/%-d %H:%M'),
-                                                   '' if x['exact'] else '・<b>時刻未確認</b>')
-                                for x in lost),
-                       now.strftime('%-m月%-d日 %H:%M')))
-
-    fixed = [x for x in b['now'] + b['unverified'] + b['watch'] + b['next']
-             if '締切を訂正した' in x['r']['状態']]
-    if fixed:
-        lede.append('<p style="border-left:3px solid var(--crit);padding-left:14px">'
-                    '<strong>一次資料と突き合わせて、締切を訂正した案件が %d件あります。</strong>'
-                    '%s。<b>いずれも公募型プロポーザルの二段構え（参加申込 → 企画提案書）で、'
-                    '後段の企画提案書の期限を前段の「参加申込」と取り違えて転記していました。</b>'
-                    '検査の仕組みごと作り直しました'
-                    '（報告書 <code>docs/report_kanmon_20260904.md</code>）。</p>'
-                    % (len(fixed),
-                       '／'.join('%s（%s → <b>%s %s</b>）'
-                                 % (esc(x['r']['案件名'][:24]), esc(x['r']['発注機関']),
-                                    x['at'].strftime('%-m/%-d %H:%M'), esc(x['gate']))
-                                 for x in fixed)))
-
-    priced = [x for x in b['now'] + b['going'] + b['coming'] + b['grade']
-              if any(k in x['r']['予定価格'] for k in ('前年度', '令和', '【推定】', '万円'))]
-    if priced:
-        lede.append('<p><strong>過去の落札額を調べました。</strong>'
-                    'いま判断が要る案件と、等級で落ちた案件のうち <b>%d件</b>について、'
-                    '前年度の同種案件の落札金額・落札者・応札者数を各カードの「予定価格」欄に入れてあります。'
-                    '<b>東京都は発注予定表に予定価格を出しませんが、開札済みの案件は'
-                    '入札経過調書に落札額と全入札者の入札額が載ります。</b>'
-                    '年次で反復する案件なら、前年度の落札額がそのまま今年度の目安になります。</p>'
-                    % len(priced))
-    if b['grade']:
-        lede.append('<p><strong>等級で届かなかった案件が、いま %d件あります。</strong>'
-                    'いずれも中身は御社の本業です。<b>9月14日に始まる東京都の定期受付が、'
-                    'この壁を動かせる唯一の機会です。</b>6番の節にまとめました。</p>' % len(b['grade']))
-    lede.append('<p><strong>巡回について。</strong>自動巡回は週1回（毎週月曜8時）です。'
-                'ところが東京都の希望申請期間は<b>5〜7日しかありません</b>。'
-                '<b>週次のままでは窓を丸ごと逃す周期にあります。</b>'
-                '隔日への変更をご検討ください（報告書 <code>docs/report_junkai_20260903.md</code>）。</p>')
+                       '／'.join('%s（%s締切）' % (esc(x['r']['案件名'][:30]),
+                                                x['at'].strftime('%-m/%-d %H:%M'))
+                                for x in lost)))
+    if b['unverified']:
+        lede.append('<p class="warn2"><strong>締切を確かめていない案件が %d件あります。</strong>'
+                    '確かめるまで判断面には出しません（2番の節）。</p>' % len(b['unverified']))
+    lede.append('<p class="fine">%s 現在／台帳 %d件／'
+                'この画面は <code>data/ledger.csv</code> と <code>data/programs.csv</code> から'
+                ' <code>bin/build_board.py</code> が作っています。手で書いていません。'
+                '<b>残り時間は、いま開いている時刻から計算しています。</b></p>'
+                % (now.strftime('%Y年%-m月%-d日 %H:%M'), len(rows)))
     lede.append('</div>')
     o.append(''.join(lede))
+
+    # ── 今月の関門（案件と制度を1本の時系列にする）──
+    # **制度（補助金）がボードに1件も載っていなかった。**
+    # 案件の締切だけを見ていると、持続化補助金の様式4（12/4）のような
+    # 「前段の関門」が画面に現れない。2026-09-16 に追加した。
+    o.append(timeline(b, now))
+
 
     # ── 1. いま決める ──
     if b['now']:
@@ -755,6 +826,34 @@ details .scroll{border:none; border-radius:0}
 .days.over{color:var(--muted)!important; font-size:15px}
 .card.over{opacity:.55}
 .card.over .ctitle h3{text-decoration:line-through; text-decoration-color:var(--line-strong)}
+/* ── 冒頭を判断面に戻す（2026-09-16）─────────────────── */
+.lede p.big{font-size:17px;line-height:1.7;margin-bottom:10px}
+.lede p.alert{background:var(--crit-soft);border-left:3px solid var(--crit);
+  padding:11px 15px;border-radius:0 2px 2px 0;margin:0 0 10px}
+.lede p.warn2{background:var(--warn-soft);border-left:3px solid var(--warn);
+  padding:11px 15px;border-radius:0 2px 2px 0;margin:0 0 10px;font-size:13.5px}
+.lede p.fine{font-size:12px;color:var(--muted);margin:0}
+
+/* ── 今月の関門（主役の表）──────────────────────── */
+table.tl{font-size:13.5px;min-width:720px}
+table.tl td{vertical-align:middle}
+table.tl td.d{white-space:nowrap}
+table.tl td.d .sub{font-family:"Roboto Mono",monospace;font-size:11px;color:var(--muted);margin-top:1px}
+table.tl td .sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+table.tl td.gate{font-size:12.5px;color:var(--ink-2);max-width:23ch}
+table.tl td.money{font-size:12.5px;color:var(--ink-2);max-width:20ch}
+.kind{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:2px 9px;border-radius:2px;border:1px solid;white-space:nowrap}
+.k-crit{background:var(--crit-soft);color:var(--crit);border-color:var(--crit)}
+.k-warn{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.k-ok{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.k-off{background:var(--off-soft);color:var(--off);border-color:var(--line-strong)}
+.k-prog{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+tr.t-crit td:first-child{box-shadow:inset 3px 0 0 var(--crit)}
+tr.t-prog td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+tr.t-ok td:first-child{box-shadow:inset 3px 0 0 var(--ok)}
+tr.t-warn td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+
 .est{
   display:inline-block; margin-left:8px; padding:1px 6px; border-radius:2px;
   font-size:10.5px; font-weight:700; letter-spacing:.04em;
