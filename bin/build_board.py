@@ -815,7 +815,7 @@ TAIL = r"""<script>
 
 
 
-def audit_ledger(rows):
+def audit_ledger(rows):  # noqa: C901
     """**台帳の書式を点検する。壊れていたら止める。**
 
     2026-09-05、別セッションが `締切` 欄に `2026-09-29 17:00` と日時を書き込み、
@@ -823,27 +823,49 @@ def audit_ledger(rows):
     進行中の最重要案件から残り時間の表示が静かに消えていた。
     **書式違反は、エラーにならずに情報を失わせる。**だから明示的に点検する。
     """
-    ng = []
+    ng, free = [], []
     for i, r in enumerate(rows, start=2):          # 2 = ヘッダの次の行
         d = (r.get('締切') or '').strip()
         t = (r.get('締切時刻') or '').strip()
         c = (r.get('締切確認日') or '').strip()
         if re.match(r'\d{4}-\d{2}-\d{2}[ T]', d):
             ng.append((i, '締切欄に日時が入っている（時刻は締切時刻欄へ）', d))
+        elif d and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', d):
+            # **自由文は日付として読めず、その行は静かに次年度候補へ落ちる。**
+            # 2026-09-16、枝 znmhfx から引き継いだ監視対象4件が
+            # 「2027-02〜03（予測）」と書かれており、来年の束に隠れた。
+            # 検査は日時の混入だけを見ており、ここを見ていなかった。
+            #
+            # **ただし止めない。**「未確認」「要確認」と書かれた行が61件あり、
+            # それらは締切がまだ分からないだけで、次年度候補にあるのが正しい。
+            # 止めると、直すために**台帳を一括で書き換えたくなる**——
+            # 実際に2026-09-16、73行を機械的に書き換えて確認面を63件に膨らませ、
+            # 元に戻した（CLAUDE.md「台帳を機械的に書き換える処理は危険」）。
+            free.append((i, d))
         if t and not re.fullmatch(r'\d{1,2}:\d{2}', t):
             ng.append((i, '締切時刻の書式が不正', t))
         if c and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', c):
             ng.append((i, '締切確認日の書式が不正', c))
         if c and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', d):
             ng.append((i, '確認日があるのに締切が日付でない', d))
-    return ng
+    return ng, free
 
 
 def main():
     now = today()
     td = now.date()
     rows = load()
-    ng = audit_ledger(rows)
+    ng, free = audit_ledger(rows)
+    if free:
+        # **止めない。だが黙らない。**値ごとに数えて出す（73行を並べても読まれない）
+        import collections
+        c = collections.Counter(v for _, v in free)
+        print('▲ 締切欄が YYYY-MM-DD でない行が %d件ある（日付として読めず、'
+              '次年度候補へ落ちる）' % len(free))
+        for v, n in c.most_common():
+            print('    %-20s %3d件' % (repr(v), n))
+        print('    **監視したい案件がこの中にあるなら、締切を空にし '
+              '状態欄の先頭に【予測】と書く。**一括で書き換えないこと')
     if ng:
         print('**台帳の書式に問題がある。直してから作り直すこと。**')
         for line, why, val in ng:
