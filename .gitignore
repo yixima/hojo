@@ -1,3 +1,13 @@
 __pycache__/
 data/awards/cache/
 workflow/__pycache__/
+
+# ── 引き継ぎファイルは絶対にコミットしない（2026-09-18）──────────
+# **本リポジトリは公開（public）である。**GitHub API で `"private": false` を実測した。
+# 引き継ぎファイルは会話原文をそのまま運ぶ設計（L1 §10-5）であり、
+# 個人情報・取引先とのやり取り・判断の経緯がそのまま公開されてしまう。
+# 置き場はクラウドドライブ `claude_handover/<案件名>/` であって、このリポジトリではない。
+docs/handover/
+docs/*handover*.md
+*_handover_*.md
+*handover_latest.md
