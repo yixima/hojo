@@ -42,7 +42,8 @@ import re
 import sys
 import urllib.request
 import zipfile
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -128,7 +129,9 @@ def main() -> int:
     ap.add_argument("--min-yen", type=int, default=0)
     args = ap.parse_args()
 
-    today = date.today()
+    # 日付は JST から採る。date.today() はコンテナの UTC を返すため、
+    # 深夜帯（JST 09:00 より前）に走らせると出力ファイル名が1日ずれる。
+    today = datetime.now(ZoneInfo('Asia/Tokyo')).date()
     OUT.mkdir(parents=True, exist_ok=True)
 
     print("=== 落札実績オープンデータ ===")

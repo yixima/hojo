@@ -194,6 +194,34 @@ check('BOM混入を止める', any('列が想定と違う' in m for _, m, _ in _
 _ng, _free = bb.audit_ledger([_row(案件名='正常')])
 check('正常な列では鳴らない', [m for _, m, _ in _ng], [])
 
+# ── 3.9 日付を JST で採っているか（沈黙する検出器の検出） ─────
+# 2026-09-21 判明。`bin/sweep_channels.py` が観測日時を naive な
+# `datetime.now()` で刻んでいた。コンテナは UTC なので、毎朝 08:0x JST の掃引は
+# **「前日 23:0x」として記録されていた。**
+# その結果、「本日（JSTの日付）はじめて見た見出し」を数えると**常に0件**になる。
+# 0件は「新規が無かった」ではなく「その日付の行が1つも無い」という意味で、
+# 3日続けて「新規0件」と報告していたが、実際には 12件・1件・2件あった。
+# **鳴らない検出器は、検出器が無いのと同じである。**
+_TZ_SRC = [
+    ('bin/sweep_channels.py', '観測日時（data/sweep_log.csv に刻む）'),
+    ('workflow/awards_pportal.py', '落札実績の出力ファイル名'),
+]
+import re as _re
+for _f, _why in _TZ_SRC:
+    _t = io.open(os.path.join(ROOT, _f), encoding='utf-8').read()
+    # コメント行は除く。**事故の経緯を書いた注釈まで検出すると、
+    # 注釈を消すほうへ圧力がかかる。**残すべきは注釈で、直すべきはコードである。
+    _t = '\n'.join(l for l in _t.split('\n') if not l.lstrip().startswith('#'))
+    # 日付を作る式に、タイムゾーンの指定が無いものが残っていないか
+    _naive = [m.group(0) for m in
+              _re.finditer(r'datetime\.now\(\s*\)|date\.today\(\s*\)', _t)]
+    check('%s は日付を JST で採る（%s）' % (_f, _why), _naive, [])
+
+# 検出器そのものが効いているか：わざと naive な式を混ぜたら見つかること
+_fake = "x = datetime.now()\n"
+check('naive な now() を見つけられる',
+      bool(_re.search(r'datetime\.now\(\s*\)', _fake)), True)
+
 # ── 4. 台帳の件数が減っていないか（破壊の検出） ─────────────
 check('台帳が空でない', len(led) > 200, True)
 

@@ -27,6 +27,7 @@ import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
+from zoneinfo import ZoneInfo
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CH = os.path.join(ROOT, 'data', 'channels.csv')
@@ -164,7 +165,12 @@ def main():
     # 2026-09-16、チャンスナビのトップが**回転表示**であることが判明した。
     # 朝8時に見えたねんりんピック2件は、夕方には消えていた。
     # 出力を標準出力に流すだけでは、回転で消えたものは二度と辿れない。
-    stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+    # **観測日時は JST で刻む。**
+    # 2026-09-21 判明：ここが naive な now() だったため、コンテナの UTC が書かれていた。
+    # 毎朝 08:0x JST の掃引は「前日 23:0x」として記録され、
+    # 「本日はじめて見た見出し」を JST の日付で数えると**常に0件**になっていた。
+    # 0件は「新規が無かった」ではなく「その日付の行が存在しない」という意味だった。
+    stamp = datetime.datetime.now(ZoneInfo('Asia/Tokyo')).strftime('%Y-%m-%d %H:%M')
     log = []
 
     total_new = 0
