@@ -11,3 +11,7 @@ jizokuka-ca,持続化補助金＜一般型・通常枠＞商工会地区,https:/
 jetro-proc,ジェトロ 調達・公募情報,https://www.jetro.go.jp/procurement/,独法,案件探索,,curl,3,,,巡回中,既存
 smrj-proc,中小機構 調達・公募情報,https://www.smrj.go.jp/procurement/,独法,案件探索,,curl,7,,,未巡回,**旧 JAPANブランドの巡回先として名前だけあった。実際のURLは未確認だった**
 chisou-mirai,内閣府 地域未来交付金,https://www.chisou.go.jp/sousei/about/chiikimiraikoufukin/index.html,省庁,制度更新,chiiki-mirai,curl,30,2026-09-15,3434,巡回中,2026-09-15 追加。案件の財源＝先行指標
+kankocho,観光庁 公募情報,https://www.mlit.go.jp/kankocho/,国の機関,案件探索,,curl,1,,,現存,**2026-09-24 まで一度も巡回していなかった。**当社の本業である「出展事業」の公募が実際に出ている（日シンガポール外交関係樹立60周年イベント SJ60 共同出展地域の公募・2026-09-02 正午で終了）。加えてインバウンド関連の補助金は自治体・DMOが受け、その執行が当社の受託業務になる。**財源と発注の両方がここに出る**
+bunkacho,文化庁 補助金・公募情報,https://www.bunka.go.jp/shinsei_boshu/kobo/index.html,国の機関,案件探索,,curl,1,,,現存,**案件台帳には文化庁の案件が既に3件あるのに（第42回国民文化祭 分野別フェスティバル・無形文化遺産保護条約に係る国際動向調査ほか）、巡回先の一覧に文化庁が無かった。**拾えていたのは他経路からの偶然である
+tokyo-kosha-josei,東京都中小企業振興公社 助成金,https://www.tokyo-kosha.or.jp/support/josei/index.html,公社・外郭団体,案件探索,,curl,3,,,現存,公社の**委託**（東京手仕事・伝統工芸品展ほか）は台帳で監視しているが、**助成金の面は見ていなかった。**産地・事業者に使わせる原資であり、当社の提案の裏付けになる
+vipo,VIPO（映像産業振興機構）補助金事業,https://vipo.or.jp/j-lod/,公益法人,制度更新,vipo-ip360,curl,7,,,現存,**J-LOD は「過去の補助金事業」へ移っており現行ではない。**後継の IP360 補助金ほかへ入れ替わっている。名称の入れ替わりを人が見るための定点
