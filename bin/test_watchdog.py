@@ -205,6 +205,7 @@ check('正常な列では鳴らない', [m for _, m, _ in _ng], [])
 _TZ_SRC = [
     ('bin/sweep_channels.py', '観測日時（data/sweep_log.csv に刻む）'),
     ('workflow/awards_pportal.py', '落札実績の出力ファイル名'),
+    ('bin/greenexpo_sweep.py', 'GREEN×EXPO 掃引の出力ファイル名'),
 ]
 import re as _re
 for _f, _why in _TZ_SRC:
@@ -221,6 +222,26 @@ for _f, _why in _TZ_SRC:
 _fake = "x = datetime.now()\n"
 check('naive な now() を見つけられる',
       bool(_re.search(r'datetime\.now\(\s*\)', _fake)), True)
+
+# ── 3.10 取得の成否を HTTP ステータスで見ているか ───────────────
+# 2026-10-05 判明。`bin/greenexpo_sweep.py` は本文が500バイトを超えれば
+# 「取得できた」と見なしていた。**自治体の404ページは数十KBのHTMLなので、
+# 長さでは本物と区別できない。**
+# そのため「サイト内検索の経路が通らなかった県」を数える仕組みを入れた直後の実測が
+# 「2県」と出た。HTTPコードを別に測ると**29県**だった。
+# **都合のよい数を返す検査は、検査が無いのと同じである。**
+# 直したうえで 23県。神奈川県の GREEN×EXPO 賓客等接遇業務委託（上限4億337万円・
+# 等級要件なし）を、参加意思表明 9/24 15時が閉じた11日後に検出した件の原因である。
+_ge = io.open(os.path.join(ROOT, 'bin/greenexpo_sweep.py'), encoding='utf-8').read()
+check('greenexpo_sweep に fetch2（ステータスを返す取得）がある',
+      'def fetch2(' in _ge, True)
+check('検索経路は 2xx のみ数える',
+      bool(_re.search(r'if 200 <= code < 300: reach\[.search.\] \+= 1', _ge)), True)
+check('経路が死んだ県を申告する',
+      '検索経路が1つも通らなかった県' in _ge, True)
+# 検出器そのものの検出：ガードを外したら見つけられること
+check('ガードが無ければ見つけられる',
+      bool(_re.search(r'if 200 <= code < 300', "reach['search'] += 1")), False)
 
 # ── 4. 台帳の件数が減っていないか（破壊の検出） ─────────────
 check('台帳が空でない', len(led) > 200, True)
