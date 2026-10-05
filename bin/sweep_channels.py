@@ -29,6 +29,18 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from zoneinfo import ZoneInfo
 
+# **当社の領域かを判定する。**2026-10-05、チャネルを17→142本へ広げた結果、
+# 台帳に無い見出しが 87件 → **4,650件**になった。
+# 全件を並べた報告は読めない。読めない報告は、報告が無いのと同じである。
+# そこで bin/rank.py の適合度判定（S/A/B）を噛ませ、**S と A だけを本文に出す。**
+# B と領域外は件数だけ出し、観測ログ（data/sweep_log.csv）には全件を残す。
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from rank import grade as _grade
+except Exception:
+    def _grade(n): return 'A', '（rank.py を読めず。全件をAとして扱う）'
+
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CH = os.path.join(ROOT, 'data', 'channels.csv')
 LEDGER = os.path.join(ROOT, 'data', 'ledger.csv')
@@ -208,6 +220,35 @@ def main():
     print('\n' + '=' * 62)
     print('**台帳に無い見出し 合計 %d件 ／ 取得できなかったチャネル %d件**'
           % (total_new, len(dead)))
+
+    # ── 当社の領域だけを抜き出して並べ直す ──────────────────
+    # **台帳に無いものだけを見る。**既知の行を混ぜると、毎回同じものが並ぶ。
+    # **結果公表・決定・終了の通知も外す。**応募できないものを判断面に出さない。
+    DONE = re.compile(r'入札結果|開札結果|契約結果|落札|最優秀|受託(候補)?者?を?(決定|選定)|'
+                      r'選定しました|選定結果|結果[のを]?公表|結果について|終了しました|'
+                      r'募集(は)?終了|公募終了|受付終了|中止|質問(書)?[のへ]?回答')
+    sa, b, out, done = [], 0, 0, 0
+    for r in log:
+        if r[4] != '未登録':     # 台帳にあるものは出さない
+            continue
+        if DONE.search(r[2]):
+            done += 1; continue
+        g, why = _grade(r[2])
+        if g == 'S' or g == 'A': sa.append((g, why, r[1], r[2], r[3]))
+        elif g == 'B':           b += 1
+        else:                    out += 1
+    sa.sort(key=lambda x: (x[0] != 'S',))
+    print()
+    print('■ **当社の領域（S・A）%d件** ／ 周辺(B) %d件 ／ 領域外 %d件 ／ '
+          '結果・決定の通知 %d件（応募できないので外した）'
+          % (len(sa), b, out, done))
+    print('  **判定は bin/rank.py の grade()。S＝中核と直結／A＝隣接・応札可能。**')
+    print('  **B と領域外も data/sweep_log.csv には全件残している。消していない。**')
+    for g, why, ch_, title, link in sa[:60]:
+        print('  [%s] %s' % (g, title[:92]))
+        print('      %s ／ %s' % (why[:40], (link or '（リンクなし）')[:96]))
+    if len(sa) > 60:
+        print('  …ほか %d件（全件は data/sweep_log.csv）' % (len(sa) - 60))
     print('観測 %d行を data/sweep_log.csv に追記した（回転表示への備え）' % len(log))
     print('**台帳は書き換えていない。**見出しは案件とは限らない。'
           '一次資料を開き、締切種別と締切確認日を埋めてから台帳へ入れること。')
