@@ -30,7 +30,7 @@ def fetch2(u, t=22, tries=3):
     for _i in range(tries):
         try:
             r = subprocess.run(['curl', '-sSL', '-A', UA, '--max-time', str(t),
-                                '--compressed', '-k', '-w', '\n#HTTP%{http_code}', u],
+                                '--compressed', '-w', '\n#HTTP%{http_code}', u],
                                capture_output=True, timeout=t + 8)
             raw = r.stdout.decode('utf-8', 'replace')
             code = 0

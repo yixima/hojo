@@ -19,7 +19,7 @@ HUB  = re.compile(r'入札|公募|調達|プロポーザル|契約|委託|募集
 def fetch(u, t=22, tries=3):
     for _i in range(tries):
         try:
-            b = subprocess.run(['curl','-sSL','-A',UA,'--max-time',str(t),'--compressed','-k',u],
+            b = subprocess.run(['curl','-sSL','-A',UA,'--max-time',str(t),'--compressed',u],
                                capture_output=True, timeout=t+8).stdout.decode('utf-8','replace')
             if len(b) > 400: return b
         except Exception: pass

@@ -44,7 +44,7 @@ def get(u, t=45, tries=2):
     for _ in range(tries):
         try:
             b = subprocess.run(['curl', '-sSL', '-A', UA, '--max-time', str(t),
-                                '--compressed', '-k', u],
+                                '--compressed', u],
                                capture_output=True, timeout=t + 12).stdout.decode('utf-8', 'replace')
             if len(b) > 50: return b
         except Exception:

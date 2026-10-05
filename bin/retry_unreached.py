@@ -40,7 +40,7 @@ PATHS = [
 def fetch(u, t=16):
     try:
         r = subprocess.run(['curl', '-sSL', '-A', UA, '--max-time', str(t),
-                            '--compressed', '-k', '-w', '\n#H%{http_code}', u],
+                            '--compressed', '-w', '\n#H%{http_code}', u],
                            capture_output=True, timeout=t + 9)
         raw = r.stdout.decode('utf-8', 'replace')
         m = re.search(r'\n#H(\d{3})\s*$', raw)

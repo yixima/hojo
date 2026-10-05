@@ -21,7 +21,7 @@ def fetch_bytes(url, timeout=22, tries=3, min_size=500, headers=None):
     min_size に満たない応答は失敗とみなす。
     0バイトや、エラーページだけが返るケースを拾うため。
     """
-    args = ['curl', '-sSL', '-A', UA, '--max-time', str(timeout), '--compressed', '-k']
+    args = ['curl', '-sSL', '-A', UA, '--max-time', str(timeout), '--compressed']
     for h in (headers or []):
         args += ['-H', h]
     for i in range(tries):

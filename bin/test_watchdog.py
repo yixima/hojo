@@ -243,6 +243,83 @@ check('経路が死んだ県を申告する',
 check('ガードが無ければ見つけられる',
       bool(_re.search(r'if 200 <= code < 300', "reach['search'] += 1")), False)
 
+# ── 3.11 TLS検証を切っていないか ────────────────────────────
+# 2026-10-05 判明。curl を呼ぶ8本すべてが `-k`（証明書の検証を省く）を付けていた。
+# この環境の決めごとは「TLS検証は決して切らない」である（/root/.ccr/README.md）。
+# 外して実測したところ、**どのサイトも 200 を返した。**つまり必要ではなかった。
+# `-k` は中間者を見分けられなくするだけでなく、**証明書の不備という異常を
+# 黙って飲み込む。**鳴らない検出器と同じ型である。
+_curl_users = ['bin/sweep_channels.py', 'bin/fetchlib.py', 'bin/triage.py',
+               'bin/discover_channels.py', 'bin/follow_channels.py',
+               'bin/greenexpo_sweep.py', 'bin/jgrants_sweep.py',
+               'bin/retry_unreached.py', 'bin/national_events_sweep.py',
+               'bin/watch_repeaters.py']
+for _p in _curl_users:
+    _f = os.path.join(ROOT, _p)
+    if not os.path.exists(_f): continue
+    _s = io.open(_f, encoding='utf-8').read()
+    check('%s は TLS検証を切っていない（-k が無い）' % _p,
+          ("'-k'" in _s) or ('"-k"' in _s), False)
+# 検出器そのものの検出：`-k` があれば見つけられること
+check('-k があれば見つけられる', "'-k'" in "['curl', '-sSL', '-k', u]", True)
+
+# ── 3.12 相対URLの解決を自前で書いていないか ──────────────────
+# 2026-10-05 判明。`absolutize()` が `base.rsplit('/',1)[0] + '/' + href.lstrip('./')`
+# と書いていた。**`lstrip('./')` は `../../../../` の「上へ4つ」をただ削り落とす。**
+# その結果
+# `/kensei/nyuusatsu/compe/sanka/kensei/nyuusatsu/compe/sanka/1099190.html`
+# のような経路の二重URLが生まれ、**掃引ログには見出しが残るので「取れている」
+# ように見えるのに、開くと必ず404になる。**
+# 篩分け（triage.py）の「一次資料を取得できなかった54件」のうち38本がこれだった。
+# プロトコル相対リンク（`//host/...`）も二重ホストになっていた。
+# **URLの解決は urljoin に任せる。自前の連結に戻さない。**
+_sw = io.open(os.path.join(ROOT, 'bin/sweep_channels.py'), encoding='utf-8').read()
+check('absolutize は urljoin を使う', 'urllib.parse.urljoin' in _sw, True)
+check('absolutize に自前の連結が残っていない',
+      bool(_re.search(r"lstrip\(['\"]\./['\"]\)", _sw)), False)
+sys.path.insert(0, os.path.join(ROOT, 'bin'))
+import importlib
+_sc = importlib.import_module('sweep_channels')
+check('プロトコル相対リンクを正しく解く',
+      _sc.absolutize('https://a.jp/b/', '//c.jp/d.html'), 'https://c.jp/d.html')
+check('上へ戻る相対リンクを正しく解く',
+      _sc.absolutize('https://www.pref.iwate.jp/kensei/nyuusatsu/compe/sanka/1102077.html',
+                     '../../../../kensei/nyuusatsu/compe/sanka/1099190.html'),
+      'https://www.pref.iwate.jp/kensei/nyuusatsu/compe/sanka/1099190.html')
+
+# ── 3.13 篩分けは壊れたURLを直し、詳細を1段たどるか ─────────────
+# 既に積んだ掃引ログの壊れたURLは直らない。**読む側でも直す。**
+# また、掃引が拾うリンクは一覧ページが多く、**締切と金額は詳細ページにしかない。**
+_tr = importlib.import_module('triage')
+check('triage は経路の二重を直す',
+      _tr.repair('https://www.pref.iwate.jp/kensei/nyuusatsu/compe/sanka/'
+                 'kensei/nyuusatsu/compe/sanka/1099190.html'),
+      'https://www.pref.iwate.jp/kensei/nyuusatsu/compe/sanka/1099190.html')
+check('triage はホストの二重を直す',
+      _tr.repair('https://x.jp//x.jp/a/b.html'), 'https://x.jp/a/b.html')
+check('triage は正しいURLを壊さない',
+      _tr.repair('https://a.jp/b/c/d.html'), 'https://a.jp/b/c/d.html')
+check('triage は詳細を1段たどる', 'def find_detail(' in
+      io.open(os.path.join(ROOT, 'bin/triage.py'), encoding='utf-8').read(), True)
+check('別件のリンクを拾わない（一致が半分未満なら採らない）',
+      _tr.find_detail('https://a.jp/list.html',
+                      b'<html><a href="/zzz.html">\xe5\x85\xa8\xe3\x81\x8f\xe5\x88\xa5\xe3\x81\xae'
+                      b'\xe6\xa1\x88\xe4\xbb\xb6\xe3\x81\xa7\xe3\x81\x99\xe3\x81\xaa</a></html>',
+                      '令和8年度観光誘客promotion業務委託の企画提案を募集します'), '')
+
+# ── 3.14 「届かない」の申告が当て推量でないか ──────────────────
+# 2026-10-05 判明。候補パス37本を当てに行った道具が「26自治体に届かない」と報告した。
+# 同じ26ホストのトップを HTTP コードで実測すると**20が200を返した。**
+# **届かなかったのはネットワークではなく、こちらのURLの当て推量だった。**
+# サイト自身が張っているリンクを2段たどると17自治体に届いた（神奈川県を含む）。
+# **自分の当て推量の失敗を、相手のせいにして申告していた。**
+check('リンクをたどる道具がある',
+      os.path.exists(os.path.join(ROOT, 'bin/follow_channels.py')), True)
+_fo = io.open(os.path.join(ROOT, 'bin/follow_channels.py'), encoding='utf-8').read()
+check('たどる道具は2段たどる', 'lv2' in _fo and 'HUB2' in _fo, True)
+check('たどる道具は案件行3件以上のURLだけ採る', 'if n >= 3' in _fo, True)
+check('たどる道具は届かなかった自治体を名指しする', 'それでも届かない自治体' in _fo, True)
+
 # ── 4. 台帳の件数が減っていないか（破壊の検出） ─────────────
 check('台帳が空でない', len(led) > 200, True)
 

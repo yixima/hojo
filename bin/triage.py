@@ -45,7 +45,7 @@ def fetch(u, t=25, tries=2):
     for i in range(tries):
         try:
             r = subprocess.run(['curl', '-sSL', '-A', UA, '--max-time', str(t),
-                                '--compressed', '-k', '-w', '\n#H%{http_code}', u],
+                                '--compressed', '-w', '\n#H%{http_code}', u],
                                capture_output=True, timeout=t + 12)
             raw = r.stdout
             m = re.search(rb'\n#H(\d{3})\s*$', raw)
@@ -90,6 +90,98 @@ def money_of(t):
     return best
 
 
+def repair(u):
+    """掃引ログのURLを直す。
+
+    2026-10-05 実測：ログには
+    `https://www.city.fukushima.fukushima.jp//www.city.fukushima.fukushima.jp/...`
+    のようなURLが54本あった。プロトコル相対リンク（`//host/...`）を
+    自前で連結したためである（`bin/sweep_channels.py` 側は urljoin に直した）。
+    **過去に積んだログは直らないので、読む側でも修復する。**
+    """
+    if not u: return u
+    p = urllib.parse.urlsplit(u)
+    path = p.path
+    for _ in range(4):
+        if not path.startswith('//'): break
+        seg = path[2:].split('/', 1)
+        if '.' in seg[0] and ' ' not in seg[0]:       # ホスト名が重複している
+            path = '/' + (seg[1] if len(seg) > 1 else '')
+        else:
+            path = path[1:]
+    # **同じ経路が2回続くURLを直す。**
+    # 2026-10-05 実測：ログの38本が
+    # `/kensei/nyuusatsu/compe/sanka/kensei/nyuusatsu/compe/sanka/1099190.html`
+    # の形で 404 だった。旧 absolutize が `href.lstrip('./')` と書いており、
+    # **`../../../../` の「上へ4つ」をただ削り落としていた**ためである。
+    # 直したのは掃引側だが、**既に積んだログは直らないので読む側でも直す。**
+    seg = [x for x in path.split('/') if x != '']
+    for k in range(len(seg) // 2, 0, -1):
+        if seg[:k] == seg[k:2 * k]:
+            seg = seg[k:]
+            break
+    if seg:
+        path = '/' + '/'.join(seg)
+    return urllib.parse.urlunsplit((p.scheme, p.netloc, path, p.query, ''))
+
+
+_NORM_DROP = re.compile(r'[\s　・,，.。「」『』“”\'"（）()\[\]【】〔〕\-–—‐─ー~〜/／]+')
+
+
+def _norm(t):
+    t = t.translate(str.maketrans('０１２３４５６７８９（）［］　', '0123456789()[] '))
+    return _NORM_DROP.sub('', t)
+
+
+def _lcs(a, b):
+    """最長共通部分文字列の長さ。見出しと a タグの文字列を突き合わせる。"""
+    if not a or not b: return 0
+    prev = [0] * (len(b) + 1)
+    best = 0
+    for i in range(1, len(a) + 1):
+        cur = [0] * (len(b) + 1)
+        ai = a[i - 1]
+        for j in range(1, len(b) + 1):
+            if ai == b[j - 1]:
+                cur[j] = prev[j - 1] + 1
+                if cur[j] > best: best = cur[j]
+        prev = cur
+    return best
+
+
+_A = re.compile(r'<a\s[^>]*href=["\']([^"\'#]+)["\'][^>]*>(.*?)</a>', re.S | re.I)
+
+
+def find_detail(base, raw, title):
+    """一覧ページから、その見出しの**詳細ページ**のURLを1本返す。
+
+    なぜ要るか（2026-10-05）
+    ------------------------
+    掃引が拾ったリンクは一覧ページであることが多く、
+    **締切と金額は詳細ページにしか書いていない。**
+    一覧だけを読んで「締切が取れたのは1件」と出しても判断には使えない。
+    だから**1段たどる。**
+
+    **半分以上が一致しないリンクは採らない。**取り違えると、
+    別の案件の締切を入れてしまい、それは締切が無いより危ない。
+    """
+    if raw[:4] == b'%PDF': return ''
+    import html as H
+    s = raw.decode('utf-8', 'replace')
+    nt = _norm(title)
+    if len(nt) < 8: return ''
+    best, bu = 0, ''
+    for m in _A.finditer(s):
+        at = _norm(re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', '', m.group(2)))))
+        if len(at) < 8: continue
+        n = _lcs(nt, at)
+        if n > best:
+            best, bu = n, urllib.parse.urljoin(base, H.unescape(m.group(1)).strip())
+    if best >= max(10, int(len(nt) * 0.5)) and bu and bu.rstrip('/') != base.rstrip('/'):
+        return bu
+    return ''
+
+
 def job(row):
     stamp, cid, title, link, state = row
     g, why = grade(title)
@@ -99,22 +191,42 @@ def job(row):
     if not link:
         out['取得'] = 'リンクなし（ナビ等。手で開く必要あり）'
         return out
+    link = repair(link)
+    out['URL'] = link
     raw, code = fetch(link)
     if not raw or not (200 <= code < 300):
         out['取得'] = f'取得できず HTTP {code}'
         return out
     t = text_of(raw, link)
     out['取得'] = 'ok'
-    try:
-        gates = gatelib.extract_gates(t)
-    except Exception:
-        gates = []
+
+    def read(txt):
+        try:
+            gs = gatelib.extract_gates(txt)
+        except Exception:
+            gs = []
+        return gs, money_of(txt)
+
+    gates, v = read(t)
+
+    # **一覧ページには締切も金額も無い。だから1段たどる。**（2026-10-05）
+    # 直す前は、締切が取れたのは54件中1件だった。
+    if not gates or not v:
+        d = find_detail(link, raw, title)
+        if d:
+            raw2, c2 = fetch(d)
+            if raw2 and 200 <= c2 < 300:
+                g2, v2 = read(text_of(raw2, d))
+                if g2 and not gates: gates = g2
+                if v2 and not v: v = v2
+                if g2 or v2:
+                    out['URL'] = d
+                    out['取得'] = 'ok（詳細を1段たどった）'
+
     if gates:
-        # 最も早い関門
-        gs = sorted(gates, key=lambda x: str(x[1]))
-        out['締切種別'], d = gs[0][0], gs[0][1]
-        out['締切'] = str(d)
-    v = money_of(t)
+        gs = sorted(gates, key=lambda x: str(x[1]))   # 最も早い関門
+        out['締切種別'], d0 = gs[0][0], gs[0][1]
+        out['締切'] = str(d0)
     if v:
         out['金額_円'] = v
         out['金額'] = f'{v:,}円'

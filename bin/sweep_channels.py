@@ -19,7 +19,7 @@
     python3 bin/sweep_channels.py            # 全チャネル
     python3 bin/sweep_channels.py chancenavi # IDを指定
 """
-import csv
+import csv, urllib.parse
 import datetime
 import io
 import os
@@ -116,16 +116,20 @@ def titles(raw):
 
 
 def absolutize(base, href):
-    """相対リンクを絶対URLにする。**辿れないリンクは無いのと同じ。**"""
-    if not href or href.startswith(('javascript:', '#', 'mailto:')):
+    """相対リンクを絶対URLにする。**辿れないリンクは無いのと同じ。**
+
+    2026-10-05 判明：自前で連結していたため、**プロトコル相対リンク
+    （`//www.example.jp/...`）が二重になって壊れていた。**
+    実例＝`https://www.city.fukushima.fukushima.jp//www.city.fukushima.fukushima.jp/...`
+    掃引ログには見出しが残るので「取れている」ように見えるが、
+    **そのリンクを開くと必ず失敗する。**篩分け（triage.py）で
+    「一次資料を取得できなかった」の大半がこれだった。
+    urljoin は RFC 3986 の解決を行うので、自前の連結に戻さない。
+    """
+    if not href or href.startswith(('javascript:', '#', 'mailto:', 'tel:')):
         return ''
-    if href.startswith('http'):
-        return href
-    m = re.match(r'(https?://[^/]+)', base)
-    root = m.group(1) if m else ''
-    if href.startswith('/'):
-        return root + href
-    return base.rsplit('/', 1)[0] + '/' + href.lstrip('./')
+    import html as _H
+    return urllib.parse.urljoin(base, _H.unescape(href).strip())
 
 
 def save_log(rows_):
