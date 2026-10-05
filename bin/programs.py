@@ -62,6 +62,31 @@ def parse_day(s):
         return None
 
 
+def find_day(s):
+    """文中のどこにある YYYY-MM-DD でも拾う。**前段関門の欄にだけ使う。**
+
+    なぜ分けるか（2026-10-06 判明）
+    ------------------------------
+    前段関門の欄は、日付だけでなく「何を・どこへ出すのか」まで書く欄である。
+    持続化補助金 第20回の欄は
+    「事業支援計画書（様式4）の発行受付締切 2026-12-04（商工会・商工会議所）。
+      ここが実質の期限」
+    と書かれており、`parse_day`（先頭だけを見る）では日付が取れていなかった。
+    その結果、**申請締切 12/15 より11日早い本当の関門 12/4 が、
+    60日以内の予告に1件も出ていなかった。**
+    毎朝の報告の指示は「前段関門があるならその日付を必ず併記する」であり、
+    **指示はあったが、道具が日付を読めていなかった。**
+    締切と公募開始は日付そのものを入れる欄なので、そちらは先頭だけを見る
+    （文中拾いにすると、備考の年号などを誤って関門にしてしまう）。
+    """
+    for m in re.finditer(r'(\d{4})-(\d{2})-(\d{2})', s or ''):
+        try:
+            return datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        except ValueError:
+            continue
+    return None
+
+
 def load():
     with io.open(CSV, encoding='utf-8') as f:
         return list(csv.DictReader(f))
@@ -124,7 +149,7 @@ def check(rows, now, net=False):
 
         # 4. 前段関門と締切の前後（自己矛盾）
         dl = parse_day(r.get('締切'))
-        gate = parse_day(r.get('前段関門'))
+        gate = find_day(r.get('前段関門'))   # **文中の日付も拾う**
         if dl and gate and gate > dl:
             hard.append((i, name, '前段関門 %s が締切 %s より後になっている' % (gate, dl)))
 
