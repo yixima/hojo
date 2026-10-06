@@ -346,5 +346,29 @@ check('持続化の様式4 12/04 が予告に出る',
           for _, d, lb, nm, _g in _pg.check(_pg.load(), _pg.today(), False)[2]
           if lb == '前段関門'), True)
 
+# ── 3.16 期間の「終わり」を締切として採っているか ────────────
+# 2026-10-07 判明。公社の契約情報の希望申出期間は
+# 「令和8年10月6日9:00～令和8年10月15日14:00」のように1つの欄に2つの日時が入る。
+# `re.search` で先頭を採ると**始まり**を拾い、受付中の案件を
+# 「残り -24時間」＝もう閉じた、と表示していた。
+# **閉じたと誤って言う検出器は、何も言わない検出器より悪い。**
+# 判断面から案件が1件消えるのに、画面には何の異常も出ない。
+_kk = os.path.join(ROOT, 'bin/kosha_keiyaku.py')
+check('公社の契約情報を読む道具がある', os.path.exists(_kk), True)
+_ks = io.open(_kk, encoding='utf-8').read()
+check('期間は findall で終わりを採る', 'WA.findall(span)' in _ks and 'ms[-1]' in _ks, True)
+check('先頭を採る書き方が残っていない', 'WA.search(span)' in _ks, False)
+check('公表日より早い締切は自己矛盾として申告する', '自己矛盾：公表日より締切が早い' in _ks, True)
+check('表が読めなかったときに0件と言わない', '0件と報告してはいけない' in _ks, True)
+check('認証情報が無いことを明記する', 'CN_USER' in _ks, True)
+# 道具そのものを動かして、終わりの日時を採れることを確かめる（ネットワーク不要）
+sys.path.insert(0, os.path.join(ROOT, 'bin'))
+_kkm = importlib.import_module('kosha_keiyaku')
+_span = '令和8年10月6日9:00～令和8年10月15日14:00'
+_ms = _kkm.WA.findall(_span)
+check('期間から2つの日時を取り出せる', len(_ms), 2)
+check('終わりは 2026-10-15', str(_kkm.wa2date(*_ms[-1][:3])), '2026-10-15')
+check('令和の換算（令和1年＝2019年）', str(_kkm.wa2date(1, 5, 1)), '2019-05-01')
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)
