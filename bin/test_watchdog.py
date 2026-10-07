@@ -353,21 +353,36 @@ check('持続化の様式4 12/04 が予告に出る',
 # 「残り -24時間」＝もう閉じた、と表示していた。
 # **閉じたと誤って言う検出器は、何も言わない検出器より悪い。**
 # 判断面から案件が1件消えるのに、画面には何の異常も出ない。
-_kk = os.path.join(ROOT, 'bin/kosha_keiyaku.py')
-check('公社の契約情報を読む道具がある', os.path.exists(_kk), True)
+_kk = os.path.join(ROOT, 'bin/gaikaku_keiyaku.py')
+check('外郭団体の契約情報を読む道具がある', os.path.exists(_kk), True)
 _ks = io.open(_kk, encoding='utf-8').read()
-check('期間は findall で終わりを採る', 'WA.findall(span)' in _ks and 'ms[-1]' in _ks, True)
-check('先頭を採る書き方が残っていない', 'WA.search(span)' in _ks, False)
+check('期間は全件を採り、最後を締切にする', 'gates(span)' in _ks and 'gs[-1]' in _ks, True)
+check('先頭を採る書き方が残っていない',
+      bool(_re.search(r'(WAREKI|SEIREKI|WA)\.search\(span\)', _ks)), False)
 check('公表日より早い締切は自己矛盾として申告する', '自己矛盾：公表日より締切が早い' in _ks, True)
 check('表が読めなかったときに0件と言わない', '0件と報告してはいけない' in _ks, True)
 check('認証情報が無いことを明記する', 'CN_USER' in _ks, True)
 # 道具そのものを動かして、終わりの日時を採れることを確かめる（ネットワーク不要）
 sys.path.insert(0, os.path.join(ROOT, 'bin'))
-_kkm = importlib.import_module('kosha_keiyaku')
+_kkm = importlib.import_module('gaikaku_keiyaku')
 _span = '令和8年10月6日9:00～令和8年10月15日14:00'
-_ms = _kkm.WA.findall(_span)
-check('期間から2つの日時を取り出せる', len(_ms), 2)
-check('終わりは 2026-10-15', str(_kkm.wa2date(*_ms[-1][:3])), '2026-10-15')
+_g = _kkm.gates(_span)
+check('和暦の期間から2つの日時を取り出せる', len(_g), 2)
+check('和暦の終わりは 2026-10-15 14:00',
+      (str(_g[-1][0]), _g[-1][1], _g[-1][3]), ('2026-10-15', 14, True))
+# TCVB は西暦で「12時」と書く。**片方しか読めない道具は、もう片方を静かに落とす。**
+_g2 = _kkm.gates('2026年08月26日 ～ 2026年10月09日12時')
+check('西暦「○時」の期間も読める（時刻の無い始まりも拾う）', len(_g2), 2)
+check('西暦の終わりは 2026-10-09 12:00',
+      (str(_g2[-1][0]), _g2[-1][1], _g2[-1][3]), ('2026-10-09', 12, True))
+# **時刻が書いていなければ、書いていないと言う。17時を当てない**
+check('時刻の無い日付は「時刻が書いてある」と言わない',
+      _kkm.gates('2026年10月09日')[-1][3], False)
+check('時刻未確認を画面に出す', '時刻未確認' in _ks, True)
+check('対象は2団体以上', len(_kkm.SITES) >= 2, True)
+check('TCVB が対象に入っている', any('tcvb' in u for _n, u, _h in _kkm.SITES), True)
+check('ナビに入れなくても仕様書を取り寄せられる旨を書いている',
+      'keiyaku@tcvb.or.jp' in _ks, True)
 check('令和の換算（令和1年＝2019年）', str(_kkm.wa2date(1, 5, 1)), '2019-05-01')
 
 print('\n%d件成功 / %d件失敗' % (ok, fail))
