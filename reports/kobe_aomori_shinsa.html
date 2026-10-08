@@ -1,0 +1,374 @@
+<title>神戸と青森の応募可否</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+/* 判定シート。左に判定、右に根拠。関門は時系列の帯で示す。
+   公募ボードと同じ書体（明朝＋角ゴ＋等幅）を使い、同じ案件の系統だと分かるようにする。
+   ただし主色は朱鷺色寄りの赤褐に振る。これは「通った／通らない」を言う紙である。 */
+:root{
+  --ground:#FBF7F4;
+  --surface:#FFFFFF;
+  --surface-2:#F5EFEA;
+  --ink:#1F1A18;
+  --ink-2:#4E443F;
+  --muted:#8A7D76;
+  --line:#E8DED6;
+  --line-strong:#D3C4B8;
+  --accent:#9B3B2E;        /* 弁柄 */
+  --accent-soft:#F7EAE6;
+  --stop:#A8232B;          /* 緋 */
+  --stop-soft:#FBEAEB;
+  --go:#2C6B4F;            /* 松葉 */
+  --go-soft:#E7F1EC;
+  --hold:#8A6512;          /* 山吹 */
+  --hold-soft:#FBF3E0;
+  --shadow:0 1px 2px rgba(31,26,24,.05), 0 10px 28px -14px rgba(31,26,24,.20);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#17130F;
+    --surface:#201A16;
+    --surface-2:#2A221C;
+    --ink:#F3ECE6;
+    --ink-2:#CDC0B6;
+    --muted:#9B8E85;
+    --line:#352B24;
+    --line-strong:#4B3D33;
+    --accent:#E4917F;
+    --accent-soft:#36211C;
+    --stop:#F08D92;
+    --stop-soft:#3A1E20;
+    --go:#7FC3A2;
+    --go-soft:#16301F;
+    --hold:#DCB163;
+    --hold-soft:#342712;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -14px rgba(0,0,0,.65);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#17130F; --surface:#201A16; --surface-2:#2A221C;
+  --ink:#F3ECE6; --ink-2:#CDC0B6; --muted:#9B8E85;
+  --line:#352B24; --line-strong:#4B3D33;
+  --accent:#E4917F; --accent-soft:#36211C;
+  --stop:#F08D92; --stop-soft:#3A1E20;
+  --go:#7FC3A2; --go-soft:#16301F;
+  --hold:#DCB163; --hold-soft:#342712;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -14px rgba(0,0,0,.65);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.8; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1000px; margin:0 auto; padding-block:36px 72px; padding-left:22px; padding-right:22px}
+
+h1{font-family:"Shippori Mincho",serif; font-weight:700; letter-spacing:.02em;
+  font-size:clamp(25px,4vw,34px); line-height:1.3; margin:0; text-wrap:balance}
+.mast{border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:12px;
+  display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-end; justify-content:space-between}
+.mast .sub{color:var(--muted); font-size:13px; margin-top:6px; max-width:60ch}
+.asof{font-size:12.5px; color:var(--muted); font-family:"Roboto Mono",monospace;
+  font-variant-numeric:tabular-nums; white-space:nowrap}
+
+.verdict-lede{background:var(--stop-soft); border:1px solid var(--stop); border-left-width:3px;
+  border-radius:3px; padding:18px 22px; margin:26px 0 38px; box-shadow:var(--shadow)}
+.verdict-lede p{margin:0 0 9px; max-width:66ch}
+.verdict-lede p:last-child{margin-bottom:0}
+.verdict-lede b{color:var(--stop)}
+
+section{margin-bottom:46px}
+.case{background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  box-shadow:var(--shadow); overflow:hidden}
+.case-head{display:flex; flex-wrap:wrap; gap:12px 18px; align-items:flex-start;
+  padding:20px 22px; border-bottom:1px solid var(--line); background:var(--surface-2)}
+.case-head .who{flex:1 1 300px; min-width:0}
+.case-head h2{font-family:"Shippori Mincho",serif; font-size:19px; font-weight:700;
+  margin:0 0 3px; line-height:1.5; text-wrap:balance}
+.case-head .org{color:var(--muted); font-size:12.5px}
+.stamp{flex:none; display:inline-flex; align-items:center; gap:7px;
+  padding:5px 13px; border-radius:2px; border:1px solid; font-weight:700;
+  font-size:12.5px; letter-spacing:.06em; white-space:nowrap}
+.s-stop{background:var(--stop-soft); color:var(--stop); border-color:var(--stop)}
+.money{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  font-size:21px; font-weight:500; color:var(--ink); line-height:1.2}
+.money small{display:block; font-family:"Zen Kaku Gothic New",sans-serif;
+  font-size:11px; color:var(--muted); font-weight:400; letter-spacing:.04em}
+
+.case-body{padding:22px}
+.block{margin-bottom:26px}
+.block:last-child{margin-bottom:0}
+.block > h3{font-family:"Shippori Mincho",serif; font-size:14.5px; font-weight:700;
+  margin:0 0 10px; letter-spacing:.04em; color:var(--ink)}
+
+blockquote{margin:0; padding:14px 18px; background:var(--accent-soft);
+  border-left:3px solid var(--accent); border-radius:0 2px 2px 0;
+  font-family:"Shippori Mincho",serif; font-size:15.5px; line-height:1.85}
+blockquote cite{display:block; margin-top:8px; font-family:"Zen Kaku Gothic New",sans-serif;
+  font-size:11.5px; color:var(--muted); font-style:normal; letter-spacing:.03em}
+.against{margin:12px 0 0; font-size:14px; color:var(--ink-2)}
+.against b{color:var(--stop)}
+
+dl.facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px; background:var(--line); border:1px solid var(--line); border-radius:2px;
+  overflow:hidden; margin:0}
+dl.facts > div{background:var(--surface); padding:10px 13px; min-width:0}
+dl.facts dt{font-size:11px; color:var(--muted); letter-spacing:.06em; margin-bottom:2px}
+dl.facts dd{margin:0; font-size:13.5px; font-weight:500; line-height:1.6}
+
+/* 関門の時系列。早いほうの関門が先に来ることを形で示す */
+ol.gates{list-style:none; margin:0; padding:0; display:grid; gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:2px; overflow:hidden}
+ol.gates li{background:var(--surface); display:grid;
+  grid-template-columns:minmax(118px,auto) 1fr; gap:4px 16px; padding:11px 14px; align-items:baseline}
+ol.gates .when{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  font-size:13px; color:var(--ink); white-space:nowrap}
+ol.gates .what{font-size:13.5px; min-width:0}
+ol.gates .what em{font-style:normal; color:var(--muted); font-size:12px; display:block}
+ol.gates li.key{background:var(--hold-soft); box-shadow:inset 3px 0 0 var(--hold)}
+ol.gates li.key .when{color:var(--hold); font-weight:500}
+ol.gates li.key .what b{color:var(--hold)}
+@media (max-width:460px){ol.gates li{grid-template-columns:1fr}}
+
+ul.scope{margin:0; padding-left:1.15em; font-size:14px; color:var(--ink-2)}
+ul.scope li{margin-bottom:5px}
+ul.scope b{color:var(--ink)}
+.spec{margin-top:12px; padding:12px 15px; background:var(--surface-2);
+  border:1px solid var(--line); border-radius:2px; font-size:12.5px;
+  font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  color:var(--ink-2); overflow-x:auto}
+.spec span{display:inline-block; margin-right:18px; white-space:nowrap}
+
+.door{padding:14px 18px; border:1px solid var(--go); border-left-width:3px;
+  background:var(--go-soft); border-radius:0 2px 2px 0; font-size:14px; color:var(--ink-2)}
+.door b{color:var(--go)}
+.door.caution{border-color:var(--hold); background:var(--hold-soft)}
+.door.caution b{color:var(--hold)}
+
+.mine{background:var(--surface); border:1px solid var(--line-strong); border-radius:3px;
+  padding:22px; box-shadow:var(--shadow)}
+.mine h2{font-family:"Shippori Mincho",serif; font-size:17px; margin:0 0 12px; letter-spacing:.03em}
+.mine p{margin:0 0 10px; max-width:68ch; font-size:14px; color:var(--ink-2)}
+.mine p:last-child{margin-bottom:0}
+.mine b{color:var(--ink)}
+code{font-family:"Roboto Mono",monospace; font-size:.9em; background:var(--surface-2);
+  padding:1px 5px; border-radius:2px; border:1px solid var(--line)}
+
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13px; min-width:520px}
+th,td{padding:9px 13px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-size:11px; letter-spacing:.07em; color:var(--muted); font-weight:700;
+  background:var(--surface-2); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.d{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-2)}
+
+.shead{display:flex; align-items:baseline; gap:11px; flex-wrap:wrap; margin-bottom:5px}
+.shead h2{font-family:"Shippori Mincho",serif; font-size:18px; font-weight:700; margin:0; letter-spacing:.03em}
+.shead .n{font-family:"Roboto Mono",monospace; font-size:12px; color:var(--muted)}
+.sdesc{color:var(--muted); font-size:13px; margin:0 0 16px; max-width:68ch}
+.rule{height:1px; background:var(--line); margin:0 0 18px}
+a{color:var(--accent)} a:focus-visible,:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:1px}
+.src{font-size:12px; color:var(--muted); margin:12px 0 0; word-break:break-all}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <h1>神戸と青森の応募可否</h1>
+    <div class="sub">一般社団法人ジャパンプロモーション ／ 公募要領・実施要領を読んだ結果</div>
+  </div>
+  <div class="asof">基準日時 2026-10-08 23:00 JST</div>
+</header>
+
+<div class="verdict-lede">
+  <p><b>結論：2件とも応募できません。</b>どちらも中身は当社の本業そのものですが、<b>応募資格の所在地・拠点の条件で落ちます。</b></p>
+  <p>神戸は「神戸市内に本社を置く企業又は団体」、青森は「ベトナム国及び日本国内に拠点を有すること」。いずれも一次資料の第1号に書かれた条件で、例外の定めはありません。</p>
+  <p>10月8日朝のご報告で、この2件を「判断していただきたい2件」としてお出ししました。<b>応募資格を読む前にお出ししたのは私の誤りです。</b>経緯と再発防止をいちばん下に書きました。</p>
+</div>
+
+<section>
+  <article class="case">
+    <div class="case-head">
+      <div class="who">
+        <h2>第19回神戸ものづくり中小企業展示商談会 出展企業支援等業務</h2>
+        <div class="org">神戸市 経済観光局 ものづくり産業課 ／ 公募型プロポーザル</div>
+      </div>
+      <div class="money">8,000,000<small>円・契約上限額（税込）</small></div>
+      <span class="stamp s-stop">応募不可・所在地</span>
+    </div>
+    <div class="case-body">
+
+      <div class="block">
+        <h3>落ちる条件</h3>
+        <blockquote>
+          ４ 応募資格　次に掲げる条件のすべてに該当すること。<br>
+          （１）神戸市内に本社を置く企業又は団体であること。
+          <cite>第19回神戸ものづくり中小企業展示商談会 出展企業支援等業務 委託事業者公募要領 p.1</cite>
+        </blockquote>
+        <p class="against">当方の本社は東京都渋谷区神宮前6-18-10。<b>「すべてに該当すること」と書かれているため、他の4号を満たしても通りません。</b>準市内業者（市内に営業所を有する者）を認める定めもありません。</p>
+      </div>
+
+      <div class="block">
+        <h3>関門（二段構え）</h3>
+        <ol class="gates">
+          <li><span class="when">10/07（水）</span><span class="what">公募開始<em>前日に掲載された</em></span></li>
+          <li class="key"><span class="when">10/23（金）17:00</span><span class="what"><b>参加申請書（様式1）・申請者概要書（様式2）・質問書（様式3）　必着</b><em>E-mail で ものづくり産業課 宛／質問期限も同日。回答は参加申請を出した事業者にのみ 11/4 までに届く</em></span></li>
+          <li><span class="when">11/20（金）17:00</span><span class="what">業務実施計画書・見積書及び明細書<em>持参は開庁日の 9:00〜12:00／13:00〜17:00</em></span></li>
+          <li><span class="when">12/02（水）</span><span class="what">選考審査会（予定）</span></li>
+          <li><span class="when">12/09（水）</span><span class="what">選定結果通知（予定）</span></li>
+          <li><span class="when">12/16（水）</span><span class="what">契約締結・事業開始（予定）</span></li>
+          <li><span class="when">2027/06/18（金）</span><span class="what">展示商談会 10:00〜17:00<em>神戸サンボーホール2階大展示場／出展80社程度</em></span></li>
+          <li><span class="when">2027/08/27（金）</span><span class="what">事業完了（事業実施報告書の提出期限）</span></li>
+        </ol>
+      </div>
+
+      <div class="block">
+        <h3>条件</h3>
+        <dl class="facts">
+          <div><dt>契約上限額</dt><dd>8,000,000円（消費税含む）</dd></div>
+          <div><dt>契約期間</dt><dd>契約締結日〜2027-08-27</dd></div>
+          <div><dt>配点</dt><dd>内容点90（実施体制30・実施計画40・類似実績20）＋価格点10</dd></div>
+          <div><dt>支払</dt><dd>原則、業務完了後に検査を経て請求</dd></div>
+          <div><dt>著作権</dt><dd>成果物の諸権利は神戸市に帰属</dd></div>
+          <div><dt>前提</dt><dd>神戸市令和8年度一般会計予算の成立</dd></div>
+          <div><dt>等級</dt><dd>指定なし（指名停止・暴力団等除外措置でないこと）</dd></div>
+          <div><dt>提出</dt><dd>E-mail（kogyoka@city.kobe.lg.jp）</dd></div>
+        </dl>
+      </div>
+
+      <div class="block">
+        <h3>委託される仕事</h3>
+        <ul class="scope">
+          <li><b>出展企業募集</b>　募集チラシ3,000部（うち2,800部を納入）、自社媒体での申込ページ作成と窓口設置、概ね週1回の応募状況報告。募集は2027年1月開始〜2月19日締切</li>
+          <li><b>マッチング</b>　<b>出展約80社すべてに原則直接訪問でヒアリング</b>、商談先候補（大手・中堅の購買／生産管理／開発・設計部門）のリスト作成、<b>原則訪問での来場勧誘</b>、当日のブースアテンド</li>
+          <li><b>事前説明会</b>　開催1か月前までにオンラインで開催、進行、欠席者への資料送付</li>
+          <li><b>印刷物</b>　出展企業紹介カタログ1,800部（二次元バーコードで電子データ配布）、来場案内リーフレット20,000部（納入期限2027-04-09）</li>
+          <li><b>会場</b>　会場図・ブース配置図・特別講演会場の提案、当日と前日のスタッフ・備品手配、全入場者へのパスホルダー貸与、進行</li>
+          <li><b>検証</b>　来場者アンケート1,500部・出展者アンケート100部の設計と当日回収、回収率向上策、集計分析、出展後のWebアンケート、事業実施報告書</li>
+        </ul>
+        <div class="spec">
+          <span>出展スペース W2700×D900×H2100</span><span>展示台 W1800×D600×H700</span><span>社名版 W900×D200</span><span>電源 200W×2口</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>残る道</h3>
+        <div class="door caution">
+          <p style="margin:0"><b>再委託。</b>公募要領 9(1)ク に「再委託先を必要とする場合には可能な限り地元企業に発注するよう配慮すること」とあります。<b>元請は神戸市内本社に限られますが、元請から当方への再委託は禁じられていません。</b>ただし「地元企業へ配慮」と明記されている点は不利で、当方が取れるのは市内本社の事業者と組む場合に限られます。来年度（第20回）も同じ資格要件なら、元請としては毎年応募できません。</p>
+        </div>
+        <p class="src">一次資料：https://www.city.kobe.lg.jp/a93457/2026monotenitaku.html　／　担当：ものづくり産業課 渡邉・岡田　078-984-0340</p>
+      </div>
+
+    </div>
+  </article>
+</section>
+
+<section>
+  <article class="case">
+    <div class="case-head">
+      <div class="who">
+        <h2>令和8年度ベトナムにおける青森県レセプション運営等業務</h2>
+        <div class="org">青森県 観光交流推進部 県産品販売・輸出促進課 経済交流グループ ／ 企画提案公募</div>
+      </div>
+      <div class="money">6,000,000<small>円以内・委託上限額（税込）</small></div>
+      <span class="stamp s-stop">応募不可・拠点</span>
+    </div>
+    <div class="case-body">
+
+      <div class="block">
+        <h3>落ちる条件</h3>
+        <blockquote>
+          ７ 応募資格要件　企画提案を提出する者は、次に掲げる要件を全て満たしていること。<br>
+          （１）ベトナム国及び日本国内に本店、支店または営業所等といった拠点を有すること。
+          <cite>令和8年度ベトナムにおける青森県レセプション運営等業務 企画提案公募実施要領 p.1</cite>
+        </blockquote>
+        <p class="against">当方の海外拠点はフランス・パリのみ（在住社員2名）。<b>ベトナム側の拠点が無く、10月23日までに置くのは現実的ではありません。</b>「及び」であって「又は」ではないため、日本国内の拠点だけでは足りません。</p>
+        <p class="against">この条件は形式ではなく中身に直結しています。<b>審査基準にも「ベトナムにおける県産農林水産品の販路開拓に資するベトナム現地企業（商社、小売、飲食店等）の提案が可能か」が入っています。</b></p>
+      </div>
+
+      <div class="block">
+        <h3>関門（三段構え）</h3>
+        <ol class="gates">
+          <li><span class="when">10/07（水）</span><span class="what">募集開始<em>前日に掲載された</em></span></li>
+          <li><span class="when">10/16（金）17:00</span><span class="what">質問書（様式1）　必着<em>電子メール又は郵送＋電話で到着確認。回答は 10/21 までにメールと県庁サイトで</em></span></li>
+          <li class="key"><span class="when">10/23（金）17:00</span><span class="what"><b>参加表明書（様式2）　必着</b><em>電子メール又は郵送＋電話で到着確認</em></span></li>
+          <li><span class="when">10/28（水）17:00</span><span class="what">企画提案書ほか　必着<em>6部（正本1・副本5）を持参又は郵送</em></span></li>
+          <li><span class="when">11/02（月）</span><span class="what">審査結果の通知</span></li>
+          <li><span class="when">11月中旬</span><span class="what">契約締結</span></li>
+          <li><span class="when">2027/03/15（月）</span><span class="what">業務委託期間の終わり</span></li>
+        </ol>
+      </div>
+
+      <div class="block">
+        <h3>条件</h3>
+        <dl class="facts">
+          <div><dt>委託上限額</dt><dd>6,000,000円以内（消費税含む）</dd></div>
+          <div><dt>委託期間</dt><dd>契約締結日〜2027-03-15</dd></div>
+          <div><dt>提出部数</dt><dd>6部（正本1・副本5）／A4・片面カラー</dd></div>
+          <div><dt>提案数</dt><dd>1者1案</dd></div>
+          <div><dt>審査</dt><dd>書面・審査員3名の合計点で最優秀を1者</dd></div>
+          <div><dt>不選定</dt><dd>1者応募でも審査するが、審査員1人あたり平均6割未満なら選定しないことがある</dd></div>
+          <div><dt>審査基準</dt><dd>考え方／企画内容・方法／スケジュール／実施運営体制／経費積算／類似実績の6項目</dd></div>
+          <div><dt>添付</dt><dd>概要資料・類似実績の契約書写し・組織図・役員名簿・定款・直近の事業報告書と収支決算</dd></div>
+        </dl>
+      </div>
+
+      <div class="block">
+        <h3>委託される仕事</h3>
+        <ul class="scope">
+          <li><b>料理の企画</b>　県産食材・食品の選定、メニューとレシピの開発</li>
+          <li><b>調達</b>　レセプションで必要な県産食材・食品の調達と管理体制</li>
+          <li><b>招待者リスト</b>　<b>ベトナム現地企業（商社・小売・飲食店等）を含む</b>、販路開拓に資する招待者の提案</li>
+          <li><b>制作物</b>　PRリーフレット、紹介スライド（動画）、来場者への土産品</li>
+          <li><b>当日</b>　アトラクション企画、司会、通訳、問い合わせ・商談希望への対応、会場設営などの人員手配</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <h3>残る道</h3>
+        <div class="door caution">
+          <p style="margin:0 0 8px"><b>ベトナムに拠点を持つ事業者との提携。</b>ただし拠点要件は「企画提案を提出する者」自身に課されており、<b>共同提案や再委託で満たせるかは実施要領に定めがありません。</b>やるなら県への確認が先で、質問書の期限は10月16日17時です。</p>
+          <p style="margin:0"><b>もし当方にベトナムの拠点・駐在・現地法人・現地代理店があれば、判断が変わります。</b>会社プロファイルにはフランス・パリのみ記載されています。記載が漏れているだけであればお知らせください。</p>
+        </div>
+        <p class="src">一次資料：https://www.pref.aomori.lg.jp/soshiki/kanko/hanbai/vietnam_reception_2026.html　／　担当：県産品販売・輸出促進課 経済交流グループ　017-734-9730</p>
+      </div>
+
+    </div>
+  </article>
+</section>
+
+<section class="mine">
+  <h2>私の誤りと、直したこと</h2>
+  <p>10月8日朝のご報告で、この2件を<b>「判断していただきたい2件」</b>としてお出ししました。そのとき私が読んでいたのは、神戸はWebページのスケジュール欄と公募要領の締切部分だけ、青森は公募ページのスケジュール表だけです。<b>どちらも「応募資格」を読んでいませんでした。</b></p>
+  <p><code>workflow/eligibility.md</code> には 8月28日から<b>「市内業者限定は資格の有無より先に効く」「台帳に載せる際は、格付より先に所在地要件を確認する」</b>と書いてありました。横浜市の案件で同じことに当たり、自分で書き足した項目です。<b>規則は文書にあり、実行しませんでした。文書にあって実行されない規則は、無いのと同じです。</b></p>
+  <p>案件の相性を付ける仕組み（<code>bin/rank.py</code>）は、業務内容の言葉だけを見ています。所在地という概念を一つも持っていません。だから言葉で書いた規則ではなく、<b>鳴る仕組みにしました</b>（<code>bin/audit_location.py</code>）。締切が未来の行について、所在地の判定が書かれているかを見て、書かれていなければ名指しで出します。</p>
+  <p>走らせたところ、<b>締切が未来の12件のうち9件が「所在地の判定が書かれていない」と出ました。</b>下の9件です。関門が近い順に一次資料の応募資格を読み、判定を台帳に書き込んでいきます。</p>
+</section>
+
+<section>
+  <div class="shead"><h2>所在地の判定がまだ書かれていない案件</h2><span class="n">9件</span></div>
+  <p class="sdesc">「書かれていない」は「応募できない」ではありません。<b>読んでいないという意味です。</b>関門が近い順に並べました。</p>
+  <div class="rule"></div>
+  <div class="scroll"><table>
+    <thead><tr><th>締切</th><th>案件名</th><th>発注機関</th></tr></thead>
+    <tbody>
+      <tr><td class="d">10-09 12:00</td><td>令和8年度「地域資源発掘型プログラム事業」地域観光プロモーター業務委託（第2回）</td><td>東京観光財団</td></tr>
+      <tr><td class="d">10-13 12:00</td><td>GREEN×EXPO 2027 メディアポータルサイト及びクラウドストレージ構築・運用</td><td>2027年国際園芸博覧会協会</td></tr>
+      <tr><td class="d">10-14 17:00</td><td>第61回スーパーマーケット・トレードショー2027 出展に係る装飾委託業務</td><td>やまぐち産業振興財団</td></tr>
+      <tr><td class="d">10-20 12:00</td><td>令和8年度MICE誘致クライアントイベント（ジャカルタ）参加事業者募集</td><td>東京観光財団</td></tr>
+      <tr><td class="d">12-28</td><td>令和8年度「海外商談会出展支援事業」補助金</td><td>鹿児島県</td></tr>
+      <tr><td class="d">2027-01-16</td><td>新輸出大国コンソーシアム パートナーによるハンズオン支援業務</td><td>JETRO</td></tr>
+      <tr><td class="d">2027-02-04</td><td>海外展示会「Bharat Mobility GLOBAL EXPO 2027」出展</td><td>浜松市</td></tr>
+      <tr><td class="d">2027-03-31</td><td>未来の音楽家育成・国際芸術交流業務</td><td>神戸市</td></tr>
+      <tr><td class="d">2027-11-30</td><td>什器等の賃貸借及び保守に係る一般競争入札（条件付）</td><td>宮崎県</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</div>

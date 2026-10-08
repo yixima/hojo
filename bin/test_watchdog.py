@@ -385,5 +385,32 @@ check('ナビに入れなくても仕様書を取り寄せられる旨を書い�
       'keiyaku@tcvb.or.jp' in _ks, True)
 check('令和の換算（令和1年＝2019年）', str(_kkm.wa2date(1, 5, 1)), '2019-05-01')
 
+# ── 3.17 格付より先に所在地要件を見ているか ──────────────────
+# 2026-10-08 判明。`workflow/eligibility.md` には 8/28 から
+# **[5]「市内業者限定」は資格の有無より先に効く／[9]「市内」には3つの意味がある／
+# 台帳に載せる際は、格付より先に所在地要件を確認する**と書いてあった。
+# それでも同日朝、**応募資格を読まずに2件を「判断していただきたい」として出した。**
+# 読んだら両方とも所在地で落ちた＝神戸ものづくり（800万円・「神戸市内に本社」）／
+# 青森県ベトナムレセプション（600万円・「ベトナム国及び日本国内に拠点」）。
+# **規則が文書にあって誰も実行しないなら、規則が無いのと同じである。**
+# `bin/rank.py` の格付は中身の相性だけを見ており、所在地の概念を持たない。
+_al = os.path.join(ROOT, 'bin/audit_location.py')
+check('所在地要件の検出器がある', os.path.exists(_al), True)
+_als = io.open(_al, encoding='utf-8').read()
+check('検出器は台帳を書き換えない', 'DictWriter' in _als, False)
+check('検出器は規則の出どころを示す', 'eligibility.md' in _als, True)
+_alm = importlib.import_module('audit_location')
+check('「神戸市内に本社」を判定済みと認める',
+      bool(_alm.VERDICT.search('応募資格(1)「神戸市内に本社を置く企業又は団体であること」')), True)
+check('「ベトナム国及び日本国内に…拠点を有する」を判定済みと認める',
+      bool(_alm.VERDICT.search('ベトナム国及び日本国内に本店、支店または営業所等といった拠点を有すること')), True)
+check('「所在地区分：指定なし」を判定済みと認める',
+      bool(_alm.VERDICT.search('所在地区分は指定なし')), True)
+check('中身の相性だけ書いた行は未判定として鳴る',
+      bool(_alm.VERDICT.search('S。展示会の設営運営は当社の本業')), False)
+check('rank.py は所在地の概念を持たない（だから別の検出器が要る）',
+      bool(_re.search(r'所在地|市内に本社',
+           io.open(os.path.join(ROOT, 'bin/rank.py'), encoding='utf-8').read())), False)
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)

@@ -361,6 +361,7 @@ Artifact は Claude Code の右側ペインで開き、共有もできる。
 | **地域未来交付金という財源**（案件の上流。自治体が委託を出す原資） | https://claude.ai/artifact/KNDJEEaZm59fy6vUXCMfbT | `reports/chiiki_mirai_koufukin.html` |
 | **見落としを検出できる分母**（制度・チャネル・案件の3層データベース） | https://claude.ai/artifact/D7a4rrrzDsZn8rmHb6YVru | `reports/bunbo.html` |
 | **生島様にお願いする3件**（締切の引きかた・週次巡回の直しかた） | https://claude.ai/artifact/JwDG9n9rh1yrCKjQx9ehMA | `reports/onegai.html` |
+| **神戸と青森の応募可否**（一次資料を読んだ結果・2件とも所在地要件で不可） | https://claude.ai/artifact/XYmgRx1xKnrBFxbspnEztp | `reports/kobe_aomori_shinsa.html` |
 
 ### セッションの守備範囲（2026-09-04 生島様の指示）
 
