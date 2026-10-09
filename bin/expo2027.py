@@ -33,7 +33,7 @@ for u in ENTRIES:
     if not s: continue
     for t, link in anchors(u, s):
         if CASE.search(t) and '/contract/' in link:
-            k = t[:70]
+            k = t
             if k in seen: continue
             seen.add(k); rows.append((t, link))
         elif '/contract/' in link and link not in level2:
@@ -50,7 +50,7 @@ def deeper(u):
 with ThreadPoolExecutor(max_workers=10) as ex:
     for got in ex.map(deeper, level2[:40]):
         for t, link in got:
-            k = t[:70]
+            k = t
             if k in seen: continue
             seen.add(k); rows.append((t, link))
 

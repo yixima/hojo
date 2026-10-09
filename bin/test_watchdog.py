@@ -412,5 +412,58 @@ check('rank.py は所在地の概念を持たない（だから別の検出器�
       bool(_re.search(r'所在地|市内に本社',
            io.open(os.path.join(ROOT, 'bin/rank.py'), encoding='utf-8').read())), False)
 
+# ── 3.18 「セミナー・フォーラムの運営」を当社領域から外していないか ────
+# 2026-10-10 判明。公社が同じ日に
+#   …東京展開セミナー運営業務委託(インド)／同(シンガポール)
+# を出したが、**毎朝の報告（S/A だけを出す）には1件も現れなかった。**
+# 原因は2つ。
+# ① `bin/rank.py` の DOMAIN['イベント運営'] に**会議体の語が無かった**
+#    （セミナー・フォーラム・シンポジウム・講演会・レセプション）。
+#    海外×セミナー運営は当社の本業だが、格付Bに落ちていた。
+# ② NOISE に `セミナー` が無条件で入っており、**発注案件そのものを捨てる作りだった。**
+#    ノイズにしたいのは「受講者を募るお知らせ」であって「運営を委託する公募」ではない。
+# **当社は催事・会議の運営会社である。会議体の語を欠いていたのは分母の穴である。**
+# 見つけたのは `bin/gaikaku_keiyaku.py`（格付に関係なく受付中を全件出す）だった。
+#
+# **なお、最初はこれを「件名を70字で切る重複キーのせい」と疑ったが、誤りだった。**
+# 実測すると当該件名は50字で、切り詰めは起きていない。
+# 切り詰め自体は将来の危険なので外したが、**今回の見落ちの原因ではない。**
+_rk = importlib.import_module('rank')
+def _judge(n):
+    if _rk.NOISE.search(n) and not _rk.NOISE_UNEI.search(n):
+        return '除外'
+    return _rk.grade(n)[0]
+check('海外×セミナー運営は S か A',
+      _judge('令和8年度「海外企業とのイノベーション創出支援事業」に係る'
+             '東京展開セミナー運営業務委託(インド)') in ('S', 'A'), True)
+check('フォーラム開催の業務委託は S か A',
+      _judge('令和8年度「BCP策定推進フォーラム」開催に係る業務委託') in ('S', 'A'), True)
+check('セミナー運営のプロポーザルは S か A',
+      _judge('令和8年度観光セミナー運営業務に係る公募型プロポーザル') in ('S', 'A'), True)
+# 逆に、受講者向けのお知らせは拾わない（**緩めすぎると報告が読めなくなる**）
+check('受講者募集は除外する', _judge('DX推進セミナー受講者募集のお知らせ'), '除外')
+check('開催案内は除外する', _judge('創業セミナーの開催案内'), '除外')
+check('説明会の開催告知は除外する', _judge('中小企業向け研修の説明会を開催します'), '除外')
+check('会議体の語が DOMAIN に入っている',
+      bool(_rk.DOMAIN['イベント運営'].search('フォーラム')) and
+      bool(_rk.DOMAIN['イベント運営'].search('セミナー')) and
+      bool(_rk.DOMAIN['イベント運営'].search('シンポジウム')), True)
+
+# ── 3.19 件名を切り詰めて重複キーにしていないか（将来の危険を閉じる）────
+# 70字を超える件名で、**国名や回次が末尾にある場合**に2件目以降が静かに消える。
+# 当社の仕事は海外案件であり、国名こそが見分けどころである。
+_TRUNC = _re.compile(r'k\s*=\s*(?:r\[\d+\]|t2?)\[:\d+\]')
+for _p in ('bin/triage.py', 'bin/denom.py', 'bin/greenexpo_sweep.py',
+           'bin/expo2027.py', 'bin/sweep_channels.py'):
+    _f = os.path.join(ROOT, _p)
+    if not os.path.exists(_f): continue
+    check('%s は件名を切り詰めて重複キーにしない' % _p,
+          bool(_TRUNC.search(io.open(_f, encoding='utf-8').read())), False)
+check('切り詰めがあれば見つけられる', bool(_TRUNC.search('        k = r[2][:60]')), True)
+_long = '令和8年度' + 'あ' * 70
+check('70字で切ると末尾の違いが消える',
+      len({(_long + '(インド)')[:70], (_long + '(シンガポール)')[:70]}), 1)
+check('全文なら残る', len({_long + '(インド)', _long + '(シンガポール)'}), 2)
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)

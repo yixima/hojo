@@ -251,7 +251,7 @@ def main():
     # 同じ見出しの重複を落とす
     seen, uniq = set(), []
     for r in rows:
-        k = r[2][:60]
+        k = r[2]
         if k in seen: continue
         seen.add(k); uniq.append(r)
     uniq = uniq[:mx]

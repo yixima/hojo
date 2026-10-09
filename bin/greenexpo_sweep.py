@@ -77,7 +77,7 @@ def work(item):
         for t, link in anchors(u, s):
             if not EXPO.search(t): continue
             if SKIP.search(t) or not CASE.search(t): continue
-            k = t[:60]
+            k = t
             if k in seen: continue
             seen.add(k); hits.append((pref, t, link))
     # トップから入札・公募ハブへ1段だけ降りる
@@ -91,7 +91,7 @@ def work(item):
             for t2, l2 in anchors(link, hs):
                 if not EXPO.search(t2): continue
                 if SKIP.search(t2) or not CASE.search(t2): continue
-                k = t2[:60]
+                k = t2
                 if k in seen: continue
                 seen.add(k); hits.append((pref, t2, l2))
     return pref, hits, reach

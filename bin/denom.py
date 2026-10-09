@@ -50,7 +50,7 @@ def work(item):
     # 重複除去
     seen=set(); uq=[]
     for r in rows:
-        k=r[1][:60]
+        k=r[1]
         if k in seen: continue
         seen.add(k); uq.append(r)
     return label,'ok',uq
