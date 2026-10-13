@@ -465,5 +465,52 @@ check('70字で切ると末尾の違いが消える',
       len({(_long + '(インド)')[:70], (_long + '(シンガポール)')[:70]}), 1)
 check('全文なら残る', len({_long + '(インド)', _long + '(シンガポール)'}), 2)
 
+# ── 3.20 ナビの認証情報をリポジトリに書いていないか ──────────────
+# 2026-10-13、生島様よりビジネスチャンス・ナビの認証情報を頂いた。
+# **本リポジトリは公開（public）である。**過去に会話原文の流出事故が起きている。
+# 認証情報は環境変数 CN_USER / CN_PASS からのみ読み、
+# **ファイルにも、データにも、コミットにも残さない**（CLAUDE.md）。
+# この検査は「それらしい文字列が木に無いこと」を見張る。
+# **1回でも入れば、履歴からは消せない。**
+# 値が本物らしいときだけ鳴らす。**docstring の `'...'` のような置き換え例では鳴らさない。**
+# 鳴りすぎる検査は、すぐに無視されるようになる。
+_LEAK = _re.compile(r'japanpro\w*2015'
+                    r'|(?:CN_PASS|CN_USER|user_pass|user_login)\s*=\s*'
+                    r'["\'](?![.<{]|your|xxx|dummy|\s*["\'])[A-Za-z0-9@._%+-]{4,}["\']')
+_skip = {'.git', '__pycache__', 'node_modules'}
+_hits = []
+for _dp, _dn, _fn in os.walk(ROOT):
+    _dn[:] = [d for d in _dn if d not in _skip]
+    for _f in _fn:
+        if _f.endswith(('.pyc', '.png', '.jpg', '.pdf', '.zip', '.xlsx')): continue
+        # **この検査ファイル自身は除く。**検出器が鳴ることを示すための見本
+        # （`export CN_PASS='himitsu'`）を持っているので、自分を数えると必ず鳴る。
+        # **鳴りっぱなしの検査は、無視されるようになる。**
+        if _f == 'test_watchdog.py': continue
+        _fp = os.path.join(_dp, _f)
+        try:
+            _t = io.open(_fp, encoding='utf-8', errors='ignore').read()
+        except Exception:
+            continue
+        if _LEAK.search(_t):
+            _hits.append(os.path.relpath(_fp, ROOT))
+check('リポジトリに認証情報の平文が無い', _hits, [])
+# 検出器そのものの検出：入っていれば見つけられること
+check('平文があれば見つけられる',
+      bool(_LEAK.search("export CN_PASS='himitsu'")), True)
+check('環境変数から読む書き方は鳴らさない',
+      bool(_LEAK.search("os.environ.get('CN_PASS')")), False)
+check('docstring の例（値なし）は鳴らさない',
+      bool(_LEAK.search("export CN_USER='...'; export CN_PASS='...'")), False)
+# ナビの道具が認証情報をファイルに書かないこと
+for _p in ('bin/chancenavi.py', 'bin/chancenavi_anken.py'):
+    _f = os.path.join(ROOT, _p)
+    if not os.path.exists(_f): continue
+    _s = io.open(_f, encoding='utf-8').read()
+    check('%s は環境変数からしか認証情報を読まない' % _p,
+          "os.environ.get('CN_USER')" in _s or 'CN_USER' in _s, True)
+    check('%s は認証情報をファイルへ書かない' % _p,
+          bool(_re.search(r'(open|write)\([^)]*CN_(USER|PASS)', _s)), False)
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)

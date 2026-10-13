@@ -26,11 +26,30 @@
 5. **1回でも想定外の遷移をするとセッションが即死する**（SBA9001／SBA9002）。
    失敗したら**入り直す**。同じセッションで試行錯誤しない
 
-**未解明：案件検索の画面IDが分かっていない。**
-確認できた画面＝caa0101 マイページ／caa0105 自社情報設定／cdf0101 おすすめ案件通知設定／
-cdg0101 お気に入り登録案件一覧／cdg0102 お気に入り登録企業・商品一覧／cea0101 問い合わせ。
-**「受注したい（案件を探す）」はタブ内の JavaScript から開くため、URL が HTML に出てこない。**
-ブラウザの開発者ツールで1回だけ実際の遷移先を見れば確定する。
+**解明した（2026-10-13）。案件検索の画面IDは次のとおり。**
+生島様より認証情報を頂いてログインし、マイページの HTML と
+`js/pages/caa0101.js`・`js/provider/common.js` を読んで確定した。
+**開発者ツールは要らなかった。onclick の関数定義が外部JSに書いてある。**
+
+| 画面ID | 中身 | 追加で送る値 |
+|---|---|---|
+| `caa0202` | **東京都の外郭団体等**（公社・TCVB の案件がここ） | なし |
+| `caa0203` | 民間発注案件等 | なし |
+| `caa0204` | 官公庁入札情報（東京都等） | なし |
+| `caa0201` | 東京2020組織委員会 | なし |
+| `sba2101` | 代理店募集商品 | `recruitmentExist=on` `initRecruitmentExist=on` |
+| `sba0301` | 国・独立行政法人等入札情報の検索 | `pageKey=2` |
+| `sba0303` | 案件一覧 | `pageKey=1` |
+| `sba0501` | 案件一覧 | `pageKey=1` `proposalClassCode=1` |
+| `cga0101` | 案件一覧 | `tocog_flag=0` `status=0` |
+| `sba0403` / `sba0404` | 個別案件の詳細 | 案件番号 |
+| `cga0201` | 個別案件の詳細 | 提案番号 |
+| `sba0601` | 商品評価の個別ページ | 提案番号 |
+| `sba0701` | 企業の検索 | なし |
+
+**`tmpTokenKey` は送らない。**本物の `post()`（common.js）は `token` だけを足す。
+以前のこのファイルは `tmpTokenKey` を付けていたが、**サイトはそんな値を作っていない。**
+余計な値を付けるのは「想定外の遷移」そのものである。
 """
 import os
 import re
@@ -85,9 +104,30 @@ def login():
     return my, m.group(1)
 
 
+# 画面IDごとに必要な値（2026-10-13、js/pages/caa0101.js から読み取った）
+SCREENS = {
+    'caa0202': ([], '東京都の外郭団体等'),
+    'caa0203': ([], '民間発注案件等'),
+    'caa0204': ([], '官公庁入札情報（東京都等）'),
+    'caa0201': ([], '東京2020組織委員会'),
+    'sba2101': ([('recruitmentExist', 'on'), ('initRecruitmentExist', 'on')], '代理店募集商品'),
+    'sba0301': ([('pageKey', '2')], '国・独立行政法人等入札情報の検索'),
+    'sba0303': ([('pageKey', '1')], '案件一覧'),
+    'sba0501': ([('pageKey', '1'), ('proposalClassCode', '1')], '案件一覧'),
+    'cga0101': ([('tocog_flag', '0'), ('status', '0')], '案件一覧'),
+    'sba0701': ([], '企業の検索'),
+}
+
+
 def screen(sid, token, extra=None):
-    """画面IDを POST で開く。**GET では開けない。**"""
-    d = [('token', token), ('tmpTokenKey', uuid.uuid4().hex)] + (extra or [])
+    """画面IDを POST で開く。**GET では開けない。**
+
+    **`tmpTokenKey` は送らない。**本物の post()（common.js）は token だけを足す。
+    画面ごとに要る値は SCREENS に持つ。無い値を足すのも、要る値を欠くのも
+    「想定外の遷移」であり、セッションが即死する（SBA9001／SBA9002）。
+    """
+    need = SCREENS.get(sid.split('/')[0], ([], ''))[0]
+    d = [('token', token)] + list(need) + (extra or [])
     return _curl(BASE + '/' + sid, d, BASE + '/caa0101')
 
 
@@ -110,7 +150,11 @@ def main():
             open(out, 'w', encoding='utf-8').write(s)
             print('  保存：%s' % out)
         return 0 if not bad else 2
-    print('**案件検索の画面IDは未解明。**docstring の「未解明」を参照。')
+    print('■ 開ける画面（画面IDと中身）')
+    for k, (need, label) in SCREENS.items():
+        extra = ' '.join('%s=%s' % kv for kv in need)
+        print('  %-9s %-24s %s' % (k, label, extra))
+    print('使い方： python3 bin/chancenavi.py caa0202')
     return 0
 
 
