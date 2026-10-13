@@ -512,5 +512,28 @@ for _p in ('bin/chancenavi.py', 'bin/chancenavi_anken.py'):
     check('%s は認証情報をファイルへ書かない' % _p,
           bool(_re.search(r'(open|write)\([^)]*CN_(USER|PASS)', _s)), False)
 
+# ── 3.21 件名の取り出しを長さで決めていないか ──────────────────
+# 2026-10-14 実測。公社の契約情報の整理番号66 は
+#   件名「ノート型パソコンの借入」（11字）
+#   期間「令和8年10月13日9:00～」（15字）
+# で、**いちばん長い行を件名にしていたため日付を件名として報告した。**
+# 先頭から採るように直すと、今度は表の見出しの残り「情報」を件名にした（整理番号68）。
+# **除いてから選ぶ。順序だけでも長さだけでも間違える。**
+# **案件名を取り違える道具は、黙っている道具より悪い。**名前は判断の入口である。
+_gk = io.open(os.path.join(ROOT, 'bin/gaikaku_keiyaku.py'), encoding='utf-8').read()
+check('件名は日付らしい行を除いてから選ぶ', 'DATEISH' in _gk, True)
+check('件名を max(blk, key=len) で選んでいない',
+      bool(_re.search(r'max\(blk,\s*key=len\)', _gk)), False)
+check('表の見出しの残りを件名にしない', "'情報'" in _gk, True)
+_gkm = importlib.import_module('gaikaku_keiyaku')
+_DATEISH = _re.compile(r'^(?:令和\d+年\d+月\d+日|\d{4}年\d{1,2}月\d{1,2}日)'
+                       r'\s*(?:\d{1,2}(?:[:：]\d{2}|時)?)?\s*[～~]?$')
+check('「令和8年10月13日9:00～」は日付として外れる',
+      bool(_DATEISH.match('令和8年10月13日9:00～')), True)
+check('「ノート型パソコンの借入」は日付ではない',
+      bool(_DATEISH.match('ノート型パソコンの借入')), False)
+check('「2026年10月09日12時」も日付として外れる',
+      bool(_DATEISH.match('2026年10月09日12時')), True)
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)

@@ -166,9 +166,17 @@ def main():
         k = (r['案件名'], r['提案番号'])
         if k in seen: continue
         seen.add(k); uniq.append(r)
-    print('読めた案件 %d件（%d件中）' % (len(uniq), total))
-    if len(uniq) < total:
-        print('**全件に届いていない。0件でも全件でもないことを明記する。**')
+    # **数の意味を混ぜない。**画面の「32件」は「入札参加可能な案件」の数で、
+    # こちらの検索（状態の絞り込みを空にして送る）は公示前や入札準備中も返す。
+    # 2026-10-13、これを「50件（32件中）」と出した。**届いていないように読める。**
+    import collections as _c
+    st = _c.Counter(r['ステータス'][:24] for r in uniq)
+    print('検索で返った案件 %d件（画面の「入札参加可能」は %d件。'
+          'こちらは状態を絞らずに送るので公示前なども入る）' % (len(uniq), total))
+    for k, v in st.most_common():
+        print('    %3d  %s' % (v, k))
+    if not uniq:
+        print('**0件。これは「無い」ではなく「読めなかった」可能性がある。入り直すこと**')
 
     out = os.path.join(ROOT, 'data/chancenavi_%s_%s.csv'
                        % ('kekka' if status == '1' else 'open', now.strftime('%Y%m%d')))

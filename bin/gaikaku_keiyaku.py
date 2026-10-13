@@ -128,8 +128,20 @@ def parse(s, head):
             if len(gates(cand)) >= 1:
                 span = cand
                 break
-        # 件名＝いちばん長い行
-        name = max(blk, key=len) if blk else ''
+        # **件名＝「数字だけでも日付でもない行」。長さで選んではいけない。**
+        # 2026-10-14 実測：整理番号66 の件名は「ノート型パソコンの借入」（11字）だが、
+        # 同じ行群にある「令和8年10月13日9:00～」（15字）のほうが長い。
+        # いちばん長い行を件名にしていたため、**日付を件名として報告した。**
+        # **案件名を取り違える道具は、黙っている道具より悪い。**名前は判断の入口である。
+        DATEISH = re.compile(r'^(?:令和\d+年\d+月\d+日|\d{4}年\d{1,2}月\d{1,2}日)'
+                             r'\s*(?:\d{1,2}(?:[:：]\d{2}|時)?)?\s*[～~]?$')
+        # 日付・整理番号・受付状況を除いたうえで、**残った中のいちばん長いもの**を採る。
+        # 先頭から採ると、表の見出しの残り（「情報」など）を件名にしてしまう
+        # （整理番号68 で実測）。**除いてから選ぶ。順序だけでも長さだけでも間違える。**
+        cand = [x for x in blk
+                if not re.fullmatch(r'\d{1,4}', x) and not DATEISH.match(x)
+                and x not in ('受付中', '終了', '情報', '整理', '番号', '件名', '公表日')]
+        name = max(cand, key=len) if cand else ''
         pub = next((x for x in blk if PUB_S.fullmatch(x) or PUB_W.fullmatch(x)), '')
         out.append((no, name, pub, span, r))
     return out
