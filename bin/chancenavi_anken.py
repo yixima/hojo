@@ -113,6 +113,7 @@ def main():
     label = '結果が公表された案件' if status == '1' else '入札参加可能な案件'
     h = C.screen('cga0101', tok, [('status', status)])
     # **開いた画面の token を取り直す。**前の画面の token では弾かれる
+    h0 = h          # **絞り込みの既定値はこの画面から読む**
     m = re.search(r'id="token"[^>]*value="([^"]*)"', h)
     if m:
         tok = m.group(1)
@@ -131,15 +132,26 @@ def main():
             # 2026-10-13 実測：`sort` に `1` を送って SBA9001「処理中断」になった。
             # 正しい値は `desc`／`asc` である（option の value）。
             # **欠けても、知らない値でも、「想定していない操作」として即死する。**
+            # **状態の絞り込みは、画面が持っている値をそのまま渡す。**
+            # 2026-10-15 実測：ここを空にして送ったため絞り込みが全部外れ、
+            # **件数表示が 11,088件になっていた**（画面の「入札参加可能」は32件）。
+            # 1ページ50件なので、**11,088件のうち先頭50件だけを見て「当社領域4件」と
+            # 報告していた。BCP策定推進フォーザムは2ページ目にあった。**
+            # **黙って切り捨てる道具は、黙って見落とす。**
+            # 既定は acceptedBefore=on／accepting=on、他は off（画面の *Hidden から読む）。
+            flt = []
+            for k in ('acceptedBefore', 'bidding', 'accepting', 'resultPublishing',
+                      'examinationApplicationResultInput', 'bidResultInput',
+                      'prepareResultPublished'):
+                mk = re.search(r'id="%sHidden"[^>]*value="([^"]*)"' % k, h0)
+                flt.append((k, 'on' if (mk and mk.group(1) == 'on') else ''))
             d = ([('token', tok), ('limit', '50'), ('sort', 'desc'),
                   ('status', status), ('tocog_flag', '0'),
-                  ('keywordRetrievalMethod', '1'), ('page', str(page))]
+                  ('keywordRetrievalMethod', '1'), ('page', str(page))] + flt
                  + [(k, '') for k in (
                      'txt_free_word', 'txt_acceptance_date_from', 'txt_acceptance_date_to',
                      'txt_bid_date_from', 'txt_bid_date_to',
-                     'acceptedBefore', 'bidding', 'accepting', 'resultPublishing',
-                     'examinationApplicationResultInput', 'bidResultInput',
-                     'prepareResultPublished', 'freeWordArray', 'contractMethodArray',
+                     'freeWordArray', 'contractMethodArray',
                      'proposalExecuteLocationPrefectturesArray', 'proposalBusinessArray',
                      'environmentalConsiderationArray',
                      'responsibilityRightProhibitedMatterArray',
@@ -157,7 +169,7 @@ def main():
         if not rs:
             break
         allrows += rs
-        if len(allrows) >= total or page >= 12:
+        if len(allrows) >= total or page >= 20:
             break
         page += 1
     # 重複を落とす（**案件名を切り詰めない**）
@@ -171,12 +183,14 @@ def main():
     # 2026-10-13、これを「50件（32件中）」と出した。**届いていないように読める。**
     import collections as _c
     st = _c.Counter(r['ステータス'][:24] for r in uniq)
-    print('検索で返った案件 %d件（画面の「入札参加可能」は %d件。'
-          'こちらは状態を絞らずに送るので公示前なども入る）' % (len(uniq), total))
+    print('検索で返った案件 %d件（画面の「入札参加可能」は %d件）' % (len(uniq), total))
     for k, v in st.most_common():
         print('    %3d  %s' % (v, k))
     if not uniq:
         print('**0件。これは「無い」ではなく「読めなかった」可能性がある。入り直すこと**')
+    elif len(uniq) < total:
+        print('★**%d件のうち %d件しか読めていない。切り捨てている。**'
+              % (total, len(uniq)))
 
     out = os.path.join(ROOT, 'data/chancenavi_%s_%s.csv'
                        % ('kekka' if status == '1' else 'open', now.strftime('%Y%m%d')))

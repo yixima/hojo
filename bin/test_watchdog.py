@@ -535,5 +535,24 @@ check('「ノート型パソコンの借入」は日付ではない',
 check('「2026年10月09日12時」も日付として外れる',
       bool(_DATEISH.match('2026年10月09日12時')), True)
 
+# ── 3.22 ナビの一覧を黙って切り捨てていないか ─────────────────
+# 2026-10-15 判明。検索の送りで状態の絞り込みを**空**にしていたため、
+# 絞り込みが全部外れ、**件数表示が 11,088件**になっていた
+# （画面の「入札参加可能」は32件）。1ページ50件なので、
+# **11,088件のうち先頭50件だけを見て「当社領域4件」と報告していた。**
+# BCP策定推進フォーラムは2ページ目にあり、
+# **Care Show Japan 2027（本日17時締切・当社の中核）は見えていなかった。**
+# 公示は10/1で、**2週間気づかなかった。**
+# **黙って切り捨てる道具は、黙って見落とす。**
+# 直しかた＝画面が持つ `*Hidden`（acceptedBefore=on／accepting=on／他 off）を
+# そのまま渡す。読めた件数が総数に届かなければ★で申告する。
+_ca = io.open(os.path.join(ROOT, 'bin/chancenavi_anken.py'), encoding='utf-8').read()
+check('状態の絞り込みを画面から読んで渡す',
+      bool(_re.search(r'id="%sHidden"', _ca)) and 'acceptedBefore' in _ca, True)
+check('絞り込みを空で送っていない',
+      bool(_re.search(r"\('acceptedBefore', ''\)", _ca)), False)
+check('読めた件数が総数に届かなければ申告する', '切り捨てている' in _ca, True)
+check('0件を「無い」と言わない', '読めなかった' in _ca, True)
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)
