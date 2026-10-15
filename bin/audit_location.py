@@ -43,6 +43,8 @@ VERDICT = re.compile(
     r'事業所を有|事務所を有|所在地は|県内に事務所|都内に所在|'
     r'所在地の指定(は)?(無|な)い|所在地要件(は)?(無|な)し|'
     r'欠格事由のみ|等級要件(は)?(無|な)')
+# **領域外・本業外と決めた行**（bin/build_board.py の OUTSIDE と同じ語）
+OUT = re.compile(r'領域外|対象外|業務範囲外|本業外')
 # 一次資料に所在地の定めがあるのに見落としやすい語（参考表示用）
 HINT = re.compile(r'市|区|県|町|村')
 
@@ -63,17 +65,27 @@ def main():
     rows = list(csv.DictReader(io.open(os.path.join(ROOT, 'data/ledger.csv'),
                                        encoding='utf-8')))
     allf = '--all' in sys.argv
-    tgt, ng = [], []
+    tgt, ng, skipped = [], [], []
     for i, r in enumerate(rows, start=2):
         d = day(r.get('締切'))
         if not allf and not (d and d >= today):
             continue
         tgt.append(r)
         blob = ' '.join((r.get('資格要否') or '', r.get('格付') or '', r.get('状態') or ''))
+        # **領域外と決めた案件に所在地の判定は要らない。**
+        # ただし**黙って外さない。**数と件名を別に出す。
+        # 黙って外す道具は、黙って見落とす（CLAUDE.md）。
+        if OUT.search(r.get('状態') or ''):
+            skipped.append((i, r, d))
+            continue
         if not VERDICT.search(blob):
             ng.append((i, r, d))
 
     print('検証対象 %d件（%s）' % (len(tgt), '全件' if allf else '締切が未来の行'))
+    if skipped:
+        print('\n領域外として外した %d件（**黙って外さない。**所在地は問わない）：' % len(skipped))
+        for i, r, d in skipped:
+            print('    %4d行 %s / %s' % (i, (r['案件名'] or '')[:46], (r['発注機関'] or '')[:24]))
     if not ng:
         print('\n**全件に所在地の判定が書かれている。**')
     else:

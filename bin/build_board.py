@@ -95,7 +95,17 @@ def classify(r):
     """
     st = r['状態']
     shikaku = r['資格要否']
-    blob = st + ' ' + shikaku
+    # **判定の語は「状態」欄の先頭の一句だけで読む。全文で探してはならない。**
+    # 2026-10-16 実測の事故：公社の「東京展開セミナー運営業務委託（インド）／（シンガポール）」は
+    # **応募可・10/20 14:00 が関門**だが、同じ状態欄の後ろに
+    # 「整理番号65（Webサイトの保守）も出たが**当社の領域外**とみなした」と
+    # **別の案件のことを書いていたため、この2件が `out`（対象外）に落ち、
+    # 公募ボードの「いま決める」に1度も出なかった。**
+    # 台帳の作法では、判定は状態欄の**先頭**に書き、経緯は「／」より後ろに書く。
+    # だから先頭の一句だけを見る。**後ろに判定語があっても無視し、代わりに申告する**
+    # （`--check` が出す。黙って無視する道具は、黙って見落とす）。
+    head = _verdict_head(st)
+    head_blob = head + ' ' + _verdict_head(shikaku)
     if '【予測】' in st:
         # **まだ公告されていないが、周期から必ず出ると分かっている案件。**
         # 締切欄の日付は推定値であり、確定日ではない（状態欄に明記してある）
@@ -105,13 +115,35 @@ def classify(r):
             return 'decided_no'
         if any(k in st for k in GO):
             return 'decided_go'
-    if any(k in blob for k in NG):
+    if any(k in head_blob for k in NG):
         return 'ng'
-    if any(k in blob for k in OUTSIDE):
+    if any(k in head_blob for k in OUTSIDE):
         return 'out'
-    if any(k in st for k in NO):
+    if any(k in head for k in NO):
         return 'rec_no'
     return 'open'
+
+
+def _verdict_head(s):
+    """判定が書かれている先頭の一句を返す。区切りは「／」または「/」。"""
+    return re.split(r'／|/', s or '', 1)[0]
+
+
+def tail_verdicts(rows):
+    """**判定の語が先頭ではなく後ろだけにある行**を返す。黙って無視しない。
+
+    後ろの判定語は、別の案件について書いたものか、`days_left.py --update` が
+    「締切超過（旧: …」を前に足して押し出したものである。どちらも判定には使わない。
+    """
+    out = []
+    for i, r in enumerate(rows, start=2):
+        st = r.get('状態') or ''
+        head = _verdict_head(st)
+        tail = st[len(head):]
+        hit = [k for k in (NG + OUTSIDE + NO) if k in tail and k not in head]
+        if hit:
+            out.append((i, r, hit))
+    return out
 
 
 def parse_date(s):
@@ -983,6 +1015,17 @@ def main():
         for line, why, val in ng:
             print('  %d行目 %s: %r' % (line, why, val))
         sys.exit(2)
+    # **判定語が状態欄の後ろだけにある行を、必ず申告する。**
+    # 判定には使わないが（classify の注を見よ）、**黙って無視はしない。**
+    tv = tail_verdicts(rows)
+    if tv:
+        print('▲ 判定の語が状態欄の**先頭ではなく後ろ**にある行が %d件ある'
+              '（判定には使っていない。別の案件のことを書いたか、'
+              '「締切超過（旧: 」で押し出されたものである）' % len(tv))
+        for line, r, hit in tv[:12]:
+            print('    %4d行 [%s] %s' % (line, '・'.join(hit), (r['案件名'] or '')[:44]))
+        if len(tv) > 12:
+            print('    …ほか %d件' % (len(tv) - 12))
     b, body = build(rows, now)
     if '--check' in sys.argv:
         for k in ('now', 'unverified', 'going', 'coming', 'watch', 'grade',

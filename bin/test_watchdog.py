@@ -593,5 +593,34 @@ _ca_code = '\n'.join(l for l in _ca.split('\n') if not l.lstrip().startswith('#'
 check('固定の page >= 20 で止めていない',
       bool(_re.search(r'or page >= 20\s*:', _ca_code)), False)
 
+# ── 3.26 判定語を状態欄の全文から拾っていないか ──────────────────
+# 2026-10-16 実測の事故。公社の「東京展開セミナー運営業務委託（インド）／（シンガポール）」は
+# **応募可・10/20 14:00 が関門**だが、同じ状態欄の後ろに
+# 「整理番号65（Webサイトの保守）も出たが**当社の領域外**とみなした」と
+# **別の案件のことを書いていた。**classify() が状態欄の全文を部分一致で見ていたため、
+# この2件が `out`（対象外）に落ち、**公募ボードの「いま決める」に1度も出なかった。**
+# 日次の残日数一覧には【至急】残4日と出ていたのに、判断面には無かった。
+# **数字が出る場所と、判断する場所が食い違っていた。**
+# 直しかた＝判定は状態欄の**先頭の一句**（「／」より前）だけで読む。
+# **後ろにある判定語は使わないが、`--check` で必ず申告する。**
+_bb = io.open(os.path.join(ROOT, 'bin/build_board.py'), encoding='utf-8').read()
+_bbm = importlib.import_module('build_board')
+check('判定は状態欄の先頭の一句だけで読む', '_verdict_head' in _bb, True)
+check('状態欄の全文を判定に使っていない',
+      bool(_re.search(r'blob = st \+ ', _bb)), False)
+_row_ok = {'状態': '**海外（インド）でのセミナー運営＝当社の本業。**公表 令和8年10月9日'
+                  '／整理番号65（Webサイトの保守）も出たが当社の領域外とみなした',
+           '資格要否': '**所在地要件は無い**'}
+check('後ろに「領域外」があっても対象外にしない',
+      _bbm.classify(_row_ok), 'open')
+_row_out = {'状態': '領域外（当社の業務範囲外）', '資格要否': '要確認'}
+check('先頭に「領域外」があれば対象外にする',
+      _bbm.classify(_row_out), 'out')
+_row_ng = {'状態': '**応募不可（所在地要件）。**告示第11533号で確認した'
+                  '／他の要件は満たせる', '資格要否': '応募不可（所在地要件）'}
+check('先頭の「応募不可」は効く', _bbm.classify(_row_ng), 'ng')
+check('後ろの判定語を申告する道具がある', 'def tail_verdicts' in _bb, True)
+check('申告が --check だけで止まっていない（毎回出す）',
+      _bb.index('tail_verdicts(rows)') < _bb.index("if '--check' in sys.argv:\n        for k in"), True)
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)
