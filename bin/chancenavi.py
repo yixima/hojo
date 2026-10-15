@@ -80,6 +80,28 @@ def _curl(url, data=None, ref=None, xhr=False):
         return ''
 
 
+def _curl_bin(url, data=None, ref=None, out=None):
+    """添付資料のように**本文がバイナリ**のものを受け取る。
+
+    cga0201 の downloadFile(key, index, flag) は `/bcnc/cga0201/download` への
+    POST で、post()（common.js）が token を足す。**1ファイル1リクエストである。**
+    `-o` でファイルへ落とし、Content-Type と大きさを返す。
+    """
+    c = ['curl', '-sSL', '--http1.1', '-A', UA, '--max-time', '60',
+         '--compressed', '-c', JAR, '-b', JAR, '-o', out,
+         '-w', '%{http_code} %{content_type} %{size_download}']
+    if ref:
+        c += ['-H', 'Referer: ' + ref]
+    if data is not None:
+        for k, v in data:
+            c += ['--data-urlencode', '%s=%s' % (k, v)]
+    try:
+        r = subprocess.run(c + [url], capture_output=True, timeout=90)
+        return r.stdout.decode('utf-8', 'replace').strip()
+    except Exception as e:
+        return '0 - 0 (%s)' % e
+
+
 def plain(h):
     b = re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', h, flags=re.S | re.I)
     return ' '.join(re.sub(r'<[^>]+>', ' ', b).split())

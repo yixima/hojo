@@ -94,6 +94,59 @@ def main():
     who = re.search(r'([^\s]+様)', C.plain(my))
     print('ログイン：%s' % (who.group(1) if who else '（氏名を読めず）'))
 
+    if '--files' in sys.argv:
+        # **添付資料を落とす。**案件（詳細）を開き、隠し INPUT の JSON から
+        # name/index/flag/key を読み、1ファイルずつ POST する。
+        # **token は開いた cga0201 から取り直す。**前の画面の token では弾かれる
+        # （SBA9001 処理中断）。2026-10-16、js/sh/pages/cga0201.js の
+        # downloadFile(key,index,flag) と common.js の post() で確認した。
+        pn = sys.argv[sys.argv.index('--files') + 1]
+        C._curl(C.BASE + '/cga0101/index/showProposalDetailInfo',
+                [('token', tok), ('proposalNumber', pn)], C.BASE + '/cga0101', xhr=True)
+        time.sleep(1)
+        h = C._curl(C.BASE + '/cga0201', [('token', tok), ('proposalNumber', pn)],
+                    C.BASE + '/cga0101')
+        head = C.plain(h)[:90]
+        if 'タイムアウト' in head or 'エラー' in head or '中断' in head:
+            print('**案件（詳細）を開けなかった。**%s' % head)
+            return 2
+        m = re.search(r'id="token"[^>]*value="([^"]*)"', h)
+        if not m:
+            print('**cga0201 に token が無い。**ダウンロードできない')
+            return 2
+        tok2 = m.group(1)
+        files = []
+        for mm in re.finditer(r'<INPUT id="(\w*[Ff]ile\w*)" type="hidden" value="([^"]*)"', h):
+            try:
+                files += json.loads(html.unescape(mm.group(2)))
+            except Exception:
+                pass
+        if not files:
+            print('**添付資料が1件も読めなかった。**隠し INPUT の形が変わった可能性がある')
+            return 2
+        d = os.path.join('/tmp', 'cn_files_%s' % pn)
+        os.makedirs(d, exist_ok=True)
+        print('添付資料 %d件 → %s' % (len(files), d))
+        ok = 0
+        for f in files:
+            name = re.sub(r'[^\w.\-一-龥ぁ-んァ-ヶ０-９【】]', '_', f['name'])
+            out = os.path.join(d, name)
+            r = C._curl_bin(C.BASE + '/cga0201/download',
+                            [('token', tok2), ('key', str(f['key'])),
+                             ('index', str(f['index'])), ('flag', str(f['flag']))],
+                            C.BASE + '/cga0201', out)
+            code = r.split()[0] if r.split() else '0'
+            size = int(r.split()[2]) if len(r.split()) > 2 and r.split()[2].isdigit() else 0
+            if code == '200' and size > 1000:
+                ok += 1
+                print('  ○ %s  %s  %.1fKB' % (f['name'], code, size / 1024.0))
+            else:
+                print('  **× %s  HTTP %s  %dバイト（落とせていない）**' % (f['name'], code, size))
+            time.sleep(1)
+        if ok < len(files):
+            print('**%d件のうち %d件しか落とせていない。黙って終わらない。**' % (len(files), ok))
+        return 0 if ok else 2
+
     if '--detail' in sys.argv:
         pn = sys.argv[sys.argv.index('--detail') + 1]
         # 本来の作法：先に showProposalDetailInfo を叩く
@@ -169,7 +222,15 @@ def main():
         if not rs:
             break
         allrows += rs
-        if len(allrows) >= total or page >= 20:
+        # **送りの上限は、総数から要るページ数で決める。固定値で止めない。**
+        # 2026-10-16 実測：`page >= 20` で止めていたため、結果公表済み1,507件のうち
+        # **先頭1,000件（20ページ×50件）しか読めていなかった。507件を落としていた。**
+        # 入札参加可能32件では1ページで収まるので、この上限は**今まで鳴らなかった。**
+        # **鳴らない上限は、上限が無いのと同じに見える。**
+        # 事故の防止のため上限自体は残すが、総数から要るページ数＋2に広げる。
+        need = (total + 49) // 50 + 2
+        cap = max(need, 20)
+        if len(allrows) >= total or page >= cap:
             break
         page += 1
     # 重複を落とす（**案件名を切り詰めない**）
