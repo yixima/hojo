@@ -102,9 +102,18 @@ def parse_chosho(t):
             taxes.add(money(m.group(1)))
     tax = min(taxes) if taxes else 0
     win, zei = 0, ''
-    m = (re.search(AMOUNT + r'円?[-\u00a5]?[（(]?うち消費税', z)
-         or re.search(r'落札(?:金額|価格)[^0-9]{0,24}?' + AMOUNT, z)
-         or re.search(r'落札者(?:氏)?名?[^0-9]{0,40}?' + AMOUNT, z))
+    # **ラベルと値の間に改行と日付が入る書式がある**（農林水産振興財団 令和6年度）。
+    # 2026-10-16：`[^0-9]` で止めていたため日付の数字で切れ、
+    # 「円?」のあとに改行を許していなかったため税込の並びも拾えず、
+    # **1件まるごと「読めない」で落としていた。**
+    # 金額は3桁区切りのカンマがある数だけ採るので、間に数字を許しても取り違えない。
+    # **「（うち消費税相当額 ）」と金額が空の書式がある**（人材支援事業団）。
+    # 空のままこの型に当てると、**無関係な入札額を落札金額にしてしまう。**
+    # だから「うち消費税」のあとに**実際の数があること**を要件にする。
+    m = (re.search(AMOUNT + r'\s*円?\s*[-\u00a5]?\s*[（(]?\s*うち消費税'
+                   r'[^0-9]{0,24}?(?:[0-9]{1,3}(?:,[0-9]{3})+)', z)
+         or re.search(r'落札(?:金額|価格)[\s\S]{0,40}?' + AMOUNT, z)
+         or re.search(r'落札者(?:氏)?名?[\s\S]{0,40}?' + AMOUNT, z))
     if m:
         win, zei = money(m.group(1)), '税込'
     if not win:
@@ -195,17 +204,27 @@ def parse_chosho(t):
     # 1.1倍の検査をかけると**正しい値を「読めない」と言ってしまう。**
     hikazei = bool(re.search(r'不課税|非課税', z))
     if zei == '税込' and not hikazei and win and others and win < min(others):
-        cands = [v for v in allamt if consistent(v)]
+        # **拾ってしまった数が消費税額なら、税込額はその11倍である。**
+        # 税込 = 税抜 × 1.1 なので 消費税 = 税込 ÷ 11。
+        # 2026-10-16 実測：型5（人材支援事業団）2,948,000 ÷ 11 = 268,000、
+        # 農林水産振興財団 3,927,000 ÷ 11 = 357,000。**同じ関係である。**
+        # 入札額の一覧が出ていない調書でも、これなら直せる。
+        cands = [v for v in allamt if v != win and v % 11 == 0 and v // 11 == win]
+        if not cands:
+            cands = [v for v in allamt if consistent(v)]
         if len(cands) == 1:
             note = ('落札金額を %s円 → %s円 に訂正した'
-                    '（調書の「落札金額」の直後に消費税相当額が並んでいた）'
+                    '（拾った数は消費税額だった。税込額はその11倍である）'
                     % ('{:,}'.format(win), '{:,}'.format(cands[0])))
+            taxes.add(win)      # 拾った数は消費税額だった。入札額に混ぜない
             win = cands[0]
         else:
             return (who, 0, len(allamt), allamt[:12],
                     '**落札金額（%s円）が最低入札額（%s円）より小さい。'
                     '消費税額を拾った疑いがあり、訂正先を一つに絞れない**'
                     % ('{:,}'.format(win), '{:,}'.format(min(others))), zei)
+    # 訂正したあとの「他の金額」で見る。**訂正前の数（消費税額）は数えない**
+    others = [a for a in allamt if a != win and a not in taxes]
     if zei == '税込' and not hikazei and win and others and not consistent(win):
         note = (note + '／' if note else '') + \
             '**どの入札額の1.1倍にも一致しない。書式が未知か、辞退・不参が混じっている**'

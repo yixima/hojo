@@ -58,6 +58,28 @@ def day(s):
         return None
 
 
+def bare_url(u):
+    """**一次資料に戻れない行**か。URLが空、または組織のトップページだけなら True。
+
+    2026-10-16 判明。所在地の判定が書けなかった3件は、**どれも URL が
+    発注機関のトップページだけだった**（鹿児島県／浜松市／神戸市）。
+    「読んでいない」のではなく、**読みに行く先が台帳に無かった。**
+    台帳全体では47行がこの状態である。
+    **戻れない記録は、記録していないのと同じである。**
+    """
+    u = (u or '').strip()
+    if not u:
+        return 'URLが空'
+    try:
+        from urllib.parse import urlparse
+        q = urlparse(u)
+    except Exception:
+        return ''
+    if q.path in ('', '/') and not q.query:
+        return '組織のトップページだけ'
+    return ''
+
+
 def main():
     now = datetime.datetime.now(JST)
     today = now.date()
@@ -96,6 +118,17 @@ def main():
                   % (i, r.get('締切') or '未取得', r.get('締切時刻') or '',
                      r['案件名'][:48], r['発注機関'][:22]))
             print('        %s' % (r.get('URL') or '（URLなし）')[:108])
+            bw = bare_url(r.get('URL'))
+            if bw:
+                print('        ★**一次資料に戻れない（%s）。'
+                      '読んでいないのではなく、読みに行く先が台帳に無い**' % bw)
+
+    allbare = [(i, r) for i, r in enumerate(rows, start=2) if bare_url(r.get('URL'))]
+    if allbare:
+        print('\n▲ **一次資料に戻れない行が %d件ある**（台帳 %d行中）。'
+              'URLが空か、発注機関のトップページだけである。'
+              '**戻れない記録は、記録していないのと同じである**'
+              % (len(allbare), len(rows)))
 
     print('\n**この検査は「書いてあるか」しか見ない。**'
           '中身の正しさは一次資料で人が確かめる（CLAUDE.md）。')
