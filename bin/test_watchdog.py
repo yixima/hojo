@@ -715,5 +715,52 @@ check('1件ごとに入り直す（SBA900x 対策）', 'C.login()' in _sb.split(
 check('読めなかった件数を申告する', '黙って飛ばさない' in _sb, True)
 check('0件を「相場が無い」と言わない', '読めていない' in _sb, True)
 
+# ── 3.29 掃引の見出し抽出が、1件を丸ごと捨てていないか ──────────────
+# 2026-10-17 実測。園芸博協会の
+# 「2027年国際園芸博覧会協会 お問い合わせ窓口運営業務委託の一般競争入札について」
+# （当社領域・公示10/16・**前段関門が10/20 17:00**）が**1度も記録されていなかった。**
+# 原因は2つ。
+# (a) 一覧の `<a>` の中が「2026.10.16」「委託等」「件名」の3要素に割れており、
+#     **href は日付の行に付き、件名の行には付かなかった。**
+#     掃引ログには件名が残るので取れているように見えるが、
+#     **その件名からは二度と一次資料へ辿れない。**
+#     さらに「2026.10.16 委託等」自体が見出しとして記録され、
+#     **同じ日に2件出ると `norm()` が一致して重複除去で片方が丸ごと消えていた。**
+# (b) **ナビゲーションを落とすためのノイズ語「お問い合わせ」が、
+#     業務そのものの語と衝突していた。**2026-10-10 に rank.py で
+#     「セミナー」が「東京展開セミナー運営業務委託」を殺したのと同じ型である。
+# **落としたいのは案内のリンクであって、発注そのものではない。**
+_sw = io.open(os.path.join(ROOT, 'bin/sweep_channels.py'), encoding='utf-8').read()
+_swm = importlib.import_module('sweep_channels')
+check('リンクの続きの行へ href を引き継ぐ', 'carry_n' in _sw, True)
+check('日付と区分だけの行を見出しにしない', 'LABEL' in _sw, True)
+check('重複除去の鍵に href を入れる', "k = (norm(ln), href)" in _sw, True)
+check('発注を示す語があればノイズ語で落とさない', 'ORDER' in _sw, True)
+
+_html = ('<ul><li><a href="/contract/detail/A.html"><span class="date">2026.10.16</span>'
+         '<span class="cat">委託等</span>'
+         '<h2><span>2027年国際園芸博覧会協会　お問い合わせ窓口運営業務委託の一般競争入札について</span></h2>'
+         '</a></li>'
+         '<li><a href="/contract/detail/B.html"><span class="date">2026.10.16</span>'
+         '<span class="cat">委託等</span>'
+         '<h2><span>２０２７年国際園芸博覧会 主催者催事 ナイトパレードにかかる制作・管理運営業務委託の公募型プロポーザルについて</span></h2>'
+         '</a></li></ul>')
+_got = _swm.titles(_html)
+_names = [x[0] for x in _got]
+_hrefs = dict(_got)
+check('同じ日に2件出ても両方拾う', len(_got), 2)
+check('「お問い合わせ窓口運営業務委託」を捨てない',
+      any('お問い合わせ窓口運営業務委託' in n for n in _names), True)
+check('件名に正しい href が付く',
+      [h for n, h in _got if 'お問い合わせ窓口' in n], ['/contract/detail/A.html'])
+check('2件目にも正しい href が付く',
+      [h for n, h in _got if 'ナイトパレード' in n], ['/contract/detail/B.html'])
+check('「2026.10.16 委託等」を見出しにしない',
+      any(_swm.LABEL.fullmatch(n) for n in _names), False)
+# **本物の案内リンクは、これまでどおり落ちる**
+check('ナビゲーションの「お問い合わせ」は落ちる',
+      _swm.titles('<li><a href="/contact/">お問い合わせ窓口のご案内はこちら</a></li>'), [])
+
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)
