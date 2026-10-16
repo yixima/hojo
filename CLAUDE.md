@@ -362,6 +362,7 @@ Artifact は Claude Code の右側ペインで開き、共有もできる。
 | **見落としを検出できる分母**（制度・チャネル・案件の3層データベース） | https://claude.ai/artifact/D7a4rrrzDsZn8rmHb6YVru | `reports/bunbo.html` |
 | **生島様にお願いする3件**（締切の引きかた・週次巡回の直しかた） | https://claude.ai/artifact/JwDG9n9rh1yrCKjQx9ehMA | `reports/onegai.html` |
 | **神戸と青森の応募可否**（一次資料を読んだ結果・2件とも所在地要件で不可） | https://claude.ai/artifact/XYmgRx1xKnrBFxbspnEztp | `reports/kobe_aomori_shinsa.html` |
+| **東京都外郭団体の落札額**（予定価格が非公表でも、終わった案件の入札経過調書に落札額が書いてある） | https://claude.ai/artifact/JDzPCBVyu7eepBDRbsugEL | `reports/souba.html` |
 
 ### セッションの守備範囲（2026-09-04 生島様の指示）
 
