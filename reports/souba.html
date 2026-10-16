@@ -1,0 +1,460 @@
+<title>東京都外郭団体の落札額</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+/* 版面：藍の罫線と朱の訂正印。入札経過調書そのものの配色にする */
+:root{
+  --ground:#F7F5F0;      /* 生成りの和紙 */
+  --surface:#FFFFFF;
+  --surface-2:#EFEDE6;
+  --ink:#1A1A17;
+  --ink-2:#4A4942;
+  --muted:#7C7A70;
+  --line:#DDDAD0;
+  --line-strong:#C3BFB2;
+  --accent:#1F3A5F;      /* 藍 */
+  --accent-soft:#E6EBF2;
+  --mark:#A5321E;        /* 朱（訂正・注意） */
+  --mark-soft:#F8EAE6;
+  --ok:#2A6049;
+  --ok-soft:#E4EFE9;
+  --shadow:0 1px 2px rgba(26,26,23,.05), 0 10px 28px -16px rgba(26,26,23,.22);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#13151A; --surface:#1B1E25; --surface-2:#232832;
+    --ink:#EDEAE3; --ink-2:#C2BEB3; --muted:#8C897F;
+    --line:#2C313B; --line-strong:#434A57;
+    --accent:#8FB3DC; --accent-soft:#1D2735;
+    --mark:#E89A86; --mark-soft:#36211C;
+    --ok:#7FBFA2; --ok-soft:#17291F;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#13151A; --surface:#1B1E25; --surface-2:#232832;
+  --ink:#EDEAE3; --ink-2:#C2BEB3; --muted:#8C897F;
+  --line:#2C313B; --line-strong:#434A57;
+  --accent:#8FB3DC; --accent-soft:#1D2735;
+  --mark:#E89A86; --mark-soft:#36211C;
+  --ok:#7FBFA2; --ok-soft:#17291F;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 72px}
+.mast{display:flex;flex-wrap:wrap;gap:18px 32px;align-items:flex-end;
+  justify-content:space-between;border-bottom:2px solid var(--accent);
+  padding-block:36px 20px;margin-bottom:30px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;color:var(--accent);font-weight:700}
+.mast h1{font-family:"Shippori Mincho",serif;font-weight:700;margin:.18em 0 0;
+  font-size:clamp(25px,4vw,35px);line-height:1.28;letter-spacing:.02em;text-wrap:balance}
+.mast .sub{color:var(--muted);font-size:13px;margin:7px 0 0;max-width:60ch}
+.mast .sub b{color:var(--ink-2)}
+.stamp{display:flex;gap:24px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.stamp b{display:block;font-family:"Roboto Mono",monospace;font-size:18px;
+  color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.lede{background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:2px;
+  padding:20px 24px;margin-bottom:40px;box-shadow:var(--shadow)}
+.lede p{margin:0 0 10px;max-width:68ch}
+.lede p:last-child{margin-bottom:0}
+.lede .big{font-size:17px;line-height:1.7}
+.lede strong{color:var(--accent);font-weight:700}
+.lede .fine{font-size:12px;color:var(--muted)}
+code{font-family:"Roboto Mono",monospace;font-size:.88em;
+  background:var(--surface-2);padding:1px 5px;border-radius:2px}
+section{margin-bottom:44px}
+.shead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:3px}
+.shead h2{font-family:"Shippori Mincho",serif;font-size:19px;font-weight:700;
+  margin:0;letter-spacing:.03em}
+.shead .n{font-family:"Roboto Mono",monospace;font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.sdesc{color:var(--muted);font-size:13px;margin:0 0 14px;max-width:70ch}
+.nums{display:flex;gap:2px;background:var(--line);border:1px solid var(--line);
+  border-radius:2px;overflow:hidden;margin-bottom:14px;flex-wrap:wrap}
+.nums>div{background:var(--surface);padding:9px 16px;flex:1 1 130px;min-width:0}
+.nums dt{font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+.nums dd{margin:0;font-family:"Roboto Mono",monospace;font-size:17px;font-weight:500;
+  font-variant-numeric:tabular-nums}
+.nums dd.key{color:var(--accent);font-size:21px}
+.nums dd small{font-size:11px;color:var(--muted);margin-left:2px;font-weight:400}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;
+  background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:860px}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);
+  vertical-align:top}
+th{font-size:10.5px;letter-spacing:.1em;color:var(--muted);font-weight:700;
+  background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.d{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+td.d b{font-size:14.5px}
+.zei{font-size:10px;letter-spacing:.06em;color:var(--muted);margin-top:2px}
+.zei.warn{color:var(--mark);font-weight:700}
+.barcell{width:110px;min-width:90px}
+.bar{display:block;height:5px;background:var(--surface-2);border-radius:3px;
+  overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+td.who{font-size:12.5px;color:var(--ink-2);max-width:17ch}
+.unk{color:var(--mark);font-size:11.5px}
+td.nm{min-width:0;max-width:40ch}
+.note{margin-top:4px;font-size:11.5px;color:var(--mark);
+  background:var(--mark-soft);padding:5px 9px;border-radius:2px;
+  border-left:2px solid var(--mark)}
+td.org{font-size:11.5px;color:var(--muted);max-width:16ch}
+td.bid small{font-size:10px;color:var(--muted);margin-left:1px}
+.seq{font-size:10.5px;color:var(--muted);margin-top:3px;max-width:22ch;
+  white-space:normal;line-height:1.5}
+.caveat{background:var(--mark-soft);border:1px solid var(--mark);
+  border-left:3px solid var(--mark);border-radius:2px;padding:18px 22px;
+  margin:4px 0 40px}
+.caveat h3{font-family:"Shippori Mincho",serif;font-size:15px;margin:0 0 8px;
+  color:var(--mark);letter-spacing:.03em}
+.caveat p{margin:0 0 8px;font-size:13.5px;color:var(--ink-2);max-width:70ch}
+.caveat p:last-child{margin-bottom:0}
+.caveat b{color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding-top:22px;margin-top:8px;
+  font-size:12.5px;color:var(--muted)}
+.foot h3{font-family:"Shippori Mincho",serif;font-size:14px;color:var(--ink);
+  margin:0 0 10px;letter-spacing:.04em}
+.foot ul{margin:0;padding-left:18px}
+.foot li{margin-bottom:6px;max-width:74ch}
+.foot b{color:var(--ink-2)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:560px){
+  .stamp{gap:16px}
+  .lede{padding:16px}
+}
+
+</style>
+
+<div class="wrap">
+<header class="mast"><div>
+<div class="eyebrow">ビジネスチャンス・ナビ 結果公表済み案件</div>
+<h1>東京都外郭団体の落札額</h1>
+<p class="sub">予定価格は公表されない。<b>落札額は、終わった案件の「入札経過調書」に書いてある。</b>一般社団法人ジャパンプロモーション</p>
+</div><div class="stamp">
+<div>基準<b>10.16 09:01</b></div>
+<div>読めた案件<b>35</b></div>
+<div>発注組織<b>9</b></div>
+</div></header>
+<div class="lede"><p class="big">金額が分からないと思っていたのは、<strong>見ていた場所が違っていたからです。</strong></p><p>公社も都産技研も、仕様書を最後まで読んでも金額を1字も書きません。けれど<b>結果が公表された案件の「案件（詳細）」には入札経過調書が付いており、落札者名・落札金額・全入札者の入札額がそのまま載っています。</b>ナビの結果公表済みは1,523件あり、今まで一度も開いていませんでした。</p><p class="fine">出どころ＝<code>chancenavi_souba_20261016.csv</code>／この画面は <code>bin/build_souba.py</code> が作っています。手で書いていません。<b>金額は調書の記載そのままで、推計は1件もありません。</b></p></div>
+<section><div class="shead"><h2>展示会への出展（企画運営・装飾）</h2><span class="n">7件</span></div>
+<p class="sdesc">当社の中核。公社・都産技研が毎年出す型で、Care Show Japan 2027 や SXSW のブース装飾と同じ列に並ぶ</p>
+<div class="nums"><div><dt>中央値</dt><dd class="key">4,311,230<small>円</small></dd></div><div><dt>最小</dt><dd>3,172,237<small>円</small></dd></div><div><dt>最大</dt><dd>13,072,070<small>円</small></dd></div></div>
+<div class="scroll"><table><thead><tr><th>金額</th><th>規模</th><th>落札者</th><th>件名</th><th>発注</th><th>入札</th></tr></thead><tbody>
+<tr>
+<td class="d"><b>3,172,237</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:24%"></i></span></td>
+<td class="who">エーエムシー東京株式会社</td>
+<td class="nm">Singapore Airshow 2026 に係る企画・装飾・運営業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">1<small>者</small><div class="seq">4,350,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>3,382,720</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:26%"></i></span></td>
+<td class="who">株式会社日広通信社</td>
+<td class="nm">東京ケアウィーク’26 出展に係る企画運営・装飾業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">8<small>者</small><div class="seq">3,075,200 / 3,780,000 / 4,490,000 / 5,300,000 / 5,399,000 / 6,275,500</div></td>
+</tr>
+<tr>
+<td class="d"><b>3,740,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:29%"></i></span></td>
+<td class="who">株式会社ユニオンアルファ</td>
+<td class="nm">H.C.R. 2025 出展に係る企画運営・装飾業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">7<small>者</small><div class="seq">3,400,000 / 3,573,000 / 4,062,000 / 4,444,800 / 4,632,700 / 7,800,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>4,311,230</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:33%"></i></span></td>
+<td class="who">株式会社スコープ</td>
+<td class="nm">第16回化粧品開発展東京出展に係る企画運営・装飾等業務委託について</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">4<small>者</small><div class="seq">3,919,300 / 4,000,000 / 4,220,000 / 9,333,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>8,284,100</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:63%"></i></span></td>
+<td class="who">株式会社日広通信社</td>
+<td class="nm">2025年度3展示会出展（年度末）に係る企画運営・装飾業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">6<small>者</small><div class="seq">7,531,000 / 9,020,860 / 9,341,500 / 10,500,000 / 11,252,000 / 22,883,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>9,353,300</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:72%"></i></span></td>
+<td class="who"><span class="unk">氏名を読めず</span></td>
+<td class="nm">令和６年度クール・ネット東京普及啓発に係るイベントへのブース出展及び運営業務委託</td>
+<td class="org">公益財団法人東京都環境公社</td>
+<td class="d bid">2<small>者</small><div class="seq">8,503,000 / 15,825,800</div></td>
+</tr>
+<tr>
+<td class="d"><b>13,072,070</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:100%"></i></span></td>
+<td class="who">株式会社ヒップ</td>
+<td class="nm">CEATEC 2025 出展に係る企画運営・装飾業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">10<small>者</small><div class="seq">11,883,700 / 12,570,000 / 12,850,000 / 13,358,400 / 15,000,000 / 15,500,000</div></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="shead"><h2>セミナー・講演会・会議の運営</h2><span class="n">10件</span></div>
+<p class="sdesc">公社の「東京展開セミナー運営業務委託（インド／シンガポール）」と同じ型</p>
+<div class="nums"><div><dt>中央値</dt><dd class="key">8,042,650<small>円</small></dd></div><div><dt>最小</dt><dd>2,524,500<small>円</small></dd></div><div><dt>最大</dt><dd>35,470,000<small>円</small></dd></div></div>
+<div class="scroll"><table><thead><tr><th>金額</th><th>規模</th><th>落札者</th><th>件名</th><th>発注</th><th>入札</th></tr></thead><tbody>
+<tr>
+<td class="d"><b>2,524,500</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:7%"></i></span></td>
+<td class="who">株式会社アカンパニーテクノロジーズ</td>
+<td class="nm">東京都における水素エネルギーの活用に関するセミナー運営等業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">6<small>者</small><div class="seq">2,295,000 / 2,838,000 / 4,200,000 / 4,960,500 / 6,500,000 / 6,550,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>2,948,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:8%"></i></span></td>
+<td class="who">(株)ブレインワークス</td>
+<td class="nm">「令和８年度ライフプラン講習会」講義動画作成及びWebセミナー運営配信等業務委託<div class="note">▲ 落札金額を 268,000円 → 2,948,000円 に訂正した（調書の「落札金額」の直後に消費税相当額が並んでいた）</div></td>
+<td class="org">一般財団法人東京都人材支援事業団</td>
+<td class="d bid">16<small>者</small><div class="seq">268,000 / 2,680,000 / 3,053,000 / 3,060,000 / 3,110,000 / 3,320,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>3,946,800</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:11%"></i></span></td>
+<td class="who">(株)ツクルス</td>
+<td class="nm">「令和７年度ライフプラン講習会」講義動画作成及びWebセミナー運営配信等業務委託<div class="note">▲ 落札金額を 358,800円 → 3,946,800円 に訂正した（調書の「落札金額」の直後に消費税相当額が並んでいた）</div></td>
+<td class="org">一般財団法人東京都人材支援事業団</td>
+<td class="d bid">4<small>者</small><div class="seq">358,800 / 3,588,000 / 3,980,000 / 5,400,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>4,361,500</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:12%"></i></span></td>
+<td class="who">株式会社アカンパニーテクノロジーズ</td>
+<td class="nm">2025年度海外展開競争力強化支援事業におけるセミナー企画・運営及び個別相談会に係る委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">2<small>者</small><div class="seq">3,965,000 / 24,000,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>4,539,700</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:13%"></i></span></td>
+<td class="who">クリエイティブ・ファクトリー株式会社</td>
+<td class="nm">令和８年度Tokyoヘルスケアサポーター養成講座「出産・子育て支援コース」に係る講演会運営業務委託（上半期２回分）</td>
+<td class="org">地方独立行政法人東京都立病院機構</td>
+<td class="d bid">7<small>者</small><div class="seq">4,127,000 / 10,782,000 / 15,900,000 / 18,833,000 / 23,450,000 / 24,300,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>11,545,600</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:33%"></i></span></td>
+<td class="who"><span class="unk">氏名を読めず</span></td>
+<td class="nm">「令和５年度　中学生科学コンテスト」「令和５年度Tokyo 　サイエンスフェア」の運営等に係る業務委託</td>
+<td class="org">公益財団法人東京都教育支援機構</td>
+<td class="d bid">4<small>者</small><div class="seq">10,496,000 / 12,850,000 / 15,702,240 / 16,300,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>11,550,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:33%"></i></span></td>
+<td class="who">株式会社ツクルス</td>
+<td class="nm">令和８年度Tokyoヘルスケアサポーター養成講座「出産・子育て支援コース」に係る講演会運営業務委託（下半期２回分）</td>
+<td class="org">地方独立行政法人東京都立病院機構</td>
+<td class="d bid">5<small>者</small><div class="seq">10,500,000 / 11,000,000 / 19,156,640 / 25,990,000 / 49,988,143</div></td>
+</tr>
+<tr>
+<td class="d"><b>12,885,400</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:36%"></i></span></td>
+<td class="who">株式会社森のエネルギー研究所</td>
+<td class="nm">令和6年度　木質バイオマス発電に関するデータ分析及び推進会議運営業務委託</td>
+<td class="org">公益財団法人東京都農林水産振興財団</td>
+<td class="d bid">1<small>者</small><div class="seq">11,714,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>31,900,000</b><div class="zei warn">税抜</div></td>
+<td class="barcell"><span class="bar"><i style="width:90%"></i></span></td>
+<td class="who">株式会社ＴＲＡＰＥ</td>
+<td class="nm">介護現場改革促進等事業　生産性向上に向けた「個別相談」及び「動画セミナーの構築」委託</td>
+<td class="org">公益財団法人東京都福祉保健財団</td>
+<td class="d bid">0<small>者</small></td>
+</tr>
+<tr>
+<td class="d"><b>35,470,000</b><div class="zei warn">税抜</div></td>
+<td class="barcell"><span class="bar"><i style="width:100%"></i></span></td>
+<td class="who">株式会社エイデル研究所</td>
+<td class="nm">令和８年度「TOKYO働きやすい福祉の職場宣言事業」に係るセミナー及び事業者支援コーディネーター派遣プロジェクト委託</td>
+<td class="org">公益財団法人東京都福祉保健財団</td>
+<td class="d bid">0<small>者</small></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="shead"><h2>施設の管理・運営</h2><span class="n">2件</span></div>
+<p class="sdesc">当社の領域ではない。判定器（bin/rank.py）が拾ったものをそのまま載せている</p>
+<div class="nums"><div><dt>中央値</dt><dd class="key">7,226,450<small>円</small></dd></div><div><dt>最小</dt><dd>3,232,900<small>円</small></dd></div><div><dt>最大</dt><dd>11,220,000<small>円</small></dd></div></div>
+<div class="scroll"><table><thead><tr><th>金額</th><th>規模</th><th>落札者</th><th>件名</th><th>発注</th><th>入札</th></tr></thead><tbody>
+<tr>
+<td class="d"><b>3,232,900</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:29%"></i></span></td>
+<td class="who">株式会社ＯＰＳ</td>
+<td class="nm">１４３　令和８年度 東京都立大学（南大沢キャンパス）国際交流会館の宿泊室清掃委託（単価契約）</td>
+<td class="org">東京都公立大学法人</td>
+<td class="d bid">3<small>者</small><div class="seq">2,939,000 / 3,850,500 / 5,577,800</div></td>
+</tr>
+<tr>
+<td class="d"><b>11,220,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:100%"></i></span></td>
+<td class="who">有限会社エスパシオ</td>
+<td class="nm">２２７　令和8年度東京都立大学（南大沢キャンパス）国際交流会館管理運営業務委託（その２）</td>
+<td class="org">東京都公立大学法人</td>
+<td class="d bid">1<small>者</small><div class="seq">10,200,000</div></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="shead"><h2>フェア・イベントの運営</h2><span class="n">5件</span></div>
+<p class="sdesc">東京農林水産フェアは令和4年度から毎年出ている。同じ業務で3,795,000円→3,839,000円→3,927,000円→5,698,000円と推移している</p>
+<div class="nums"><div><dt>中央値</dt><dd class="key">3,839,000<small>円</small></dd></div><div><dt>最小</dt><dd>2,348,610<small>円</small></dd></div><div><dt>最大</dt><dd>16,500,000<small>円</small></dd></div></div>
+<div class="scroll"><table><thead><tr><th>金額</th><th>規模</th><th>落札者</th><th>件名</th><th>発注</th><th>入札</th></tr></thead><tbody>
+<tr>
+<td class="d"><b>2,348,610</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:14%"></i></span></td>
+<td class="who">株式会社ステージ</td>
+<td class="nm">東京イノベーション発信交流会2026における会場設営・撤去及び運営等に係る業務委託</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">5<small>者</small><div class="seq">2,135,100 / 2,833,000 / 4,298,000 / 5,375,590 / 7,000,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>3,795,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:23%"></i></span></td>
+<td class="who">株式会社キープ</td>
+<td class="nm">令和5年度東京農林水産フェア運営等業務委託</td>
+<td class="org">公益財団法人東京都農林水産振興財団</td>
+<td class="d bid">4<small>者</small><div class="seq">3,450,000 / 4,050,000 / 4,130,000 / 11,765,600</div></td>
+</tr>
+<tr>
+<td class="d"><b>3,839,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:23%"></i></span></td>
+<td class="who">株式会社セレスポ</td>
+<td class="nm">令和４年度　東京農林水産フェア運営等業務委託</td>
+<td class="org">公益財団法人東京都農林水産振興財団</td>
+<td class="d bid">4<small>者</small><div class="seq">3,490,000 / 4,560,000 / 4,800,000 / 6,967,350</div></td>
+</tr>
+<tr>
+<td class="d"><b>5,698,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:35%"></i></span></td>
+<td class="who">TSP東日本株式会社</td>
+<td class="nm">令和8年度東京農林水産フェア運営等業務委託</td>
+<td class="org">公益財団法人東京都農林水産振興財団</td>
+<td class="d bid">7<small>者</small><div class="seq">5,180,000 / 5,720,663 / 6,402,300 / 6,843,060 / 8,700,000 / 9,933,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>16,500,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:100%"></i></span></td>
+<td class="who">株式会社ツクルス</td>
+<td class="nm">多摩産材利用拡大フェア2023運営等業務委託</td>
+<td class="org">公益財団法人東京都農林水産振興財団</td>
+<td class="d bid">3<small>者</small><div class="seq">15,000,000 / 20,000,000 / 32,600,000</div></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="shead"><h2>什器・物品の購入／借入</h2><span class="n">11件</span></div>
+<p class="sdesc">当社の領域ではない。判定器が「什器」を展示・出展の語として拾っている。取りこぼしを防ぐため落とさず、ここに分けて置く</p>
+<div class="nums"><div><dt>中央値</dt><dd class="key">16,390,000<small>円</small></dd></div><div><dt>最小</dt><dd>2,279,200<small>円</small></dd></div><div><dt>最大</dt><dd>71,240,000<small>円</small></dd></div></div>
+<div class="scroll"><table><thead><tr><th>金額</th><th>規模</th><th>落札者</th><th>件名</th><th>発注</th><th>入札</th></tr></thead><tbody>
+<tr>
+<td class="d"><b>2,279,200</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:3%"></i></span></td>
+<td class="who">株式会社コイヌマ</td>
+<td class="nm">１１２　国際系新学部開設に伴う教員研究室改修に係る什器の購入</td>
+<td class="org">東京都公立大学法人</td>
+<td class="d bid">2<small>者</small><div class="seq">2,072,000 / 2,250,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>5,093,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:7%"></i></span></td>
+<td class="who">落札業者コーユーレンティア株式会社</td>
+<td class="nm">令和７年度事務支援関係受託業務に係るオフィス什器等の借入れ</td>
+<td class="org">公益財団法人東京都教育支援機構</td>
+<td class="d bid">1<small>者</small><div class="seq">4,630,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>6,055,830</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:9%"></i></span></td>
+<td class="who"><span class="unk">氏名を読めず</span></td>
+<td class="nm">本社における新規什器の購入</td>
+<td class="org">公益財団法人東京都環境公社</td>
+<td class="d bid">2<small>者</small><div class="seq">5,505,300 / 6,397,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>6,974,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:10%"></i></span></td>
+<td class="who">株式会社大坂屋</td>
+<td class="nm">城東支所機械分野什器の購入</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">2<small>者</small><div class="seq">6,340,000 / 7,870,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>14,432,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:20%"></i></span></td>
+<td class="who"><span class="unk">氏名を読めず</span></td>
+<td class="nm">什器類等の買入れ及びLAN配線更新等業務委託</td>
+<td class="org">公益財団法人東京都環境公社</td>
+<td class="d bid">2<small>者</small><div class="seq">13,120,000 / 14,150,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>16,390,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:23%"></i></span></td>
+<td class="who">株式会社コイヌマ</td>
+<td class="nm">打合せ・web会議ブースの購入</td>
+<td class="org">公益財団法人東京都農林水産振興財団</td>
+<td class="d bid">3<small>者</small><div class="seq">14,900,000 / 15,890,000 / 16,500,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>17,765,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:25%"></i></span></td>
+<td class="who">エビヌマ株式会社</td>
+<td class="nm">城東支所デザイン分野什器の購入</td>
+<td class="org">地方独立行政法人東京都立産業技術研究センター</td>
+<td class="d bid">2<small>者</small><div class="seq">16,150,000 / 16,700,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>26,235,000</b><div class="zei ">税込</div></td>
+<td class="barcell"><span class="bar"><i style="width:37%"></i></span></td>
+<td class="who">株式会社コイヌマ</td>
+<td class="nm">０２７　１１号館什器の購入（その１）</td>
+<td class="org">東京都公立大学法人</td>
+<td class="d bid">2<small>者</small><div class="seq">23,850,000 / 24,000,000</div></td>
+</tr>
+<tr>
+<td class="d"><b>34,580,000</b><div class="zei warn">税抜</div></td>
+<td class="barcell"><span class="bar"><i style="width:49%"></i></span></td>
+<td class="who"><span class="unk">氏名を読めず</span></td>
+<td class="nm">什器の買入れ（新宿NSビル22階南）</td>
+<td class="org">一般財団法人GovTech東京</td>
+<td class="d bid">0<small>者</small></td>
+</tr>
+<tr>
+<td class="d"><b>44,886,000</b><div class="zei warn">税抜</div></td>
+<td class="barcell"><span class="bar"><i style="width:63%"></i></span></td>
+<td class="who"><span class="unk">氏名を読めず</span></td>
+<td class="nm">NSビル22階増床に伴う什器の購入</td>
+<td class="org">一般財団法人GovTech東京</td>
+<td class="d bid">0<small>者</small></td>
+</tr>
+<tr>
+<td class="d"><b>71,240,000</b><div class="zei warn">税抜</div></td>
+<td class="barcell"><span class="bar"><i style="width:100%"></i></span></td>
+<td class="who">帝國器材株式会社</td>
+<td class="nm">什器の買入れ</td>
+<td class="org">一般財団法人GovTech東京</td>
+<td class="d bid">0<small>者</small></td>
+</tr>
+</tbody></table></div></section>
+<div class="caveat"><h3>この表に出てこない発注者がいます</h3><p><b>（公財）東京都中小企業振興公社と東京観光財団（TCVB）は、ナビの結果公表済み1,523件に1件もありません。</b>この2者は当社がいちばん多く向き合う相手です。公社は仕様書に「契約金額250万円以上の契約案件を、決算の公表に合わせて年1回取りまとめ、当公社ホームページ及び閲覧により公表する」と書いています。<b>公社の落札額はナビではなくそこにあり、まだ取れていません。</b></p><p>ですから下の数字は、<b>都産技研・農林水産振興財団・都立病院機構・都立大学法人・人材支援事業団・GovTech東京・環境公社・福祉保健財団の相場です。</b>公社の案件に当てるときは、同じ業務の型であることを確かめてから使ってください。</p></div>
+<div class="foot"><h3>読み方の注意</h3><ul><li><b>税区分を必ず見てください。</b>「税抜」と書いた行は、1.1倍すると税込になります。調書の書式は発注者ごとに違います</li><li><b>「入札」の欄は、調書に載っていた入札額の件数です。</b>辞退・不参は金額が書かれないため、この数に入りません。実際の参加者はこれより多いことがあります</li><li>▲ の行は、道具が金額を訂正したものです。<b>調書の「落札金額」の直後に消費税額が並ぶ書式があり、そのままだと消費税額を落札額として読んでしまいます。</b>税込額は消費税額の11倍である、という関係で直しています</li><li><b>契約不調（落札者なし）は、この表に入れていません。</b>「読めなかった」ではなく結果なので、別に数えています</li></ul></div>
+</div>

@@ -22,6 +22,9 @@ JST = ZoneInfo('Asia/Tokyo')
 OUT = os.path.join(ROOT, 'reports/souba.html')
 
 # **並べる順は「当社の本業に近い順」である。**什器は最後。
+# **順序そのものが判定になっている。**先に当たったものが勝つ。
+# 2026-10-16：「国際交流会館の宿泊室清掃委託」が『交流会』を含むため
+# フェア・イベントの束に入っていた。**施設の管理・運営を先に置いて直した。**
 GROUPS = [
     ('展示会への出展（企画運営・装飾）',
      r'展示会|出展|ブース出展|パビリオン|EXPO|CEATEC|H\.C\.R|ギフト・?ショー|'
@@ -32,13 +35,13 @@ GROUPS = [
      r'セミナー|講習|講演|フォーラム|会議運営|推進会議|コンテスト|サイエンスフェア|'
      r'個別相談|動画セミナー|配信',
      '公社の「東京展開セミナー運営業務委託（インド／シンガポール）」と同じ型'),
+    ('施設の管理・運営',
+     r'管理運営|宿泊室|清掃|会館',
+     '当社の領域ではない。判定器（bin/rank.py）が拾ったものをそのまま載せている'),
     ('フェア・イベントの運営',
      r'フェア|イベント|交流会|祭|設営・撤去',
      '東京農林水産フェアは令和4年度から毎年出ている。**同じ業務で3,795,000円→'
      '3,839,000円→3,927,000円→5,698,000円**と推移している'),
-    ('施設の管理・運営',
-     r'管理運営|宿泊室|清掃|会館',
-     '当社の領域ではない。判定器（bin/rank.py）が拾ったものをそのまま載せている'),
     ('什器・物品の購入／借入',
      r'什器|購入|買入|借入|レンタル|LAN配線',
      '**当社の領域ではない。**判定器が「什器」を展示・出展の語として拾っている。'
@@ -188,6 +191,18 @@ def main():
             b.append('</tr>')
         b.append('</tbody></table></div></section>')
 
+    b.append('<div class="caveat"><h3>この表に出てこない発注者がいます</h3>'
+             '<p><b>（公財）東京都中小企業振興公社と東京観光財団（TCVB）は、'
+             'ナビの結果公表済み1,523件に1件もありません。</b>'
+             'この2者は当社がいちばん多く向き合う相手です。'
+             '公社は仕様書に「契約金額250万円以上の契約案件を、決算の公表に合わせて'
+             '年1回取りまとめ、当公社ホームページ及び閲覧により公表する」と書いています。'
+             '<b>公社の落札額はナビではなくそこにあり、まだ取れていません。</b></p>'
+             '<p>ですから下の数字は、<b>都産技研・農林水産振興財団・都立病院機構・'
+             '都立大学法人・人材支援事業団・GovTech東京・環境公社・福祉保健財団の相場です。</b>'
+             '公社の案件に当てるときは、同じ業務の型であることを確かめてから使ってください。</p>'
+             '</div>')
+
     b.append('<div class="foot"><h3>読み方の注意</h3><ul>'
              '<li><b>税区分を必ず見てください。</b>「税抜」と書いた行は、'
              '1.1倍すると税込になります。調書の書式は発注者ごとに違います</li>'
@@ -292,6 +307,14 @@ td.org{font-size:11.5px;color:var(--muted);max-width:16ch}
 td.bid small{font-size:10px;color:var(--muted);margin-left:1px}
 .seq{font-size:10.5px;color:var(--muted);margin-top:3px;max-width:22ch;
   white-space:normal;line-height:1.5}
+.caveat{background:var(--mark-soft);border:1px solid var(--mark);
+  border-left:3px solid var(--mark);border-radius:2px;padding:18px 22px;
+  margin:4px 0 40px}
+.caveat h3{font-family:"Shippori Mincho",serif;font-size:15px;margin:0 0 8px;
+  color:var(--mark);letter-spacing:.03em}
+.caveat p{margin:0 0 8px;font-size:13.5px;color:var(--ink-2);max-width:70ch}
+.caveat p:last-child{margin-bottom:0}
+.caveat b{color:var(--ink)}
 .foot{border-top:1px solid var(--line);padding-top:22px;margin-top:8px;
   font-size:12.5px;color:var(--muted)}
 .foot h3{font-family:"Shippori Mincho",serif;font-size:14px;color:var(--ink);
