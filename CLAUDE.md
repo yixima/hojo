@@ -169,8 +169,14 @@ HP: http://www.japanpromotion.org
 
 - **WebFetchツールは公的機関サイトに対して遮断される。curl を使うこと。**
   `curl -sSL -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' --max-time 30 --compressed <URL>`
-- PDFの読み取りには pypdf。事前に `pip install --quiet cffi` が必要
-  （これがないと cryptography のバインディングエラーで落ちる）
+- PDFの読み取りには pypdf。**`python3 -m pip install cffi pypdf` で入れる。**
+  **`pip install` ではいけない（2026-10-19 実測）。**この環境の `pip` は python3.13 を指し、
+  `python3` は 3.11 である。`pip install pypdf` は成功したと表示されるのに
+  `python3 -c "import pypdf"` が ModuleNotFoundError になる。
+  **「入れたのに無い」と見えるときは、入れた先と使う先が違う。**
+  cffi が無いと cryptography のバインディングエラーで落ちる
+- **コンテナは作り直される。そのとき pip で入れたものは消える。**
+  手順の最初で `python3 -c "import pypdf"` を試し、落ちたら入れ直す
 - 大量のサイトを巡回するときは ThreadPoolExecutor で並列化する（max_workers=10〜14）
 - バックグラウンド実行は `run_in_background: true` を使う。
   `nohup ... &` は親シェル終了時に道連れで死ぬ
@@ -238,6 +244,11 @@ HP: http://www.japanpromotion.org
 - **案件検索の画面IDは未解明。**タブ内の JavaScript から開くため HTML に URL が出てこない
 - 環境変数が未設定なら、巡回の報告に「設定されていないため確認できなかった」と明記する。
   **黙って飛ばさない**
+- **認証情報はスクラッチパッドに置かない（2026-10-19 の事故）。**
+  コンテナが作り直されると消える。**リポジトリは手順2の `git merge` で復旧するが、
+  スクラッチパッドには復旧する手段が無い。** 正しい置き場所は
+  **環境（Environment）の設定の Network secrets／環境変数**である。
+  手順は `docs/chancenavi.md` の末尾。**会話に貼り付けていただく必要はない**
 
 ### 週次巡回はこのセッションへ発火する（2026-09-16・案A）
 
