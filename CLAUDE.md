@@ -175,6 +175,10 @@ HP: http://www.japanpromotion.org
   `python3 -c "import pypdf"` が ModuleNotFoundError になる。
   **「入れたのに無い」と見えるときは、入れた先と使う先が違う。**
   cffi が無いと cryptography のバインディングエラーで落ちる
+- **PDFの文字が取れないとき、抽出器を2つ試す。** `pypdf` と **`pdftotext -enc UTF-8`**（poppler・この環境に既に入っている）。
+  **どちらかで取れることがある。**実測 2026-10-23：徳島県実行委員会の提案募集要項は
+  **両方とも本文6バイトで、画像だけのPDFだった**（OCRは入っていない。`pdfimages` はある）。
+  **「読めなかった」を「要件が無い」と書かない。読めなかったと書き、電話か人の目に回す。**
 - **コンテナは作り直される。そのとき pip で入れたものは消える。**
   手順の最初で `python3 -c "import pypdf"` を試し、落ちたら入れ直す
 - 大量のサイトを巡回するときは ThreadPoolExecutor で並列化する（max_workers=10〜14）
