@@ -59,6 +59,16 @@ DATE_PATS = [
 # 拾えないことはエラーにならず、「不一致の証拠が無い」が「一致」に化ける（§3-11）。
 MONTHDAY = re.compile(r'([0-9０-９]{1,2})\s*月\s*([0-9０-９]{1,2})\s*日')
 
+# **期間の終わりの日付が「月」を省く書き方（2026-10-27 に判明した誤警報）。**
+#   令和8年10月21日（水）から27日（火）午前11時00分までの間、…
+# 「27日」には月が無いため MONTHDAY に当たらず、**行に日付が1つしか無いと見える。**
+# すると「まで」が前の 10月21日 に結び付き、**受付の始まりを締切と読む。**
+# 実測：福岡県の案件で、台帳の 10/27 11:00 が正しいのに「台帳のほうが6日遅い＝危険」と
+# 検査が鳴った。**鳴りっぱなしの警報は、鳴らない警報と同じである。**
+# ここでは「直前の年つき日付のあと、『から』をはさんで現れる『N日』」だけを拾い、
+# **月と年は直前の日付から借りる。**単独の「27日まで」は拾わない（月を当て推量しない）。
+RANGE_END = re.compile(r'(?:から|〜|～|-|–)\s*([0-9０-９]{1,2})\s*日')
+
 TIME_PATS = [
     (re.compile(r'正午'), lambda m: datetime.time(12, 0)),
     (re.compile(r'(\d{1,2})\s*[:：]\s*(\d{2})'), lambda m: datetime.time(int(m[1]), int(m[2]))),
@@ -153,6 +163,36 @@ def find_dates(t, anchor=None):
                 continue
         if extra:
             keep = sorted(keep + extra)
+
+    # 期間の終わり（「…から27日…まで」）。**月は直前の日付から借りる。**
+    tail = []
+    for m in RANGE_END.finditer(t):
+        if any(m.start() < e and s2 < m.end() for s2, e, _ in keep):
+            continue                          # すでに拾った日付と重なっている
+        before = [(e, d) for s2, e, d in keep if e <= m.start()]
+        if not before:
+            continue                          # 借りる相手がいない。当て推量しない
+        e0, base = before[-1]
+        # **「から」と前の日付が離れていたら、同じ期間の記述ではない。**
+        # **「（月）」の月を月名と見ないこと。**曜日の「月」で弾くと月曜日だけ落ちる
+        # （2026-10-27、12月28日（月）から5日 の例で実際に落ちた）。
+        if m.start() - e0 > 12 or re.search(r'[0-9０-９]\s*月', t[e0:m.start()]):
+            continue
+        try:
+            da = int(m.group(1).translate(Z2H))
+        except ValueError:
+            continue
+        y, mo = base.year, base.month
+        if da < base.day:                     # 月をまたぐ期間
+            mo += 1
+            if mo > 12:
+                mo, y = 1, y + 1
+        try:
+            tail.append((m.start(), m.end(), datetime.date(y, mo, da)))
+        except ValueError:
+            continue
+    if tail:
+        keep = sorted(keep + tail)
     return keep
 
 

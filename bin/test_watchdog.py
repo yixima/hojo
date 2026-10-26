@@ -917,5 +917,47 @@ check('「ブース装飾等の業務委託」はS/A',
       _rkm.grade('海外展示会出展に伴うブース装飾等の業務委託')[0] in ('S', 'A'), True)
 
 
+# ── 3.34 全角と半角の違いで、台帳に入れた案件が「未処理」の山に残り続けないか ──
+# 2026-10-27 実測：チャンスナビの見出しは「令和８年度…」（全角8）、台帳は「令和8年度…」（半角8）。
+# 同じ案件なのに前方18文字が一致せず、**処理済みの案件22件が「見えていたのに拾っていない」側に
+# 積まれていた。**溜まりの件数が嘘になると、**本当の溜まりが読めなくなって取りこぼしを作る。**
+import importlib
+_sab = importlib.import_module('sa_backlog')
+check('norm が全角数字を半角に揃える',
+      _sab.norm('令和８年度海外展開総合支援事業') == _sab.norm('令和8年度海外展開総合支援事業'), True)
+check('norm が全角英字を半角に揃える',
+      _sab.norm('ＳＸＳＷ 2027') == _sab.norm('SXSW 2027'), True)
+check('norm が大文字と小文字を揃える（Ambiente と ambiente）',
+      _sab.norm('海外見本市（Ambiente 2027 JAPAN STYLE）') ==
+      _sab.norm('海外見本市(ambiente 2027 JAPAN STYLE)'), True)
+check('norm が全角括弧と半角括弧を同じに扱う',
+      _sab.norm('業務委託（提案番号）') == _sab.norm('業務委託(提案番号)'), True)
+# **終わった告知を未処理と同じ山に積まない。**件数が意味を失う
+check('「入札結果」は終わった告知と判定する',
+      bool(_sab.RESULT.search('【入札結果】国旗等の製作及び運営業務委託')), True)
+check('「最優秀提案事業者決定」は終わった告知と判定する',
+      bool(_sab.RESULT.search('【最優秀提案事業者決定】賓客接遇業務委託')), True)
+check('「質問への回答」は終わった告知と判定する',
+      bool(_sab.RESULT.search('開催業務に関する質問への回答について')), True)
+# **募集そのものを「終わった告知」に流し込んだら、それは取りこぼしである**
+# **過年度と今年度を混ぜると、今年拾い損ねた案件が過去の山に埋もれる。**
+check('「令和7年度」は過年度と判定する',
+      bool(_sab.PAST.search('令和7年度宮崎県総合防災訓練に係る会場設営及び撤去等業務委託')), True)
+check('「FOODEX JAPAN 2024」は過年度と判定する',
+      bool(_sab.PAST.search('スーパーマーケット・トレードショー 2024及びFOODEX JAPAN 2024 ブース装飾等委託業務')), True)
+check('「平成」は過年度と判定する', bool(_sab.PAST.search('平成31年度物産展企画運営業務')), True)
+# **今年度を過年度に流し込んだら、それがそのまま取りこぼしになる**
+check('「令和8年度」は過年度ではない',
+      bool(_sab.PAST.search('令和8年度和歌山県産ブランド和牛取扱飲食店応援イベントフェア企画運営業務委託')), False)
+check('「2027年国際園芸博覧会」は過年度ではない',
+      bool(_sab.PAST.search('2027年国際園芸博覧会和歌山県催事実施計画策定等業務委託')), False)
+check('「2026年度」は過年度ではない',
+      bool(_sab.PAST.search('2026年度 屋内出展施設運営管理業務の一般競争入札について')), False)
+check('「企画提案の募集について」は終わった告知ではない',
+      bool(_sab.RESULT.search('東日本大震災復興フォーラム開催業務に関する企画提案の募集について')), False)
+check('「一般競争入札について」は終わった告知ではない',
+      bool(_sab.RESULT.search('パーテーション設置業務の一般競争入札について')), False)
+
+
 print('\n%d件成功 / %d件失敗' % (ok, fail))
 sys.exit(1 if fail else 0)
