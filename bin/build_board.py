@@ -178,6 +178,8 @@ def md(s):
 
 # ── 仕分け ──────────────────────────────────────────────
 WATCH_MAX = 120  # 「見ておく」の上限。これより先は次年度候補に寄せる
+# 等級の壁の節が遡る日数。**証拠は過去の案件なので、閉じたものも1年は残す**
+GRADE_LOOKBACK = 365
 
 
 def buckets(rows, now):
@@ -212,8 +214,17 @@ def buckets(rows, now):
         if k == 'forecast':
             b['coming'].append(rec)
             continue
-        if k == 'ng' and not rec['closed'] and left is not None and '等級' in r['状態'] + r['資格要否']:
-            # 生きている案件が等級で落ちた。**定期受付（9/14〜10/30）の判断材料になる**
+        if k == 'ng' and left is not None and left >= -GRADE_LOOKBACK \
+                and '等級' in r['状態'] + r['資格要否']:
+            # 等級で落ちた案件。**定期受付（9/14〜10/30）の判断材料になる**
+            #
+            # **2026-10-29、この節が0件になった。**案件が無くなったのではなく、
+            # 福岡県のシンポジウムが締切超過で次年度候補へ移ったためである。
+            # 以前の条件は `not rec['closed']`、すなわち**生きている案件だけ**だった。
+            # ところが**この節の役目は「等級を上げるべきか」の証拠を出すことであり、
+            # 証拠は本質的に「過去に落とした案件」である。**
+            # 定期受付の締切（10/30）が近づくほど証拠が消える、逆向きの作りになっていた。
+            # **直近1年以内に閉じたものは、証拠として残す。**
             b['grade'].append(rec)
             continue
         if (left is None or rec['closed'] or k in ('decided_no', 'rec_no', 'ng')
