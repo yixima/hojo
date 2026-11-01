@@ -89,6 +89,17 @@ LABEL = re.compile(r'\d{4}[.\-/年]\s?\d{1,2}[.\-/月]\s?\d{1,2}日?'
                    r'(?:\s*(?:委託等|工事|物品|その他|更新|新着|お知らせ|公告|入札))*\s*')
 
 
+# **HTTP 200 は「読めた」という意味ではない（2026-11-02 実測）。**
+# 堺市は 200 を返しながら本文が「このページは表示できません／イベント ID: …」だった。
+# 和歌山県の実行委員会（403）も大阪市（408）も、curl -sSL は本文として遮断ページを返す。
+# **本文が空でなければ「取得できた」と数えていたため、この3件は毎回「0件」として
+# 静かに通り過ぎていた。**「0件」は「無かった」ではなく「見えていなかった」だった。
+# 2026-09-21 の教訓（鳴らない検出器は、検出器が無いのと同じ）と同じ型である。
+BLOCKED = re.compile(r'このページは表示できません|アクセスが拒否|アクセスできません|'
+                     r'Access Denied|Forbidden|Request Timeout|Attention Required|'
+                     r'イベント ?ID|Error 1\d{3}')
+
+
 def fetch(url):
     try:
         p = subprocess.run(
@@ -265,10 +276,16 @@ def main():
             print('   **案件としての差は取らない。**回次が変わっていないかを人が見る')
             continue
         ts = titles(raw) if raw else []
-        if not raw:
+        # **見出しが1本も取れず、本文が遮断ページの文言なら、それは「0件」ではない。**
+        blocked = bool(raw) and not ts and BLOCKED.search(raw[:4000])
+        if not raw or blocked:
             dead.append(c)
             print('\n■ %-18s %s' % (c['チャネルID'], c['名称']))
-            print('   **取得できなかった。「案件なし」ではない。**判定不能として扱う')
+            if blocked:
+                print('   **遮断された（本文が遮断ページ）。HTTP 200 でも読めていない。**'
+                      '「案件なし」ではない。判定不能として扱う')
+            else:
+                print('   **取得できなかった。「案件なし」ではない。**判定不能として扱う')
             continue
         new = [(t, h) for t, h in ts if not known(norm(t), keys)]
         total_new += len(new)
