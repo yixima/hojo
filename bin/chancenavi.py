@@ -150,6 +150,7 @@ SCREENS = {
     'sba0303': ([('pageKey', '1')], '案件一覧'),
     'sba0501': ([('pageKey', '1'), ('proposalClassCode', '1')], '案件一覧'),
     'cga0101': ([('tocog_flag', '0'), ('status', '0')], '案件一覧'),
+    'sba0304': ([('pageKey', '2')], '東京都内の区市町村等入札情報の検索'),
     'sba0701': ([], '企業の検索'),
 }
 
@@ -254,6 +255,64 @@ def detail(pn, outdir=None):
     return d, got
 
 
+# sba0304（東京都内の区市町村等入札情報）の doSearch が post() に渡す data。
+# js/pages/sba0304.js:115 で実測（2026-11-05）。
+_CITY_FIXED = [
+    ('pageKey', '2'), ('exceptReject', ''),
+    ('txtApplicationDateFrom', ''), ('txtApplicationDateTo', ''),
+    ('freeWord', ''), ('sort', 'desc'), ('keywordRetrievalMethod', '1'),
+    ('businessArray', '[]'), ('lineOfBusinessArray', '[]'),
+    ('bidContractSystemArray', '[]'), ('municipalityArray', '[]'),
+    ('recommend_id_clear', ''),
+]
+
+
+def city_search(token, word=None, limit=50, page=1):
+    """東京都内の区市町村等入札情報（sba0304）を引く。
+
+    **ここは cga0101（東京都の外郭団体等）とは別の母集団である。**
+    2026-11-05、この画面を初めて叩いた日に、種目120「催事関係業務」・共同格付
+    指定なし・予定価格360万円の荒川区案件（匠の技展in日暮里）が、締切2時間前で
+    見つかった。**画面を持っていなかったから見えていなかっただけである。**
+    """
+    import json as _j
+    fw = _j.dumps([word], ensure_ascii=False) if word else '[]'
+    d = ([('token', token), ('limit', str(limit))] + _CITY_FIXED
+         + [('freeWordArray', fw), ('page', str(page))])
+    return _curl(BASE + '/sba0304/index', d, BASE + '/caa0101')
+
+
+def parse_city(h):
+    """sba0304 の一覧HTMLから案件を読む。[{案件番号, 本文}] を返す。"""
+    out = []
+    for it in re.findall(r'<LI class="dataset-item">(.*?)</LI>', h,
+                         flags=re.S | re.I):
+        m = re.search(r"sba0404'\s*,\s*'(\d+)'", it)
+        out.append({'案件番号': m.group(1) if m else '',
+                    '本文': plain(it)})
+    return out
+
+
+def city_all(token, word=None, limit=50, max_pages=12):
+    """全ページを取る。**ページを開くたびに token が入れ替わるので拾い直す。**"""
+    got, seen = [], set()
+    t = token
+    for pg in range(1, max_pages + 1):
+        h = city_search(t, word, limit, pg)
+        if 'SBA0304' not in plain(h)[:20]:
+            break
+        t = token_of(h) or t
+        rows = parse_city(h)
+        fresh = [r for r in rows if r['案件番号'] not in seen]
+        for r in fresh:
+            seen.add(r['案件番号'])
+        got += fresh
+        if len(rows) < limit or not fresh:
+            break
+        time.sleep(1)
+    return got
+
+
 def main():
     my, t = login()
     if not t:
@@ -262,6 +321,13 @@ def main():
         return 1
     who = re.search(r'([^\s]+様)', plain(my))
     print('ログインできた：%s' % (who.group(1) if who else '（氏名を読めず）'))
+    if len(sys.argv) > 1 and sys.argv[1] == 'city':
+        w = sys.argv[2] if len(sys.argv) > 2 else None
+        rows = city_all(t, w)
+        print('区市町村等 %d件%s' % (len(rows), ('（「%s」で絞り込み）' % w) if w else ''))
+        for i, a in enumerate(rows, 1):
+            print('%3d) [%s] %s' % (i, a['案件番号'], a['本文'][:170]))
+        return 0
     if len(sys.argv) > 1 and sys.argv[1] == 'list':
         n = int(sys.argv[2]) if len(sys.argv) > 2 else 50
         h = search_list(t, n)
@@ -300,6 +366,7 @@ def main():
     print('使い方： python3 bin/chancenavi.py caa0202')
     print('        python3 bin/chancenavi.py list [件数]        # 案件一覧（既定50件）')
     print('        python3 bin/chancenavi.py detail <提案番号> [保存先]  # 詳細＋添付資料')
+    print('        python3 bin/chancenavi.py city [語]          # 東京都内の区市町村等入札情報（別の母集団）')
     return 0
 
 
