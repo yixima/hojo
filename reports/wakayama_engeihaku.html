@@ -1,0 +1,361 @@
+<title>和歌山DAY 応募進行表</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+<style>
+/* 版面：1本の時系列を縦に通し、関門ごとに「いつ・何を・どこへ」を同じ形で並べる。
+   色は熊野の杉（深緑）を地に、紀州梅（赤）を関門の印にだけ使う。 */
+:root{
+  --ground:#F7F6F2;
+  --surface:#FFFFFF;
+  --surface-2:#EFEEE8;
+  --ink:#16201B;
+  --ink-2:#44524A;
+  --muted:#79857D;
+  --line:#DFDED6;
+  --line-strong:#C5C4B8;
+  --kumano:#1F4A38;      /* 熊野の杉 */
+  --kumano-soft:#E4EDE8;
+  --ume:#A3253F;         /* 紀州梅 */
+  --ume-soft:#FAEBEE;
+  --amber:#8A6414;
+  --amber-soft:#F8F0DC;
+  --done:#8E9A93;
+  --done-soft:#ECEFED;
+  --shadow:0 1px 2px rgba(22,32,27,.05), 0 10px 28px -16px rgba(22,32,27,.28);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#11150F;
+    --surface:#191E18;
+    --surface-2:#222820;
+    --ink:#EDF1EA;
+    --ink-2:#C0CBC2;
+    --muted:#8D978F;
+    --line:#2C332A;
+    --line-strong:#424A3F;
+    --kumano:#8FC9AC;
+    --kumano-soft:#1B2C23;
+    --ume:#EE93A6;
+    --ume-soft:#331A21;
+    --amber:#D9B166;
+    --amber-soft:#332814;
+    --done:#7E8A82;
+    --done-soft:#20261F;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#11150F;
+  --surface:#191E18;
+  --surface-2:#222820;
+  --ink:#EDF1EA;
+  --ink-2:#C0CBC2;
+  --muted:#8D978F;
+  --line:#2C332A;
+  --line-strong:#424A3F;
+  --kumano:#8FC9AC;
+  --kumano-soft:#1B2C23;
+  --ume:#EE93A6;
+  --ume-soft:#331A21;
+  --amber:#D9B166;
+  --amber-soft:#332814;
+  --done:#7E8A82;
+  --done-soft:#20261F;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 28px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.8; -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:940px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:0 88px;
+}
+
+/* 見出し */
+.mast{border-bottom:2px solid var(--kumano); padding-block:36px 20px; margin-bottom:28px}
+.eyebrow{
+  font-family:"Roboto Mono",monospace; font-size:11.5px; letter-spacing:.14em;
+  color:var(--kumano); text-transform:uppercase; margin-bottom:10px;
+}
+.mast h1{
+  font-family:"Shippori Mincho",serif; font-weight:700;
+  font-size:clamp(25px,4.4vw,36px); line-height:1.35; margin:0; letter-spacing:.02em;
+  text-wrap:balance;
+}
+.mast .sub{color:var(--muted); font-size:13.5px; margin-top:10px; max-width:62ch}
+
+/* 冒頭の判断 */
+.lede{
+  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--ume);
+  border-radius:3px; padding:20px 22px; margin-bottom:34px; box-shadow:var(--shadow);
+  display:grid; gap:10px;
+}
+.lede p{margin:0; max-width:64ch}
+.lede .big{font-size:16.5px; line-height:1.75}
+.lede strong{color:var(--ume)}
+.lede .fine{font-size:12.5px; color:var(--muted)}
+
+/* 節 */
+section{margin-bottom:40px}
+.shead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px}
+.shead h2{font-family:"Shippori Mincho",serif; font-size:19px; font-weight:700; margin:0; letter-spacing:.03em}
+.shead .n{font-family:"Roboto Mono",monospace; font-size:11.5px; color:var(--muted)}
+.sdesc{color:var(--muted); font-size:13px; margin:0 0 16px; max-width:66ch}
+.rule{height:1px; background:var(--line); margin-bottom:18px}
+
+/* 関門の時系列 */
+.gates{display:grid; gap:12px}
+.gate{
+  background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:16px 18px; box-shadow:var(--shadow);
+  display:grid; grid-template-columns:minmax(0,118px) minmax(0,1fr); gap:6px 20px; align-items:start;
+}
+.gate.live{border-left:3px solid var(--ume)}
+.gate.past{opacity:.6; border-left:3px solid var(--done)}
+.gate .when{display:grid; gap:2px; min-width:0}
+.gate .cd{
+  font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  font-size:21px; font-weight:500; line-height:1.15; color:var(--ume);
+}
+.gate.past .cd{color:var(--done); font-size:15px}
+.gate .date{font-family:"Roboto Mono",monospace; font-size:12px; color:var(--muted); white-space:nowrap}
+.gate .what{min-width:0}
+.gate h3{margin:0 0 4px; font-size:15.5px; font-weight:700; line-height:1.5}
+.gate p{margin:0; font-size:13.5px; color:var(--ink-2); max-width:62ch}
+.gate b{color:var(--ink)}
+.chip{
+  display:inline-block; font-size:11px; font-weight:700; letter-spacing:.05em;
+  padding:2px 9px; border-radius:2px; border:1px solid; white-space:nowrap; margin-right:6px;
+}
+.c-mail{background:var(--kumano-soft); color:var(--kumano); border-color:var(--kumano)}
+.c-paper{background:var(--amber-soft); color:var(--amber); border-color:var(--amber)}
+.c-done{background:var(--done-soft); color:var(--done); border-color:var(--line-strong)}
+
+/* 書類の表 */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:600px}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-size:11px; letter-spacing:.08em; color:var(--muted); font-weight:700; background:var(--surface-2); white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.no{font-family:"Roboto Mono",monospace; color:var(--muted); white-space:nowrap}
+td.cnt{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+tr.hot td{background:var(--ume-soft)}
+tr.hot td.no{color:var(--ume)}
+.tag{font-size:11px; font-weight:700; color:var(--ume); white-space:nowrap}
+
+/* 配点 */
+.scores{display:grid; gap:8px}
+.score{display:grid; grid-template-columns:minmax(0,1fr) 54px; gap:12px; align-items:center}
+.score .bar{height:22px; background:var(--surface-2); border-radius:2px; overflow:hidden; position:relative; min-width:0}
+.score .bar i{display:block; height:100%; background:var(--kumano)}
+.score .bar i.top{background:var(--ume)}
+.score .bar span{
+  position:absolute; inset:0; display:flex; align-items:center; padding-inline:10px;
+  font-size:12.5px; color:var(--ink); mix-blend-mode:normal;
+}
+.score .pt{font-family:"Roboto Mono",monospace; font-variant-numeric:tabular-nums;
+  text-align:right; font-size:14px; font-weight:500}
+
+/* 要点の箱 */
+.note{
+  background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:16px 18px; box-shadow:var(--shadow);
+}
+.note.warn{background:var(--amber-soft); border-color:var(--amber); border-left-width:3px}
+.note p{margin:0 0 8px; font-size:13.5px; color:var(--ink-2); max-width:64ch}
+.note p:last-child{margin-bottom:0}
+.note b{color:var(--ink)}
+ul{margin:0; padding-left:20px}
+li{margin-bottom:6px; font-size:13.5px; color:var(--ink-2); max-width:64ch}
+li b{color:var(--ink)}
+
+.foot{border-top:1px solid var(--line); padding-top:20px; margin-top:44px; font-size:12.5px; color:var(--muted)}
+.foot a{color:var(--kumano)}
+a:focus-visible{outline:2px solid var(--ume); outline-offset:3px; border-radius:1px}
+@media (max-width:560px){
+  .gate{grid-template-columns:1fr; gap:10px}
+  .gate .when{display:flex; align-items:baseline; gap:10px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="eyebrow">2027年国際園芸博覧会／和歌山県催事</div>
+  <h1>和歌山DAY「こころの旅路つながる」<br>応募の進行表</h1>
+  <div class="sub">2027年国際園芸博覧会和歌山県催事実施計画策定等業務委託 公募型プロポーザル ／ 発注＝和歌山県 県土整備部 都市住宅局 都市政策課 ／ 一般社団法人ジャパンプロモーション</div>
+</header>
+
+<div class="lede">
+  <p class="big"><strong>いま動くのは、書類の取り寄せです。</strong>企画提案書は社内で書けますが、<b>納税証明書と登記事項証明書は外から取るもので、当社の手では速くなりません。</b>ここが律速です。</p>
+  <p><strong>とくに和歌山県税の証明。</strong>当社は和歌山県内に事業所がないため、「未納がない」ことをどの書類で示すのかが要項からは読み取れません。<b>和歌山県の担当課へ電話で確かめるのが、今週いちばん先にすべきことです。</b></p>
+  <p class="fine">基準日時 2026年11月5日 20時41分（JST）。残り時間は、この画面を開いている時刻から計算しています。読み直すときは再読み込みしてください。</p>
+</div>
+
+<section>
+  <div class="shead"><h2>関門</h2><span class="n">二段構え・提出方法が段で違う</span></div>
+  <p class="sdesc">応募表明は電子メール、企画提案書は持参か郵送です。<b>同じ案件でも段で出し方が変わります。</b>郵送した場合は県へ電話して受領確認まで行うことが要項に書かれています。</p>
+  <div class="rule"></div>
+  <div class="gates">
+
+    <article class="gate past">
+      <div class="when"><div class="cd" data-deadline="2026-11-05T17:00"></div><div class="date">11/05（木）17:00</div></div>
+      <div class="what">
+        <h3><span class="chip c-done">終了</span>質問申出書（様式1）の提出締切</h3>
+        <p><b>この期限は過ぎました。</b>質問を出さなかったことは応募の妨げになりません。要項・仕様書の読み取りで判断がつかない点は、<b>質問としてではなく、担当課への事実確認として電話で聞きます。</b>回答は11月12日に全応募者へ一斉公表されるので、<b>他社が何を聞いたかは必ず確認します。</b></p>
+      </div>
+    </article>
+
+    <article class="gate live">
+      <div class="when"><div class="cd" data-deadline="2026-11-19T17:00"></div><div class="date">11/19（木）17:00 必着</div></div>
+      <div class="what">
+        <h3><span class="chip c-mail">電子メール</span>プロポーザル応募表明書（様式2）</h3>
+        <p>宛先 <b>e0809001@pref.wakayama.lg.jp</b>。受付は土日祝を除く9:00〜17:45、最終日は17:00まで。<b>これを出さないと企画提案書を出せません。</b>様式2を埋めて送るだけなので、<b>迷っている段階でも先に出しておくのが安全です。</b>辞退は様式3を同じ宛先へ送れば足ります。</p>
+      </div>
+    </article>
+
+    <article class="gate live">
+      <div class="when"><div class="cd" data-deadline="2026-11-26T17:00"></div><div class="date">11/26（木）17:00 必着</div></div>
+      <div class="what">
+        <h3><span class="chip c-paper">持参・郵送</span>企画提案書ほか一式（①〜⑫）</h3>
+        <p>〒640-8585 和歌山市小松原通一丁目1番地／和歌山県 県土整備部 都市住宅局 都市政策課。<b>FAX不可。郵送した場合は県へ電話し受領確認を行うこと</b>と要項にあります。あわせて<b>②企画提案書・③見積書・④業務実績調書は電子メールでも提出</b>します（6MBを超えるときは大容量送信サービスのURLを送る旨を先にメールで依頼）。</p>
+      </div>
+    </article>
+
+    <article class="gate">
+      <div class="when"><div class="cd" data-deadline="2026-11-30T09:00"></div><div class="date">11月末〜12月上旬</div></div>
+      <div class="what">
+        <h3>選定委員会（プレゼンテーション）</h3>
+        <p>日時・場所は<b>応募表明を出した者にだけ別途通知</b>されます。左の残り時間は11月30日を仮に置いたもので、確定日ではありません。<b>和歌山市での対面を前提に、日程を空けておきます。</b>審査結果は委員会の翌日以降に県ホームページで公表されます（契約候補者の名称と評価点、次点以下は点のみ）。</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>今週とる書類</h2><span class="n">外から取り寄せるもの</span></div>
+  <p class="sdesc">当社は和歌山県の競争入札参加資格を持たないため、<b>⑦〜⑫を省略できません。</b>このうち⑨⑩⑪は役所に請求するもので、<b>請求してから手元に届くまでの日数が読めません。11月26日から逆算すると、着手は今週中です。</b></p>
+  <div class="rule"></div>
+  <div class="note warn">
+    <p><b>いちばん先に電話で確かめること。</b>⑪「和歌山県税に未納がない旨の証明書」は、和歌山県内に事業所のない法人がどう取るのかが要項に書かれていません。<b>県税の納税義務がない場合にどの書類で代えるのか</b>を、都市政策課（073-441-3230）に確認してください。ここを放置したまま他を揃えると、最後の1枚で間に合わなくなります。</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>提出書類</h2><span class="n">①〜⑫・11月26日必着</span></div>
+  <p class="sdesc"><b>赤い行が、外から取り寄せるものです。</b>部数は要項7(1)のとおり。副本には社名・住所など応募者が特定できる情報を書きません。</p>
+  <div class="rule"></div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>No</th><th>書類</th><th>様式</th><th>部数</th><th>入手先・注意</th></tr></thead>
+      <tbody>
+        <tr><td class="no">①</td><td>企画提案申請書</td><td>様式4</td><td class="cnt">1部</td><td>社内</td></tr>
+        <tr><td class="no">②</td><td><b>企画提案書</b></td><td>任意様式</td><td class="cnt">正1・副3</td><td><b>表紙を除き20頁以内（厳守）／A4横書き推奨・左綴じ・オールカラー・両面印刷。副本は匿名化</b></td></tr>
+        <tr><td class="no">③</td><td>見積書</td><td>任意様式</td><td class="cnt">正1・副3</td><td><b>宛名は「和歌山県知事」</b>／積算項目ごとの内訳書を添付／税込・消費税額を明記</td></tr>
+        <tr><td class="no">④</td><td>業務実績調書</td><td>様式5</td><td class="cnt">正1・副3</td><td>社内（過去5年の類似実績）</td></tr>
+        <tr><td class="no">⑤</td><td>提案者の概要書</td><td>様式6</td><td class="cnt">1部</td><td>社内</td></tr>
+        <tr><td class="no">⑥</td><td>誓約書</td><td>様式7</td><td class="cnt">1部</td><td>社内</td></tr>
+        <tr><td class="no">⑦</td><td>役員等に関する調書</td><td>様式8</td><td class="cnt">1部</td><td>社内（理事の氏名・生年月日・住所）</td></tr>
+        <tr><td class="no">⑧</td><td>直前1事業年度の決算書類</td><td>—</td><td class="cnt">1部</td><td>社内（事業報告書・貸借対照表・損益計算書・利益処分計算書またはこれに準ずるもの）</td></tr>
+        <tr class="hot"><td class="no">⑨</td><td>定款の写し＋<b>法人登記事項証明書</b></td><td>—</td><td class="cnt">1部</td><td><span class="tag">外部</span> 法務局。窓口なら即日、オンライン請求でも数日</td></tr>
+        <tr class="hot"><td class="no">⑩</td><td><b>法人税・消費税・地方消費税の未納がない証明書</b></td><td>—</td><td class="cnt">1部</td><td><span class="tag">外部</span> 税務署（納税証明書その3の3）。<b>発行後3か月以内のもの</b>／窓口・e-Tax・郵送で日数が大きく変わる</td></tr>
+        <tr class="hot"><td class="no">⑪</td><td><b>和歌山県税の未納がない証明書</b></td><td>—</td><td class="cnt">1部</td><td><span class="tag">外部</span> 和歌山県の県税事務所。<b>発行後3か月以内のもの</b>／<b>県内に事業所がない場合の扱いを要確認</b></td></tr>
+        <tr><td class="no">⑫</td><td>コンソーシアム協定書の写し</td><td>—</td><td class="cnt">1部</td><td>単独で出すなら不要</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>どこで点が取れるか</h2><span class="n">100点満点・6割未満は選定されない</span></div>
+  <p class="sdesc"><b>催事企画・プロデュース力が30点で最大です。</b>同点になったときも、まず安い方、次にこの項目の得点で決まります。<b>選定委員の2人以上が「E（劣っている）」を付けた項目があると、原則として選定の対象になりません。</b>全項目でCを下回らないことが先で、そのうえで30点に寄せます。</p>
+  <div class="rule"></div>
+  <div class="scores">
+    <div class="score"><div class="bar"><i class="top" style="width:100%"></i><span>2 催事企画・プロデュース力</span></div><div class="pt">30</div></div>
+    <div class="score"><div class="bar"><i style="width:66.7%"></i><span>1 業務目的の理解度</span></div><div class="pt">20</div></div>
+    <div class="score"><div class="bar"><i style="width:33.3%"></i><span>4 実施体制・人員の適切性</span></div><div class="pt">10</div></div>
+    <div class="score"><div class="bar"><i style="width:33.3%"></i><span>5 制作・設営計画の妥当性</span></div><div class="pt">10</div></div>
+    <div class="score"><div class="bar"><i style="width:33.3%"></i><span>6 運営管理・進行体制</span></div><div class="pt">10</div></div>
+    <div class="score"><div class="bar"><i style="width:33.3%"></i><span>7 見積金額の適正性</span></div><div class="pt">10</div></div>
+    <div class="score"><div class="bar"><i style="width:16.7%"></i><span>3 広報・記録計画</span></div><div class="pt">5</div></div>
+    <div class="score"><div class="bar"><i style="width:16.7%"></i><span>8 企画提案能力</span></div><div class="pt">5</div></div>
+  </div>
+  <div class="note" style="margin-top:16px">
+    <p><b>30点の中身は、評価基準に書かれています。</b>「催事全体として統一感・ストーリー性のある構成」「独自性や工夫が見られ、来場者の増加につながる」「<b>来場者が催事来場後に本県を訪れたくなる</b>」「和歌山らしさが感じられる具体的な提案」「催事プログラムの内容・構成・進行計画が具体的」の5つです。</p>
+    <p><b>当社の強みが直接効くのは4つ目と5つ目です。</b>海外見本市と物産展で、ブース装飾・ステージ進行・出演者手配・配布物の動線まで一体で回してきた実績を、<b>具体の数字で書けます。</b>「本県を訪れたくなるか」は横浜の会場から和歌山への送客の話なので、<b>会場で完結させず、現地へつなぐ仕掛けを1本通す</b>と読みやすくなります。</p>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>催事の中身</h2><span class="n">仕様書より</span></div>
+  <p class="sdesc">開催は<b>2027年6月12日（土）、横浜市・旧上瀬谷通信施設跡地の園芸博 催事場。</b>ステージ（客席最大300席程度）と、展示・物販ブースで構成します。大阪・関西万博の和歌山DAY「こころの旅路はじまる」からの継続という位置づけです。</p>
+  <div class="rule"></div>
+  <ul>
+    <li>出前紀州館として<b>県産品（梅酒を含む）の販売</b></li>
+    <li><b>GI梅酒の試飲</b>／<b>梅酒・梅シロップ作成体験</b></li>
+    <li>和歌山一番星アワード認定商品の販売（<b>販売スタッフの手配込み</b>）</li>
+    <li>花き・梅・新しょうがの実物展示</li>
+    <li>世界農業遺産「みなべ・田辺の梅システム」の展示（説明パネル・炭琴）</li>
+    <li>熊野白浜リゾート空港のノベルティ配布</li>
+    <li><b>県内温泉の足湯体験。温泉水の運搬と足湯設備の貸与まで運営業務に含みます</b></li>
+    <li>梅干し・花き・新しょうが<b>各500名分</b>の配布に要する運搬・動線確保・配布スタッフ手配</li>
+  </ul>
+</section>
+
+<section>
+  <div class="shead"><h2>金額の見かた</h2><span class="n">本業務400万円＋翌年度1,900万円</span></div>
+  <div class="rule"></div>
+  <div class="note">
+    <p><b>今回のプロポーザルで決まるのは、実施計画策定等業務の400万円（税込）だけです。</b>ただし仕様書7(1)イに、令和9年度の「催事運営業務（仮）」は<b>本業務の受託者と契約する予定</b>と書かれており、その上限が1,900万円（税込）。<b>合わせて約2,300万円の入口が、この400万円です。</b></p>
+    <p><b>翌年度分は令和9年度和歌山県一般会計予算の成立が前提</b>であり、確約ではありません。見積と体制は400万円の業務として組み、<b>運営までを見通した計画であることを提案書で示す</b>のが筋だと考えます。</p>
+  </div>
+</section>
+
+<footer class="foot">
+  参加資格は募集要項3の(1)〜(10)で、<b>所在地要件はありません。</b>(10)「過去5年間に地域の文化または産品のPRに係るイベントの実施計画策定・運営実績」は、当社の物産展・海外展示会・催事の受託実績で満たします。
+  ／問い合わせ＝和歌山県 県土整備部 都市住宅局 都市政策課 073-441-3230（代表 073-441-3231）／
+  <a href="https://www.pref.wakayama.lg.jp/prefg/080900/d00223172.html" target="_blank" rel="noopener">募集要項・仕様書・様式・評価基準（和歌山県ホームページ）</a>
+</footer>
+</div>
+
+<script>
+(function () {
+  function render() {
+    var now = Date.now();
+    document.querySelectorAll('[data-deadline]').forEach(function (el) {
+      var t = new Date(el.getAttribute('data-deadline') + ':00+09:00').getTime();
+      if (isNaN(t)) { el.textContent = '—'; return; }
+      var ms = t - now;
+      var card = el.closest('.gate');
+      if (ms <= 0) {
+        el.textContent = '受付終了';
+        if (card && !card.classList.contains('past')) {
+          card.classList.add('past'); card.classList.remove('live');
+        }
+        return;
+      }
+      var mins = Math.floor(ms / 60000);
+      var days = Math.floor(mins / 1440);
+      var hrs = Math.floor((mins % 1440) / 60);
+      if (days >= 1) el.textContent = '残り ' + days + '日';
+      else if (hrs >= 1) el.textContent = '残り ' + hrs + '時間';
+      else el.textContent = '残り ' + mins + '分';
+    });
+  }
+  render();
+  setInterval(render, 60000);
+})();
+</script>
